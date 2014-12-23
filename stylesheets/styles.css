@@ -261,3 +261,7 @@ footer {
 img.border {
   border: 1px #8585AD solid;
 }
+
+iframe {
+  border: 1px #8585AD solid;
+}
