@@ -26,6 +26,9 @@
   <link rel="stylesheet" href="stylesheets/styles.css">
   <link rel="stylesheet" href="stylesheets/pygment_trac.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="./javascripts/typed.min.js"></script>
+  
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -50,7 +53,15 @@
 <body>
   <div class="wrapper">
     <header>
-      <h1 class="centerMe">jewkesy.github.io</h1>
+      <h1 class="centerMe">&lt;h1&gt;<span class="typeMeTitle"></span>&lt;/h1&gt;</h1>
+      <script>
+        $(function(){
+            $(".typeMeTitle").typed({
+              strings: ["jewkesy.github.io"],
+              typeSpeed: 0
+            });
+        });
+      </script>
       <p class="centerMe"><img src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188&s=140" /></p>
       <p class="centerMe">the daryljewkes.com homepage</p>
       <p class="view"><a href="#welcome">Welcome</a></p>
