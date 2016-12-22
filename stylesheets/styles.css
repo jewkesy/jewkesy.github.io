@@ -45,6 +45,11 @@ a small {
   display:block;
 }
 
+
+h4 > a {
+  font-weight:600;
+}
+
 .wrapper {
   width:860px;
   margin:0 auto;
