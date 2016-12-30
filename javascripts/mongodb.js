@@ -20,38 +20,39 @@ function httpGet(theUrl){
 	}
 }
 
-function buildStatPanel(topUsers, userCount, topWords, fastest, wins, loses, failed, total) {
-	console.log(topUsers, userCount, topWords, fastest, wins, loses, failed, total);
-	document.getElementById("20q_players").innerHTML = userCount;
-	document.getElementById("20q_wins").innerHTML = wins;
-	document.getElementById("20q_loses").innerHTML = loses;
-	document.getElementById("20q_total").innerHTML = total;
+function buildStatPanel(topUsers, userCount, topWords, fastest, wins, loses, failed, total, gPerHr) {
+	// console.log(topUsers, userCount, topWords, fastest, wins, loses, failed, total);
+	document.getElementById("20q_players").innerHTML = numberWithCommas(userCount);
+	document.getElementById("20q_wins").innerHTML = numberWithCommas(wins);
+	document.getElementById("20q_loses").innerHTML = numberWithCommas(loses);
+	document.getElementById("20q_total").innerHTML = numberWithCommas(total);
 
 	document.getElementById("20q_wins_perc").innerHTML = Math.floor((wins / total) * 100) + '%';
 	document.getElementById("20q_loses_perc").innerHTML  = Math.floor((loses / total) * 100) + '%';
 
-	document.getElementById("20q_word1").innerHTML = "1. " + topWords[0].key;
-	document.getElementById("20q_word2").innerHTML = "2. " + topWords[1].key;
-	document.getElementById("20q_word3").innerHTML = "3. " + topWords[2].key;
-	document.getElementById("20q_word4").innerHTML = "4. " + topWords[3].key;
-	document.getElementById("20q_word5").innerHTML = "5. " + topWords[4].key;
+	document.getElementById("20q_avgHr").innerHTML = numberWithCommas(gPerHr);
 
-	document.getElementById("20q_word1_count").innerHTML = topWords[0].count;
-	document.getElementById("20q_word2_count").innerHTML = topWords[1].count;
-	document.getElementById("20q_word3_count").innerHTML = topWords[2].count;
-	document.getElementById("20q_word4_count").innerHTML = topWords[3].count;
-	document.getElementById("20q_word5_count").innerHTML = topWords[4].count;
+	for (var i = 0; i < topWords.length; i++) {
+		var x = i+1;
+		document.getElementById("20q_word" + x).innerHTML = x +". " + topWords[i].key;
+		document.getElementById("20q_word" + x + "_count").innerHTML = numberWithCommas(topWords[i].count);
+	}
 }
 
 function processResults(docs) {
-	// document.getElementById("response").innerHTML=xmlHttp.responseText;
-
 	var users = [];
 	var words = [];
 	var quickest = 30;
 	var win = 0;
 	var lose = 0;
 	var end = 0;
+
+	var startDate = new Date(docs[0].timestamp);
+	var endDate = new Date(docs[docs.length-1].timestamp);
+
+	var hours = Math.abs(startDate - endDate) / 36e5;
+	var gPerHr = Math.ceil(docs.length/Math.ceil(hours));
+	// console.log(startDate, endDate, Math.ceil(hours), gPerHr);
 
 	for (var i = 0; i < docs.length; i++) {
 		upsertArray(docs[i].userId, users);
@@ -60,6 +61,7 @@ function processResults(docs) {
 		if (docs[i].num == 30) end++;
 		if (docs[i].win) win++; else lose++;
 	}
+
 	users.sort(sortByCount);
 	var topUsers = users.slice(0, 10);
 	// console.log(users.length, topUsers);
@@ -70,7 +72,11 @@ function processResults(docs) {
 	// console.log(topWords);
 
 	// console.log("Fastest: " + quickest, "Wins: " + win, "Loses: " + lose, "Failed: " + end, "No. records: " + docs.length);
-	buildStatPanel(topUsers, users.length, topWords, quickest, win, lose, end, docs.length);
+	buildStatPanel(topUsers, users.length, topWords, quickest, win, lose, end, docs.length, gPerHr);
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function sortByCount(a,b) {
