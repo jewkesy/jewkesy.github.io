@@ -20,8 +20,20 @@ function httpGet(theUrl){
 	}
 }
 
-function buildStatPanel(topUsers, userCount, topWords, fastest, wins, loses, failed, total, gPerHr, timeFrom) {
+function buildStatPanel(topUsers, userCount, topWords, fastest, wins, loses, failed, total, gPerHr, timeFrom, lastGame) {
 	// console.log(topUsers, userCount, topWords, fastest, wins, loses, failed, total);
+	// console.log(lastGame)
+
+	if (lastGame.win) {
+		document.getElementById("20q_lastGame").innerHTML = "Alexa just won! She guessed " + lastGame.word + " in " + lastGame.num + " questions :)"
+	} else {
+		if (lastGame.num == 30) {
+			document.getElementById("20q_lastGame").innerHTML = "Alexa just lost! She couldn't guess the object after 30 questions :|";
+		} else {
+			document.getElementById("20q_lastGame").innerHTML = "Alexa just lost, but she guessed " + lastGame.word + " in " + lastGame.num + " questions :("
+		}
+	}
+
 	document.getElementById("20q_timeFrom").innerHTML = "Skill launched on " + timeFrom.replace("+0000 (UTC)", "");
 	document.getElementById("20q_players").innerHTML = numberWithCommas(userCount);
 	document.getElementById("20q_wins").innerHTML = numberWithCommas(wins);
@@ -73,7 +85,7 @@ function processResults(docs) {
 	// console.log(topWords);
 
 	// console.log("Fastest: " + quickest, "Wins: " + win, "Loses: " + lose, "Failed: " + end, "No. records: " + docs.length);
-	buildStatPanel(topUsers, users.length, topWords, quickest, win, lose, end, docs.length, gPerHr,  docs[0].datetime);
+	buildStatPanel(topUsers, users.length, topWords, quickest, win, lose, end, docs.length, gPerHr,  docs[0].datetime, docs[docs.length-1]);
 }
 
 function numberWithCommas(x) {
