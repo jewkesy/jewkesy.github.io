@@ -20,8 +20,9 @@ function httpGet(theUrl){
 	}
 }
 
-function buildStatPanel(topUsers, userCount, topWords, fastest, wins, loses, failed, total, gPerHr) {
+function buildStatPanel(topUsers, userCount, topWords, fastest, wins, loses, failed, total, gPerHr, timeFrom) {
 	// console.log(topUsers, userCount, topWords, fastest, wins, loses, failed, total);
+	document.getElementById("20q_timeFrom").innerHTML = "Skill launched on " + timeFrom.replace("+0000 (UTC)", "");
 	document.getElementById("20q_players").innerHTML = numberWithCommas(userCount);
 	document.getElementById("20q_wins").innerHTML = numberWithCommas(wins);
 	document.getElementById("20q_loses").innerHTML = numberWithCommas(loses);
@@ -72,7 +73,7 @@ function processResults(docs) {
 	// console.log(topWords);
 
 	// console.log("Fastest: " + quickest, "Wins: " + win, "Loses: " + lose, "Failed: " + end, "No. records: " + docs.length);
-	buildStatPanel(topUsers, users.length, topWords, quickest, win, lose, end, docs.length, gPerHr);
+	buildStatPanel(topUsers, users.length, topWords, quickest, win, lose, end, docs.length, gPerHr,  docs[0].datetime);
 }
 
 function numberWithCommas(x) {
