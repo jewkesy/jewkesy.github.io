@@ -27,7 +27,7 @@ function buildStatPanel(topUsers, userCount, topWords, fastest, wins, loses, fai
 	if (lastGame.win) {
 		document.getElementById("20q_lastGame").innerHTML = "Alexa just won! She guessed " + lastGame.word + " in " + lastGame.num + " questions :)"
 	} else {
-		if (lastGame.num == 30) {
+		if (lastGame.num >= 30) {
 			document.getElementById("20q_lastGame").innerHTML = "Alexa just lost! She couldn't guess the object after 30 questions :|";
 		} else {
 			document.getElementById("20q_lastGame").innerHTML = "Alexa just lost, but she guessed " + lastGame.word + " in " + lastGame.num + " questions :("
