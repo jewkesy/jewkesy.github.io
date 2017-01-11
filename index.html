@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="keywords" content="Daryl Jewkes Flappy Bird Formula One Development Software Applications" />
+  <meta name="keywords" content="Daryl Jewkes Twenty Questions Flappy Bird Formula One Development Software Applications" />
   <meta name="description" content="The homepage of Daryl Jewkes" />
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow" />
@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="stylesheets/pygment_trac.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src="./javascripts/typed.min.js"></script>
   <script src="./javascripts/amazon.js"></script>
   <script src="./javascripts/mongodb.js"></script>
@@ -86,42 +87,56 @@
       <p>A brief overview of some of my projects: -</p>
 
       <h4><a name="20q" href="https://www.amazon.co.uk/dp/B01N6I0G8D/" target="_blank">"Alexa, play twenty questions"</a></h4>
+      <p class="centerMe">
+       <img src="./images/20q_s.png" width="100px" />
+      </p>
       <p>My first venture into voice interaction and using the <strong>Amazon Alexa Echo</strong> voice platform, you can now play the classic 20 questions game by adding my <strong>Skill</strong> to your device. </p>
       <p>Alexa will win if she correctly guesses in 20 questions or less, will lose if she correctly guesses in under 30 quesitons.  Otherwise she'll admit defeat at failing to guess the object.</p>
-      <div style="border: 1px solid #e5e5e5; margin-bottom: 20px;">
-       <div style="float: left; padding-right: 5px; min-width:184px;">
-         <table>
-          <tr><th colspan="3">Game Stats</th></tr>
-          <tr><td>Wins:</td><td id="20q_wins"><img src="./images/spinner.gif"/></td><td id="20q_wins_perc"></td></tr>
-          <tr><td>Loses:</td><td id="20q_loses"><img src="./images/spinner.gif"/></td><td id="20q_loses_perc"></td></tr>
-          <tr><td>Failed:</td><td id="20q_failed"><img src="./images/spinner.gif"/></td><td id="20q_failed_perc"></td></tr>
-          <tr><td>Total:</td><td id="20q_total"><img src="./images/spinner.gif"/></td><td></td></tr>
-          <tr><td>Games/hr:</td><td id="20q_avgHr"><img src="./images/spinner.gif"/></td><td></td></tr>
-          <tr><td>Players:</td><td id="20q_players"><img src="./images/spinner.gif"/></td><td></td></tr>
-          <tr><td>Fastest:</td><td id="20q_fastestObj"><img src="./images/spinner.gif"/></td><td id="20q_fastest"></td></tr>
-         </table>
-       </div>
-       <div style="float: left; padding:5px; padding-top: 55px;"> <img src="./images/20q_s.png" width="100px" /></div>
-       <div style="float: left; padding-left: 5px; min-width:168px;">
-         <table>
-          <tr><th colspan="2" style="text-align: right;">Top Words</th></tr>
-          <tr><td id="20q_word1">1. </td><td id="20q_word1_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word2">2. </td><td id="20q_word2_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word3">3. </td><td id="20q_word3_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word4">4. </td><td id="20q_word4_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word5">5. </td><td id="20q_word5_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word6">6. </td><td id="20q_word6_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word7">7. </td><td id="20q_word7_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word8">8. </td><td id="20q_word8_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word9">9. </td><td id="20q_word9_count"><img src="./images/spinner.gif"/></td></tr>
-          <tr><td id="20q_word10">10.</td><td id="20q_word10_count"><img src="./images/spinner.gif"/></td></tr>
-         </table>
-       </div>
-       <hr>
-       <br style="clear: left;" />
-       <div style="width:100%; text-align: center; " id="20q_lastGame"></div>
-       <br style="clear: left;" />
-       <div style="width:100%; text-align: right; font-style: italic; color: #e5e5e5;" id='20q_timeFrom'></div>
+      <div >
+       <table style="border: 1px solid #e5e5e5; margin-bottom: 20px;">
+        <tr>
+          <td><img src="./images/20q_s.png" width="50px" /></td>
+          <td><div style="width:100%; text-align: center; font-size: 1.1em;" id="20q_lastGame"></div></td>
+        </tr> 
+        <tr>
+          <td colspan="2">
+            <div style="float: left; padding-right: 5px; min-width:184px;">
+             <table>
+              <tr><th colspan="3">Game Stats</th></tr>
+              <tr><td>Wins:</td><td id="20q_wins"><img src="./images/spinner.gif"/></td><td id="20q_wins_perc"></td></tr>
+              <tr><td>Loses:</td><td id="20q_loses"><img src="./images/spinner.gif"/></td><td id="20q_loses_perc"></td></tr>
+              <tr><td>Failed:</td><td id="20q_failed"><img src="./images/spinner.gif"/></td><td id="20q_failed_perc"></td></tr>
+              <tr><td>Total:</td><td id="20q_total"><img src="./images/spinner.gif"/></td><td></td></tr>
+              <tr><td>Games/hr:</td><td id="20q_avgHr"><img src="./images/spinner.gif"/></td><td></td></tr>
+              <tr><td>Players:</td><td id="20q_players"><img src="./images/spinner.gif"/></td><td></td></tr>
+              <tr><td>Fastest:</td><td id="20q_fastestObj"><img src="./images/spinner.gif"/></td><td id="20q_fastest"></td></tr>
+             </table>
+           </div>
+
+           <div style="float: left; padding-left: 5px; min-width:184px;">
+             <table>
+              <tr><th colspan="2" style="text-align: right;">Top Words</th></tr>
+              <tr><td id="20q_word1">1. </td><td id="20q_word1_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word2">2. </td><td id="20q_word2_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word3">3. </td><td id="20q_word3_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word4">4. </td><td id="20q_word4_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word5">5. </td><td id="20q_word5_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word6">6. </td><td id="20q_word6_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word7">7. </td><td id="20q_word7_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word8">8. </td><td id="20q_word8_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word9">9. </td><td id="20q_word9_count"><img src="./images/spinner.gif"/></td></tr>
+              <tr><td id="20q_word10">10.</td><td id="20q_word10_count"><img src="./images/spinner.gif"/></td></tr>
+             </table>
+           </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <canvas id="chtCats" height="100" width="200" style="display: block;"></canvas>
+            <div style="width:100%; text-align: right; font-style: italic; color: #e5e5e5;" id='20q_timeFrom'></div>
+          </td>
+        </tr>
+       </table>
       </div>
 
       <p>It uses www.20q.net as the knowledge base, though has no affiliation.  The Skill provides a simple web browser experience without the UI, controlled using your voice responses!</p>
