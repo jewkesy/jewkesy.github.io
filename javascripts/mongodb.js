@@ -1,8 +1,9 @@
 "use strict";
 
-httpGet("https://api.mongolab.com/api/1/databases/twentyquestions/collections/summary?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9");
+httpGetStats("https://api.mongolab.com/api/1/databases/twentyquestions/collections/summary?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9");
+httpGetAmazon("https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9");
 
-function httpGet(theUrl){
+function httpGetStats(theUrl){
 
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
@@ -103,6 +104,28 @@ function buildCharts(categories) {
 	        }
 	    }
 	});
+}
+
+function httpGetAmazon(theUrl){
+	var xmlHttp = null;
+	xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.onreadystatechange = handleReadyStateChange;
+	xmlHttp.send(null);
+
+	function handleReadyStateChange() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				var doc = JSON.parse(xmlHttp.responseText)[0];
+				// console.log(doc)
+				buildAmazonParts(doc);
+			}
+		}
+	}
+}
+
+function buildAmazonParts(doc) {
+	document.getElementById("20q_amazon_score").innerHTML = "Amazon Rating: " + doc.uk.score + " / 5<br>" + "Reviews: " + doc.uk.reviews;
 }
 
 function getCountByKey(key, arr) {
