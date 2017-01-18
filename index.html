@@ -31,7 +31,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src="./javascripts/typed.min.js"></script>
-  <script src="./javascripts/mongodb.js"></script>
+  
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -58,7 +58,7 @@
     <header>
       <h1 class="centerMe">&lt;h1&gt;<span class="typeMeTitle"></span>&lt;/h1&gt;</h1>
       
-      <p class="centerMe"><img src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188&s=140" /></p>
+      <p class="centerMe"><img style="border-radius: 8px;" src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188" /></p>
       <p class="centerMe">the daryljewkes.com homepage</p>
       <p class="view"><a href="#welcome">Welcome</a></p>
       <p class="view"><a href="#bio">About Me</a></p>
@@ -275,18 +275,16 @@
 
       </p>
     </section>
-    <footer>
-      <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-    </footer>
   </div>
   <script src="javascripts/scale.fix.js"></script>
   <script>
-        $(function(){
-            $(".typeMeTitle").typed({
-              strings: ["jewkesy.github.io"],
-              typeSpeed: 75
-            });
+    $(function(){
+        $(".typeMeTitle").typed({
+          strings: ["jewkesy.github.io"],
+          typeSpeed: 75
         });
-      </script>
+    });
+  </script>
+  <script src="./javascripts/mongodb.js"></script>
  </body>
 </html>
