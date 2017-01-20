@@ -14,7 +14,7 @@ setInterval(function () {
 	httpGetStats(statsUrl, false);
 	httpGetAmazon(amazonUkUrl);
 	// console.log('got');
-}, 5000);
+}, 60000);
 
 
 
