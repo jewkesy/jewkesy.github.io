@@ -8,15 +8,12 @@ httpGetAmazon(amazonUkUrl);
 
 var totalGames = 0;
 
-
 setInterval(function () { 
 	// console.log('getting');
 	httpGetStats(statsUrl, false);
 	httpGetAmazon(amazonUkUrl);
 	// console.log('got');
 }, 60000);
-
-
 
 function httpGetStats(theUrl, firstTime){
 
@@ -30,7 +27,7 @@ function httpGetStats(theUrl, firstTime){
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText)[0];
-				// if (totalGames == doc.totalGames) return;
+				if (totalGames == doc.totalGames) return;
 				totalGames = doc.totalGames;
 				// console.log(doc)
 				buildStatPanel(doc.topUsers, doc.totalUsers, doc.topWords, doc.quickest, doc.quickestObj, doc.wins, doc.loses, doc.failed, doc.totalGames, doc.avgGameHr, doc.startTime, doc.lastGame);
@@ -42,15 +39,18 @@ function httpGetStats(theUrl, firstTime){
 }
 
 function buildStatPanel(topUsers, userCount, topWords, fastest, fastestObj, wins, loses, failed, total, gPerHr, timeFrom, lastGame) {
-	if (lastGame.win) {
-		document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just won!</strong><br>She guessed " + lastGame.word + " in " + lastGame.num + " questions :)"
-	} else {
-		if (lastGame.num >= 30) {
-			document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just lost!</strong><br>She couldn't guess the object after 30 questions :(";
+	 $( "#20q_lastGame" ).fadeOut( "fast", function() {
+		if (lastGame.win) {
+			document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just won!</strong><br>She guessed " + lastGame.word + " in " + lastGame.num + " questions :)"
 		} else {
-			document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just lost</strong><br>But she guessed " + lastGame.word + " in " + lastGame.num + " questions :|"
+			if (lastGame.num >= 30) {
+				document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just lost!</strong><br>She couldn't guess the object after 30 questions :(";
+			} else {
+				document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just lost</strong><br>But she guessed " + lastGame.word + " in " + lastGame.num + " questions :|"
+			}
 		}
-	}
+		$( "#20q_lastGame" ).fadeIn( "fast");
+	  });
 
 	document.getElementById("20q_timeFrom").innerHTML = "Echo Skill launched on " + timeFrom.replace("+0000 (UTC)", "");
 	document.getElementById("20q_players").innerHTML = numberWithCommas(userCount);
