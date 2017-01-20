@@ -3,7 +3,7 @@
 const statsUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/summary?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 const amazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
-httpGetStats(statsUrl);
+httpGetStats(statsUrl, true);
 httpGetAmazon(amazonUkUrl);
 
 var totalGames = 0;
@@ -11,14 +11,14 @@ var totalGames = 0;
 
 setInterval(function () { 
 	// console.log('getting');
-	httpGetStats(statsUrl);
+	httpGetStats(statsUrl, false);
 	httpGetAmazon(amazonUkUrl);
 	// console.log('got');
-}, 60000);
+}, 5000);
 
 
 
-function httpGetStats(theUrl){
+function httpGetStats(theUrl, firstTime){
 
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
@@ -30,11 +30,12 @@ function httpGetStats(theUrl){
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText)[0];
-				if (totalGames == doc.totalGames) return;
+				// if (totalGames == doc.totalGames) return;
 				totalGames = doc.totalGames;
 				// console.log(doc)
 				buildStatPanel(doc.topUsers, doc.totalUsers, doc.topWords, doc.quickest, doc.quickestObj, doc.wins, doc.loses, doc.failed, doc.totalGames, doc.avgGameHr, doc.startTime, doc.lastGame);
-				buildCharts(doc.categories);
+				
+				if (firstTime) buildCharts(doc.categories, firstTime);
 			}
 		}
 	}
@@ -77,10 +78,10 @@ function buildStatPanel(topUsers, userCount, topWords, fastest, fastestObj, wins
 function buildCharts(categories) {
 	// console.log(categories);
 
-	var ctx = document.getElementById("chtCats");
+	// var ctx = document.getElementById("chtCats");
 	var ctx = document.getElementById("chtCats").getContext("2d");
-	var ctx = $("#chtCats");
-	var ctx = "chtCats";
+	// var ctx = $("#chtCats");
+
 	var myChart = new Chart(ctx, {
 	    type: 'bar',
 	    data: {
