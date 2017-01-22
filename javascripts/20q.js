@@ -1,17 +1,18 @@
 "use strict";
 
-const statsUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/summary?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
-const amazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
+var statsUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/summary?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
+var amazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
-httpGetStats(statsUrl, true);
 httpGetAmazon(amazonUkUrl);
+httpGetStats(statsUrl, true);
 
 var totalGames = 0;
 
 setInterval(function () { 
 	// console.log('getting');
-	httpGetStats(statsUrl, false);
 	httpGetAmazon(amazonUkUrl);
+	httpGetStats(statsUrl, false);
+	
 	// console.log('got');
 }, 60000);
 
