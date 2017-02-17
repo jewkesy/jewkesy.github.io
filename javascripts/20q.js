@@ -1,6 +1,6 @@
 "use strict";
 
-var statsUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/summary?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
+var statsUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/summary?q={\"gameCollection\":\"combined_stats\"}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 var amazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
 httpGetAmazon(amazonUkUrl);
@@ -8,11 +8,11 @@ httpGetStats(statsUrl, true);
 
 var totalGames = 0;
 
-setInterval(function () { 
+setInterval(function () {
 	// console.log('getting');
 	httpGetAmazon(amazonUkUrl);
 	httpGetStats(statsUrl, false);
-	
+
 	// console.log('got');
 }, 60000);
 
@@ -32,7 +32,7 @@ function httpGetStats(theUrl, firstTime){
 				totalGames = doc.totalGames;
 				// console.log(doc)
 				buildStatPanel(doc.topUsers, doc.totalUsers, doc.topWords, doc.quickest, doc.quickestObj, doc.wins, doc.loses, doc.failed, doc.totalGames, doc.avgGameHr, doc.startTime, doc.lastGame);
-				
+
 				if (firstTime) buildCharts(doc.categories, firstTime);
 			}
 		}
@@ -90,10 +90,10 @@ function buildCharts(categories) {
 	        datasets: [{
 	            label: 'Count',
 	            data: [
-	            	getCountByKey('Animal', categories), 
-	            	getCountByKey('Vegetable', categories), 
-	            	getCountByKey('Mineral', categories), 
-	            	getCountByKey('Other', categories), 
+	            	getCountByKey('Animal', categories),
+	            	getCountByKey('Vegetable', categories),
+	            	getCountByKey('Mineral', categories),
+	            	getCountByKey('Other', categories),
 	            	getCountByKey('Unknown', categories)],
 	            backgroundColor: [
 	                'rgba(255, 99, 132, 0.2)',
