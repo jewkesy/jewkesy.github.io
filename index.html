@@ -22,7 +22,7 @@
   <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188&s=140">
 
   <meta name="p:domain_verify" content="c2b3fd0f0cf91014684cb6c6294022b6"/>
-  
+
   <title>jewkesy.github.io by Daryl Jewkes</title>
 
   <link rel="stylesheet" href="stylesheets/styles.css">
@@ -31,7 +31,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <script src="./javascripts/typed.min.js"></script>
-  
+
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -57,7 +57,7 @@
   <div class="wrapper">
     <header>
       <h1 class="centerMe">&lt;h1&gt;<span class="typeMeTitle"></span>&lt;/h1&gt;</h1>
-      
+
       <p class="centerMe"><img style="border-radius: 8px;" src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188" /></p>
       <p class="centerMe">the daryljewkes.com homepage</p>
       <p class="view"><a href="#welcome">Welcome</a></p>
@@ -95,15 +95,15 @@
       </p>
       <div style="clear: both;"></div>
       <br>
-      
+
       <p>Alexa will win if she correctly guesses in 20 questions or less, will lose if she correctly guesses in under 30 quesitons.  Otherwise she'll admit defeat at failing to guess the object.</p>
-      
+
       <div>
        <table style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
         <tr>
           <td><img src="./images/20q_s.png" width="50px" /></td>
           <td><div style="width:100%; text-align: center; font-size: 1.1em;" id="20q_lastGame"></div></td>
-        </tr> 
+        </tr>
         <tr>
           <td colspan="2">
             <div style="float: left; padding-right: 5px; min-width:234px;">
@@ -137,11 +137,16 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2" height="100px" width="200px">
-            <canvas id="chtCats" height="100px" width="200px" style="display: block;"></canvas>
-            <div style="width:100%; text-align: right; font-style: italic; color: #e5e5e5;" id='20q_timeFrom'></div>
+          <td  colspan="2">
+            <canvas id="chtCats" height="50px" width="100px" style="display: block;"></canvas>
           </td>
         </tr>
+        <tr>
+          <td  colspan="2">
+            <canvas id="chtWins" height="50px" width="100px" style="display: block;"></canvas>
+          </td>
+        </tr>
+        <tr><td colspan="2"><div style="width:100%; text-align: right; font-style: italic; color: #e5e5e5;" id='20q_timeFrom'></div></td></tr>
        </table>
       </div>
 
@@ -288,6 +293,6 @@
         });
     });
   </script>
-  
+
  </body>
 </html>

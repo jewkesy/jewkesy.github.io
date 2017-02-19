@@ -33,7 +33,14 @@ function httpGetStats(theUrl, firstTime){
 				// console.log(doc)
 				buildStatPanel(doc.topUsers, doc.totalUsers, doc.topWords, doc.quickest, doc.quickestObj, doc.wins, doc.loses, doc.failed, doc.totalGames, doc.avgGameHr, doc.startTime, doc.lastGame);
 
-				if (firstTime) buildCharts(doc.categories, firstTime);
+				var wins = {
+					labels: ["Wins", "Loses", "Fails"],
+					data: [doc.wins, doc.loses, doc.failed]
+				}
+
+				if (firstTime) {
+					buildCharts(doc.categories, wins);
+				}
 			}
 		}
 	}
@@ -76,14 +83,13 @@ function buildStatPanel(topUsers, userCount, topWords, fastest, fastestObj, wins
 	}
 }
 
-function buildCharts(categories) {
-	// console.log(categories);
+function buildCharts(categories, wins) {
+	// console.log(categories, wins);
 
-	// var ctx = document.getElementById("chtCats");
-	var ctx = document.getElementById("chtCats").getContext("2d");
-	// var ctx = $("#chtCats");
+	var ctxCats = document.getElementById("chtCats").getContext("2d");
+	var ctxWins = document.getElementById("chtWins").getContext("2d");
 
-	var myChart = new Chart(ctx, {
+	var catChart = new Chart(ctxCats, {
 	    type: 'bar',
 	    data: {
 	        labels: ["Animal", "Vegetable", "Mineral", "Other", "Unknown"],
@@ -122,6 +128,30 @@ function buildCharts(categories) {
 	            }]
 	        }
 	    }
+	});
+	var winChart = new Chart(ctxWins, {
+		type: 'pie',
+		data: {
+			labels: wins.labels,
+			datasets: [{
+				data: wins.data,
+				backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+			}]
+		},
+		options: {
+			legend: {
+				display: true
+			}
+		}
 	});
 }
 
