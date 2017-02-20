@@ -35,7 +35,7 @@ function httpGetStats(theUrl, firstTime){
 
 				var wins = {
 					labels: ["Wins", "Loses", "Fails"],
-					data: [doc.wins, doc.loses, doc.failed]
+					data: [doc.wins, doc.loses-doc.failed, doc.failed]
 				}
 
 				if (firstTime) {
