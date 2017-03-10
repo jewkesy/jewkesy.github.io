@@ -192,6 +192,10 @@ footer {
   text-align: center;
 }
 
+table.centerMe, tr, td, th {
+  text-align: center;
+}
+
 @media print, screen and (max-width: 960px) {
 
   div.wrapper {
