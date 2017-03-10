@@ -8,13 +8,13 @@ httpGetStats(statsUrl, true);
 
 // var totalGames = 0;
 
-// setInterval(function () {
-// 	// console.log('getting');
-// 	// httpGetAmazon(amazonUkUrl);
-// 	httpGetStats(statsUrl, false);
+setInterval(function () {
+	// console.log('getting');
+	// httpGetAmazon(amazonUkUrl);
+	httpGetStats(statsUrl, false);
 
-// 	// console.log('got');
-// }, 60000);
+	// console.log('got');
+}, 60000);
 
 function httpGetStats(theUrl, firstTime){
 
