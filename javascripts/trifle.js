@@ -1,20 +1,29 @@
 "use strict";
 
-var statsUrl = 'https://api.mongolab.com/api/1/databases/trifle/collections/game?s={"score":1,"timestamp":-1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
-// var amazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
-// httpGetAmazon(amazonUkUrl);
-httpGetStats(statsUrl, true);
 
-// var totalGames = 0;
+var trifleUrl = 'https://api.mongolab.com/api/1/databases/trifle/collections/game?s={"score":1,"timestamp":-1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
+var trifleAmazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
+
+
+httpGetStats(trifleUrl, true);
+buildAmazonParts({
+	uk: {
+		reviews: 'Awaiting publish',
+		score: 'NA'
+	}
+}, 'trifle_amazon_score');
 
 setInterval(function () {
 	// console.log('getting');
-	// httpGetAmazon(amazonUkUrl);
-	httpGetStats(statsUrl, false);
+	// httpGetAmazon(trifleAmazonUkUrl);
+	httpGetStats(trifleUrl, false);
 
 	// console.log('got');
 }, 60000);
+
+// httpGetAmazon(amazonUkUrl);
+
 
 function httpGetStats(theUrl, firstTime){
 
@@ -29,74 +38,20 @@ function httpGetStats(theUrl, firstTime){
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
 				// console.log(doc)
-
 				buildTopTen(doc.splice(0, 10));
-
-				// if (totalGames == doc.totalGames) return;
-				// totalGames = doc.totalGames;
-				// console.log(doc)
-				// buildStatPanel(doc.topUsers, doc.totalUsers, doc.topWords, doc.quickest, doc.quickestObj, doc.wins, doc.loses, doc.failed, doc.totalGames, doc.avgGameHr, doc.startTime, doc.lastGame);
-
-				// var wins = {
-				// 	labels: ["Wins", "Loses", "Fails"],
-				// 	data: [doc.wins, doc.loses-doc.failed, doc.failed]
-				// }
-
-				// if (firstTime) {
-				// 	buildCharts(doc.categories, wins);
-				// }
 			}
 		}
 	}
 }
 
-
 function buildTopTen(topTen) {
-	console.log(topTen)
+	// console.log(topTen)
 
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;
 		var id = "tr_" + x;
 		document.getElementById(id + "_score").innerHTML = numberWithCommas(topTen[i].score);
 		document.getElementById(id + "_games").innerHTML = numberWithCommas(topTen[i].games);
-	}
-}
-
-
-function buildStatPanel(topUsers, userCount, topWords, fastest, fastestObj, wins, loses, failed, total, gPerHr, timeFrom, lastGame) {
-	 $( "#20q_lastGame" ).fadeOut( "fast", function() {
-		if (lastGame.win) {
-			document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just won!</strong><br>She guessed " + lastGame.word + " in " + lastGame.num + " questions :)"
-		} else {
-			if (lastGame.num >= 30) {
-				document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just lost!</strong><br>She couldn't guess the object after 30 questions :(";
-			} else {
-				document.getElementById("20q_lastGame").innerHTML = "<strong>Alexa just lost</strong><br>But she guessed " + lastGame.word + " in " + lastGame.num + " questions :|"
-			}
-		}
-		$( "#20q_lastGame" ).fadeIn( "fast");
-	  });
-
-	document.getElementById("20q_timeFrom").innerHTML = "Echo Skill launched on " + timeFrom.replace("+0000 (UTC)", "");
-	document.getElementById("20q_players").innerHTML = numberWithCommas(userCount);
-	document.getElementById("20q_wins").innerHTML = numberWithCommas(wins);
-	document.getElementById("20q_loses").innerHTML = numberWithCommas(loses - failed);
-	document.getElementById("20q_failed").innerHTML = numberWithCommas(failed);
-	document.getElementById("20q_total").innerHTML = numberWithCommas(total);
-
-	document.getElementById("20q_wins_perc").innerHTML = Math.floor((wins / total) * 100) + '%';
-	document.getElementById("20q_loses_perc").innerHTML  = Math.floor(((loses - failed) / total) * 100) + '%';
-	document.getElementById("20q_failed_perc").innerHTML  = Math.floor((failed / total) * 100) + '%';
-
-	document.getElementById("20q_avgHr").innerHTML = numberWithCommas(gPerHr);
-
-	document.getElementById("20q_fastestObj").innerHTML = fastestObj;
-	document.getElementById("20q_fastest").innerHTML = fastest;
-
-	for (var i = 0; i < 10; i++) {
-		var x = i+1;
-		document.getElementById("20q_word" + x).innerHTML = x +". " + topWords[i].key;
-		document.getElementById("20q_word" + x + "_count").innerHTML = numberWithCommas(topWords[i].count);
 	}
 }
 
@@ -184,23 +139,9 @@ function httpGetAmazon(theUrl){
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText)[0];
 				// console.log(doc)
-				buildAmazonParts(doc);
+				buildAmazonParts(doc, 'trifle_amazon_score');
 			}
 		}
 	}
 }
 
-function buildAmazonParts(doc) {
-	document.getElementById("20q_amazon_score").innerHTML = "Amazon Rating: " + doc.uk.score + " / 5<br>" + "Reviews: " + doc.uk.reviews;
-}
-
-function getCountByKey(key, arr) {
-	for(var i = 0, len = arr.length; i < len; i++) {
-		if( arr[ i ].key === key ) return arr[ i ].count;
-	}
-	return 0;
-}
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
