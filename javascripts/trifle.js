@@ -1,9 +1,11 @@
 "use strict";
 
+var trifleCountUrl = 'https://api.mongolab.com/api/1/databases/trifle/collections/game?f={"games":1,"_id":0}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var trifleUrl = 'https://api.mongolab.com/api/1/databases/trifle/collections/game?s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var trifleAmazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
-httpGetStats(trifleUrl, true);
+httpGetStats(trifleUrl);
+httpGetGameCount(trifleCountUrl);
 buildAmazonParts({
 	uk: {
 		reviews: 'Awaiting publish',
@@ -14,16 +16,40 @@ buildAmazonParts({
 setInterval(function () {
 	// console.log('getting');
 	// httpGetAmazon(trifleAmazonUkUrl);
-	httpGetStats(trifleUrl, false);
-
+	httpGetStats(trifleUrl);
+	httpGetGameCount(trifleCountUrl);
 	// console.log('got');
 }, 60000);
 
 // httpGetAmazon(amazonUkUrl);
+function httpGetGameCount(theUrl){
+	var xmlHttp = null;
+	xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.onreadystatechange = handleReadyStateChange;
+	xmlHttp.send(null);
 
+	function handleReadyStateChange() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				var doc = JSON.parse(xmlHttp.responseText);
+				// console.log(doc)
+				// tr_total_games
+				document.getElementById('tr_total_players').innerHTML = numberWithCommas(doc.length);
 
-function httpGetStats(theUrl, firstTime){
+				var count = 0;
+				for (var i = 0; i < doc.length; i++) {
+					count += doc[i].games;
+				}
 
+				document.getElementById('tr_total_games').innerHTML = numberWithCommas(count);
+				
+			}
+		}
+	}
+}
+
+function httpGetStats(theUrl){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
