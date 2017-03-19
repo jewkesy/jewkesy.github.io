@@ -4,6 +4,8 @@ var trifleCountUrl = 'https://api.mongolab.com/api/1/databases/trifle/collection
 var trifleUrl = 'https://api.mongolab.com/api/1/databases/trifle/collections/game?s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var trifleAmazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
+var myId = "amzn1.ask.account.AFJST3SHUEGBJ6AIWIBJHTJHHCU6NOUCAYBPAASUEPR6CAOPWB2MNH4T5JWE5GHTBVHRXXJFDV7TGAA4LLYETT3WIGRGKS2LEU5MR6X3HTEJW467IU7XNGI3OTBHYKZB4TMD5QYVTQ423HKYVT4J74TSCWHRGPYPJEWHFIGNJRKBOOKX4C7LSUX47V7CVIN5Q3KADVTT63FHE2A";
+
 httpGetStats(trifleUrl);
 httpGetGameCount(trifleCountUrl);
 buildAmazonParts({
@@ -73,8 +75,10 @@ function buildTopTen(topTen) {
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;
 		var id = "tr_" + x;
+		if (topTen[i].userId == myId) console.log(x)
 		document.getElementById(id + "_score").innerHTML = numberWithCommas(topTen[i].score);
 		document.getElementById(id + "_games").innerHTML = numberWithCommas(topTen[i].games);
+
 	}
 }
 
