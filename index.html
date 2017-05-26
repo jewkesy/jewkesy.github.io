@@ -85,6 +85,59 @@
       <h3><a name="projects" class="anchor" href="#"><span class="octicon octicon-link"></span></a>My Projects</h3>
       <p>A brief overview of some of my projects: -</p>
 
+       <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, play <i>Popcorn Quiz</i>"</a></h4>
+      <h4 style="text-align: right; margin-top: 0;">"Let's do this! First question, <i>true</i> or <i>false</i> - in the 2007 movie...</h4>
+      <p>Think you know movies? Test your skills against the world!</p>
+      <p class="centerMed">
+       <img style="float:left; margin-right: 5px;" src="./images/popcorn_s.png" width="80px" />
+       <a name="popcorn" href="#">
+       <h5 id="popcorn_amazon_score"></h5></a>
+       <a name="popcorn" href="#" target="_blank">Amazon UK</a> |
+       <a name="popcorn" href="#" target="_blank">Amazon US</a>
+      </p>
+      <div style="clear: both;"></div>
+      <br>
+      <p>Alexa will ask five true or false questions from a vast range of movies.  For the given movie, Alexa will ask you for the Year, Actors or Directors.</p>
+      <p>Alexa will keep your score and tell you your world ranking position compared against other Alexa players.</p>
+      <p>The more games you play and the more questions you answer correctly, the greater chance to increase your world rank.</p>
+
+      <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
+      <h4 style="text-align: right; margin-top: 0;">"Ok! Your rank is...</h4>
+      <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
+        <tr><th colspan=3>Top 10 Global Rankings</th></tr>
+        <tr>
+          <th>Rank</th>
+          <th>Score</th>
+          <th>Games Played</th>
+        </tr>
+        <tr><td>1</td><td id='pc_1_score'></td><td id='pc_1_games'></td></tr>
+        <tr><td>2</td><td id='pc_2_score'></td><td id='pc_2_games'></td></tr>
+        <tr><td>3</td><td id='pc_3_score'></td><td id='pc_3_games'></td></tr>
+        <tr><td>4</td><td id='pc_4_score'></td><td id='pc_4_games'></td></tr>
+        <tr><td>5</td><td id='pc_5_score'></td><td id='pc_5_games'></td></tr>
+        <tr><td>6</td><td id='pc_6_score'></td><td id='pc_6_games'></td></tr>
+        <tr><td>7</td><td id='pc_7_score'></td><td id='pc_7_games'></td></tr>
+        <tr><td>8</td><td id='pc_8_score'></td><td id='pc_8_games'></td></tr>
+        <tr><td>9</td><td id='pc_9_score'></td><td id='pc_9_games'></td></tr>
+        <tr><td>10</td><td id='pc_10_score'></td><td id='pc_10_games'></td></tr>
+      </table>
+      <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
+        <tr><th>Total Players:</th><td id='pc_total_players'></td><th>Total Games:</th><td id='pc_total_games'></td></tr>
+      </table>
+
+      <p>The Skill provides an addictive, rapid-fire game that keeps you coming back to increase your score.</p>
+
+      <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
+
+      <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
+        <tr><th>Have a quick game now!</th></tr>
+        <tr><td>Coming Soon :)</td></tr>
+      </table>
+
+      <hr>
+
+
+
       <h4 style="margin-bottom: 0;"><a name="trifle" href="https://www.amazon.co.uk/dp/B06XHMRDJJ/" target="_blank">"Alexa, play <i>Trifle Quiz</i>"</a></h4>
       <h4 style="text-align: right; margin-top: 0;">"Welcome back! First question for 1 point...</h4>
       <p>Three questions. Three difficulties. You versus the world!</p>
@@ -126,13 +179,6 @@
       </table>
 
       <p>The Skill provides an addictive, rapid-fire game that keeps you coming back to increase your score.</p>
-
-      <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
-
-      <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
-        <tr><th>Have a quick game now!</th></tr>
-        <tr><td>Coming Soon :)</td></tr>
-      </table>
 
       <hr>
 
@@ -268,6 +314,7 @@
     </section>
   </div>
   <script src="./javascripts/app.js"></script>
+  <script src="./javascripts/popcorn.js"></script>
   <script src="./javascripts/trifle.js"></script>
   <script src="./javascripts/scale.fix.js"></script>
   <script>
