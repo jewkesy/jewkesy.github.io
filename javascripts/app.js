@@ -1,3 +1,5 @@
+var me = "amzn1.ask.account.AEYVZX3MSGMLIKSHCAT3YCQIKASZYEYE2MEZSERJB4ALC7YDASS7HKZZ4MKB6JKEZTYVMBSBELRJN7EEZBYUMVMTNMVNXUWX73H6RBIBXH5RQ42CUDOYQWM2ZDS5S2KHWCRZ7KBQGC4OJVSPMK3OCVYJFY7COYNWZJPRTAYSUDFVKNEHOTUTE6VTMLQBQPV3A4VELGVNJCFEHGI";
+
 
 function buildAmazonParts(doc, id) {
 	document.getElementById(id).innerHTML = "Amazon Rating: " + doc.uk.score + " / 5<br>" + "Reviews: " + doc.uk.reviews;
@@ -64,7 +66,9 @@ function buildTopTen(topTen, prefix) {
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;
 		var id = prefix + "_" + x;
-		if (topTen[i].userId == myId) console.log(x);
+		var star = "";
+		if (topTen[i].userId == me) star = "*";
+		if (document.getElementById(id)) document.getElementById(id).innerHTML = x + star
 		document.getElementById(id + "_score").innerHTML = numberWithCommas(topTen[i].score);
 		document.getElementById(id + "_games").innerHTML = numberWithCommas(topTen[i].games);
 	}
