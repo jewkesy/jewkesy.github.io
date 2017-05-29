@@ -71,5 +71,9 @@ function buildTopTen(topTen, prefix) {
 		if (document.getElementById(id)) document.getElementById(id).innerHTML = x + star
 		document.getElementById(id + "_score").innerHTML = numberWithCommas(topTen[i].score);
 		document.getElementById(id + "_games").innerHTML = numberWithCommas(topTen[i].games);
+		if (topTen[i].locale) {
+			document.getElementById(id + "_locale").innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+		}
 	}
 }
+

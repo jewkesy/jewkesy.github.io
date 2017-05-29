@@ -280,6 +280,11 @@ div.scroll_frame_480 {
   height: 100%;
 }
 
+img.locale {
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
 iframe {
   border: 0px #8585AD solid;
 }
