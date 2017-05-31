@@ -1,5 +1,6 @@
 var me = "amzn1.ask.account.AEYVZX3MSGMLIKSHCAT3YCQIKASZYEYE2MEZSERJB4ALC7YDASS7HKZZ4MKB6JKEZTYVMBSBELRJN7EEZBYUMVMTNMVNXUWX73H6RBIBXH5RQ42CUDOYQWM2ZDS5S2KHWCRZ7KBQGC4OJVSPMK3OCVYJFY7COYNWZJPRTAYSUDFVKNEHOTUTE6VTMLQBQPV3A4VELGVNJCFEHGI";
 
+var displayCount = getParameterByName('count') || 10;
 
 function buildAmazonParts(doc, id) {
 	document.getElementById(id).innerHTML = "Amazon Rating: " + doc.uk.score + " / 5<br>" + "Reviews: " + doc.uk.reviews;
@@ -54,14 +55,14 @@ function httpGetStats(theUrl, prefix){
 				// console.log(xmlHttp.responseText)
 				var doc = JSON.parse(xmlHttp.responseText);
 				// console.log(doc)
-				buildTopTen(doc.splice(0, 10), prefix);
+				buildTopTen(doc.splice(0, displayCount), prefix);
 			}
 		}
 	}
 }
 
 function buildTopTen(topTen, prefix) {
-	// console.log(topTen, prefix)
+	console.log(topTen, prefix)
 
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;
@@ -77,3 +78,14 @@ function buildTopTen(topTen, prefix) {
 	}
 }
 
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
