@@ -77,18 +77,28 @@ function buildTopTen(topTen, prefix) {
 			var row = container.insertRow(-1);
 			row.id = prefix + '_' + x;
 			var cell1 = row.insertCell(0);
+			cell1.id = prefix + "_rank_" + x;
 			var cell2 = row.insertCell(1);
+			cell2.id = prefix + "_score_" + x;
 			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);			
-		}
+			cell3.id = prefix + "_games_" + x;
+			var cell4 = row.insertCell(3);
+			cell4.id = prefix + "_locale_" + x;
 
-		cell1.innerHTML = x + star;
-		cell2.innerHTML = topTen[i].score;
-		cell3.innerHTML = topTen[i].games;
-		if (topTen[i].locale) {
-			cell4.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+			cell1.innerHTML = x + star;
+			cell2.innerHTML = topTen[i].score;
+			cell3.innerHTML = topTen[i].games;
+			if (topTen[i].locale) {
+				cell4.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+			}			
+		} else {
+			document.getElementById(prefix + '_rank_' + x).innerHTML = x + star;
+			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].score;
+			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].games;
+			if (topTen[i].locale) {
+				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+			}
 		}
-
 	}
 }
 
