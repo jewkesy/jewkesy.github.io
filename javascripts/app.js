@@ -13,6 +13,13 @@ function getCountByKey(key, arr) {
 	return 0;
 }
 
+function keyExists(name, arr) {
+  for(var i = 0, len = arr.length; i < len; i++) {
+    if( arr[ i ].key === name ) return i;
+  }
+  return -1;
+}
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -42,7 +49,7 @@ function httpGetGameCount(theUrl, prefix){
 	}
 }
 
-function httpGetStats(theUrl, prefix){
+function httpGetStats(theUrl, prefix, callback){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
@@ -56,7 +63,9 @@ function httpGetStats(theUrl, prefix){
 				var doc = JSON.parse(xmlHttp.responseText);
 				// console.log(doc)
 				buildTopTen(doc.splice(0, displayCount), prefix);
+				if (callback) return callback(null, doc);
 			}
+			if (callback) return callback(xmlHttp.status);
 		}
 	}
 }
