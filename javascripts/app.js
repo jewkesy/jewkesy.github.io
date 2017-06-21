@@ -190,6 +190,6 @@ function getParameterByName(name, url) {
         }
     }
     // update time every minute
-    setTimeout(timeAgo, 1000);
+    setTimeout(timeAgo, 10000);
 
 })();
