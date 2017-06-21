@@ -61,7 +61,7 @@ function httpGetStats(theUrl, prefix, callback){
 			if (xmlHttp.status == 200) {
 				// console.log(xmlHttp.responseText)
 				var doc = JSON.parse(xmlHttp.responseText);
-				// console.log(doc)
+
 				buildTopTen(doc.splice(0, displayCount), prefix);
 				if (callback) return callback(null, doc);
 			}
@@ -91,15 +91,22 @@ function buildTopTen(topTen, prefix) {
 			cell2.id = prefix + "_score_" + x;
 			var cell3 = row.insertCell(2);
 			cell3.id = prefix + "_games_" + x;
-			var cell4 = row.insertCell(3);
-			cell4.id = prefix + "_locale_" + x;
+			var cell4 = row.insertCell(3)
+			cell4.id = prefix + "_ts_" + x;
+			cell4.className = "timeago";
+			cell4.title=topTen[i].timestamp/1000;
+			var cell5 = row.insertCell(4);
+			cell5.id = prefix + "_locale_" + x;
 
 			cell1.innerHTML = x + star;
 			cell2.innerHTML = topTen[i].score;
 			cell3.innerHTML = topTen[i].games;
+			cell4.innerHTML = "";
+
 			if (topTen[i].locale) {
-				cell4.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
-			}			
+				cell5.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+			}
+			
 		} else {
 			document.getElementById(prefix + '_rank_' + x).innerHTML = x + star;
 			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].score;
@@ -122,3 +129,67 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+(function timeAgo(selector) {
+    var templates = {
+        prefix: "",
+        suffix: " ago",
+        seconds: "less than a minute",
+        minute: "about a minute",
+        minutes: "%d minutes",
+        hour: "about an hour",
+        hours: "about %d hours",
+        day: "a day",
+        days: "%d days",
+        month: "about a month",
+        months: "%d months",
+        year: "about a year",
+        years: "%d years"
+    };
+    var template = function(t, n) {
+        return templates[t] && templates[t].replace(/%d/i, Math.abs(Math.round(n)));
+    };
+
+    var timer = function(time) {
+        if (!time)
+            return;
+        time = time.replace(/\.\d+/, ""); // remove milliseconds
+        time = time.replace(/-/, "/").replace(/-/, "/");
+        time = time.replace(/T/, " ").replace(/Z/, " UTC");
+        time = time.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2"); // -04:00 -> -0400
+        time = new Date(time * 1000 || time);
+
+        var now = new Date();
+        var seconds = ((now.getTime() - time) * .001) >> 0;
+        var minutes = seconds / 60;
+        var hours = minutes / 60;
+        var days = hours / 24;
+        var years = days / 365;
+
+        return templates.prefix + (
+                seconds < 45 && template('seconds', seconds) ||
+                seconds < 90 && template('minute', 1) ||
+                minutes < 45 && template('minutes', minutes) ||
+                minutes < 90 && template('hour', 1) ||
+                hours < 24 && template('hours', hours) ||
+                hours < 42 && template('day', 1) ||
+                days < 30 && template('days', days) ||
+                days < 45 && template('month', 1) ||
+                days < 365 && template('months', days / 30) ||
+                years < 1.5 && template('year', 1) ||
+                template('years', years)
+                ) + templates.suffix;
+    };
+
+    var elements = document.getElementsByClassName('timeago');
+    // console.log(elements)
+    for (var i in elements) {
+        var $this = elements[i];
+        if (typeof $this === 'object') {
+            $this.innerHTML = timer($this.getAttribute('title') || $this.getAttribute('datetime'));
+        }
+    }
+    // update time every minute
+    setTimeout(timeAgo, 1000);
+
+})();
