@@ -94,7 +94,7 @@ function buildTopTen(topTen, prefix) {
 			var cell4 = row.insertCell(3)
 			cell4.id = prefix + "_ts_" + x;
 			cell4.className = "timeago";
-			cell4.title=topTen[i].timestamp/1000;
+			cell4.title = topTen[i].timestamp/1000;
 			var cell5 = row.insertCell(4);
 			cell5.id = prefix + "_locale_" + x;
 
@@ -111,6 +111,7 @@ function buildTopTen(topTen, prefix) {
 			document.getElementById(prefix + '_rank_' + x).innerHTML = x + star;
 			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].score;
 			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].games;
+			document.getElementById(prefix + '_ts_' + x).className = topTen[i].timestamp/1000;
 			if (topTen[i].locale) {
 				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
 			}
