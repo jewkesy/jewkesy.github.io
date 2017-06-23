@@ -101,7 +101,7 @@ function buildTopTen(topTen, prefix) {
 			cell1.innerHTML = x + star;
 			cell2.innerHTML = topTen[i].score;
 			cell3.innerHTML = topTen[i].games;
-			cell4.innerHTML = "";
+			cell4.innerHTML = "...";
 
 			if (topTen[i].locale) {
 				cell5.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
