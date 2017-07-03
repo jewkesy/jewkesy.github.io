@@ -1,5 +1,8 @@
-var me = "amzn1.ask.account.AEYVZX3MSGMLIKSHCAT3YCQIKASZYEYE2MEZSERJB4ALC7YDASS7HKZZ4MKB6JKEZTYVMBSBELRJN7EEZBYUMVMTNMVNXUWX73H6RBIBXH5RQ42CUDOYQWM2ZDS5S2KHWCRZ7KBQGC4OJVSPMK3OCVYJFY7COYNWZJPRTAYSUDFVKNEHOTUTE6VTMLQBQPV3A4VELGVNJCFEHGI";
+// var me = "amzn1.ask.account.AEYVZX3MSGMLIKSHCAT3YCQIKASZYEYE2MEZSERJB4ALC7YDASS7HKZZ4MKB6JKEZTYVMBSBELRJN7EEZBYUMVMTNMVNXUWX73H6RBIBXH5RQ42CUDOYQWM2ZDS5S2KHWCRZ7KBQGC4OJVSPMK3OCVYJFY7COYNWZJPRTAYSUDFVKNEHOTUTE6VTMLQBQPV3A4VELGVNJCFEHGI";
 var me = "amzn1.ask.account.AEWWKGN7CXOP6MTGYXCV73OIJ6VKVJPJETC2Q6UUMT6UKVONYGKP6POBU4MOSAACFVF53LMFUYC57BSKE57BDBFF7X4S6JIOXBKSWUCK462NIT2ISYV2JSS7456WF5N4Q7GYDEKMZ5D4DLLRYIOAUKZVCJZJ67HGPDAAKITZ54DMRJZTGHGXMNQMUEZBCVEKDJZ5DUGDUGRBG3Q";
+var sun = "amzn1.ask.account.AG4FEV4HAGMGK5BTWSRXHVJYXRET55324SFXHI5K56U3V3PSERXVQJDBHWP3MGFSLZVNVALJ5DEUPIN6SAK5IJDFCGYOGCW4NOOLIVNTPWKJWUCS5W7DVBYND6WQUJ66PG64HTJQX23RF3DS335O3VKFU3MFDYRSWONH4AMQ5TBNL5P2DXLI2HBL3NTJGY527LBVW5GN657QNYA";
+var note  = "amzn1.ask.account.AHRKNEDAF5QOKJWAGSGGTEGJMK3SEXFU4ZTXKQNLYKAKNP66QI2TAXXJVFRHGZJZPQ6FCJ4E6IBM2B6QIKQ4CD6PZ4WTEN5YJMF7JIJ5DOACMQZIEG2BDVSW54HAGUIP33BE7BWEM24APYTHXMYWRLOQFNTS36KA733RORFKRIQLYRIHPIXHWONHRZ34P7GOYWGROMMBOGAJO6Y";
+
 var displayCount = getParameterByName('count') || 10;
 
 function buildAmazonParts(doc, id) {
@@ -79,8 +82,11 @@ function buildTopTen(topTen, prefix) {
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;
 		var id = prefix + "_" + x;
-		var star = "";
-		if (topTen[i].userId == me) star = "*";
+		var sym = "";
+		if (topTen[i].userId == me) {sym = " &#9734;";}
+		else if (topTen[i].userId == sun) {sym = " &#9788;";}
+		else if (topTen[i].userId == note) {sym = " &#9834;";}
+		// if (topTen[i].userId == me)
 
 		if (!document.getElementById(prefix + '_' + x)) {
 			var row = container.insertRow(-1);
@@ -98,7 +104,7 @@ function buildTopTen(topTen, prefix) {
 			var cell5 = row.insertCell(4);
 			cell5.id = prefix + "_locale_" + x;
 
-			cell1.innerHTML = x + star;
+			cell1.innerHTML = x + sym;
 			cell2.innerHTML = topTen[i].score;
 			cell3.innerHTML = topTen[i].games;
 			cell4.innerHTML = "...";
@@ -108,7 +114,7 @@ function buildTopTen(topTen, prefix) {
 			}
 			
 		} else {
-			document.getElementById(prefix + '_rank_' + x).innerHTML = x + star;
+			document.getElementById(prefix + '_rank_' + x).innerHTML = x + sym;
 			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].score;
 			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].games;
 			document.getElementById(prefix + '_ts_' + x).title = topTen[i].timestamp/1000;
