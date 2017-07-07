@@ -33,7 +33,7 @@ setInterval(function () {
 	httpGetGameCount(popcornCountUrl, 'pc');
 
 	// console.log('got');
-}, 60000);
+}, 10000);
 
 function httpGetAmazon(theUrl){
 	var xmlHttp = null;
