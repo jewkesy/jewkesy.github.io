@@ -114,29 +114,41 @@ function daydiff(first, second) {
 
 function chtNewUsers(chart, data) {
 	if (!data) return;
-	// console.log(chart)
-		// console.log(data);
+
 	// get days from launch as x axis
-	// console.log(startDate)
+
 	var today = new Date();
-	var diff = daydiff(startDate, today);
-
+	var diff = daydiff(startDate, today)+1;
+	// console.log(diff)
 	var l = new Array(diff).fill("");
-	l[0] = "Launch";
-	l[diff-1] = "Today";
-	var ar = new Array(diff).fill(0);
-	// ar[3] = 40
-	// ar[13] = 40
-	// ar[43] = 40
 
+	var quart = +(diff / 4).toFixed(0);
+	// console.log(quart)
+
+	var someDate = addDays(startDate, quart);
+	var q = someDate.toLocaleDateString().split("/");
+	l[quart*1] = q[0] + getMonthName(q[1]);
+
+	var someDate = addDays(startDate, quart*2);
+	var q = someDate.toLocaleDateString().split("/");
+	l[quart*2] = q[0] + getMonthName(q[1]);
+
+	var someDate = addDays(startDate, quart*3);
+	var q = someDate.toLocaleDateString().split("/");
+	l[quart*3] = q[0] + getMonthName(q[1]);
+
+	l[0] = "Launch";
+	l[diff] = "Today";
+	// console.log(l)
+	var ar = new Array(diff).fill(0);
 
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];
-		// console.log(x.startTimestamp)
 		var d = new Date(x.startTimestamp);
-		var df = daydiff(startDate, d)
-		// console.log(df)
-		ar[df] = ar[df]+1;
+		var df = daydiff(startDate, d);
+
+		if (df == diff) console.log(df, d)
+		ar[df]++;
 	}
 
 	// console.log(ar)
@@ -150,8 +162,7 @@ function chtNewUsers(chart, data) {
 			"borderColor":"rgb(75, 192, 192)",
 			"lineTension":0.1
 		}],
-		options: {}
-				
+		options: {}	
 	}
 
 	chart.data = d;
@@ -165,4 +176,21 @@ function updateCharts(data) {
 	// console.log(data);
 	chtLocale(localChart, data);
 	chtNewUsers(newUsersChart, data)
+}
+
+function addDays(startDate,numberOfDays)
+	{
+		var returnDate = new Date(
+								startDate.getFullYear(),
+								startDate.getMonth(),
+								startDate.getDate()+numberOfDays,
+								startDate.getHours(),
+								startDate.getMinutes(),
+								startDate.getSeconds());
+		return returnDate;
+	}
+
+function getMonthName(mon) {
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	return " " + monthNames[+mon];
 }
