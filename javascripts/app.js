@@ -97,20 +97,24 @@ function buildTopTen(topTen, prefix) {
 			cell2.id = prefix + "_score_" + x;
 			var cell3 = row.insertCell(2);
 			cell3.id = prefix + "_games_" + x;
-			var cell4 = row.insertCell(3)
-			cell4.id = prefix + "_ts_" + x;
-			cell4.className = "timeago";
-			cell4.title = topTen[i].timestamp/1000;
-			var cell5 = row.insertCell(4);
-			cell5.id = prefix + "_locale_" + x;
+			var cell4 = row.insertCell(3);
+			cell4.id = prefix + "_avg_" + x;
+
+			var cell5 = row.insertCell(4)
+			cell5.id = prefix + "_ts_" + x;
+			cell5.className = "timeago";
+			cell5.title = topTen[i].timestamp/1000;
+			var cell6 = row.insertCell(5);
+			cell6.id = prefix + "_locale_" + x;
 
 			cell1.innerHTML = x + sym;
 			cell2.innerHTML = topTen[i].score;
 			cell3.innerHTML = topTen[i].games;
-			cell4.innerHTML = "...";
+			cell4.innerHTML = ((+topTen[i].score)/(+topTen[i].games)).toFixed(2);
+			cell5.innerHTML = "...";
 
 			if (topTen[i].locale) {
-				cell5.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+				cell6.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
 			}
 			
 		} else {
