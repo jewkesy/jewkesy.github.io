@@ -33,7 +33,7 @@ setInterval(function () {
 	httpGetGameCount(popcornCountUrl, 'pc');
 
 	// console.log('got');
-}, 10000);
+}, 5000);
 
 function httpGetAmazon(theUrl){
 	var xmlHttp = null;
@@ -53,9 +53,10 @@ function httpGetAmazon(theUrl){
 	}
 }
 
-function chtLocale(chart, data) {
+function chtLocale(chart, data, options) {
+	if (!data) return;
+	var results = [];
 
-	var results = []
 
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];
@@ -97,6 +98,8 @@ function chtLocale(chart, data) {
 	}
 
 	chart.data = d;
+	chart.options.animation.duration = 1;
+
 	chart.update();
 
 	

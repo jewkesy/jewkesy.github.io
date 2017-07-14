@@ -201,6 +201,6 @@ function getParameterByName(name, url) {
         }
     }
     // update time every minute
-    setTimeout(timeAgo, 10000);
+    setTimeout(timeAgo, 5000);
 
 })();
