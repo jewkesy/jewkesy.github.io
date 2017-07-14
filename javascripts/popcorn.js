@@ -1,7 +1,7 @@
 "use strict";
 
-var popcornCountUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?f={"games":1,"_id":0}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
-var popcornUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
+var popcornCountUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&f={"games":1,"_id":0}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
+var popcornUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var popcornAmazonUkUrl = "https://api.mongolab.com/api/1/databases/popcorn/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
 // var ctx = document.getElementById("pc_cht_locale").getContext('2d');
