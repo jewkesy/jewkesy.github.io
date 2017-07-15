@@ -1,6 +1,6 @@
 "use strict";
 
-var popcornCountUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&f={"games":1,"startTimestamp":1,"_id":0}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
+var popcornCountUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&f={"games":1,"startTimestamp":1,"_id":0}&s={"startTimestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var popcornUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var popcornAmazonUkUrl = "https://api.mongolab.com/api/1/databases/popcorn/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
@@ -17,7 +17,6 @@ var startDate = new Date(2017, 4, 28);
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (!err) {
 		updateCharts(data);
-		chtNewUsers(newUsersChart, data)
 	}
 });
 
@@ -108,22 +107,15 @@ function chtLocale(chart, data, options) {
 	chart.update();
 }
 
-function daydiff(first, second) {
-    return Math.round((second-first)/(1000*60*60*24));
-}
-
 function chtNewUsers(chart, data) {
 	if (!data) return;
 
 	// get days from launch as x axis
 
 	var today = new Date();
-	var diff = daydiff(startDate, today)+1;
-	// console.log(diff)
+	var diff = daydiff(startDate, today, true);
 	var l = new Array(diff).fill("");
-
 	var quart = +(diff / 4).toFixed(0);
-	// console.log(quart)
 
 	var someDate = addDays(startDate, quart);
 	var q = someDate.toLocaleDateString().split("/");
@@ -139,19 +131,23 @@ function chtNewUsers(chart, data) {
 
 	l[0] = "Launch";
 	l[diff] = "Today";
-	// console.log(l)
+
 	var ar = new Array(diff).fill(0);
+	var uk = new Array(diff).fill(0);
+	var us = new Array(diff).fill(0);
+	var de = new Array(diff).fill(0);
+	var un = new Array(diff).fill(0);
 
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];
-		var d = new Date(x.startTimestamp);
-		var df = daydiff(startDate, d);
-
-		if (df == diff) console.log(df, d)
-		ar[df]++;
+		var d = new Date(x.startDate);
+		var df = daydiff(startDate, d, true);
+		if (x.locale=="en-GB") uk[df-1]++;
+		else if (x.locale=="en-US") us[df-1]++;
+		else if (x.locale=="de-DE") de[df-1]++;
+		else un[df-1]++;
+		ar[df-1]++;
 	}
-
-	// console.log(ar)
 
 	var d = {
 		"labels": l,
@@ -160,6 +156,30 @@ function chtNewUsers(chart, data) {
 			"data": ar,
 			"fill":false,
 			"borderColor":"rgb(75, 192, 192)",
+			"lineTension":0.1
+		}, {
+			"label":"UK",
+			"data": uk,
+			"fill":false,
+			//"borderColor":"rgb(75, 192, 192)",
+			"lineTension":0.1
+		},{
+			"label":"US",
+			"data": us,
+			"fill":false,
+		//	"borderColor":"rgb(75, 192, 192)",
+			"lineTension":0.1
+		},{
+			"label":"DE",
+			"data": de,
+			"fill":false,
+			//"borderColor":"rgb(75, 192, 192)",
+			"lineTension":0.1
+		},{
+			"label":"Unknown",
+			"data": un,
+			"fill":false,
+			//"borderColor":"rgb(75, 192, 192)",
 			"lineTension":0.1
 		}],
 		options: {}	
@@ -178,15 +198,33 @@ function updateCharts(data) {
 	chtNewUsers(newUsersChart, data)
 }
 
+function daydiff(first, second, includeLast) {
+
+    // Copy date parts of the timestamps, discarding the time parts.
+    var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
+    var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+
+    // Do the math.
+    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+    var millisBetween = two.getTime() - one.getTime();
+    var days = millisBetween / millisecondsPerDay;
+
+    if (includeLast) days++;
+    // Round down.
+    var retVal = Math.floor(days);
+    // console.log(retVal)
+    return retVal;
+}
+
 function addDays(startDate,numberOfDays)
 	{
 		var returnDate = new Date(
-								startDate.getFullYear(),
-								startDate.getMonth(),
-								startDate.getDate()+numberOfDays,
-								startDate.getHours(),
-								startDate.getMinutes(),
-								startDate.getSeconds());
+			startDate.getFullYear(),
+			startDate.getMonth(),
+			startDate.getDate()+numberOfDays,
+			startDate.getHours(),
+			startDate.getMinutes(),
+			startDate.getSeconds());
 		return returnDate;
 	}
 
