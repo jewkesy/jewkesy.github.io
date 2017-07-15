@@ -81,14 +81,7 @@ function chtLocale(chart, data, options) {
 	var d = {
 	    datasets: [{
 	        data: [],
-	        backgroundColor: [
-				'rgba(255,99,132,1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)',
-				'rgba(75, 192, 192, 1)',
-				'rgba(153, 102, 255, 1)',
-				'rgba(255, 159, 64, 1)'
-            ],
+	        backgroundColor: [],
             borderWidth: 1
 	    }],
 
@@ -99,6 +92,10 @@ function chtLocale(chart, data, options) {
 	for (var i = 0; i < results.length; i++) {
 		d.datasets[0].data.push(results[i].count);
 		d.labels.push(results[i].key);
+		if (results[i].key == "en-GB") d.datasets[0].backgroundColor.push("rgba(255,99,132,1)");
+		else if (results[i].key == "en-US") d.datasets[0].backgroundColor.push("rgba(54, 162, 235, 1)");
+		else if (results[i].key == "de-DE") d.datasets[0].backgroundColor.push("rgba(255, 206, 86, 1)");
+		else d.datasets[0].backgroundColor.push("rgba(75, 192, 192, 1)");
 	}
 
 	chart.data = d;
@@ -155,31 +152,35 @@ function chtNewUsers(chart, data) {
 			"label":"New Users",
 			"data": ar,
 			"fill":false,
-			"borderColor":"rgb(75, 192, 192)",
+			// "borderColor":"rga(75, 192, 192,0.5)",
 			"lineTension":0.1
 		}, {
-			"label":"UK",
+			"label":"en-GB",
 			"data": uk,
 			"fill":false,
-			//"borderColor":"rgb(75, 192, 192)",
+			"borderColor":"rgba(255,99,132,1)",
+			"backgroundColor":"rgba(255,99,132,1)",
 			"lineTension":0.1
 		},{
-			"label":"US",
+			"label":"en-US",
 			"data": us,
 			"fill":false,
-		//	"borderColor":"rgb(75, 192, 192)",
+			"borderColor":"rgba(54, 162, 235, 1)",
+			"backgroundColor":"rgba(54, 162, 235, 1)",
 			"lineTension":0.1
 		},{
-			"label":"DE",
+			"label":"de-DE",
 			"data": de,
 			"fill":false,
-			//"borderColor":"rgb(75, 192, 192)",
+			"borderColor":"rgba(255, 206, 86, 1)",
+			"backgroundColor":"rgba(255, 206, 86, 1)",
 			"lineTension":0.1
 		},{
 			"label":"Unknown",
 			"data": un,
 			"fill":false,
-			//"borderColor":"rgb(75, 192, 192)",
+			"borderColor":"rgba(75, 192, 192, 1)",
+			"backgroundColor":"rgba(75, 192, 192, 1)",
 			"lineTension":0.1
 		}],
 		options: {}	
