@@ -112,21 +112,15 @@ function chtNewUsers(chart, data) {
 	var today = new Date();
 	var diff = daydiff(startDate, today, true);
 	var l = new Array(diff).fill("");
-	var quart = +(diff / 4).toFixed(0);
 
-	var someDate = addDays(startDate, quart);
-	var q = someDate.toLocaleDateString().split("/");
-	l[quart*1] = q[0] + getMonthName(q[1]);
-
-	var someDate = addDays(startDate, quart*2);
-	var q = someDate.toLocaleDateString().split("/");
-	l[quart*2] = q[0] + getMonthName(q[1]);
-
-	var someDate = addDays(startDate, quart*3);
-	var q = someDate.toLocaleDateString().split("/");
-	l[quart*3] = q[0] + getMonthName(q[1]);
-
-	l[0] = "Launch";
+	for (var i = 1; i < diff-1; i++) {
+		var someDate = addDays(startDate, i);
+		var q = someDate.toLocaleDateString().split("/");
+		l[i] = q[0] + getMonthName(q[1]);
+		i++;
+		i++;
+	}
+	l[0] = "28 May";
 	l[diff] = "Today";
 
 	var ar = new Array(diff).fill(0);
@@ -187,7 +181,9 @@ function chtNewUsers(chart, data) {
 	}
 
 	chart.data = d;
-	chart.options.animation.duration = 1;
+	chart.getDatasetMeta(0).hidden = true
+	chart.getDatasetMeta(4).hidden = true
+	// chart.options.animation.duration = 1;
 
 	chart.update();
 }
