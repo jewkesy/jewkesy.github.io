@@ -1,5 +1,5 @@
 "use strict";
-
+var popcornLastPlay = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"locale":1,"_id":0}&s={"score":-1,%22timestamp%22:1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var popcornCountUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&f={"games":1,"startTimestamp":1,"_id":0}&s={"startTimestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var popcornUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
 var popcornAmazonUkUrl = "https://api.mongolab.com/api/1/databases/popcorn/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
@@ -21,6 +21,7 @@ httpGetStats(popcornUrl, 'pc', function (err, data) {
 });
 
 httpGetGameCount(popcornCountUrl, 'pc');
+httpGetLastPlay(popcornLastPlay, 'pc');
 buildAmazonParts({
 	uk: {
 		reviews: 'Awaiting publish',
@@ -35,7 +36,7 @@ setInterval(function () {
 		if (!err) updateCharts(data);
 	});
 	httpGetGameCount(popcornCountUrl, 'pc');
-
+	httpGetLastPlay(popcornLastPlay, 'pc');
 	// console.log('got');
 }, 60000);
 

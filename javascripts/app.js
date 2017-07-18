@@ -52,6 +52,41 @@ function httpGetGameCount(theUrl, prefix){
 	}
 }
 
+function httpGetLastPlay(theUrl, prefix) {
+	var xmlHttp = null;
+	xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.onreadystatechange = handleReadyStateChange;
+	xmlHttp.send(null);
+
+	function handleReadyStateChange() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				var doc = JSON.parse(xmlHttp.responseText);
+				// console.log(doc)
+				var t = doc[0]
+				t.rank = 1;
+				for (var i = 1; i < doc.length; i++) {
+					if (doc[i].timestamp > t.timestamp) {
+						t = doc[i];
+						t.rank = i+1;
+					}
+				}
+
+				document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.rank);
+				document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.score);
+				document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.games);
+
+				document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.score)/(+t.games)).toFixed(2);
+				document.getElementById(prefix + '_lp_ts').innerHTML = "...";
+				document.getElementById(prefix + '_lp_ts').setAttribute('title', t.timestamp/1000);
+				document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.locale + ".png' />";
+
+			}
+		}
+	}
+}
+
 function httpGetStats(theUrl, prefix, callback){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
