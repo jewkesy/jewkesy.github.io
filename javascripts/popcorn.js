@@ -12,7 +12,7 @@ var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getCon
     type: 'line'
 });
 
-var startDate = new Date(2017, 4, 28);
+var startDate = new Date("28 May 2017");
 
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (!err) {
@@ -112,17 +112,21 @@ function chtNewUsers(chart, data) {
 
 	var today = new Date();
 	var diff = daydiff(startDate, today, true);
+	// console.log(diff, startDate, today)
 	var l = new Array(diff).fill("");
 
 	for (var i = 1; i < diff-1; i++) {
+		// console.log(startDate, i)
 		var someDate = addDays(startDate, i);
+		// console.log(someDate)
 		var q = someDate.toLocaleDateString().split("/");
-		l[i] = q[0] + getMonthName(q[1]);
-		i++;
-		i++;
+		l[i] = q[0] + getMonthName(q[1]-1);
+		// i++;
+		// i++;
 	}
-	l[0] = "28 May";
+	l[0] = "Launch";
 	l[diff] = "Today";
+	// console.log(l)
 
 	var ar = new Array(diff).fill(0);
 	var uk = new Array(diff).fill(0);
