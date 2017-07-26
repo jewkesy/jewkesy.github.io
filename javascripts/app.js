@@ -88,6 +88,8 @@ function httpGetLastPlay(theUrl, prefix) {
 }
 
 function httpGetStats(theUrl, prefix, callback){
+	theUrl = theUrl + "&l=" + displayCount;
+	// console.log(theUrl)
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
@@ -99,8 +101,9 @@ function httpGetStats(theUrl, prefix, callback){
 			if (xmlHttp.status == 200) {
 				// console.log(xmlHttp.responseText)
 				var doc = JSON.parse(xmlHttp.responseText);
-
-				buildTopTen(doc.splice(0, displayCount), prefix);
+				// if (displayCount == 0) displayCount = doc.length;
+				// buildTopTen(doc.splice(0, displayCount), prefix);
+				buildTopTen(doc, prefix);
 				if (callback) return callback(null, doc);
 			}
 			if (callback) return callback(xmlHttp.status);
@@ -241,3 +244,4 @@ function getParameterByName(name, url) {
     setTimeout(timeAgo, 5000);
 
 })();
+
