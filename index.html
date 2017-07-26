@@ -24,7 +24,7 @@
   <meta name="p:domain_verify" content="c2b3fd0f0cf91014684cb6c6294022b6"/>
 
   <title>jewkesy.github.io by Daryl Jewkes</title>
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="stylesheets/styles.css">
   <link rel="stylesheet" href="stylesheets/pygment_trac.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -104,17 +104,23 @@
 
       <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
       <h4 style="text-align: right; margin-top: 0;">"Ok! Your rank is...</h4>
-      <table id='pc_scores' class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
-        <tr><th colspan=6>Top 10 Global Rankings</th></tr>
-        <tr>
-          <th>Rank</th>
-          <th>Score</th>
-          <th>Games Played</th>
-          <th>Avg. Per Game</th>
-          <th>Last Played</th>
-          <th>Locale</th>
-        </tr>
-      </table>
+      <div style="height:550px;overflow:auto;border:1px solid #e5e5e5">
+        <table id='pc_scores' class="centerMe" style="border: 0px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
+          <tr><th colspan=6>Top <span id="pc_count">10</span> Global Rankings</th></tr>
+          <tr>
+            <th>Rank</th>
+            <th>Score</th>
+            <th>Games Played</th>
+            <th>Avg. Per Game</th>
+            <th>Last Played</th>
+            <th>Locale</th>
+          </tr>
+        </table>
+      </div>
+      <div class="fadedScroller_fade"></div>
+      <br/>
+      <button class="btn btn-block btn-primary" type="button" onclick="window.location='?count=3000#pc_scores';">Load All People</button>
+      <br/>
       <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
         <tr><th colspan=6>Last Game Played</th></tr>
         <tr>
@@ -159,7 +165,6 @@
 
       <hr>
 
-
       <h4 style="margin-bottom: 0;"><a name="trifle" href="https://www.amazon.co.uk/dp/B06XHMRDJJ/" target="_blank">"Alexa, play <i>Trifle Quiz</i>"</a></h4>
       <h4 style="text-align: right; margin-top: 0;">"Welcome back! First question for 1 point...</h4>
       <p>Three questions. Three difficulties. You versus the world!</p>
@@ -178,18 +183,20 @@
 
       <h4 style="margin-bottom: 0;"><a name="trifle" href="https://www.amazon.co.uk/dp/B06XHMRDJJ/" target="_blank">"Alexa, ask <i>Trifle Quiz</i> what my rank is"</a></h4>
       <h4 style="text-align: right; margin-top: 0;">"Ok! Your rank is...</h4>
-      <table id='tr_scores' class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
-        <tr><th colspan=6>Top 10 Global Rankings</th></tr>
-        <tr>
-          <th>Rank</th>
-          <th>Score</th>
-          <th>Games Played</th>
-          <th>Avg. Per Game</th>
-          <th>Last Played</th>
-          <th></th>
-        </tr>
-
-      </table>
+      <div style="height:550px;overflow:auto;border: 1px solid #e5e5e5;">
+        <table id='tr_scores' class="centerMe" style="border: 0px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
+          <tr><th colspan=6>Top <span id="tr_count">10</span> Global Rankings</th></tr>
+          <tr>
+            <th>Rank</th>
+            <th>Score</th>
+            <th>Games Played</th>
+            <th>Avg. Per Game</th>
+            <th>Last Played</th>
+            <th></th>
+          </tr>
+        </table>
+      </div>
+      <div class="fadedScroller_fade"></div>
       <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
         <tr><th>Total Players:</th><td id='tr_total_players'></td><th>Total Games:</th><td id='tr_total_games'></td></tr>
       </table>

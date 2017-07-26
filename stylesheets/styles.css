@@ -289,6 +289,19 @@ iframe {
   border: 0px #8585AD solid;
 }
 
+.fadedScroller_fade {
+
+  content:'';
+  margin-top: -50px;
+  height: 60px;
+  background: -webkit-linear-gradient(bottom, rgba(229, 229, 229, 0), rgba(229, 229, 229, 1)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom, rgba(229, 229, 229, 0), rgba(229, 229, 229, 1)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom, rgba(229, 229, 229, 0), rgba(229, 229, 229, 1)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom, rgba(229, 229, 229, 0), rgba(229, 229, 229, 1)); /* Standard syntax (must be last) */
+  position: relative;
+}
+
+
 .typed-cursor{
     opacity: 1;
     -webkit-animation: blink 0.7s infinite;
