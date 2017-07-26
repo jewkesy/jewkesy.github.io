@@ -290,7 +290,7 @@ iframe {
 }
 
 .fadedScroller_fade {
-
+  max-width: 500px;
   content:'';
   margin-top: -50px;
   height: 60px;
