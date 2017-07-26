@@ -88,7 +88,7 @@ function httpGetLastPlay(theUrl, prefix) {
 }
 
 function httpGetStats(theUrl, prefix, callback){
-	theUrl = theUrl + "&l=" + displayCount;
+	// theUrl = theUrl + "&l=" + displayCount;
 	// console.log(theUrl)
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
@@ -101,7 +101,7 @@ function httpGetStats(theUrl, prefix, callback){
 			if (xmlHttp.status == 200) {
 				// console.log(xmlHttp.responseText)
 				var doc = JSON.parse(xmlHttp.responseText);
-				// if (displayCount == 0) displayCount = doc.length;
+				// if (displayCount == 0) displayCount = 100000000;
 				// buildTopTen(doc.splice(0, displayCount), prefix);
 				buildTopTen(doc, prefix);
 				if (callback) return callback(null, doc);
@@ -119,6 +119,7 @@ function buildTopTen(topTen, prefix) {
 	// if (document.getElementById(container)) document.getElementById(container).innerHTML = x + star
 
 	for (var i = 0; i < topTen.length; i++) {
+		if (i >= displayCount) break;
 		var x = i + 1;
 		var id = prefix + "_" + x;
 		var sym = "";
