@@ -166,7 +166,7 @@ function buildTopTen(topTen, prefix) {
 				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
 			}
 		}
-		document.getElementById(prefix + '_count').innerHTML = displayCount;
+		document.getElementById(prefix + '_count').innerHTML = i+1;
 	}
 }
 
