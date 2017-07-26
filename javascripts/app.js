@@ -112,6 +112,7 @@ function buildTopTen(topTen, prefix) {
 	// console.log(topTen, prefix)
 
 	var container = document.getElementById(prefix + '_scores')
+
 	// if (document.getElementById(container)) document.getElementById(container).innerHTML = x + star
 
 	for (var i = 0; i < topTen.length; i++) {
@@ -161,6 +162,7 @@ function buildTopTen(topTen, prefix) {
 				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
 			}
 		}
+		document.getElementById(prefix + '_count').innerHTML = displayCount;
 	}
 }
 
