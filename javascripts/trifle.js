@@ -1,8 +1,7 @@
 "use strict";
 
-var trifleCountUrl = 'https://api.mongolab.com/api/1/databases/trifle/collections/game?f={"games":1,"_id":0}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
-var trifleUrl = 'https://api.mongolab.com/api/1/databases/trifle/collections/game?s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
-var trifleAmazonUkUrl = "https://api.mongolab.com/api/1/databases/twentyquestions/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
+var trifleCountUrl = aws + 'getHomePageContent?action=getcounts&prefix=tf';
+var trifleUrl = aws + 'getHomePageContent?action=getscores&prefix=tf';
 
 httpGetStats(trifleUrl, 'tr');
 httpGetGameCount(trifleCountUrl, 'tr');
@@ -15,7 +14,6 @@ buildAmazonParts({
 
 setInterval(function () {
 	// console.log('getting');
-	// httpGetAmazon(trifleAmazonUkUrl);
 	httpGetStats(trifleUrl, 'tr');
 	httpGetGameCount(trifleCountUrl, 'tr');
 	// console.log('got');

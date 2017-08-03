@@ -1,3 +1,5 @@
+
+var aws = "https://e94s2o5jyb.execute-api.eu-west-1.amazonaws.com/prod/";
 // var me = "amzn1.ask.account.AEYVZX3MSGMLIKSHCAT3YCQIKASZYEYE2MEZSERJB4ALC7YDASS7HKZZ4MKB6JKEZTYVMBSBELRJN7EEZBYUMVMTNMVNXUWX73H6RBIBXH5RQ42CUDOYQWM2ZDS5S2KHWCRZ7KBQGC4OJVSPMK3OCVYJFY7COYNWZJPRTAYSUDFVKNEHOTUTE6VTMLQBQPV3A4VELGVNJCFEHGI";
 var me = "amzn1.ask.account.AEWWKGN7CXOP6MTGYXCV73OIJ6VKVJPJETC2Q6UUMT6UKVONYGKP6POBU4MOSAACFVF53LMFUYC57BSKE57BDBFF7X4S6JIOXBKSWUCK462NIT2ISYV2JSS7456WF5N4Q7GYDEKMZ5D4DLLRYIOAUKZVCJZJ67HGPDAAKITZ54DMRJZTGHGXMNQMUEZBCVEKDJZ5DUGDUGRBG3Q";
 var sun = "amzn1.ask.account.AG4FEV4HAGMGK5BTWSRXHVJYXRET55324SFXHI5K56U3V3PSERXVQJDBHWP3MGFSLZVNVALJ5DEUPIN6SAK5IJDFCGYOGCW4NOOLIVNTPWKJWUCS5W7DVBYND6WQUJ66PG64HTJQX23RF3DS335O3VKFU3MFDYRSWONH4AMQ5TBNL5P2DXLI2HBL3NTJGY527LBVW5GN657QNYA";
@@ -88,8 +90,6 @@ function httpGetLastPlay(theUrl, prefix) {
 }
 
 function httpGetStats(theUrl, prefix, callback){
-	// theUrl = theUrl + "&l=" + displayCount;
-	// console.log(theUrl)
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
@@ -99,10 +99,7 @@ function httpGetStats(theUrl, prefix, callback){
 	function handleReadyStateChange() {
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
-				// console.log(xmlHttp.responseText)
 				var doc = JSON.parse(xmlHttp.responseText);
-				// if (displayCount == 0) displayCount = 100000000;
-				// buildTopTen(doc.splice(0, displayCount), prefix);
 				buildTopTen(doc, prefix);
 				if (callback) return callback(null, doc);
 			}
@@ -243,6 +240,5 @@ function getParameterByName(name, url) {
     }
     // update time every minute
     setTimeout(timeAgo, 5000);
-
 })();
 

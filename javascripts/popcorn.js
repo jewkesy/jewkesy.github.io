@@ -1,10 +1,9 @@
 "use strict";
-var popcornLastPlay = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"locale":1,"_id":0}&s={"score":-1,%22timestamp%22:1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
-var popcornCountUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&f={"games":1,"startTimestamp":1,"_id":0}&s={"startTimestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
-var popcornUrl = 'https://api.mongolab.com/api/1/databases/popcorn/collections/game?l=0&s={"score":-1,"timestamp":1}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9';
-var popcornAmazonUkUrl = "https://api.mongolab.com/api/1/databases/popcorn/collections/amazon?q={}&apiKey=qbjPCckU4aqtUj_i5wyxpwEizWa5Ccp9";
 
-// var ctx = document.getElementById("pc_cht_locale").getContext('2d');
+var popcornLastPlay = aws + 'getHomePageContent?action=getscores&prefix=pc';
+var popcornCountUrl = aws + 'getHomePageContent?action=getcounts&prefix=pc';
+var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
+
 var localChart = new Chart(document.getElementById("pc_cht_locale").getContext('2d'), {
     type: 'doughnut'
 });
@@ -62,13 +61,10 @@ function chtLocale(chart, data, options) {
 	if (!data) return;
 	var results = [];
 
-
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];
-		// console.log(x)
 		if (!x.locale) x.locale = 'Unknown'
 		var idx = keyExists(x.locale, results)
-		// console.log(idx)
 		if (idx == -1) {
 			results.push({
 				key: x.locale,
@@ -112,21 +108,15 @@ function chtNewUsers(chart, data) {
 
 	var today = new Date();
 	var diff = daydiff(startDate, today, true);
-	// console.log(diff, startDate, today)
 	var l = new Array(diff).fill("");
 
 	for (var i = 1; i < diff-1; i++) {
-		// console.log(startDate, i)
 		var someDate = addDays(startDate, i);
-		// console.log(someDate)
 		var q = someDate.toLocaleDateString().split("/");
 		l[i] = q[0] + getMonthName(q[1]-1);
-		// i++;
-		// i++;
 	}
 	l[0] = "Launch";
 	l[diff] = "Today";
-	// console.log(l)
 
 	var ar = new Array(diff).fill(0);
 	var uk = new Array(diff).fill(0);
@@ -151,7 +141,6 @@ function chtNewUsers(chart, data) {
 			"label":"New Users",
 			"data": ar,
 			"fill":false,
-			// "borderColor":"rga(75, 192, 192,0.5)",
 			"lineTension":0.1
 		}, {
 			"label":"en-GB",
@@ -188,14 +177,12 @@ function chtNewUsers(chart, data) {
 	chart.data = d;
 	chart.getDatasetMeta(0).hidden = true
 	chart.getDatasetMeta(4).hidden = true
-	// chart.options.animation.duration = 1;
 
 	chart.update();
 }
 
 function updateCharts(data) {
 	if (!data) return;
-	// console.log(data);
 	chtLocale(localChart, data);
 	chtNewUsers(newUsersChart, data)
 }
@@ -218,17 +205,16 @@ function daydiff(first, second, includeLast) {
     return retVal;
 }
 
-function addDays(startDate,numberOfDays)
-	{
-		var returnDate = new Date(
-			startDate.getFullYear(),
-			startDate.getMonth(),
-			startDate.getDate()+numberOfDays,
-			startDate.getHours(),
-			startDate.getMinutes(),
-			startDate.getSeconds());
-		return returnDate;
-	}
+function addDays(startDate,numberOfDays) {
+	var returnDate = new Date(
+		startDate.getFullYear(),
+		startDate.getMonth(),
+		startDate.getDate()+numberOfDays,
+		startDate.getHours(),
+		startDate.getMinutes(),
+		startDate.getSeconds());
+	return returnDate;
+}
 
 function getMonthName(mon) {
 	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

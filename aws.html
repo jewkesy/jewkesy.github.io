@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AWS SDK for JavaScript - Sample Application</title>
+    <meta charset="utf-8">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.77.0.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        AWS.config.region = 'eu-west-1'; // Region
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: 'eu-west-1:8eeac19e-831f-401a-88d5-2ff5717d7c0f',
+        });
+
+        var lambda = new AWS.Lambda();
+
+        var input = {
+            name: "Daryl"
+        }
+
+      lambda.invoke({
+        FunctionName: 'function:getHomePageContent',
+        Payload: JSON.stringify(input)
+      }, function(err, data) {
+        if (err) {
+          console.log(err, err.stack);
+        } else {
+          var output = JSON.parse(data.Payload);
+          console.log(output)
+        }
+      });
+
+
+
+        // Initialize the Amazon Cognito credentials provider
+        // AWS.config.region = 'eu-west-1'; // Region
+        // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        //   IdentityPoolId: 'eu-west-1:40f0910c-72f5-4f73-83bc-89f44d0afe92',
+        // });
+
+        // var lambda = new AWS.Lambda();
+
+        // function returnGreetings() {
+        //   var input = {
+        //       name: "Daryl"
+        //     };
+
+        //   lambda.invoke({
+        //     FunctionName: 'greetingsOnDemand',
+        //     Payload: JSON.stringify(input)
+        //   }, function(err, data) {
+        //     if (err) {
+        //       console.log(err, err.stack);
+        //     } else {
+        //       var output = JSON.parse(data.Payload);
+        //       console.log(output)
+        //     }
+        //   });
+        // }
+
+        // returnGreetings();
+
+    </script>
+</body>
+</html>
