@@ -4,9 +4,9 @@ var popcornLastPlay = aws + 'getHomePageContent?action=getscores&prefix=pc';
 var popcornCountUrl = aws + 'getHomePageContent?action=getcounts&prefix=pc';
 var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
 
-var localChart = new Chart(document.getElementById("pc_cht_locale").getContext('2d'), {
-    type: 'doughnut'
-});
+// var localChart = new Chart(document.getElementById("pc_cht_locale").getContext('2d'), {
+//     type: 'doughnut'
+// });
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), {
     type: 'line'
 });
@@ -183,7 +183,7 @@ function chtNewUsers(chart, data) {
 
 function updateCharts(data) {
 	if (!data) return;
-	chtLocale(localChart, data);
+	// chtLocale(localChart, data);
 	chtNewUsers(newUsersChart, data)
 }
 
