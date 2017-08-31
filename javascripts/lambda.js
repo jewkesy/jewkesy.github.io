@@ -15,54 +15,65 @@ var TF_COUNT = process.env.trifleCount;
  * status code.
  */
 exports.handler = (event, context, callback) => {
-    // console.log('Received event:', JSON.stringify(event, null, 2));
+  // console.log('Received event:', JSON.stringify(event, null, 2));
 
-    const done = (err, res) => callback(null, {
-        statusCode: err ? '400' : '200',
-        body: err ? err.message : JSON.stringify(res),
-        headers: {
-            'Content-Type': 'application/json',
-            "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-            "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
-        },
-    });
+  const done = (err, res) => callback(null, {
+    statusCode: err ? '400' : '200',
+    body: err ? err.message : JSON.stringify(res),
+    headers: {
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+      "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
+    },
+  });
 
-    switch (event.httpMethod) {
-        case 'GET':
-            if (event.queryStringParameters.prefix == 'pc') {
-              getPopCornContent(event.queryStringParameters, done);
-            } else {
-              getContent(event.queryStringParameters, done);
-            }
-            break;
-        case 'DELETE':
-        case 'POST':
-        case 'PUT':
-            break;
-        default:
-            done(new Error(`Unsupported method "${event.httpMethod}"`));
-    }
+  switch (event.httpMethod) {
+    case 'GET':
+      getContent(event.queryStringParameters, done);
+      break;
+    case 'DELETE':
+    case 'POST':
+    case 'PUT':
+      break;
+    default:
+      done(new Error(`Unsupported method "${event.httpMethod}"`));
+  }
 };
 
 // var xyz = {
 //   prefix: 'pc',
-//   limit: 10,
-//   locale: 'de-DE'
+//   limit: 5,
+//   locale: ''
 // }
 
-// getPopCornContent(xyz, function(m) {
-//   console.log(m)
+// var abc = {
+//   prefix: 'tf',
+//   limit: 5,
+//   locale: ''
+// }
+
+// getContent(abc, function(e, m) {
+//   console.log(e, m)
 // });
 
-function getPopCornContent(qs, callback) {
+// getContent(xyz, function(e, m) {
+//   console.log(e, m)
+// });
+
+function getContent(qs, callback) {
   console.log(qs)
   var limit = 10;
   if (qs && qs.limit) limit = qs.limit;
+
   var url = MONGO_URI;
 
-  url += '/popcorn/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"locale":1,"icon":1,"_id":0,"startDate":1}&s={"score":-1,"timestamp":1}'
+  if (qs.prefix == 'pc') url += '/popcorn';
+  else if (qs.prefix == 'tf') url += '/trifle';
+  else return callback('unhandled prefix');
 
-  if (qs.locale && qs.locale != '' && qs.locale != 'undefined') {
+  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"locale":1,"icon":1,"_id":0,"startDate":1}&s={"score":-1,"timestamp":1}'
+
+  if (qs.prefix == 'pc' && qs.locale && qs.locale != '' && qs.locale != 'undefined') {
     url += '&q={"locale":"' + qs.locale + '"}';
   }
 
@@ -75,10 +86,10 @@ function getPopCornContent(qs, callback) {
     var league = [];
     var newUsers = [];
     var lastGame = {timestamp:0};
-
+    var totalGames = 0;
     for (var i = 0; i < msg.length; i++) {
       var x = msg[i];
-
+      totalGames += x.games;
       newUsers.push({
         locale: x.locale,
         startDate: x.startDate
@@ -97,8 +108,11 @@ function getPopCornContent(qs, callback) {
     var retVal = {
       league: league,
       newUsers: newUsers,
-      lastGame: lastGame
+      lastGame: lastGame,
+      totalUsers: msg.length,
+      totalGames: totalGames
     }
+    // console.log(retVal)
     return callback(null, retVal);
   });
 }
@@ -143,7 +157,7 @@ function getData(url, callback) {
 
 
 
-function getContent(qs, callback) {
+function getContent_bak(qs, callback) {
     var limit = 10;
     if (qs && qs.limit) limit = qs.limit;
     

@@ -10,6 +10,8 @@ function buildPopcornPage(content) {
 	updateCharts(content.newUsers);
 	buildPopcornLastGame('pc', content.lastGame);
 	buildPopcornLeague(content.league, 'pc');
+	document.getElementById('pc_total_players').innerHTML = numberWithCommas(content.totalUsers);
+	document.getElementById('pc_total_games').innerHTML = numberWithCommas(content.totalGames);
 }
 
 function buildPopcornLastGame(prefix, t) {
