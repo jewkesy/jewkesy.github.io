@@ -1,11 +1,8 @@
 
 var aws = "https://e94s2o5jyb.execute-api.eu-west-1.amazonaws.com/prod/";
-// var me = "amzn1.ask.account.AEYVZX3MSGMLIKSHCAT3YCQIKASZYEYE2MEZSERJB4ALC7YDASS7HKZZ4MKB6JKEZTYVMBSBELRJN7EEZBYUMVMTNMVNXUWX73H6RBIBXH5RQ42CUDOYQWM2ZDS5S2KHWCRZ7KBQGC4OJVSPMK3OCVYJFY7COYNWZJPRTAYSUDFVKNEHOTUTE6VTMLQBQPV3A4VELGVNJCFEHGI";
-var me = "amzn1.ask.account.AEWWKGN7CXOP6MTGYXCV73OIJ6VKVJPJETC2Q6UUMT6UKVONYGKP6POBU4MOSAACFVF53LMFUYC57BSKE57BDBFF7X4S6JIOXBKSWUCK462NIT2ISYV2JSS7456WF5N4Q7GYDEKMZ5D4DLLRYIOAUKZVCJZJ67HGPDAAKITZ54DMRJZTGHGXMNQMUEZBCVEKDJZ5DUGDUGRBG3Q";
-var sun = "amzn1.ask.account.AG4FEV4HAGMGK5BTWSRXHVJYXRET55324SFXHI5K56U3V3PSERXVQJDBHWP3MGFSLZVNVALJ5DEUPIN6SAK5IJDFCGYOGCW4NOOLIVNTPWKJWUCS5W7DVBYND6WQUJ66PG64HTJQX23RF3DS335O3VKFU3MFDYRSWONH4AMQ5TBNL5P2DXLI2HBL3NTJGY527LBVW5GN657QNYA";
-var note  = "amzn1.ask.account.AHRKNEDAF5QOKJWAGSGGTEGJMK3SEXFU4ZTXKQNLYKAKNP66QI2TAXXJVFRHGZJZPQ6FCJ4E6IBM2B6QIKQ4CD6PZ4WTEN5YJMF7JIJ5DOACMQZIEG2BDVSW54HAGUIP33BE7BWEM24APYTHXMYWRLOQFNTS36KA733RORFKRIQLYRIHPIXHWONHRZ34P7GOYWGROMMBOGAJO6Y";
 
 var displayCount = getParameterByName('count') || 10;
+var displayLocale = getParameterByName('locale') || '';
 
 function buildAmazonParts(doc, id) {
 	document.getElementById(id).innerHTML = "Amazon Rating: " + doc.uk.score + " / 5<br>" + "Reviews: " + doc.uk.reviews;
@@ -114,15 +111,20 @@ function buildTopTen(topTen, prefix) {
 	var container = document.getElementById(prefix + '_scores')
 
 	// if (document.getElementById(container)) document.getElementById(container).innerHTML = x + star
-
+// console.log(topTen.length, prefix)
 	for (var i = 0; i < topTen.length; i++) {
+		// if (i >= displayCount) break;
+		// if (prefix == 'pc' && displayLocale != '') {
+		// 	// console.log(topTen[i].locale)
+		// 	if (displayLocale != topTen[i].locale) continue;
+		// } 
 		if (i >= displayCount) break;
 		var x = i + 1;
 		var id = prefix + "_" + x;
 		var sym = "";
-		if (topTen[i].userId == me) {sym = " &#9734;";}
-		else if (topTen[i].userId == sun) {sym = " &#9788;";}
-		else if (topTen[i].userId == note) {sym = " &#9834;";}
+		if (topTen[i].icon == 'star') {sym = " &#9734;";}
+		else if (topTen[i].icon == 'sun') {sym = " &#9788;";}
+		else if (topTen[i].icon == 'note') {sym = " &#9834;";}
 		// if (topTen[i].userId == me)
 
 		if (!document.getElementById(prefix + '_' + x)) {
@@ -164,6 +166,7 @@ function buildTopTen(topTen, prefix) {
 			}
 		}
 		document.getElementById(prefix + '_count').innerHTML = i+1;
+		// if (i + 1 >= displayCount) break;
 	}
 }
 
