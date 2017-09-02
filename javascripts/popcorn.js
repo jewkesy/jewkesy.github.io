@@ -187,11 +187,11 @@ function chtNewUsers(chart, data) {
 
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];
-		var d = new Date(x.startDate);
+		var d = new Date(x.d);
 		var df = daydiff(startDate, d, true);
-		if (x.locale=="en-GB") uk[df-1]++;
-		else if (x.locale=="en-US") us[df-1]++;
-		else if (x.locale=="de-DE") de[df-1]++;
+		if (x.l=="en-GB") uk[df-1]++;
+		else if (x.l=="en-US") us[df-1]++;
+		else if (x.l=="de-DE") de[df-1]++;
 		else un[df-1]++;
 		ar[df-1]++;
 	}

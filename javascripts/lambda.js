@@ -40,11 +40,11 @@ exports.handler = (event, context, callback) => {
   }
 };
 
-// var xyz = {
-//   prefix: 'pc',
-//   limit: 5,
-//   locale: ''
-// }
+var xyz = {
+  prefix: 'pc',
+  limit: 5,
+  locale: ''
+}
 
 // var abc = {
 //   prefix: 'tf',
@@ -56,9 +56,9 @@ exports.handler = (event, context, callback) => {
 //   console.log(e, m)
 // });
 
-// getContent(xyz, function(e, m) {
-//   console.log(e, m)
-// });
+getContent(xyz, function(e, m) {
+  console.log(e, m)
+});
 
 function getContent(qs, callback) {
   console.log(qs)
@@ -71,7 +71,7 @@ function getContent(qs, callback) {
   else if (qs.prefix == 'tf') url += '/trifle';
   else return callback('unhandled prefix');
 
-  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"locale":1,"icon":1,"_id":0,"startDate":1}&s={"score":-1,"timestamp":1}'
+  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"startTimestamp":1,"locale":1,"icon":1,"_id":0,"startDate":1}&s={"score":-1,"timestamp":1}'
 
   if (qs.prefix == 'pc' && qs.locale && qs.locale != '' && qs.locale != 'undefined') {
     url += '&q={"locale":"' + qs.locale + '"}';
@@ -79,7 +79,7 @@ function getContent(qs, callback) {
 
   url += "&apiKey=" + MONGO_API;
 
-  console.log(url) 
+  // console.log(url) 
   getData(url, function (e, msg) {
     if (e) return callback(e);
     // console.log(e, msg);
@@ -91,8 +91,8 @@ function getContent(qs, callback) {
       var x = msg[i];
       totalGames += x.games;
       newUsers.push({
-        locale: x.locale,
-        startDate: x.startDate
+        l: x.locale,
+        d: x.startTimestamp
       });
       if (x.timestamp >lastGame.timestamp) {
         lastGame = x;
@@ -156,65 +156,3 @@ function getData(url, callback) {
 }
 
 
-
-function getContent_bak(qs, callback) {
-    var limit = 10;
-    if (qs && qs.limit) limit = qs.limit;
-    
-    var url = MONGO_URI;
-    
-    switch (qs.action) {
-        case 'getscores':
-            if (qs.prefix == 'pc') url += PC_LEAGUE;
-            else if (qs.prefix == 'tf') url += TF_LEAGUE;
-            break;
-        case 'getstats':
-            if (qs.prefix == 'pc') url += PC_STATS;
-            break;
-        case 'getcounts':
-            if (qs.prefix == 'pc') url += PC_COUNT;
-            else if (qs.prefix == 'tf') url += TF_COUNT;
-            break;
-        default:
-            return callback(new Error(`Unsupported action "${qs.action}"`));
-    }
-    
-    url += "&apiKey=" + MONGO_API;
-    // console.log(url)
-    
-    https.get(url, (res) => {
-      const { statusCode } = res;
-      const contentType = res.headers['content-type'];
-    
-      let error;
-      if (statusCode !== 200) {
-        error = new Error('Request Failed.\n' +
-                          `Status Code: ${statusCode}`);
-      } else if (!/^application\/json/.test(contentType)) {
-        error = new Error('Invalid content-type.\n' +
-                          `Expected application/json but received ${contentType}`);
-      }
-      if (error) {
-        console.error(error.message);
-        res.resume();
-        return callback(error); // consume response data to free up memory
-      }
-    
-      res.setEncoding('utf8');
-      let rawData = '';
-      res.on('data', (chunk) => { rawData += chunk; });
-      res.on('end', () => {
-        try {
-          const parsedData = JSON.parse(rawData);
-        //   console.log(parsedData);
-          return callback(null, parsedData);
-        } catch (e) {
-          console.error(e.message);
-          return callback(e);
-        }
-      });
-    }).on('error', (e) => {
-      console.error(`Got error: ${e.message}`);
-      return callback(e);
-    });
-}
