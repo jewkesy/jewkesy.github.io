@@ -101,7 +101,7 @@
 
       <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
       <h4 style="text-align: right; margin-top: 0;">"Ok! Your rank is...</h4>
-      <div style="height:480px;overflow:auto;border:1px solid #e5e5e5; max-width: 500px;">
+      <div style="height:500px;overflow:auto;border:1px solid #e5e5e5; max-width: 500px;">
         <a name="pc_league" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
         <table>
           <tr>
@@ -118,6 +118,7 @@
             <th>Games<br/>Played</th>
             <th>Avg. Per<br/>Game</th>
             <th>Last Played</th>
+            <th>Joined</th>
             <th>Locale</th>
           </tr>
         </table>
@@ -125,20 +126,21 @@
       <div class="fadedScroller_fade"></div>
       <br/>
       <div style="max-width: 500px;">
-        <button class="btn btn-block btn-primary" type="button" onclick="window.location='?count=100000000#pc_scores';">Load All People</button>
+        <button class="btn btn-block btn-primary" type="button" onclick="window.location='?limit=100000000#pc_scores';">Load All People</button>
       </div>
       <br/>
       <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
-        <tr><th colspan=6>Last Game Played</th></tr>
+        <tr><th colspan=7>Last Game Played</th></tr>
         <tr>
           <th>Rank</th>
           <th>Score</th>
           <th>Games Played</th>
           <th>Avg. Per Game</th>
           <th>Last Played</th>
+          <th>Joined</th>
           <th>Locale</th>
         </tr>
-        <tr><td id='pc_lp_rank'></td><td id='pc_lp_score'></td><td id='pc_lp_games'></td><td id='pc_lp_avg'></td><td id='pc_lp_ts' class='timeago'></td><td id='pc_lp_locale'></td></tr>
+        <tr><td id='pc_lp_rank'></td><td id='pc_lp_score'></td><td id='pc_lp_games'></td><td id='pc_lp_avg'></td><td id='pc_lp_ts' class='timeago'></td><td id='pc_lp_st' class='timeago'></td><td id='pc_lp_locale'></td></tr>
       </table>
       <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
         <tr><th>Total Players:</th><td id='pc_total_players'></td><th>Total Games:</th><td id='pc_total_games'></td></tr>
@@ -164,11 +166,11 @@
       <p>The Skill provides an addictive, rapid-fire game that keeps you coming back to increase your score.</p>
 
       <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
-
+<!-- 
       <table class="centerMe" style="border: 1px solid #e5e5e5; margin-bottom: 20px; max-width: 500px;">
         <tr><th>Have a quick game now!</th></tr>
         <tr><td>Coming Soon :)</td></tr>
-      </table>
+      </table> -->
 
       <hr>
 

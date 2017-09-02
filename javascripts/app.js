@@ -57,7 +57,7 @@ function httpGetLastPlay(theUrl, prefix) {
 	xmlHttp.open("GET", theUrl, true);
 	xmlHttp.onreadystatechange = handleReadyStateChange;
 	xmlHttp.send(null);
-console.log(theUrl, prefix)
+	// console.log(theUrl, prefix)
 	function handleReadyStateChange() {
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
