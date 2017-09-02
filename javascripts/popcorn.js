@@ -15,26 +15,26 @@ function buildPopcornPage(content) {
 }
 
 function buildPopcornLastGame(prefix, t) {
-	document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.rank);
-	document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.score);
-	document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.games);
-	document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.score)/(+t.games)).toFixed(2);
+	document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.r);
+	document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.s);
+	document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.g);
+	document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.s)/(+t.g)).toFixed(2);
 	document.getElementById(prefix + '_lp_ts').innerHTML = "...";
-	document.getElementById(prefix + '_lp_ts').setAttribute('title', t.timestamp/1000);
-	document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.locale + ".png' />";
+	document.getElementById(prefix + '_lp_ts').setAttribute('title', t.t/1000);
+	document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.l + ".png' />";
 }
 
 function buildPopcornLeague(topTen, prefix) {
 	var container = document.getElementById(prefix + '_scores')
-
+	// console.log(topTen)
 	for (var i = 0; i < topTen.length; i++) {
 		if (i >= displayCount) break;
 		var x = i + 1;
 		var id = prefix + "_" + x;
 		var sym = "";
-		if (topTen[i].icon == 'star') {sym = " &#9734;";}
-		else if (topTen[i].icon == 'sun') {sym = " &#9788;";}
-		else if (topTen[i].icon == 'note') {sym = " &#9834;";}
+		if (topTen[i].i == 'star') {sym = " &#9734;";}
+		else if (topTen[i].i == 'sun') {sym = " &#9788;";}
+		else if (topTen[i].i == 'note') {sym = " &#9834;";}
 
 		if (!document.getElementById(prefix + '_' + x)) {
 			var row = container.insertRow(-1);
@@ -51,27 +51,27 @@ function buildPopcornLeague(topTen, prefix) {
 			var cell5 = row.insertCell(4)
 			cell5.id = prefix + "_ts_" + x;
 			cell5.className = "timeago";
-			cell5.title = topTen[i].timestamp/1000;
+			cell5.title = topTen[i].t/1000;
 			var cell6 = row.insertCell(5);
 			cell6.id = prefix + "_locale_" + x;
 
 			cell1.innerHTML = x + sym;
-			cell2.innerHTML = topTen[i].score;
-			cell3.innerHTML = topTen[i].games;
-			cell4.innerHTML = ((+topTen[i].score)/(+topTen[i].games)).toFixed(2);
+			cell2.innerHTML = topTen[i].s;
+			cell3.innerHTML = topTen[i].g;
+			cell4.innerHTML = ((+topTen[i].s)/(+topTen[i].g)).toFixed(2);
 			cell5.innerHTML = "...";
 
-			if (topTen[i].locale) {
-				cell6.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+			if (topTen[i].l) {
+				cell6.innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
 			}
 			
 		} else {
 			document.getElementById(prefix + '_rank_' + x).innerHTML = x + sym;
-			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].score;
-			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].games;
-			document.getElementById(prefix + '_ts_' + x).title = topTen[i].timestamp/1000;
-			if (topTen[i].locale) {
-				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
+			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].s;
+			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].g;
+			document.getElementById(prefix + '_ts_' + x).title = topTen[i].t/1000;
+			if (topTen[i].l) {
+				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
 			}
 		}
 		document.getElementById(prefix + '_count').innerHTML = i+1;

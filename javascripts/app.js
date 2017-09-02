@@ -42,7 +42,7 @@ function httpGetGameCount(theUrl, prefix){
 
 				var count = 0;
 				for (var i = 0; i < doc.length; i++) {
-					count += doc[i].games;
+					count += doc[i].g;
 				}
 
 				document.getElementById(prefix + '_total_games').innerHTML = numberWithCommas(count);

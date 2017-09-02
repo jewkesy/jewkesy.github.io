@@ -40,11 +40,11 @@ exports.handler = (event, context, callback) => {
   }
 };
 
-var xyz = {
-  prefix: 'pc',
-  limit: 5,
-  locale: ''
-}
+// var xyz = {
+//   prefix: 'pc',
+//   limit: 5,
+//   locale: ''
+// }
 
 // var abc = {
 //   prefix: 'tf',
@@ -56,9 +56,10 @@ var xyz = {
 //   console.log(e, m)
 // });
 
-getContent(xyz, function(e, m) {
-  console.log(e, m)
-});
+// getContent(xyz, function(e, m) {
+//   console.log(e, m)
+//   console.log('done')
+// });
 
 function getContent(qs, callback) {
   console.log(qs)
@@ -71,7 +72,7 @@ function getContent(qs, callback) {
   else if (qs.prefix == 'tf') url += '/trifle';
   else return callback('unhandled prefix');
 
-  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"startTimestamp":1,"locale":1,"icon":1,"_id":0,"startDate":1}&s={"score":-1,"timestamp":1}'
+  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"startTimestamp":1,"locale":1,"icon":1,"_id":0}&s={"score":-1,"timestamp":1}'
 
   if (qs.prefix == 'pc' && qs.locale && qs.locale != '' && qs.locale != 'undefined') {
     url += '&q={"locale":"' + qs.locale + '"}';
@@ -85,18 +86,28 @@ function getContent(qs, callback) {
     // console.log(e, msg);
     var league = [];
     var newUsers = [];
-    var lastGame = {timestamp:0};
+    var lastGame = {t:0};
     var totalGames = 0;
     for (var i = 0; i < msg.length; i++) {
-      var x = msg[i];
-      totalGames += x.games;
+      var item = msg[i];
+      var x = {
+        st: item.startTimestamp,
+        s: item.score,
+        g: item.games,
+        t: item.timestamp,
+        l: item.locale
+      }
+
+      if (item.icon) x.i = item.icon;
+
+      totalGames += x.g;
       newUsers.push({
-        l: x.locale,
-        d: x.startTimestamp
+        l: x.l,
+        d: x.st
       });
-      if (x.timestamp >lastGame.timestamp) {
+      if (x.t >lastGame.t) {
         lastGame = x;
-        lastGame.rank = i+1;
+        lastGame.r = i+1;
       }
       if (i < limit) league.push(x);
     }
@@ -112,7 +123,7 @@ function getContent(qs, callback) {
       totalUsers: msg.length,
       totalGames: totalGames
     }
-    // console.log(retVal)
+    // console.log(league)
     return callback(null, retVal);
   });
 }
