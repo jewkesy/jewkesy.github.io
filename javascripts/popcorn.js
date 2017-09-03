@@ -18,14 +18,29 @@ var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getCon
 });
 
 function buildPopcornPage(content) {
+
+
 	updateCharts(content.newUsers);
 	buildPopcornLastGame('pc', content.lastGame);
-	buildPopcornLeague(content.league, 'pc');
+
+	var x = document.getElementById('pc_total_games').getAttribute('total');
+	var y = document.getElementById('pc_scores').getAttribute('total');
+// console.log(x,y)
+	if (x != y || !x || !y) buildPopcornLeague(content.league, 'pc', content.totalGames);
+
+
 	document.getElementById('pc_total_players').innerHTML = numberWithCommas(content.totalUsers);
+	document.getElementById('pc_total_players').setAttribute('total', content.totalUsers);
 	document.getElementById('pc_total_games').innerHTML = numberWithCommas(content.totalGames);
+	document.getElementById('pc_total_games').setAttribute('total', content.totalGames);	
 }
 
 function buildPopcornLastGame(prefix, t) {
+
+	var x = document.getElementById(prefix + '_lp_ts').getAttribute('title');
+
+	if (x == t.t/1000) return;
+
 	document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.r);
 	document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.s);
 	document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.g);
@@ -37,7 +52,8 @@ function buildPopcornLastGame(prefix, t) {
 	document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.l + ".png' />";
 }
 
-function buildPopcornLeague(topTen, prefix) {
+function buildPopcornLeague(topTen, prefix, total) {
+
 	var container = document.getElementById(prefix + '_scores')
 	// console.log(topTen)
 	for (var i = 0; i < topTen.length; i++) {
@@ -98,10 +114,11 @@ function buildPopcornLeague(topTen, prefix) {
 		}
 		document.getElementById(prefix + '_count').innerHTML = i+1;
 	}
+	document.getElementById(prefix + '_scores').setAttribute('total', total);
 }
 
 var startDate = new Date("28 May 2017");
-console.log(popcornUrl)
+// console.log(popcornUrl)
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (!err) {
 		buildPopcornPage(data);
@@ -186,7 +203,11 @@ function chtLocale(chart, data, options) {
 
 function chtNewUsers(chart, data) {
 	if (!data) return;
-
+	var x = document.getElementById('pc_total_players').getAttribute('total');
+	// console.log(x)
+	// console.log(data.length)
+	if (data.length == x) return
+// console.log(data)
 	// get days from launch as x axis
 
 	var today = new Date();
