@@ -23,10 +23,11 @@ function buildPopcornPage(content) {
 	updateCharts(content.newUsers);
 	buildPopcornLastGame('pc', content.lastGame);
 
-	var x = document.getElementById('pc_total_games').getAttribute('total');
-	var y = document.getElementById('pc_scores').getAttribute('total');
+	// var x = document.getElementById('pc_total_games').getAttribute('total');
+	// var y = document.getElementById('pc_scores').getAttribute('total');
 // console.log(x,y)
-	if (x != y || !x || !y) buildPopcornLeague(content.league, 'pc', content.totalGames);
+	// if (x != y || !x || !y) 
+	buildPopcornLeague(content.league, 'pc', content.totalGames);
 
 
 	document.getElementById('pc_total_players').innerHTML = numberWithCommas(content.totalUsers);
