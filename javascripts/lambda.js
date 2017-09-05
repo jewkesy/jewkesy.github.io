@@ -72,7 +72,7 @@ function getContent(qs, callback) {
   else if (qs.prefix == 'tf') url += '/trifle';
   else return callback('unhandled prefix');
 
-  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"startTimestamp":1,"locale":1,"icon":1,"_id":0}&s={"score":-1,"timestamp":1}'
+  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"startTimestamp":1,"locale":1,"icon":1,"_id":0}&s={"score":-1,"games":1,timestamp":1}'
 
   if (qs.prefix == 'pc' && qs.locale && qs.locale != '' && qs.locale != 'undefined') {
     url += '&q={"locale":"' + qs.locale + '"}';
@@ -165,5 +165,3 @@ function getData(url, callback) {
       return callback(e);
     });
 }
-
-
