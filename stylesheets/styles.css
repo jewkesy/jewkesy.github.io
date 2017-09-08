@@ -335,54 +335,54 @@ img.rounded {
   float: left;
   background-image: url(/images/amazonStars.png);
   height: 40px;
-  width: 95px;  /* 19px per star */
+  width: 75px;  /* 15px per star */
   background-repeat: no-repeat;
-  background-size: 390px 18px;
+  background-size: 303px 14px;
   margin-right: 10px;
   margin-top: 20px;
-  background-position: -95px 20px;
-
+  background-position: 0px 20px;
+  /*border: 1px solid;*/
   text-align: center;
 }
 
 .a-star-0 {
-    background-position: -95px 20px;
+    background-position: -230px 20px;
 }
 
 .a-star-0-5 {
-    background-position: -276px 20px;
+    background-position: -215px 20px;
 }
 
 .a-star-1 {
-    background-position: -76px 20px;
+    background-position: -60px 20px;
 }
 
 .a-star-1-5 {
-    background-position: -257px 20px;
+    background-position: -200px 20px;
 }
 
 .a-star-2 {
-    background-position: -57px 20px;
+    background-position: -45px 20px;
 }
 
 .a-star-2-5 {
-    background-position: -238px 20px;
+    background-position: -185px 20px;
 }
 
 .a-star-3 {
-    background-position: -38px 20px;
+    background-position: -30px 20px;
 }
 
 .a-star-3-5 {
-    background-position: -219px 20px;
+    background-position: -170px 20px;
 }
 
 .a-star-4 {
-    background-position: -19px 20px;
+    background-position: -15px 20px;
 }
 
 .a-star-4-5 {
-    background-position: -200px 20px;
+    background-position: -155px 20px;
 }
 
 .a-star-5 {

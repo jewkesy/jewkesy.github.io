@@ -158,7 +158,7 @@ function httpGetAmazon(theUrl){
 }
 
 function buildAmazonReview(data) {
-
+return
 	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars'];
 	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
 	// console.log(data)
