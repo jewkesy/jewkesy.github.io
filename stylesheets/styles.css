@@ -315,6 +315,10 @@ img.locale {
   margin: 0px !important;
 }
 
+img.rounded {
+  border-radius: 10px;
+}
+
 .fadedScroller_fade {
   max-width: 500px;
   content:'';
@@ -325,6 +329,61 @@ img.locale {
   background: -moz-linear-gradient(bottom, rgba(229, 229, 229, 0), rgba(229, 229, 229, 1)); /* For Firefox 3.6 to 15 */
   background: linear-gradient(to bottom, rgba(229, 229, 229, 0), rgba(229, 229, 229, 1)); /* Standard syntax (must be last) */
   position: relative;
+}
+
+.a-star {
+  float: left;
+  background-image: url(/images/amazonStars.png);
+  height: 18px;
+  width: 95px;  /* 19px per star */
+  background-repeat: no-repeat;
+  background-size: 390px 18px;
+  margin-right: 10px;
+  background-position: -95px 0;
+}
+
+.a-star-0 {
+    background-position: -95px 0;
+}
+
+.a-star-0-5 {
+    background-position: -276px 0;
+}
+
+.a-star-1 {
+    background-position: -76px 0;
+}
+
+.a-star-1-5 {
+    background-position: -257px 0;
+}
+
+.a-star-2 {
+    background-position: -57px 0;
+}
+
+.a-star-2-5 {
+    background-position: -238px 0;
+}
+
+.a-star-3 {
+    background-position: -38px 0;
+}
+
+.a-star-3-5 {
+    background-position: -219px 0;
+}
+
+.a-star-4 {
+    background-position: -19px 0;
+}
+
+.a-star-4-5 {
+    background-position: -200px 0;
+}
+
+.a-star-5 {
+    background-position: 0 0;
 }
 
 

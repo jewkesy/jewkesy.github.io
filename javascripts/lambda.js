@@ -8,6 +8,7 @@ var PC_STATS = process.env.popcornStats;
 var PC_COUNT = process.env.popcornCount;
 var TF_LEAGUE = process.env.trifleLeague;
 var TF_COUNT = process.env.trifleCount;
+var REVIEWS = process.env.amazonReviews || process.argv[4];
 
 /**
  * Demonstrates a simple HTTP endpoint using API Gateway. You have full
@@ -29,7 +30,11 @@ exports.handler = (event, context, callback) => {
 
   switch (event.httpMethod) {
     case 'GET':
-      getContent(event.queryStringParameters, done);
+      if (event.queryStringParameters.amazon) {
+        getAmazon(done);
+      } else {
+        getContent(event.queryStringParameters, done);
+      }
       break;
     case 'DELETE':
     case 'POST':
@@ -60,6 +65,23 @@ exports.handler = (event, context, callback) => {
 //   console.log(e, m)
 //   console.log('done')
 // });
+
+// getAmazon(function (e, r) {
+//   console.log(e, r)
+// });
+
+function getAmazon(callback) {
+  var url = MONGO_URI + REVIEWS + "&apiKey=" + MONGO_API;
+  console.log(url);
+  getData(url, function (e, msg) {
+    if (e) return callback(e);
+    var retVal = {
+      reviews: msg
+    }
+    // console.log(league)
+    return callback(null, retVal);
+  });
+}
 
 function getContent(qs, callback) {
   console.log(qs)

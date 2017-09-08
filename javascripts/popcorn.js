@@ -1,6 +1,7 @@
 "use strict";
 
 var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
+var amazonUrl = aws + 'getHomePageContent?amazon=true';
 
 var loc = getParameterByName('locale') || '';
 var c = getParameterByName('limit') || 10;
@@ -125,17 +126,16 @@ httpGetStats(popcornUrl, 'pc', function (err, data) {
 		buildPopcornPage(data);
 	}
 });
-
-buildAmazonParts({
-	uk: {
-		reviews: 'Awaiting publish',
-		score: 'NA'
-	}
-}, 'popcorn_amazon_score');
+httpGetAmazon(amazonUrl, function (err, data) {
+	// if (!err) buildAmazonReview(data.reviews[0]);
+});
 
 setInterval(function () {
 	httpGetStats(popcornUrl, 'pc', function (err, data) {
 		if (!err) buildPopcornPage(data);
+	});
+	httpGetAmazon(amazonUrl, function (err, data) {
+		// if (!err) buildAmazonReview(data.reviews[0]);
 	});
 
 }, 60000);
@@ -150,12 +150,38 @@ function httpGetAmazon(theUrl){
 	function handleReadyStateChange() {
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
-				var doc = JSON.parse(xmlHttp.responseText)[0];
-				// console.log(doc)
-				buildAmazonParts(doc, 'popcorn_amazon_score');
+				var doc = JSON.parse(xmlHttp.responseText);
+				buildAmazonReview(doc.reviews[0]);
 			}
 		}
 	}
+}
+
+function buildAmazonReview(data) {
+
+	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars'];
+	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
+	// console.log(data)
+
+	for (var i = 0; i < arIds.length; i++) {
+		var e = document.getElementById(arIds[i]);
+		for (var j = 0; j < arClasses.length; j++) {
+			e.classList.remove(arClasses[j]);
+		}
+
+		if (i == 0) e.classList.add(getCssStar(data.uk.score));
+		if (i == 1) e.classList.add(getCssStar(data.us.score));
+		if (i == 2) e.classList.add(getCssStar(data.de.score));
+	}
+}
+
+function getCssStar(score) {
+
+	var retVal = 'a-star-';
+
+	var s = score.toString().replace(".", "-");
+
+	return retVal + s;
 }
 
 function chtLocale(chart, data, options) {
