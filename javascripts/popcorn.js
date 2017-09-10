@@ -19,18 +19,10 @@ var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getCon
 });
 
 function buildPopcornPage(content) {
-
-
 	updateCharts(content.newUsers);
 	buildPopcornLastGame('pc', content.lastGame);
 
-	// var x = document.getElementById('pc_total_games').getAttribute('total');
-	// var y = document.getElementById('pc_scores').getAttribute('total');
-// console.log(x,y)
-	// if (x != y || !x || !y) 
 	buildPopcornLeague(content.league, 'pc', content.totalGames);
-
-
 	document.getElementById('pc_total_players').innerHTML = numberWithCommas(content.totalUsers);
 	document.getElementById('pc_total_players').setAttribute('total', content.totalUsers);
 	document.getElementById('pc_total_games').innerHTML = numberWithCommas(content.totalGames);
@@ -47,21 +39,18 @@ function buildPopcornLastGame(prefix, t) {
 	document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.s);
 	document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.g);
 	document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.s)/(+t.g)).toFixed(2);
-	document.getElementById(prefix + '_lp_ts').innerHTML = "...";
+	document.getElementById(prefix + '_lp_ts').innerHTML = humanTime((t.t/1000)+"");
 	document.getElementById(prefix + '_lp_ts').setAttribute('title', t.t/1000);
-	document.getElementById(prefix + '_lp_st').innerHTML = "...";
+	document.getElementById(prefix + '_lp_st').innerHTML = humanTime((t.st/1000)+"");
 	document.getElementById(prefix + '_lp_st').setAttribute('title', t.st/1000);
 	document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.l + ".png' />";
 }
 
 function buildPopcornLeague(topTen, prefix, total) {
-
 	var container = document.getElementById(prefix + '_scores')
-	// console.log(topTen)
+
 	for (var i = 0; i < topTen.length; i++) {
-		// if (i >= displayCount) break;
-		var x = i + 1;
-		
+		var x = i + 1;		
 		var id = prefix + "_" + x;
 		var sym = "";
 		if (topTen[i].i == 'star') {sym = " &#9734;";}
@@ -97,8 +86,8 @@ function buildPopcornLeague(topTen, prefix, total) {
 			cell2.innerHTML = topTen[i].s;
 			cell3.innerHTML = topTen[i].g;
 			cell4.innerHTML = ((+topTen[i].s)/(+topTen[i].g)).toFixed(2);
-			cell5.innerHTML = "...";
-			cell6.innerHTML = "...";
+			cell5.innerHTML = humanTime((topTen[i].t/1000)+"");
+			cell6.innerHTML = humanTime((topTen[i].st/1000)+"");
 
 			if (topTen[i].l) {
 				cell7.innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
@@ -231,7 +220,7 @@ function chtNewUsers(chart, data) {
 	// console.log(x)
 	// console.log(data.length)
 	if (data.length == x) return
-// console.log(data)
+
 	// get days from launch as x axis
 
 	var today = new Date();

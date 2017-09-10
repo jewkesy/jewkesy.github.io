@@ -37,7 +37,6 @@ function httpGetGameCount(theUrl, prefix){
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
-				// console.log(doc)
 				document.getElementById(prefix + '_total_players').innerHTML = numberWithCommas(doc.length);
 
 				var count = 0;
@@ -57,12 +56,11 @@ function httpGetLastPlay(theUrl, prefix) {
 	xmlHttp.open("GET", theUrl, true);
 	xmlHttp.onreadystatechange = handleReadyStateChange;
 	xmlHttp.send(null);
-	// console.log(theUrl, prefix)
+
 	function handleReadyStateChange() {
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
-				// console.log(doc)
 				var t = doc[0]
 				t.rank = 1;
 				for (var i = 1; i < doc.length; i++) {
@@ -80,7 +78,6 @@ function httpGetLastPlay(theUrl, prefix) {
 				document.getElementById(prefix + '_lp_ts').innerHTML = "...";
 				document.getElementById(prefix + '_lp_ts').setAttribute('title', t.timestamp/1000);
 				document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.locale + ".png' />";
-
 			}
 		}
 	}
@@ -106,18 +103,9 @@ function httpGetStats(theUrl, prefix, callback){
 }
 
 function buildTopTen(topTen, prefix) {
-	// console.log(topTen, prefix)
-
 	var container = document.getElementById(prefix + '_scores')
 
-	// if (document.getElementById(container)) document.getElementById(container).innerHTML = x + star
-// console.log(topTen.length, prefix)
 	for (var i = 0; i < topTen.length; i++) {
-		// if (i >= displayCount) break;
-		// if (prefix == 'pc' && displayLocale != '') {
-		// 	// console.log(topTen[i].locale)
-		// 	if (displayLocale != topTen[i].locale) continue;
-		// } 
 		if (i >= displayCount) break;
 		var x = i + 1;
 		var id = prefix + "_" + x;
@@ -125,7 +113,6 @@ function buildTopTen(topTen, prefix) {
 		if (topTen[i].icon == 'star') {sym = " &#9734;";}
 		else if (topTen[i].icon == 'sun') {sym = " &#9788;";}
 		else if (topTen[i].icon == 'note') {sym = " &#9834;";}
-		// if (topTen[i].userId == me)
 
 		if (!document.getElementById(prefix + '_' + x)) {
 			var row = container.insertRow(-1);
@@ -166,7 +153,6 @@ function buildTopTen(topTen, prefix) {
 			}
 		}
 		document.getElementById(prefix + '_count').innerHTML = i+1;
-		// if (i + 1 >= displayCount) break;
 	}
 }
 
@@ -182,66 +168,66 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+var templates = {
+    prefix: "",
+    suffix: " ago",
+    seconds: "less than a minute",
+    minute: "about a minute",
+    minutes: "%d minutes",
+    hour: "about an hour",
+    hours: "about %d hours",
+    day: "a day",
+    days: "%d days",
+    month: "about a month",
+    months: "%d months",
+    year: "about a year",
+    years: "%d years"
+};
+
+var template = function(t, n) {
+    return templates[t] && templates[t].replace(/%d/i, Math.abs(Math.round(n)));
+};    
+
+function humanTime(time) {
+	if (!time) return;
+    time = time.replace(/\.\d+/, ""); // remove milliseconds
+    time = time.replace(/-/, "/").replace(/-/, "/");
+    time = time.replace(/T/, " ").replace(/Z/, " UTC");
+    time = time.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2"); // -04:00 -> -0400
+    time = new Date(time * 1000 || time);
+
+    var now = new Date();
+    var seconds = ((now.getTime() - time) * .001) >> 0;
+    var minutes = seconds / 60;
+    var hours = minutes / 60;
+    var days = hours / 24;
+    var years = days / 365;
+
+    return templates.prefix + (
+            seconds < 45 && template('seconds', seconds) ||
+            seconds < 90 && template('minute', 1) ||
+            minutes < 45 && template('minutes', minutes) ||
+            minutes < 90 && template('hour', 1) ||
+            hours < 24 && template('hours', hours) ||
+            hours < 42 && template('day', 1) ||
+            days < 30 && template('days', days) ||
+            days < 45 && template('month', 1) ||
+            days < 365 && template('months', days / 30) ||
+            years < 1.5 && template('year', 1) ||
+            template('years', years)
+        ) + templates.suffix;
+}
+
 (function timeAgo(selector) {
-    var templates = {
-        prefix: "",
-        suffix: " ago",
-        seconds: "less than a minute",
-        minute: "about a minute",
-        minutes: "%d minutes",
-        hour: "about an hour",
-        hours: "about %d hours",
-        day: "a day",
-        days: "%d days",
-        month: "about a month",
-        months: "%d months",
-        year: "about a year",
-        years: "%d years"
-    };
-    var template = function(t, n) {
-        return templates[t] && templates[t].replace(/%d/i, Math.abs(Math.round(n)));
-    };
-
-    var timer = function(time) {
-        if (!time)
-            return;
-        time = time.replace(/\.\d+/, ""); // remove milliseconds
-        time = time.replace(/-/, "/").replace(/-/, "/");
-        time = time.replace(/T/, " ").replace(/Z/, " UTC");
-        time = time.replace(/([\+\-]\d\d)\:?(\d\d)/, " $1$2"); // -04:00 -> -0400
-        time = new Date(time * 1000 || time);
-
-        var now = new Date();
-        var seconds = ((now.getTime() - time) * .001) >> 0;
-        var minutes = seconds / 60;
-        var hours = minutes / 60;
-        var days = hours / 24;
-        var years = days / 365;
-
-        return templates.prefix + (
-                seconds < 45 && template('seconds', seconds) ||
-                seconds < 90 && template('minute', 1) ||
-                minutes < 45 && template('minutes', minutes) ||
-                minutes < 90 && template('hour', 1) ||
-                hours < 24 && template('hours', hours) ||
-                hours < 42 && template('day', 1) ||
-                days < 30 && template('days', days) ||
-                days < 45 && template('month', 1) ||
-                days < 365 && template('months', days / 30) ||
-                years < 1.5 && template('year', 1) ||
-                template('years', years)
-                ) + templates.suffix;
-    };
-
     var elements = document.getElementsByClassName('timeago');
-    // console.log(elements)
+
     for (var i in elements) {
         var $this = elements[i];
         if (typeof $this === 'object') {
-            $this.innerHTML = timer($this.getAttribute('title') || $this.getAttribute('datetime'));
+            $this.innerHTML = humanTime($this.getAttribute('title') || $this.getAttribute('datetime'));
         }
     }
     // update time every minute
-    setTimeout(timeAgo, 5000);
+    setTimeout(timeAgo, 60000);
 })();
 
