@@ -108,6 +108,7 @@ function buildPopcornLeague(topTen, prefix, total) {
 			document.getElementById(prefix + '_rank_' + x).innerHTML = x + sym;
 			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].s;
 			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].g;
+			document.getElementById(prefix + '_avg_' + x).innerHTML = ((+topTen[i].s)/(+topTen[i].g)).toFixed(2);
 			document.getElementById(prefix + '_ts_' + x).title = topTen[i].t/1000;
 			document.getElementById(prefix + '_st_' + x).title = topTen[i].st/1000;
 			if (topTen[i].l) {
