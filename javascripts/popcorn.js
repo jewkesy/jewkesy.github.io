@@ -128,7 +128,7 @@ setInterval(function () {
 		// if (!err) buildAmazonReview(data.reviews[0]);
 	});
 
-}, 60000);
+}, 45000);
 
 function httpGetAmazon(theUrl){
 	var xmlHttp = null;
@@ -163,6 +163,9 @@ function buildAmazonReview(data) {
 		if (i == 1) e.classList.add(getCssStar(data.us.score));
 		if (i == 2) e.classList.add(getCssStar(data.de.score));
 	}
+	document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
+	document.getElementById('pc_us_reviews').innerHTML = data.us.reviews;
+	document.getElementById('pc_de_reviews').innerHTML = data.de.reviews;
 }
 
 function getCssStar(score) {
