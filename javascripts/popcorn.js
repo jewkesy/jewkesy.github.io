@@ -13,9 +13,12 @@ if (loc != '') {
 if (c != 10) {
 	popcornUrl += "&limit=" + c;
 }
+Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1
+Chart.defaults.bar.scales.xAxes[0].barPercentage = 1
+// console.log(Chart.defaults.bar.scales.xAxes[0].categoryPercentage)
 
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), {
-    type: 'line'
+    type: 'bar'
 });
 
 function buildPopcornPage(content) {
@@ -238,65 +241,72 @@ function chtNewUsers(chart, data) {
 	l[0] = "Launch";
 	l[diff] = "Today";
 
-	var ar = new Array(diff).fill(0);
+	// var ar = new Array(diff).fill(0);
 	var uk = new Array(diff).fill(0);
 	var us = new Array(diff).fill(0);
 	var de = new Array(diff).fill(0);
-	var un = new Array(diff).fill(0);
 
+	var we = new Array(diff).fill(0);
+
+	var max = 0;
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];
 		var d = new Date(x.d);
+		var day = d.getDay();
+
 		var df = daydiff(startDate, d, true);
 		if (x.l=="en-GB") uk[df-1]++;
 		else if (x.l=="en-US") us[df-1]++;
 		else if (x.l=="de-DE") de[df-1]++;
-		else un[df-1]++;
-		ar[df-1]++;
+		var day = d.getDay();
+		if (day == 0 || day >= 5) we[df-1]=200;
 	}
+// console.log(we)
+// console.log(uk)
 
+// l = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+// we = [30, 0, 0, 0, 0, 30, 30]
 	var d = {
 		"labels": l,
-		"datasets":[{
-			"label":"New Users",
-			"data": ar,
-			"fill":false,
-			"lineTension":0.1
-		}, {
+		"datasets":[
+		{
 			"label":"en-GB",
 			"data": uk,
 			"fill":false,
 			"borderColor":"rgba(255,99,132,1)",
 			"backgroundColor":"rgba(255,99,132,1)",
-			"lineTension":0.1
+			"lineTension":0.1,
+			"type":"line"
 		},{
 			"label":"en-US",
 			"data": us,
 			"fill":false,
 			"borderColor":"rgba(54, 162, 235, 1)",
 			"backgroundColor":"rgba(54, 162, 235, 1)",
-			"lineTension":0.1
+			"lineTension":0.1,
+			"type":"line"
 		},{
 			"label":"de-DE",
 			"data": de,
 			"fill":false,
 			"borderColor":"rgba(255, 206, 86, 1)",
 			"backgroundColor":"rgba(255, 206, 86, 1)",
-			"lineTension":0.1
+			"lineTension":0.1,
+			"type":"line"
 		},{
-			"label":"Unknown",
-			"data": un,
-			"fill":false,
-			"borderColor":"rgba(75, 192, 192, 1)",
-			"backgroundColor":"rgba(75, 192, 192, 1)",
-			"lineTension":0.1
+			"label":"Weekends",
+			"data": we,
+			"type": "bar",
+			"borderColor":"rgba(238, 238, 238, 0)",
+			"backgroundColor":"rgba(238, 238, 238, 0.4)"
 		}],
-		options: {}	
-	}
+		options: {}
+    }
 
 	chart.data = d;
-	chart.getDatasetMeta(0).hidden = true
-	chart.getDatasetMeta(4).hidden = true
+
+
+	// chart.getDatasetMeta(0).hidden = true
 
 	chart.update();
 }
