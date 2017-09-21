@@ -13,9 +13,11 @@ if (loc != '') {
 if (c != 10) {
 	popcornUrl += "&limit=" + c;
 }
-Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1
-Chart.defaults.bar.scales.xAxes[0].barPercentage = 1
-// console.log(Chart.defaults.bar.scales.xAxes[0].categoryPercentage)
+Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
+Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
+Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
+// Chart.defaults.scale.gridLines.display=false;
+// console.log(Chart.defaults)
 
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), {
     type: 'bar'
