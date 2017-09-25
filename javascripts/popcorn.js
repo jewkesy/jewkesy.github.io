@@ -249,6 +249,7 @@ function chtNewUsers(chart, data) {
 	var de = new Array(diff).fill(0);
 
 	var we = new Array(diff).fill(0);
+	var mo = new Array(diff).fill(0);
 
 	var max = 0;
 	for (var i = 0; i < data.length; i++) {
@@ -262,6 +263,8 @@ function chtNewUsers(chart, data) {
 		else if (x.l=="de-DE") de[df-1]++;
 		var day = d.getDay();
 		if (day == 0 || day >= 5) we[df-1]=200;
+		var dt = d.getDate();
+		if (dt == 1) mo[df-1]=200;
 	}
 // console.log(we)
 // console.log(uk)
@@ -299,8 +302,15 @@ function chtNewUsers(chart, data) {
 			"label":"Weekends",
 			"data": we,
 			"type": "bar",
-			"borderColor":"rgba(238, 238, 238, 0)",
-			"backgroundColor":"rgba(238, 238, 238, 0.4)"
+			"borderWidth": 1,
+			"backgroundColor":"rgba(238, 238, 238, 0.4)",
+			"borderColor":"rgba(238, 238, 238, 0.4)"
+		},{
+			"label":"Months",
+			"data": mo,
+			"type": "bar",
+			"borderWidth": 0,
+			"backgroundColor":"rgba(76, 245, 20, 0.4)"
 		}],
 		options: {}
     }
