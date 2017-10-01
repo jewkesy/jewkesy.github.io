@@ -133,7 +133,7 @@ setInterval(function () {
 		// if (!err) buildAmazonReview(data.reviews[0]);
 	});
 
-}, 45000);
+}, 15000);
 
 function httpGetAmazon(theUrl){
 	var xmlHttp = null;
@@ -257,14 +257,14 @@ function chtNewUsers(chart, data) {
 		var d = new Date(x.d);
 		var day = d.getDay();
 
-		var df = daydiff(startDate, d, true);
-		if (x.l=="en-GB") uk[df-1]++;
-		else if (x.l=="en-US") us[df-1]++;
-		else if (x.l=="de-DE") de[df-1]++;
+		var df = daydiff(startDate, d, true)-1;
+		if (x.l=="en-GB") uk[df]++;
+		else if (x.l=="en-US") us[df]++;
+		else if (x.l=="de-DE") de[df]++;
 		var day = d.getDay();
-		if (day == 0 || day >= 5) we[df-1]=200;
+		if (day == 0 || day >= 5) we[df]=200;
 		var dt = d.getDate();
-		if (dt == 1) mo[df-1]=200;
+		if (dt == 1) mo[df]=200;
 	}
 // console.log(we)
 // console.log(uk)
