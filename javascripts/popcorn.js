@@ -58,9 +58,11 @@ function buildPopcornLeague(topTen, prefix, total) {
 		var x = i + 1;		
 		var id = prefix + "_" + x;
 		var sym = "";
+
 		if (topTen[i].i == 'star') {sym = " &#9734;";}
 		else if (topTen[i].i == 'sun') {sym = " &#9788;";}
 		else if (topTen[i].i == 'note') {sym = " &#9834;";}
+		else if (topTen[i].i == 'hash') {sym = " #";}
 
 		if (!document.getElementById(prefix + '_' + x)) {
 			var row = container.insertRow(-1);
