@@ -389,6 +389,14 @@ img.rounded {
     background-position: 0 45px;
 }
 
+.selected {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+.selected > a {
+  font-weight: bold;
+}
 
 .typed-cursor{
     opacity: 1;

@@ -7,7 +7,19 @@ var loc = getParameterByName('locale') || '';
 var c = getParameterByName('limit') || 10;
 
 if (loc != '') {
+	applyLocaleHeader(loc);
 	popcornUrl += "&locale=" + loc;
+}
+
+function applyLocaleHeader(locale) {
+	// document.getElementsByClassName('selected').classList.remove("selected");
+
+	var elements = document.getElementsByClassName('selected');
+	for(var i=0, l=elements.length; i<l; i++){
+	 elements[i].classList.remove("selected");
+	}
+	
+	document.getElementById("th_"+loc).classList.add('selected');
 }
 
 if (c != 10) {
