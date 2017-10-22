@@ -36,7 +36,7 @@ var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getCon
 });
 
 function buildPopcornPage(content) {
-	updateCharts(content.newUsers);
+	updateCharts(content.newUsers, content.totalUsers);
 	buildPopcornLastGame('pc', content.lastGame);
 
 	buildPopcornLeague(content.league, 'pc', content.totalGames);
@@ -239,12 +239,14 @@ function chtLocale(chart, data, options) {
 	chart.update();
 }
 
-function chtNewUsers(chart, data) {
+function chtNewUsers(chart, data, total) {
 	if (!data) return;
+	// console.log(total)
+	// console.log(data.length)
 	var x = document.getElementById('pc_total_players').getAttribute('total');
 	// console.log(x)
-	// console.log(data.length)
-	if (data.length == x) return
+	if (data.length == x) return;
+	// if (data.length == total) return;
 
 	// get days from launch as x axis
 
@@ -286,6 +288,10 @@ function chtNewUsers(chart, data) {
 		if (dt == 1) mo[df]=200;
 	}
 
+	// console.log( total / diff)
+
+	var avg = new Array(diff).fill( total / diff);
+
 	var d = {
 		"labels": l,
 		"datasets":[
@@ -296,7 +302,8 @@ function chtNewUsers(chart, data) {
 			"borderColor":"rgba(255,99,132,1)",
 			"backgroundColor":"rgba(255,99,132,1)",
 			"lineTension":0.1,
-			"type":"line"
+			"type":"line",
+			"pointRadius":1
 		},{
 			"label":"en-US",
 			"data": us,
@@ -304,7 +311,8 @@ function chtNewUsers(chart, data) {
 			"borderColor":"rgba(54, 162, 235, 1)",
 			"backgroundColor":"rgba(54, 162, 235, 1)",
 			"lineTension":0.1,
-			"type":"line"
+			"type":"line",
+			"pointRadius":1
 		},{
 			"label":"de-DE",
 			"data": de,
@@ -312,7 +320,8 @@ function chtNewUsers(chart, data) {
 			"borderColor":"rgba(255, 206, 86, 1)",
 			"backgroundColor":"rgba(255, 206, 86, 1)",
 			"lineTension":0.1,
-			"type":"line"
+			"type":"line",
+			"pointRadius":1
 		},{
 			"label":"en-IN",
 			"data": ind,
@@ -320,7 +329,8 @@ function chtNewUsers(chart, data) {
 			"borderColor":"rgba(255, 206, 186, 1)",
 			"backgroundColor":"rgba(255, 206, 186, 1)",
 			"lineTension":0.1,
-			"type":"line"
+			"type":"line",
+			"pointRadius":1
 		},{
 			"label":"", //Weekends
 			"data": we,
@@ -334,6 +344,14 @@ function chtNewUsers(chart, data) {
 			"type": "bar",
 			"borderWidth": 0,
 			"backgroundColor":"rgba(76, 245, 20, 0.4)"
+		},{
+			"label":"", //avg
+			"data": avg,
+			"type": "line",
+			"fill":false,
+			"borderColor":"rgba(252, 194, 197, 0.3)",
+			"backgroundColor":"rgba(252, 194, 197, 0.3)",
+			"pointRadius":2
 		}],
 		options: {}
     }
@@ -346,9 +364,9 @@ function chtNewUsers(chart, data) {
 	chart.update();
 }
 
-function updateCharts(data) {
+function updateCharts(data, total) {
 	if (!data) return;
-	chtNewUsers(newUsersChart, data)
+	chtNewUsers(newUsersChart, data, total)
 }
 
 function daydiff(first, second, includeLast) {
