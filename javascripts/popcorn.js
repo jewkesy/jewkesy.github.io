@@ -303,7 +303,7 @@ function chtNewUsers(chart, data, total) {
 			"backgroundColor":"rgba(255,99,132,1)",
 			"lineTension":0.1,
 			"type":"line",
-			"pointRadius":1
+			"pointRadius":2
 		},{
 			"label":"en-US",
 			"data": us,
@@ -312,7 +312,7 @@ function chtNewUsers(chart, data, total) {
 			"backgroundColor":"rgba(54, 162, 235, 1)",
 			"lineTension":0.1,
 			"type":"line",
-			"pointRadius":1
+			"pointRadius":2
 		},{
 			"label":"de-DE",
 			"data": de,
@@ -321,7 +321,7 @@ function chtNewUsers(chart, data, total) {
 			"backgroundColor":"rgba(255, 206, 86, 1)",
 			"lineTension":0.1,
 			"type":"line",
-			"pointRadius":1
+			"pointRadius":2
 		},{
 			"label":"en-IN",
 			"data": ind,
@@ -330,7 +330,7 @@ function chtNewUsers(chart, data, total) {
 			"backgroundColor":"rgba(255, 206, 186, 1)",
 			"lineTension":0.1,
 			"type":"line",
-			"pointRadius":1
+			"pointRadius":2
 		},{
 			"label":"", //Weekends
 			"data": we,
