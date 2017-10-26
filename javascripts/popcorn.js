@@ -263,34 +263,47 @@ function chtNewUsers(chart, data, total) {
 	l[diff] = "Today";
 
 	// var ar = new Array(diff).fill(0);
-	var uk = new Array(diff).fill(0);
-	var us = new Array(diff).fill(0);
-	var de = new Array(diff).fill(0);
-	var ind = new Array(diff).fill(0);
+	var uk = new Array(diff).fill(null);
+	var us = new Array(diff).fill(null);
+	var de = new Array(diff).fill(null);
+	var ind = new Array(diff).fill(null);
 
-	var we = new Array(diff).fill(0);
-	var mo = new Array(diff).fill(0);
+	var avg = new Array(diff).fill(0);
+
+	var we = new Array(diff).fill(null);
+	var mo = new Array(diff).fill(null);
+
+	var totals = new Array(diff).fill(0);
 
 	var max = 0;
+
 	for (var i = 0; i < data.length; i++) {
-		var x = data[i];
+		var x = data[i];		
 		var d = new Date(x.d);
 		var day = d.getDay();
 
 		var df = daydiff(startDate, d, true)-1;
+		if (df < 0) continue;
+
 		if (x.l=="en-GB") uk[df]++;
 		else if (x.l=="en-US") us[df]++;
 		else if (x.l=="de-DE") de[df]++;
 		else if (x.l=="en-IN") ind[df]++;
+		else us[df]++; // assume US
+		totals[df]++;
+
 		var day = d.getDay();
 		if (day == 0 || day >= 5) we[df]=200;
 		var dt = d.getDate();
 		if (dt == 1) mo[df]=200;
 	}
 
-	// console.log( total / diff)
-
-	var avg = new Array(diff).fill( total / diff);
+	var t = 1;  // include myself
+	avg[0] = totals[0]
+	for (var i = 0; i < diff; i++) {
+		t += totals[i]
+		avg[i] = t/(i+1) 
+	}
 
 	var d = {
 		"labels": l,
@@ -350,7 +363,7 @@ function chtNewUsers(chart, data, total) {
 			"type": "line",
 			"fill":false,
 			"borderColor":"rgba(252, 194, 197, 0.3)",
-			"backgroundColor":"rgba(252, 194, 197, 0.3)",
+			"backgroundColor":"rgba(252, 194, 197, 1.0)",
 			"pointRadius":2
 		}],
 		options: {}
