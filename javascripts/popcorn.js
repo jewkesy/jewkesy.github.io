@@ -36,6 +36,7 @@ var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getCon
 });
 
 function buildPopcornPage(content) {
+	if (!content) return;
 	updateCharts(content.newUsers, content.totalUsers);
 	buildPopcornLastGame('pc', content.lastGame);
 
@@ -362,18 +363,14 @@ function chtNewUsers(chart, data, total) {
 			"data": avg,
 			"type": "line",
 			"fill":false,
-			"borderColor":"rgba(252, 194, 197, 0.3)",
-			"backgroundColor":"rgba(252, 194, 197, 1.0)",
-			"pointRadius":2
+			"borderColor":"rgba(0, 0, 0, 1)",
+			"backgroundColor":"rgba(0, 0, 0, 1)",
+			"pointRadius":0
 		}],
 		options: {}
     }
 
 	chart.data = d;
-
-
-	// chart.getDatasetMeta(0).hidden = true
-
 	chart.update();
 }
 
