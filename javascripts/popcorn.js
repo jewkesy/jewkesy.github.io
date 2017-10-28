@@ -102,9 +102,9 @@ function buildPopcornLeague(topTen, prefix, total) {
 			var cell7 = row.insertCell(6);
 			cell7.id = prefix + "_locale_" + x;
 
-			cell1.innerHTML = x + sym;
-			cell2.innerHTML = topTen[i].s;
-			cell3.innerHTML = topTen[i].g;
+			cell1.innerHTML = numberWithCommas(x) + sym;
+			cell2.innerHTML = numberWithCommas(topTen[i].s);
+			cell3.innerHTML = numberWithCommas(topTen[i].g);
 			cell4.innerHTML = ((+topTen[i].s)/(+topTen[i].g)).toFixed(2);
 			cell5.innerHTML = humanTime((topTen[i].t/1000)+"");
 			cell6.innerHTML = humanTime((topTen[i].st/1000)+"");
@@ -114,9 +114,9 @@ function buildPopcornLeague(topTen, prefix, total) {
 			}
 			
 		} else {
-			document.getElementById(prefix + '_rank_' + x).innerHTML = x + sym;
-			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].s;
-			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].g;
+			document.getElementById(prefix + '_rank_' + x).innerHTML = numberWithCommas(x) + sym;
+			document.getElementById(prefix + '_score_' + x).innerHTML = numberWithCommas(topTen[i].s);
+			document.getElementById(prefix + '_games_' + x).innerHTML = numberWithCommas(topTen[i].g);
 			document.getElementById(prefix + '_avg_' + x).innerHTML = ((+topTen[i].s)/(+topTen[i].g)).toFixed(2);
 			document.getElementById(prefix + '_ts_' + x).title = topTen[i].t/1000;
 			document.getElementById(prefix + '_ts_' + x).innerHTML = humanTime((topTen[i].t/1000)+"");
