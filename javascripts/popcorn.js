@@ -1,6 +1,7 @@
 "use strict";
 
 var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
+var popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc';
 var amazonUrl = aws + 'getHomePageContent?amazon=true';
 
 var loc = getParameterByName('locale') || '';
@@ -22,18 +23,15 @@ function applyLocaleHeader(locale) {
 	document.getElementById("th_"+loc).classList.add('selected');
 }
 
-if (c != 10) {
-	popcornUrl += "&limit=" + c;
-}
+if (c != 10) popcornUrl += "&limit=" + c;
+
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 // Chart.defaults.scale.gridLines.display=false;
 // console.log(Chart.defaults)
 
-var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), {
-    type: 'bar'
-});
+var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildPopcornPage(content) {
 	if (!content) return;
@@ -132,7 +130,9 @@ function buildPopcornLeague(topTen, prefix, total) {
 }
 
 var startDate = new Date("28 May 2017");
-// console.log(popcornUrl)
+httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
+	if (!err) console.log(data);
+});
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (!err) {
 		buildPopcornPage(data);
@@ -142,15 +142,26 @@ httpGetAmazon(amazonUrl, function (err, data) {
 	// if (!err) buildAmazonReview(data.reviews[0]);
 });
 
+var last = 0;
+
 setInterval(function () {
-	httpGetStats(popcornUrl, 'pc', function (err, data) {
-		if (!err) buildPopcornPage(data);
+	httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
+		if (!err) {
+			if (last < data[0].timestamp) {
+				console.log(last, data[0].timestamp)
+				last = data[0].timestamp;
+				httpGetStats(popcornUrl, 'pc', function (err, data) {
+					if (!err) buildPopcornPage(data);
+				});
+			}
+		} 
 	});
+	
 	httpGetAmazon(amazonUrl, function (err, data) {
 		// if (!err) buildAmazonReview(data.reviews[0]);
 	});
 
-}, 15000);
+}, 5000);
 
 function httpGetAmazon(theUrl){
 	var xmlHttp = null;

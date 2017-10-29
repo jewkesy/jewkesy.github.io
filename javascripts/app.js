@@ -50,7 +50,7 @@ function httpGetGameCount(theUrl, prefix){
 	}
 }
 
-function httpGetLastPlay(theUrl, prefix) {
+function httpGetLastPlay(theUrl, prefix, callback) {
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
@@ -61,24 +61,9 @@ function httpGetLastPlay(theUrl, prefix) {
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
-				var t = doc[0]
-				t.rank = 1;
-				for (var i = 1; i < doc.length; i++) {
-					if (doc[i].timestamp > t.timestamp) {
-						t = doc[i];
-						t.rank = i+1;
-					}
-				}
-
-				document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.rank);
-				document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.score);
-				document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.games);
-
-				document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.score)/(+t.games)).toFixed(2);
-				document.getElementById(prefix + '_lp_ts').innerHTML = "...";
-				document.getElementById(prefix + '_lp_ts').setAttribute('title', t.timestamp/1000);
-				document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.locale + ".png' />";
+				if (callback) return callback(null, doc);
 			}
+			if (callback) return callback(xmlHttp.status);
 		}
 	}
 }

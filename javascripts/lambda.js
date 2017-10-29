@@ -32,6 +32,8 @@ exports.handler = (event, context, callback) => {
     case 'GET':
       if (event.queryStringParameters.amazon) {
         getAmazon(done);
+      } else if (event.queryStringParameters.last) {
+        getLastGame(event.queryStringParameters, done);
       } else {
         getContent(event.queryStringParameters, done);
       }
@@ -45,31 +47,6 @@ exports.handler = (event, context, callback) => {
   }
 };
 
-// var xyz = {
-//   prefix: 'pc',
-//   limit: 5,
-//   locale: ''
-// }
-
-// var abc = {
-//   prefix: 'tf',
-//   limit: 5,
-//   locale: ''
-// }
-
-// getContent(abc, function(e, m) {
-//   console.log(e, m)
-// });
-
-// getContent(xyz, function(e, m) {
-//   console.log(e, m)
-//   console.log('done')
-// });
-
-// getAmazon(function (e, r) {
-//   console.log(e, r)
-// });
-
 function getAmazon(callback) {
   var url = MONGO_URI + REVIEWS + "&apiKey=" + MONGO_API;
   console.log(url);
@@ -78,8 +55,32 @@ function getAmazon(callback) {
     var retVal = {
       reviews: msg
     }
-    // console.log(league)
     return callback(null, retVal);
+  });
+}
+
+function getLastGame(qs, callback) {
+  console.log(qs)
+
+  var url = MONGO_URI;
+
+  if (qs.prefix == 'pc') url += '/popcorn';
+  else if (qs.prefix == 'tf') url += '/trifle';
+  else return callback('unhandled prefix');
+
+  url += '/collections/game?l=1&f={timestamp:1,"_id":0}&s={"timestamp":-1}'
+
+  if (qs.prefix == 'pc' && qs.locale && qs.locale != '' && qs.locale != 'undefined') {
+    url += '&q={"locale":"' + qs.locale + '"}';
+  }
+
+  url += "&apiKey=" + MONGO_API;
+
+  // console.log(url) 
+  getData(url, function (e, msg) {
+    if (e) return callback(e);
+    // console.log(e, msg);
+    return callback(null, msg);
   });
 }
 
