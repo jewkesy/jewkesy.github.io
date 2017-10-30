@@ -130,9 +130,9 @@ function buildPopcornLeague(topTen, prefix, total) {
 }
 
 var startDate = new Date("28 May 2017");
-httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
-	if (!err) console.log(data);
-});
+// httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
+// 	if (!err) console.log(data);
+// });
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (!err) {
 		buildPopcornPage(data);
@@ -148,7 +148,7 @@ setInterval(function () {
 	httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
 		if (!err) {
 			if (last < data[0].timestamp) {
-				console.log(last, data[0].timestamp)
+				// console.log(last, data[0].timestamp)
 				last = data[0].timestamp;
 				httpGetStats(popcornUrl, 'pc', function (err, data) {
 					if (!err) buildPopcornPage(data);
@@ -351,8 +351,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"en-IN",
 			"data": ind,
 			"fill":false,
-			"borderColor":"rgba(255, 206, 186, 1)",
-			"backgroundColor":"rgba(255, 206, 186, 1)",
+			"borderColor":"rgba(0,128,0, 1)",
+			"backgroundColor":"rgba(0,128,0, 1)",
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
