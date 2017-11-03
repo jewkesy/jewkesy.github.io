@@ -147,6 +147,7 @@ var last = 0;
 setInterval(function () {
 	httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
 		if (!err) {
+			if (!data || !data[0]) return;
 			if (last < data[0].timestamp) {
 				// console.log(last, data[0].timestamp)
 				last = data[0].timestamp;
