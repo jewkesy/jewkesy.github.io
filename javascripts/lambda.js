@@ -64,7 +64,7 @@ function getLastGame(qs, callback) {
 
   var url = MONGO_URI;
 
-  if (qs.prefix == 'pc') url += '/popcorn';
+  if (qs.prefix == 'pc') url += '/popcornquiz';
   else if (qs.prefix == 'tf') url += '/trifle';
   else return callback('unhandled prefix');
 
@@ -91,7 +91,7 @@ function getContent(qs, callback) {
 
   var url = MONGO_URI;
 
-  if (qs.prefix == 'pc') url += '/popcorn';
+  if (qs.prefix == 'pc') url += '/popcornquiz';
   else if (qs.prefix == 'tf') url += '/trifle';
   else return callback('unhandled prefix');
 
