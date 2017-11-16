@@ -243,6 +243,7 @@ function chtLocale(chart, data, options) {
 		else if (results[i].key == "en-US") d.datasets[0].backgroundColor.push("rgba(54, 162, 235, 1)");
 		else if (results[i].key == "de-DE") d.datasets[0].backgroundColor.push("rgba(255, 206, 86, 1)");
 		else if (results[i].key == "en-IN") d.datasets[0].backgroundColor.push("rgba(75, 192, 192, 1)");
+		else if (results[i].key == "en-CA") d.datasets[0].backgroundColor.push("rgba(90, 92, 192, 1)");
 		else d.datasets[0].backgroundColor.push("rgba(75, 192, 192, 1)");
 	}
 
@@ -280,6 +281,7 @@ function chtNewUsers(chart, data, total) {
 	var us = new Array(diff).fill(null);
 	var de = new Array(diff).fill(null);
 	var ind = new Array(diff).fill(null);
+	var ca = new Array(diff).fill(null);
 
 	var avg = new Array(diff).fill(0);
 
@@ -302,6 +304,7 @@ function chtNewUsers(chart, data, total) {
 		else if (x.l=="en-US") us[df]++;
 		else if (x.l=="de-DE") de[df]++;
 		else if (x.l=="en-IN") ind[df]++;
+		else if (x.l=="en-CA") ca[df]++;
 		else us[df]++; // assume US
 		totals[df]++;
 
@@ -354,6 +357,15 @@ function chtNewUsers(chart, data, total) {
 			"fill":false,
 			"borderColor":"rgba(0,128,0, 1)",
 			"backgroundColor":"rgba(0,128,0, 1)",
+			"lineTension":0.1,
+			"type":"line",
+			"pointRadius":2
+		},{
+			"label":"en-CA",
+			"data": ca,
+			"fill":false,
+			"borderColor":"rgba(90,128,0, 1)",
+			"backgroundColor":"rgba(90,128,0, 1)",
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
