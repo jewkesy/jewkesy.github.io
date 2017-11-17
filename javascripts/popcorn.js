@@ -34,6 +34,7 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildPopcornPage(content) {
+	document.getElementById('pc_ts').innerHTML = new Date().toUTCString();
 	if (!content) return;
 	updateCharts(content.newUsers, content.totalUsers);
 	buildPopcornLastGame('pc', content.lastGame);
@@ -42,7 +43,8 @@ function buildPopcornPage(content) {
 	document.getElementById('pc_total_players').innerHTML = numberWithCommas(content.totalUsers);
 	document.getElementById('pc_total_players').setAttribute('total', content.totalUsers);
 	document.getElementById('pc_total_games').innerHTML = numberWithCommas(content.totalGames);
-	document.getElementById('pc_total_games').setAttribute('total', content.totalGames);	
+	document.getElementById('pc_total_games').setAttribute('total', content.totalGames);
+
 }
 
 function buildPopcornLastGame(prefix, t) {
