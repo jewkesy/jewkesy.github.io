@@ -44,7 +44,6 @@ function buildPopcornPage(content) {
 	document.getElementById('pc_total_players').setAttribute('total', content.totalUsers);
 	document.getElementById('pc_total_games').innerHTML = numberWithCommas(content.totalGames);
 	document.getElementById('pc_total_games').setAttribute('total', content.totalGames);
-
 }
 
 function buildPopcornLastGame(prefix, t) {
@@ -311,9 +310,9 @@ function chtNewUsers(chart, data, total) {
 		totals[df]++;
 
 		var day = d.getDay();
-		if (day == 0 || day >= 5) we[df]=200;
+		if (day == 0 || day >= 5) we[df]=300;
 		var dt = d.getDate();
-		if (dt == 1) mo[df]=200;
+		if (dt == 1) mo[df]=300;
 	}
 
 	var t = 1;  // include myself
