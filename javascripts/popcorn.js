@@ -34,7 +34,7 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildPopcornPage(content) {
-	document.getElementById('pc_ts').innerHTML = new Date().toUTCString();
+	document.getElementById('pc_ts').innerHTML = new Date().toLocaleString();
 	if (!content) return;
 	updateCharts(content.newUsers, content.totalUsers);
 	buildPopcornLastGame('pc', content.lastGame);
@@ -108,9 +108,7 @@ function buildPopcornLeague(topTen, prefix, total) {
 			cell5.innerHTML = humanTime((topTen[i].t/1000)+"");
 			cell6.innerHTML = humanTime((topTen[i].st/1000)+"");
 
-			if (topTen[i].l) {
-				cell7.innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
-			}
+			if (topTen[i].l) cell7.innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
 			
 		} else {
 			document.getElementById(prefix + '_rank_' + x).innerHTML = numberWithCommas(x) + sym;
@@ -121,9 +119,9 @@ function buildPopcornLeague(topTen, prefix, total) {
 			document.getElementById(prefix + '_ts_' + x).innerHTML = humanTime((topTen[i].t/1000)+"");
 			document.getElementById(prefix + '_st_' + x).title = topTen[i].st/1000;
 			document.getElementById(prefix + '_st_' + x).innerHTML = humanTime((topTen[i].st/1000)+"");
-			if (topTen[i].l) {
-				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
-			}
+
+			if (topTen[i].l) document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
+
 		}
 		document.getElementById(prefix + '_count').innerHTML = i+1;
 	}
@@ -131,17 +129,13 @@ function buildPopcornLeague(topTen, prefix, total) {
 }
 
 var startDate = new Date("28 May 2017");
-// httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
-// 	if (!err) console.log(data);
-// });
+
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (!err) {
 		buildPopcornPage(data);
 	}
 });
-httpGetAmazon(amazonUrl, function (err, data) {
-	// if (!err) buildAmazonReview(data.reviews[0]);
-});
+httpGetAmazon(amazonUrl, function (err, data) {});
 
 var last = 0;
 
@@ -159,9 +153,7 @@ setInterval(function () {
 		} 
 	});
 	
-	httpGetAmazon(amazonUrl, function (err, data) {
-		// if (!err) buildAmazonReview(data.reviews[0]);
-	});
+	httpGetAmazon(amazonUrl, function (err, data) {});
 
 }, 5000);
 
@@ -201,11 +193,6 @@ function buildAmazonReview(data) {
 	document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
 	document.getElementById('pc_us_reviews').innerHTML = data.us.reviews;
 	document.getElementById('pc_de_reviews').innerHTML = data.de.reviews;
-}
-
-function getCssStar(score) {
-	var retVal = 'a-star-' + score.toString().replace(".", "-");
-	return retVal;
 }
 
 function chtLocale(chart, data, options) {
@@ -261,7 +248,6 @@ function chtNewUsers(chart, data, total) {
 	var x = document.getElementById('pc_total_players').getAttribute('total');
 	// console.log(x)
 	if (data.length == x) return;
-	// if (data.length == total) return;
 
 	// get days from launch as x axis
 
@@ -314,7 +300,7 @@ function chtNewUsers(chart, data, total) {
 		var dt = d.getDate();
 		if (dt == 1) mo[df]=300;
 	}
-
+	document.getElementById('pc_total_today').innerHTML = numberWithCommas(totals[totals.length-1]);
 	var t = 1;  // include myself
 	avg[0] = totals[0]
 	for (var i = 0; i < diff; i++) {
@@ -394,7 +380,7 @@ function chtNewUsers(chart, data, total) {
 		}],
 		options: {}
     }
-
+    
 	chart.data = d;
 	chart.update();
 }
@@ -402,37 +388,4 @@ function chtNewUsers(chart, data, total) {
 function updateCharts(data, total) {
 	if (!data) return;
 	chtNewUsers(newUsersChart, data, total)
-}
-
-function daydiff(first, second, includeLast) {
-
-    // Copy date parts of the timestamps, discarding the time parts.
-    var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
-    var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
-
-    // Do the math.
-    var millisecondsPerDay = 1000 * 60 * 60 * 24;
-    var millisBetween = two.getTime() - one.getTime();
-    var days = millisBetween / millisecondsPerDay;
-
-    if (includeLast) days++;
-    // Round down.
-    var retVal = Math.floor(days);
-    return retVal;
-}
-
-function addDays(startDate,numberOfDays) {
-	var returnDate = new Date(
-		startDate.getFullYear(),
-		startDate.getMonth(),
-		startDate.getDate()+numberOfDays,
-		startDate.getHours(),
-		startDate.getMinutes(),
-		startDate.getSeconds());
-	return returnDate;
-}
-
-function getMonthName(mon) {
-	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	return " " + monthNames[+mon];
 }

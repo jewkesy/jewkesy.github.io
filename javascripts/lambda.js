@@ -3,11 +3,6 @@ var https = require('https');
 
 var MONGO_URI = process.env.mongoURI || process.argv[2];
 var MONGO_API = process.env.mongoAPIKey || process.argv[3];
-var PC_LEAGUE = process.env.popcornLeague;
-var PC_STATS = process.env.popcornStats;
-var PC_COUNT = process.env.popcornCount;
-var TF_LEAGUE = process.env.trifleLeague;
-var TF_COUNT = process.env.trifleCount;
 var REVIEWS = process.env.amazonReviews || process.argv[4];
 
 /**
@@ -15,9 +10,10 @@ var REVIEWS = process.env.amazonReviews || process.argv[4];
  * access to the request and response payload, including headers and
  * status code.
  */
-exports.handler = (event, context, callback) => {
-  // console.log('Received event:', JSON.stringify(event, null, 2));
 
+exports.handler = (event, context, callback) => {
+  console.log('Received event:', JSON.stringify(event, null, 2));
+  console.log(MONGO_URI, MONGO_API, REVIEWS)
   const done = (err, res) => callback(null, {
     statusCode: err ? '400' : '200',
     body: err ? err.message : JSON.stringify(res),
@@ -49,7 +45,7 @@ exports.handler = (event, context, callback) => {
 
 function getAmazon(callback) {
   var url = MONGO_URI + REVIEWS + "&apiKey=" + MONGO_API;
-  console.log(url);
+  console.log('getAmazon', url);
   getData(url, function (e, msg) {
     if (e) return callback(e);
     var retVal = {
@@ -60,7 +56,7 @@ function getAmazon(callback) {
 }
 
 function getLastGame(qs, callback) {
-  console.log(qs)
+  console.log('getLastGame', qs)
 
   var url = MONGO_URI;
 
@@ -85,7 +81,7 @@ function getLastGame(qs, callback) {
 }
 
 function getContent(qs, callback) {
-  console.log(qs)
+  console.log('getContent', qs)
   var limit = 10;
   if (qs && qs.limit) limit = qs.limit;
 

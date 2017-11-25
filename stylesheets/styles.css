@@ -181,6 +181,29 @@ hr {
   margin:0 0 20px;
 }
 
+hr.short {
+  margin-left:140px;
+  margin-right:140px
+}
+
+.borderMe {
+  border:1px solid #e5e5e5;
+}
+
+table.centerMe, tr, td, th {
+  text-align: center;
+}
+
+table.borderNoBottom {
+  margin-bottom: 0px; 
+  min-width:200px;
+  max-width:500px;
+}
+
+table.borderNoBottom > th {
+  border: solid 1px #eee;
+}
+
 footer {
   width:270px;
   float:left;
@@ -192,9 +215,7 @@ footer {
   text-align: center;
 }
 
-table.centerMe, tr, td, th {
-  text-align: center;
-}
+
 
 @media print, screen and (max-width: 960px) {
 

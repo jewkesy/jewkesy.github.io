@@ -216,3 +216,40 @@ function humanTime(time) {
     setTimeout(timeAgo, 60000);
 })();
 
+function getCssStar(score) {
+	var retVal = 'a-star-' + score.toString().replace(".", "-");
+	return retVal;
+}
+
+function daydiff(first, second, includeLast) {
+
+    // Copy date parts of the timestamps, discarding the time parts.
+    var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
+    var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+
+    // Do the math.
+    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+    var millisBetween = two.getTime() - one.getTime();
+    var days = millisBetween / millisecondsPerDay;
+
+    if (includeLast) days++;
+    // Round down.
+    var retVal = Math.floor(days);
+    return retVal;
+}
+
+function addDays(startDate,numberOfDays) {
+	var returnDate = new Date(
+		startDate.getFullYear(),
+		startDate.getMonth(),
+		startDate.getDate()+numberOfDays,
+		startDate.getHours(),
+		startDate.getMinutes(),
+		startDate.getSeconds());
+	return returnDate;
+}
+
+function getMonthName(mon) {
+	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	return " " + monthNames[+mon];
+}
