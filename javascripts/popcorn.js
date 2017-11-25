@@ -13,9 +13,6 @@ if (loc != '') {
 }
 
 function applyLocaleHeader(locale) {
-	console.log(locale, loc)
-	// document.getElementsByClassName('selected').classList.remove("selected");
-
 	var elements = document.getElementsByClassName('selected');
 	for(var i=0, l=elements.length; i<l; i++){
 	 elements[i].classList.remove("selected");
@@ -29,8 +26,6 @@ if (c != 10) popcornUrl += "&limit=" + c;
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
-// Chart.defaults.scale.gridLines.display=false;
-// console.log(Chart.defaults)
 
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
@@ -297,9 +292,9 @@ function chtNewUsers(chart, data, total) {
 		totals[df]++;
 
 		var day = d.getDay();
-		if (day == 0 || day >= 5) we[df]=300;
+		if (day == 0 || day >= 5) we[df]=350;
 		var dt = d.getDate();
-		if (dt == 1) mo[df]=300;
+		if (dt == 1) mo[df]=350;
 	}
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(totals[totals.length-1]);
 	var t = 1;  // include myself
