@@ -13,6 +13,7 @@ if (loc != '') {
 }
 
 function applyLocaleHeader(locale) {
+	console.log(locale, loc)
 	// document.getElementsByClassName('selected').classList.remove("selected");
 
 	var elements = document.getElementsByClassName('selected');
@@ -380,7 +381,7 @@ function chtNewUsers(chart, data, total) {
 		}],
 		options: {}
     }
-    
+
 	chart.data = d;
 	chart.update();
 }
