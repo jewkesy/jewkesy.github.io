@@ -292,9 +292,9 @@ function chtNewUsers(chart, data, total) {
 		totals[df]++;
 
 		var day = d.getDay();
-		if (day == 0 || day >= 5) we[df]=350;
+		if (day == 0 || day >= 5) we[df]=400;
 		var dt = d.getDate();
-		if (dt == 1) mo[df]=350;
+		if (dt == 1) mo[df]=400;
 	}
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(totals[totals.length-1]);
 	var t = 1;  // include myself
