@@ -172,23 +172,41 @@ function httpGetAmazon(theUrl){
 
 function buildAmazonReview(data) {
 
-	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars'];
+	if (!data.uk) data.uk = {score:0,reviews:0};
+	if (!data.us) data.us = {score:0,reviews:0};
+	if (!data.de) data.de = {score:0,reviews:0};
+	if (!data.in) data.in = {score:0,reviews:0};
+	if (!data.ca) data.ca = {score:0,reviews:0};
+	if (!data.jp) data.jp = {score:0,reviews:0};
+	if (!data.au) data.au = {score:0,reviews:0};
+
+	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', , 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars'];
 	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
 	// console.log(data)
 
 	for (var i = 0; i < arIds.length; i++) {
 		var e = document.getElementById(arIds[i]);
+		if (!e) continue;
 		for (var j = 0; j < arClasses.length; j++) {
 			e.classList.remove(arClasses[j]);
 		}
 
-		if (i == 0) e.classList.add(getCssStar(data.uk.score));
-		if (i == 1) e.classList.add(getCssStar(data.us.score));
-		if (i == 2) e.classList.add(getCssStar(data.de.score));
+		     if (i == 0) e.classList.add(getCssStar(data.uk.score));
+		else if (i == 1) e.classList.add(getCssStar(data.us.score));
+		else if (i == 2) e.classList.add(getCssStar(data.de.score));
+		else if (i == 3) e.classList.add(getCssStar(data.in.score));
+		else if (i == 4) e.classList.add(getCssStar(data.ca.score));
+		else if (i == 5) e.classList.add(getCssStar(data.jp.score));
+		else if (i == 6) e.classList.add(getCssStar(data.au.score));
 	}
-	document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
-	document.getElementById('pc_us_reviews').innerHTML = data.us.reviews;
-	document.getElementById('pc_de_reviews').innerHTML = data.de.reviews;
+
+	if (document.getElementById('pc_uk_reviews')) document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
+	if (document.getElementById('pc_us_reviews')) document.getElementById('pc_us_reviews').innerHTML = data.us.reviews;
+	if (document.getElementById('pc_de_reviews')) document.getElementById('pc_de_reviews').innerHTML = data.de.reviews;
+	if (document.getElementById('pc_in_reviews')) document.getElementById('pc_in_reviews').innerHTML = data.in.reviews;
+	if (document.getElementById('pc_ca_reviews')) document.getElementById('pc_ca_reviews').innerHTML = data.ca.reviews;
+	if (document.getElementById('pc_jp_reviews')) document.getElementById('pc_jp_reviews').innerHTML = data.jp.reviews;
+	if (document.getElementById('pc_au_reviews')) document.getElementById('pc_au_reviews').innerHTML = data.au.reviews;
 }
 
 function chtLocale(chart, data, options) {
@@ -228,6 +246,8 @@ function chtLocale(chart, data, options) {
 		else if (results[i].key == "de-DE") d.datasets[0].backgroundColor.push("rgba(255, 206, 86, 1)");
 		else if (results[i].key == "en-IN") d.datasets[0].backgroundColor.push("rgba(75, 192, 192, 1)");
 		else if (results[i].key == "en-CA") d.datasets[0].backgroundColor.push("rgba(90, 92, 192, 1)");
+		else if (results[i].key == "ja-JP") d.datasets[0].backgroundColor.push("rgba(90, 92, 192, 1)");
+		else if (results[i].key == "en-AU") d.datasets[0].backgroundColor.push("rgba(90, 92, 192, 1)");
 		else d.datasets[0].backgroundColor.push("rgba(75, 192, 192, 1)");
 	}
 
@@ -265,6 +285,9 @@ function chtNewUsers(chart, data, total) {
 	var de = new Array(diff).fill(null);
 	var ind = new Array(diff).fill(null);
 	var ca = new Array(diff).fill(null);
+	var jp = new Array(diff).fill(null);
+	var au = new Array(diff).fill(null);
+
 
 	var avg = new Array(diff).fill(0);
 
@@ -288,6 +311,8 @@ function chtNewUsers(chart, data, total) {
 		else if (x.l=="de-DE") de[df]++;
 		else if (x.l=="en-IN") ind[df]++;
 		else if (x.l=="en-CA") ca[df]++;
+		else if (x.l=="ja-JP") jp[df]++;
+		else if (x.l=="en-US") au[df]++;
 		else us[df]++; // assume US
 		totals[df]++;
 
@@ -346,6 +371,24 @@ function chtNewUsers(chart, data, total) {
 		},{
 			"label":"en-CA",
 			"data": ca,
+			"fill":false,
+			"borderColor":"rgba(90,128,0, 1)",
+			"backgroundColor":"rgba(90,128,0, 1)",
+			"lineTension":0.1,
+			"type":"line",
+			"pointRadius":2
+		},{
+			"label":"ja-JP",
+			"data": jp,
+			"fill":false,
+			"borderColor":"rgba(90,128,0, 1)",
+			"backgroundColor":"rgba(90,128,0, 1)",
+			"lineTension":0.1,
+			"type":"line",
+			"pointRadius":2
+		},{
+			"label":"en-AU",
+			"data": au,
 			"fill":false,
 			"borderColor":"rgba(90,128,0, 1)",
 			"backgroundColor":"rgba(90,128,0, 1)",
