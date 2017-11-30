@@ -333,7 +333,7 @@ function chtNewUsers(chart, data, total) {
 		"labels": l,
 		"datasets":[
 		{
-			"label":"en-GB",
+			"label":"UK",
 			"data": uk,
 			"fill":false,
 			"borderColor":"rgba(255,99,132,1)",
@@ -342,7 +342,7 @@ function chtNewUsers(chart, data, total) {
 			"type":"line",
 			"pointRadius":2
 		},{
-			"label":"en-US",
+			"label":"US",
 			"data": us,
 			"fill":false,
 			"borderColor":"rgba(54, 162, 235, 1)",
@@ -351,7 +351,7 @@ function chtNewUsers(chart, data, total) {
 			"type":"line",
 			"pointRadius":2
 		},{
-			"label":"de-DE",
+			"label":"Germany",
 			"data": de,
 			"fill":false,
 			"borderColor":"rgba(255, 206, 86, 1)",
@@ -360,7 +360,7 @@ function chtNewUsers(chart, data, total) {
 			"type":"line",
 			"pointRadius":2
 		},{
-			"label":"en-IN",
+			"label":"India",
 			"data": ind,
 			"fill":false,
 			"borderColor":"rgba(0,128,0, 1)",
@@ -369,7 +369,7 @@ function chtNewUsers(chart, data, total) {
 			"type":"line",
 			"pointRadius":2
 		},{
-			"label":"en-CA",
+			"label":"Canada",
 			"data": ca,
 			"fill":false,
 			"borderColor":"rgba(90,128,0, 1)",
@@ -378,7 +378,7 @@ function chtNewUsers(chart, data, total) {
 			"type":"line",
 			"pointRadius":2
 		},{
-			"label":"ja-JP",
+			"label":"Japan",
 			"data": jp,
 			"fill":false,
 			"borderColor":"rgba(90,128,0, 1)",
@@ -387,7 +387,7 @@ function chtNewUsers(chart, data, total) {
 			"type":"line",
 			"pointRadius":2
 		},{
-			"label":"en-AU",
+			"label":"Australia",
 			"data": au,
 			"fill":false,
 			"borderColor":"rgba(90,128,0, 1)",
