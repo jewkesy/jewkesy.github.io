@@ -30,16 +30,30 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildPopcornPage(content) {
-	document.getElementById('pc_ts').innerHTML = new Date().toLocaleString();
+
+	fadeyStuff("pc_ts", new Date().toLocaleString());
+
 	if (!content) return;
 	updateCharts(content.newUsers, content.totalUsers);
 	buildPopcornLastGame('pc', content.lastGame);
 
 	buildPopcornLeague(content.league, 'pc', content.totalGames);
-	document.getElementById('pc_total_players').innerHTML = numberWithCommas(content.totalUsers);
+
+	fadeyStuff("pc_total_players", numberWithCommas(content.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', content.totalUsers);
-	document.getElementById('pc_total_games').innerHTML = numberWithCommas(content.totalGames);
+
+	fadeyStuff("pc_total_games", numberWithCommas(content.totalGames));
 	document.getElementById('pc_total_games').setAttribute('total', content.totalGames);
+}
+
+function fadeyStuff(id, val) {
+	if (document.getElementById(id).innerHTML == val) return;
+
+	$("#"+id).fadeOut(666, function () {
+		// console.log('here')
+		document.getElementById(id).innerHTML = val;
+		$("#"+id).fadeIn();
+	});
 }
 
 function buildPopcornLastGame(prefix, t) {
@@ -48,20 +62,28 @@ function buildPopcornLastGame(prefix, t) {
 
 	if (x == t.t/1000) return;
 
-	document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.r);
-	document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.s);
-	document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.g);
-	document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.s)/(+t.g)).toFixed(2);
-	document.getElementById(prefix + '_lp_ts').innerHTML = humanTime((t.t/1000)+"");
+	fadeyStuff(prefix + '_lp_rank', numberWithCommas(t.r));
+	fadeyStuff(prefix + '_lp_score', numberWithCommas(t.s));
+	fadeyStuff(prefix + '_lp_games', numberWithCommas(t.g));
+	fadeyStuff(prefix + '_lp_avg', ((+t.s)/(+t.g)).toFixed(2));
+	fadeyStuff(prefix + '_lp_ts', humanTime((t.t/1000)+""));
+	fadeyStuff(prefix + '_lp_st', humanTime((t.st/1000)+""));
+	fadeyStuff(prefix + '_lp_locale', "<img class='locale' src='./images/" + t.l + ".png' />");
+
+	// document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.r);
+	// document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.s);
+	// document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.g);
+	// document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.s)/(+t.g)).toFixed(2);
+	// document.getElementById(prefix + '_lp_ts').innerHTML = humanTime((t.t/1000)+"");
 	document.getElementById(prefix + '_lp_ts').setAttribute('title', t.t/1000);
-	document.getElementById(prefix + '_lp_st').innerHTML = humanTime((t.st/1000)+"");
+	// document.getElementById(prefix + '_lp_st').innerHTML = humanTime((t.st/1000)+"");
 	document.getElementById(prefix + '_lp_st').setAttribute('title', t.st/1000);
-	document.getElementById(prefix + '_lp_locale').innerHTML =  "<img class='locale' src='./images/" + t.l + ".png' />";
+	// document.getElementById(prefix + '_lp_locale').innerHTML = "<img class='locale' src='./images/" + t.l + ".png' />";
 }
 
 function buildPopcornLeague(topTen, prefix, total) {
-	var container = document.getElementById(prefix + '_scores')
 
+	var container = document.getElementById(prefix + '_scores')
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;		
 		var id = prefix + "_" + x;
