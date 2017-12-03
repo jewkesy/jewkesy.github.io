@@ -351,6 +351,15 @@ function chtNewUsers(chart, data, total) {
 		avg[i] = t/(i+1) 
 	}
 
+
+	var red = "rgba(255,99,132,1)";
+	var blue = "rgba(54,162,235,1)";
+	var yellow = "rgba(255,206,86,1)";
+	var orange = "rgba(247,152,57,1)";
+	var purple = "rgba(195,144,212,1)";
+	var green = "rgba(22,158,22,1)";
+	var grey = "rgba(168,173,168,1)";
+
 	var d = {
 		"labels": l,
 		"datasets":[
@@ -358,8 +367,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"UK",
 			"data": uk,
 			"fill":false,
-			"borderColor":"rgba(255,99,132,1)",
-			"backgroundColor":"rgba(255,99,132,1)",
+			"borderColor":red,
+			"backgroundColor":red,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
@@ -367,8 +376,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"US",
 			"data": us,
 			"fill":false,
-			"borderColor":"rgba(54, 162, 235, 1)",
-			"backgroundColor":"rgba(54, 162, 235, 1)",
+			"borderColor":blue,
+			"backgroundColor":blue,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
@@ -376,8 +385,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"Germany",
 			"data": de,
 			"fill":false,
-			"borderColor":"rgba(255, 206, 86, 1)",
-			"backgroundColor":"rgba(255, 206, 86, 1)",
+			"borderColor":yellow,
+			"backgroundColor":yellow,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
@@ -385,8 +394,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"India",
 			"data": ind,
 			"fill":false,
-			"borderColor":"rgba(0,128,0, 1)",
-			"backgroundColor":"rgba(0,128,0, 1)",
+			"borderColor":orange,
+			"backgroundColor":orange,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
@@ -394,8 +403,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"Canada",
 			"data": ca,
 			"fill":false,
-			"borderColor":"rgba(90,128,0, 1)",
-			"backgroundColor":"rgba(90,128,0, 1)",
+			"borderColor":purple,
+			"backgroundColor":purple,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
@@ -403,8 +412,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"Japan",
 			"data": jp,
 			"fill":false,
-			"borderColor":"rgba(90,128,0, 1)",
-			"backgroundColor":"rgba(90,128,0, 1)",
+			"borderColor":green,
+			"backgroundColor":green,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
@@ -412,8 +421,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"Australia",
 			"data": au,
 			"fill":false,
-			"borderColor":"rgba(90,128,0, 1)",
-			"backgroundColor":"rgba(90,128,0, 1)",
+			"borderColor":grey,
+			"backgroundColor":grey,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
