@@ -305,11 +305,10 @@ function chtNewUsers(chart, data, total) {
 	var uk = new Array(diff).fill(null);
 	var us = new Array(diff).fill(null);
 	var de = new Array(diff).fill(null);
-	var ind = new Array(diff).fill(null);
+	var ind =new Array(diff).fill(null);
 	var ca = new Array(diff).fill(null);
 	var jp = new Array(diff).fill(null);
 	var au = new Array(diff).fill(null);
-
 
 	var avg = new Array(diff).fill(0);
 
@@ -334,7 +333,7 @@ function chtNewUsers(chart, data, total) {
 		else if (x.l=="en-IN") ind[df]++;
 		else if (x.l=="en-CA") ca[df]++;
 		else if (x.l=="ja-JP") jp[df]++;
-		else if (x.l=="en-US") au[df]++;
+		else if (x.l=="en-AU") au[df]++;
 		else us[df]++; // assume US
 		totals[df]++;
 
@@ -350,7 +349,6 @@ function chtNewUsers(chart, data, total) {
 		t += totals[i]
 		avg[i] = t/(i+1) 
 	}
-
 
 	var red = "rgba(255,99,132,1)";
 	var blue = "rgba(54,162,235,1)";
@@ -450,7 +448,7 @@ function chtNewUsers(chart, data, total) {
 		}],
 		options: {}
     }
-
+console.log(d)
 	chart.data = d;
 	chart.update();
 }
