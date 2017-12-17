@@ -3,6 +3,11 @@ var https = require('https');
 
 var MONGO_URI = process.env.mongoURI || process.argv[2];
 var MONGO_API = process.env.mongoAPIKey || process.argv[3];
+var PC_LEAGUE = process.env.popcornLeague;
+var PC_STATS = process.env.popcornStats;
+var PC_COUNT = process.env.popcornCount;
+var TF_LEAGUE = process.env.trifleLeague;
+var TF_COUNT = process.env.trifleCount;
 var REVIEWS = process.env.amazonReviews || process.argv[4];
 
 /**
@@ -10,10 +15,9 @@ var REVIEWS = process.env.amazonReviews || process.argv[4];
  * access to the request and response payload, including headers and
  * status code.
  */
-
 exports.handler = (event, context, callback) => {
-  console.log('Received event:', JSON.stringify(event, null, 2));
-  console.log(MONGO_URI, MONGO_API, REVIEWS)
+  // console.log('Received event:', JSON.stringify(event, null, 2));
+
   const done = (err, res) => callback(null, {
     statusCode: err ? '400' : '200',
     body: err ? err.message : JSON.stringify(res),
@@ -45,18 +49,18 @@ exports.handler = (event, context, callback) => {
 
 function getAmazon(callback) {
   var url = MONGO_URI + REVIEWS + "&apiKey=" + MONGO_API;
-  console.log('getAmazon', url);
+  console.log(url);
   getData(url, function (e, msg) {
     if (e) return callback(e);
     var retVal = {
       reviews: msg
-    }
+    };
     return callback(null, retVal);
   });
 }
 
 function getLastGame(qs, callback) {
-  console.log('getLastGame', qs)
+  console.log(qs);
 
   var url = MONGO_URI;
 
@@ -64,7 +68,7 @@ function getLastGame(qs, callback) {
   else if (qs.prefix == 'tf') url += '/trifle';
   else return callback('unhandled prefix');
 
-  url += '/collections/game?l=1&f={timestamp:1,"_id":0}&s={"timestamp":-1}'
+  url += '/collections/game?l=1&f={timestamp:1,"_id":0}&s={"timestamp":-1}';
 
   if (qs.prefix == 'pc' && qs.locale && qs.locale != '' && qs.locale != 'undefined') {
     url += '&q={"locale":"' + qs.locale + '"}';
@@ -81,7 +85,7 @@ function getLastGame(qs, callback) {
 }
 
 function getContent(qs, callback) {
-  console.log('getContent', qs)
+  console.log(qs);
   var limit = 10;
   if (qs && qs.limit) limit = qs.limit;
 
@@ -91,7 +95,7 @@ function getContent(qs, callback) {
   else if (qs.prefix == 'tf') url += '/trifle';
   else return callback('unhandled prefix');
 
-  url += '/collections/game?l=0&f={"score":1,"games":1,"timestamp":1,"startTimestamp":1,"locale":1,"icon":1,"_id":0}&s={"score":-1,"games":1,timestamp":1}'
+  url += '/collections/game?l=200000&f={"score":1,"games":1,"timestamp":1,"startTimestamp":1,"locale":1,"icon":1,"_id":0}&s={"score":-1,"games":1,timestamp":1}';
 
   if (qs.prefix == 'pc' && qs.locale && qs.locale != '' && qs.locale != 'undefined') {
     url += '&q={"locale":"' + qs.locale + '"}';
@@ -115,7 +119,7 @@ function getContent(qs, callback) {
         g: item.games,
         t: item.timestamp,
         l: item.locale
-      }
+      };
 
       if (item.icon) x.i = item.icon;
 
@@ -141,7 +145,7 @@ function getContent(qs, callback) {
       lastGame: lastGame,
       totalUsers: msg.length,
       totalGames: totalGames
-    }
+    };
     // console.log(league)
     return callback(null, retVal);
   });
