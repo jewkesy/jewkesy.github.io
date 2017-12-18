@@ -146,12 +146,12 @@ function buildPopcornLeague(topTen, prefix, total) {
 
 			var cell5 = row.insertCell(4);
 			cell5.id = prefix + "_ts_" + x;
-			cell5.className = "timeago";
+			cell5.className = "timeago min130";
 			cell5.title = topTen[i].t/1000;
 
 			var cell6 = row.insertCell(5);
 			cell6.id = prefix + "_st_" + x;
-			cell6.className = "timeago";
+			cell6.className = "timeago min130";
 			cell6.title = topTen[i].st/1000;
 
 			var cell7 = row.insertCell(6);
