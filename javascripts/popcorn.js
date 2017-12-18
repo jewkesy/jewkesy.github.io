@@ -1,5 +1,6 @@
 "use strict";
 
+var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc';
 var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
 var popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc';
 var amazonUrl = aws + 'getHomePageContent?amazon=true';
@@ -28,6 +29,25 @@ Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
+
+function buildGamePlayStats(content) {
+	console.log(content.length)
+	return;
+
+	var dots = []
+
+	for (var i = 0; i < content.length; i++) {
+		var s = content[i];
+		dots.push({
+			x: new Date(s.d).getTime(),
+			y: s.games
+		});
+		// console.log(x.players, x.games)
+	}
+
+	console.log(JSON.stringify(dots));
+
+}
 
 function buildPopcornPage(content) {
 
@@ -148,11 +168,13 @@ function buildPopcornLeague(topTen, prefix, total) {
 
 var startDate = new Date("28 May 2017");
 
+
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (!err) {
 		buildPopcornPage(data);
 	}
 });
+httpGetGameStats(popcornStats);
 httpGetAmazon(amazonUrl, function (err, data) {});
 
 var last = 0;
@@ -167,6 +189,7 @@ setInterval(function () {
 				httpGetStats(popcornUrl, 'pc', function (err, data) {
 					if (!err) buildPopcornPage(data);
 				});
+				httpGetGameStats(popcornStats);
 			}
 		} 
 	});
@@ -174,6 +197,23 @@ setInterval(function () {
 	httpGetAmazon(amazonUrl, function (err, data) {});
 
 }, 5000);
+
+function httpGetGameStats(theUrl){
+	var xmlHttp = null;
+	xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.onreadystatechange = handleReadyStateChange;
+	xmlHttp.send(null);
+
+	function handleReadyStateChange() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				var doc = JSON.parse(xmlHttp.responseText);
+				buildGamePlayStats(doc);
+			}
+		}
+	}
+}
 
 function httpGetAmazon(theUrl){
 	var xmlHttp = null;
@@ -193,7 +233,7 @@ function httpGetAmazon(theUrl){
 }
 
 function buildAmazonReview(data) {
-
+	// console.log(data)
 	if (!data.uk) data.uk = {score:0,reviews:0};
 	if (!data.us) data.us = {score:0,reviews:0};
 	if (!data.de) data.de = {score:0,reviews:0};
@@ -448,7 +488,7 @@ function chtNewUsers(chart, data, total) {
 		}],
 		options: {}
     }
-console.log(d)
+	// console.log(d)
 	chart.data = d;
 	chart.update();
 }
