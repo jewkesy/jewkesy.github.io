@@ -4,6 +4,15 @@ var aws = "https://e94s2o5jyb.execute-api.eu-west-1.amazonaws.com/prod/";
 var displayCount = getParameterByName('count') || 10;
 var displayLocale = getParameterByName('locale') || '';
 
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+
 function buildAmazonParts(doc, id) {
 	document.getElementById(id).innerHTML = "Amazon Rating: " + doc.uk.score + " / 5<br>" + "Reviews: " + doc.uk.reviews;
 }

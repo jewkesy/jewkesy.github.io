@@ -32,21 +32,39 @@ var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getCon
 
 function buildGamePlayStats(content) {
 	console.log(content.length)
-	return;
 
 	var dots = []
 
 	for (var i = 0; i < content.length; i++) {
 		var s = content[i];
-		dots.push({
-			x: new Date(s.d).getTime(),
-			y: s.games
-		});
-		// console.log(x.players, x.games)
+
+		// get the day
+		var d = new Date(s.d)
+		var dd = ""+d.getFullYear()+(d.getMonth() + 1)+d.getDate();
+		var day = weekday[d.getDay()];
+		// console.log(dd);
+
+		var idx = keyExists(dd, dots)
+		if (idx == -1) {
+			dots.push({
+				key: dd,
+				day: day,
+				games: s.games
+			})
+		} else {
+			dots[idx].games = s.games;
+		}
 	}
-
-	console.log(JSON.stringify(dots));
-
+	
+	for (var i = dots.length-1; i >= 0; i--) {
+		// console.log(dots[i])
+		if (i > 0) {
+			dots[i].games = dots[i].games - dots[i-1].games;
+			dots[i].hourly = dots[i].games/24;
+		}
+		else if (i == 0) dots[i].games = 0
+	}
+	console.log(dots)
 }
 
 function buildPopcornPage(content) {
