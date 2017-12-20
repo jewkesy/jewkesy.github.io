@@ -64,6 +64,9 @@ function buildGamePlayStats(content) {
 		}
 		else if (i == 0) dots[i].games = 0
 	}
+
+	fadeyStuff("pc_games_today", dots[dots.length-1].games)
+
 	console.log(dots)
 }
 
