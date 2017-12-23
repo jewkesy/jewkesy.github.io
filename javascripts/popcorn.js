@@ -507,7 +507,9 @@ function chtNewUsers(chart, data, total) {
 			"backgroundColor":"rgba(0, 0, 0, 1)",
 			"pointRadius":0
 		}],
-		options: {}
+		options: {
+			"responsive": true
+		}
     }
 	// console.log(d)
 	chart.data = d;
