@@ -31,7 +31,7 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildGamePlayStats(content) {
-	console.log(content.length)
+	// console.log(content.length)
 
 	var dots = []
 
@@ -379,9 +379,10 @@ function chtNewUsers(chart, data, total) {
 	var totals = new Array(diff).fill(0);
 
 	var max = 0;
-
+// console.log(data[0].d)
 	for (var i = 0; i < data.length; i++) {
-		var x = data[i];		
+		var x = data[i];	
+
 		var d = new Date(x.d);
 		var day = d.getDay();
 
@@ -398,9 +399,9 @@ function chtNewUsers(chart, data, total) {
 		else us[df]++; // assume US
 		totals[df]++;
 
-		var day = d.getDay();
+		// var day = d.getDay();
 		if (day == 0 || day >= 5) we[df]=400;
-		var dt = d.getDate();
+		var dt = x.d // d.getDate();
 		if (dt == 1) mo[df]=400;
 	}
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(totals[totals.length-1]);
