@@ -72,7 +72,7 @@ function buildGamePlayStats(content) {
 
 function buildPopcornPage(content) {
 
-	fadeyStuff("pc_ts", moment().format("MMM Do, hh:mm:ss"));
+	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
 
 	if (!content) return;
 	updateCharts(content.newUsers, content.totalUsers);
