@@ -401,7 +401,8 @@ function chtNewUsers(chart, data, total) {
 
 		// var day = d.getDay();
 		if (day == 0 || day >= 5) we[df]=3500;
-		var dt = x.d // d.getDate();
+		var dt = d.getDate();
+		// console.log(dt)
 		if (dt == 1) mo[df]=3500;
 	}
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(totals[totals.length-1]);
@@ -497,8 +498,8 @@ function chtNewUsers(chart, data, total) {
 			"label":"", //Months
 			"data": mo,
 			"type": "bar",
-			"borderWidth": 0,
-			"backgroundColor":"rgba(76, 245, 20, 0.4)"
+			"borderWidth": 1,
+			"backgroundColor":"rgba(76, 245, 20, 1)"
 		},{
 			"label":"", //avg
 			"data": avg,
@@ -512,7 +513,7 @@ function chtNewUsers(chart, data, total) {
 			"responsive": true
 		}
     }
-	// console.log(d)
+	// console.log(mo)
 	chart.data = d;
 	chart.update();
 }
