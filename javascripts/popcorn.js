@@ -67,7 +67,7 @@ function buildGamePlayStats(content) {
 
 	fadeyStuff("pc_games_today", dots[dots.length-1].games)
 
-	console.log(dots)
+	// console.log(dots)
 }
 
 function buildPopcornPage(content) {
@@ -189,8 +189,9 @@ function buildPopcornLeague(topTen, prefix, total) {
 
 var startDate = new Date("28 May 2017");
 
-
+var timeFrom = 0;
 httpGetStats(popcornUrl, 'pc', function (err, data) {
+	// timeFrom = new Date().getTime();
 	if (!err) {
 		buildPopcornPage(data);
 	}
@@ -207,7 +208,11 @@ setInterval(function () {
 			if (last < data[0].timestamp) {
 				// console.log(last, data[0].timestamp)
 				last = data[0].timestamp;
-				httpGetStats(popcornUrl, 'pc', function (err, data) {
+				var url = popcornUrl + "&timefrom=" + timeFrom;
+				console.log(url)
+				httpGetStats(url, 'pc', function (err, data) {
+					// timeFrom = new Date().getTime();
+					// console.log(data)
 					if (!err) buildPopcornPage(data);
 				});
 				httpGetGameStats(popcornStats);
@@ -341,13 +346,6 @@ function chtLocale(chart, data, options) {
 }
 
 function chtNewUsers(chart, data, total) {
-	if (!data) return;
-	// console.log(total)
-	// console.log(data.length)
-	var x = document.getElementById('pc_total_players').getAttribute('total');
-	// console.log(x)
-	if (data.length == x) return;
-
 	// get days from launch as x axis
 
 	var today = new Date();
@@ -379,13 +377,13 @@ function chtNewUsers(chart, data, total) {
 	var totals = new Array(diff).fill(0);
 
 	var max = 0;
-// console.log(data[0].d)
+// console.log(data)
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];	
 
-		var d = new Date(x.d);
+		var d = new Date(x.d*1000);
 		var day = d.getDay();
-
+// console.log(day)
 		var df = daydiff(startDate, d, true)-1;
 		if (df < 0) continue;
 
@@ -520,5 +518,8 @@ function chtNewUsers(chart, data, total) {
 
 function updateCharts(data, total) {
 	if (!data) return;
+	var x = document.getElementById('pc_total_players').getAttribute('total');
+	// console.log(x,data.length)
+	if (data.length == x) return;
 	chtNewUsers(newUsersChart, data, total)
 }
