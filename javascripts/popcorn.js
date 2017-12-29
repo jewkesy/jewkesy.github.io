@@ -381,7 +381,7 @@ function chtNewUsers(chart, data, total) {
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];	
 
-		var d = new Date(x.d*1000);
+		var d = new Date(x.d*100000);
 		var day = d.getDay();
 // console.log(day)
 		var df = daydiff(startDate, d, true)-1;
