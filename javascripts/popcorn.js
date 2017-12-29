@@ -387,13 +387,13 @@ function chtNewUsers(chart, data, total) {
 		var df = daydiff(startDate, d, true)-1;
 		if (df < 0) continue;
 
-		if (x.l=="en-GB") uk[df]++;
-		else if (x.l=="en-US") us[df]++;
-		else if (x.l=="de-DE") de[df]++;
-		else if (x.l=="en-IN") ind[df]++;
-		else if (x.l=="en-CA") ca[df]++;
-		else if (x.l=="ja-JP") jp[df]++;
-		else if (x.l=="en-AU") au[df]++;
+		if (x.l=="GB") uk[df]++;
+		else if (x.l=="US") us[df]++;
+		else if (x.l=="DE") de[df]++;
+		else if (x.l=="IN") ind[df]++;
+		else if (x.l=="CA") ca[df]++;
+		else if (x.l=="JP") jp[df]++;
+		else if (x.l=="AU") au[df]++;
 		else us[df]++; // assume US
 		totals[df]++;
 
