@@ -67,17 +67,17 @@ function buildGamePlayStats(content) {
 
 	fadeyStuff("pc_games_today", dots[dots.length-1].games)
 
-	console.log(dots)
+	// console.log(dots)
 }
 
 function buildPopcornPage(content) {
-
+console.log(content)
 	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
 
 	if (!content) return;
 	updateCharts(content.newUsers, content.totalUsers);
-	buildPopcornLastGame('pc', content.lastGame);
-
+	// buildPopcornLastGame('pc', content.lastGame[0]);
+	buildPopcornLastGames(content.lastGame, 'pc');
 	buildPopcornLeague(content.league, 'pc', content.totalGames);
 
 	fadeyStuff("pc_total_players", numberWithCommas(content.totalUsers));
@@ -122,9 +122,73 @@ function buildPopcornLastGame(prefix, t) {
 	// document.getElementById(prefix + '_lp_locale').innerHTML = "<img class='locale' src='./images/" + t.l + ".png' />";
 }
 
+function buildPopcornLastGames(games, prefix) {
+	var container = document.getElementById(prefix + '_lastgames');
+	// console.log(container)
+	for (var i = 0; i < games.length; i++) {
+		console.log(games[i])
+		var x = i + 1;		
+		var id = prefix + "_" + x;
+		var sym = "";
+
+		if (games[i].i == 'star') {sym = " &#9734;";}
+		else if (games[i].i == 'sun') {sym = " &#9788;";}
+		else if (games[i].i == 'note') {sym = " &#9834;";}
+		else if (games[i].i == 'hash') {sym = " #";}
+
+		if (!document.getElementById(prefix + '_' + x)) {
+			var row = container.insertRow(-1);
+			row.id = prefix + '_lastgames_' + x;
+			var cell1 = row.insertCell(0);
+			cell1.id = prefix + "_lastgames_rank_" + x;
+			var cell2 = row.insertCell(1);
+			cell2.id = prefix + "_lastgames_score_" + x;
+			var cell3 = row.insertCell(2);
+			cell3.id = prefix + "_lastgames_games_" + x;
+			var cell4 = row.insertCell(3);
+			cell4.id = prefix + "_lastgames_avg_" + x;
+
+			var cell5 = row.insertCell(4);
+			cell5.id = prefix + "_lastgames_ts_" + x;
+			cell5.className = "timeago";
+			cell5.title = games[i].t/1000;
+
+			var cell6 = row.insertCell(5);
+			cell6.id = prefix + "_lastgames_st_" + x;
+			cell6.className = "timeago";
+			cell6.title = games[i].st/1000;
+
+			var cell7 = row.insertCell(6);
+			cell7.id = prefix + "_lastgames_locale_" + x;
+
+			cell1.innerHTML = numberWithCommas(games[i].r) + sym;
+			cell2.innerHTML = numberWithCommas(games[i].s);
+			cell3.innerHTML = numberWithCommas(games[i].g);
+			cell4.innerHTML = ((+games[i].s)/(+games[i].g)).toFixed(2);
+			cell5.innerHTML = humanTime((games[i].t/1000)+"");
+			cell6.innerHTML = humanTime((games[i].st/1000)+"");
+
+			if (games[i].l) cell7.innerHTML =  "<img class='locale' src='./images/" + games[i].l + ".png' />";
+			
+		} else {
+			document.getElementById(prefix + '_lastgames_rank_' + x).innerHTML = numberWithCommas(games[i].r) + sym;
+			document.getElementById(prefix + '_lastgames_score_' + x).innerHTML = numberWithCommas(games[i].s);
+			document.getElementById(prefix + '_lastgames_games_' + x).innerHTML = numberWithCommas(games[i].g);
+			document.getElementById(prefix + '_lastgames_avg_' + x).innerHTML = ((+games[i].s)/(+games[i].g)).toFixed(2);
+			document.getElementById(prefix + '_lastgames_ts_' + x).title = games[i].t/1000;
+			document.getElementById(prefix + '_lastgames_ts_' + x).innerHTML = humanTime((games[i].t/1000)+"");
+			document.getElementById(prefix + '_lastgames_st_' + x).title = games[i].st/1000;
+			document.getElementById(prefix + '_lastgames_st_' + x).innerHTML = humanTime((games[i].st/1000)+"");
+
+			if (games[i].l) document.getElementById(prefix + '_lastgames_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + games[i].l + ".png' />";
+
+		}
+	}
+}
+
 function buildPopcornLeague(topTen, prefix, total) {
 
-	var container = document.getElementById(prefix + '_scores')
+	var container = document.getElementById(prefix + '_scores');
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;		
 		var id = prefix + "_" + x;
