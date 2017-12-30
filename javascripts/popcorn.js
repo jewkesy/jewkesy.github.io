@@ -1,6 +1,6 @@
 "use strict";
 
-var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc';
+var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=40';
 var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
 var popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc';
 var amazonUrl = aws + 'getHomePageContent?amazon=true';
@@ -31,11 +31,11 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildGamePlayStats(content) {
-	// console.log(content.length)
+	// console.log(content)
 
 	var dots = []
 
-	for (var i = 0; i < content.length; i++) {
+	for (var i = content.length-1; i >= 0; i--) {	
 		var s = content[i];
 
 		// get the day
@@ -67,7 +67,7 @@ function buildGamePlayStats(content) {
 
 	fadeyStuff("pc_games_today", dots[dots.length-1].games)
 
-	// console.log(dots)
+	console.log(dots)
 }
 
 function buildPopcornPage(content) {
@@ -206,7 +206,6 @@ setInterval(function () {
 		if (!err) {
 			if (!data || !data[0]) return;
 			if (last < data[0].timestamp) {
-				// console.log(last, data[0].timestamp)
 				last = data[0].timestamp;
 				var url = popcornUrl + "&timefrom=" + timeFrom;
 				console.log(url)
