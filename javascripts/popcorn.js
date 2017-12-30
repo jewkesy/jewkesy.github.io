@@ -1,6 +1,6 @@
 "use strict";
 
-var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=40';
+var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=100';
 var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
 var popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc';
 var amazonUrl = aws + 'getHomePageContent?amazon=true';
@@ -31,7 +31,7 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildGamePlayStats(content) {
-	// console.log(content)
+	console.log(content)
 
 	var dots = []
 
@@ -64,7 +64,7 @@ function buildGamePlayStats(content) {
 		}
 		else if (i == 0) dots[i].games = 0
 	}
-
+console.log(dots[dots.length-1].games)
 	fadeyStuff("pc_games_today", dots[dots.length-1].games)
 
 	// console.log(dots)
@@ -126,7 +126,7 @@ function buildPopcornLastGames(games, prefix) {
 	var container = document.getElementById(prefix + '_lastgames');
 	// console.log(container)
 	for (var i = 0; i < games.length; i++) {
-		console.log(games[i])
+		// console.log(games[i])
 		var x = i + 1;		
 		var id = prefix + "_" + x;
 		var sym = "";
