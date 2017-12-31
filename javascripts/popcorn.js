@@ -1,6 +1,6 @@
 "use strict";
 
-var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=100';
+var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=75';
 var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
 var popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc';
 var amazonUrl = aws + 'getHomePageContent?amazon=true';
@@ -12,6 +12,45 @@ if (loc != '') {
 	applyLocaleHeader(loc);
 	popcornUrl += "&locale=" + loc;
 }
+
+
+var startDate = new Date("28 May 2017");
+
+var timeFrom = 0;
+httpGetStats(popcornUrl, 'pc', function (err, data) {
+	// timeFrom = new Date().getTime();
+	if (!err) {
+		buildPopcornPage(data);
+	}
+});
+httpGetGameStats(popcornStats);
+
+httpGetAmazon(amazonUrl, function (err, data) {
+	setInterval(function () {
+		httpGetAmazon(amazonUrl, function (err, data) {});
+	}, 60000);
+});
+
+var last = 0;
+
+setInterval(function () {
+	httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
+		if (!err) {
+			if (!data || !data[0]) return;
+			if (last < data[0].timestamp) {
+				last = data[0].timestamp;
+				var url = popcornUrl + "&timefrom=" + timeFrom;
+				// console.log(url)
+				httpGetStats(url, 'pc', function (err, data) {
+					timeFrom = new Date().getTime();
+					console.log(data.newUsers)
+					if (!err) buildPopcornPage(data);
+				});
+				httpGetGameStats(popcornStats);
+			}
+		} 
+	});
+}, 5000);
 
 function applyLocaleHeader(locale) {
 	var elements = document.getElementsByClassName('selected');
@@ -31,9 +70,9 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildGamePlayStats(content) {
-	console.log(content)
+	// console.log(content)
 
-	var dots = []
+	var dots = [];
 
 	for (var i = content.length-1; i >= 0; i--) {	
 		var s = content[i];
@@ -64,14 +103,14 @@ function buildGamePlayStats(content) {
 		}
 		else if (i == 0) dots[i].games = 0
 	}
-console.log(dots[dots.length-1].games)
+
 	fadeyStuff("pc_games_today", dots[dots.length-1].games)
 
 	// console.log(dots)
 }
 
 function buildPopcornPage(content) {
-console.log(content)
+	// console.log(content)
 	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
 
 	if (!content) return;
@@ -111,22 +150,14 @@ function buildPopcornLastGame(prefix, t) {
 	fadeyStuff(prefix + '_lp_st', humanTime((t.st/1000)+""));
 	fadeyStuff(prefix + '_lp_locale', "<img class='locale' src='./images/" + t.l + ".png' />");
 
-	// document.getElementById(prefix + '_lp_rank').innerHTML = numberWithCommas(t.r);
-	// document.getElementById(prefix + '_lp_score').innerHTML = numberWithCommas(t.s);
-	// document.getElementById(prefix + '_lp_games').innerHTML = numberWithCommas(t.g);
-	// document.getElementById(prefix + '_lp_avg').innerHTML = ((+t.s)/(+t.g)).toFixed(2);
-	// document.getElementById(prefix + '_lp_ts').innerHTML = humanTime((t.t/1000)+"");
 	document.getElementById(prefix + '_lp_ts').setAttribute('title', t.t/1000);
-	// document.getElementById(prefix + '_lp_st').innerHTML = humanTime((t.st/1000)+"");
 	document.getElementById(prefix + '_lp_st').setAttribute('title', t.st/1000);
-	// document.getElementById(prefix + '_lp_locale').innerHTML = "<img class='locale' src='./images/" + t.l + ".png' />";
 }
 
 function buildPopcornLastGames(games, prefix) {
 	var container = document.getElementById(prefix + '_lastgames');
-	// console.log(container)
+
 	for (var i = 0; i < games.length; i++) {
-		// console.log(games[i])
 		var x = i + 1;		
 		var id = prefix + "_" + x;
 		var sym = "";
@@ -181,7 +212,6 @@ function buildPopcornLastGames(games, prefix) {
 			document.getElementById(prefix + '_lastgames_st_' + x).innerHTML = humanTime((games[i].st/1000)+"");
 
 			if (games[i].l) document.getElementById(prefix + '_lastgames_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + games[i].l + ".png' />";
-
 		}
 	}
 }
@@ -251,42 +281,6 @@ function buildPopcornLeague(topTen, prefix, total) {
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
 }
 
-var startDate = new Date("28 May 2017");
-
-var timeFrom = 0;
-httpGetStats(popcornUrl, 'pc', function (err, data) {
-	// timeFrom = new Date().getTime();
-	if (!err) {
-		buildPopcornPage(data);
-	}
-});
-httpGetGameStats(popcornStats);
-httpGetAmazon(amazonUrl, function (err, data) {});
-
-var last = 0;
-
-setInterval(function () {
-	httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
-		if (!err) {
-			if (!data || !data[0]) return;
-			if (last < data[0].timestamp) {
-				last = data[0].timestamp;
-				var url = popcornUrl + "&timefrom=" + timeFrom;
-				console.log(url)
-				httpGetStats(url, 'pc', function (err, data) {
-					// timeFrom = new Date().getTime();
-					// console.log(data)
-					if (!err) buildPopcornPage(data);
-				});
-				httpGetGameStats(popcornStats);
-			}
-		} 
-	});
-	
-	httpGetAmazon(amazonUrl, function (err, data) {});
-
-}, 5000);
-
 function httpGetGameStats(theUrl){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
@@ -304,7 +298,7 @@ function httpGetGameStats(theUrl){
 	}
 }
 
-function httpGetAmazon(theUrl){
+function httpGetAmazon(theUrl, callback){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
@@ -316,6 +310,7 @@ function httpGetAmazon(theUrl){
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
 				buildAmazonReview(doc.reviews[0]);
+				return callback();
 			}
 		}
 	}
@@ -408,6 +403,8 @@ function chtLocale(chart, data, options) {
 	chart.update();
 }
 
+var _newUsers = {}
+
 function chtNewUsers(chart, data, total) {
 	// get days from launch as x axis
 
@@ -424,55 +421,57 @@ function chtNewUsers(chart, data, total) {
 	l[diff] = "Today";
 
 	// var ar = new Array(diff).fill(0);
-	var uk = new Array(diff).fill(null);
-	var us = new Array(diff).fill(null);
-	var de = new Array(diff).fill(null);
-	var ind =new Array(diff).fill(null);
-	var ca = new Array(diff).fill(null);
-	var jp = new Array(diff).fill(null);
-	var au = new Array(diff).fill(null);
+	_newUsers.uk = new Array(diff).fill(null);
+	_newUsers.us = new Array(diff).fill(null);
+	_newUsers.de = new Array(diff).fill(null);
+	_newUsers.ind =new Array(diff).fill(null);
+	_newUsers.ca = new Array(diff).fill(null);
+	_newUsers.jp = new Array(diff).fill(null);
+	_newUsers.au = new Array(diff).fill(null);
+	_newUsers.avg = new Array(diff).fill(0);
 
-	var avg = new Array(diff).fill(0);
-
-	var we = new Array(diff).fill(null);
-	var mo = new Array(diff).fill(null);
+	_newUsers.we = new Array(diff).fill(null);
+	_newUsers.mo = new Array(diff).fill(null);
 
 	var totals = new Array(diff).fill(0);
 
 	var max = 0;
-// console.log(data)
+	// console.log(data)
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];	
 
 		var d = new Date(x.d*100000);
 		var day = d.getDay();
-// console.log(day)
+		// console.log(day)
 		var df = daydiff(startDate, d, true)-1;
 		if (df < 0) continue;
 
-		if (x.l=="GB") uk[df]++;
-		else if (x.l=="US") us[df]++;
-		else if (x.l=="DE") de[df]++;
-		else if (x.l=="IN") ind[df]++;
-		else if (x.l=="CA") ca[df]++;
-		else if (x.l=="JP") jp[df]++;
-		else if (x.l=="AU") au[df]++;
-		else us[df]++; // assume US
+		if (x.l=="GB") _newUsers.uk[df]++;
+		else if (x.l=="US") _newUsers.us[df]++;
+		else if (x.l=="DE") _newUsers.de[df]++;
+		else if (x.l=="IN") _newUsers.ind[df]++;
+		else if (x.l=="CA") _newUsers.ca[df]++;
+		else if (x.l=="JP") _newUsers.jp[df]++;
+		else if (x.l=="AU") _newUsers.au[df]++;
+		else _newUsers.us[df]++; // assume US
 		totals[df]++;
 
 		// var day = d.getDay();
-		if (day == 0 || day >= 5) we[df]=3500;
+		if (day == 0 || day >= 5) _newUsers.we[df]=3500;
 		var dt = d.getDate();
 		// console.log(dt)
-		if (dt == 1) mo[df]=3500;
+		if (dt == 1) _newUsers.mo[df]=3500;
 	}
+	// console.log(totals)
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(totals[totals.length-1]);
 	var t = 1;  // include myself
-	avg[0] = totals[0]
+	_newUsers.avg[0] = totals[0]
 	for (var i = 0; i < diff; i++) {
 		t += totals[i]
-		avg[i] = t/(i+1) 
+		_newUsers.avg[i] = t/(i+1) 
 	}
+
+
 
 	var red = "rgba(255,99,132,1)";
 	var blue = "rgba(54,162,235,1)";
@@ -487,7 +486,7 @@ function chtNewUsers(chart, data, total) {
 		"datasets":[
 		{
 			"label":"UK",
-			"data": uk,
+			"data": _newUsers.uk,
 			"fill":false,
 			"borderColor":red,
 			"backgroundColor":red,
@@ -496,7 +495,7 @@ function chtNewUsers(chart, data, total) {
 			"pointRadius":2
 		},{
 			"label":"US",
-			"data": us,
+			"data": _newUsers.us,
 			"fill":false,
 			"borderColor":blue,
 			"backgroundColor":blue,
@@ -505,7 +504,7 @@ function chtNewUsers(chart, data, total) {
 			"pointRadius":2
 		},{
 			"label":"Germany",
-			"data": de,
+			"data": _newUsers.de,
 			"fill":false,
 			"borderColor":yellow,
 			"backgroundColor":yellow,
@@ -514,7 +513,7 @@ function chtNewUsers(chart, data, total) {
 			"pointRadius":2
 		},{
 			"label":"India",
-			"data": ind,
+			"data": _newUsers.ind,
 			"fill":false,
 			"borderColor":orange,
 			"backgroundColor":orange,
@@ -523,7 +522,7 @@ function chtNewUsers(chart, data, total) {
 			"pointRadius":2
 		},{
 			"label":"Canada",
-			"data": ca,
+			"data": _newUsers.ca,
 			"fill":false,
 			"borderColor":purple,
 			"backgroundColor":purple,
@@ -532,7 +531,7 @@ function chtNewUsers(chart, data, total) {
 			"pointRadius":2
 		},{
 			"label":"Japan",
-			"data": jp,
+			"data": _newUsers.jp,
 			"fill":false,
 			"borderColor":green,
 			"backgroundColor":green,
@@ -541,7 +540,7 @@ function chtNewUsers(chart, data, total) {
 			"pointRadius":2
 		},{
 			"label":"Australia",
-			"data": au,
+			"data": _newUsers.au,
 			"fill":false,
 			"borderColor":grey,
 			"backgroundColor":grey,
@@ -550,20 +549,20 @@ function chtNewUsers(chart, data, total) {
 			"pointRadius":2
 		},{
 			"label":"", //Weekends
-			"data": we,
+			"data": _newUsers.we,
 			"type": "bar",
 			"borderWidth": 1,
 			"backgroundColor":"rgba(238, 238, 238, 0.4)",
 			"borderColor":"rgba(238, 238, 238, 0.4)"
 		},{
 			"label":"", //Months
-			"data": mo,
+			"data": _newUsers.mo,
 			"type": "bar",
 			"borderWidth": 1,
 			"backgroundColor":"rgba(76, 245, 20, 1)"
 		},{
 			"label":"", //avg
-			"data": avg,
+			"data": _newUsers.avg,
 			"type": "line",
 			"fill":false,
 			"borderColor":"rgba(0, 0, 0, 1)",
@@ -584,5 +583,10 @@ function updateCharts(data, total) {
 	var x = document.getElementById('pc_total_players').getAttribute('total');
 	// console.log(x,data.length)
 	if (data.length == x) return;
+
+
+
+
+
 	chtNewUsers(newUsersChart, data, total)
 }
