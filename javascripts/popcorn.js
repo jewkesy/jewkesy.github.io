@@ -43,7 +43,7 @@ setInterval(function () {
 				// console.log(url)
 				httpGetStats(url, 'pc', function (err, data) {
 					timeFrom = new Date().getTime();
-					console.log(data.newUsers)
+					// console.log(data.newUsers)
 					if (!err) buildPopcornPage(data);
 				});
 				httpGetGameStats(popcornStats);
@@ -66,8 +66,6 @@ if (c != 10) popcornUrl += "&limit=" + c;
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
-
-var newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 function buildGamePlayStats(content) {
 	// console.log(content)
@@ -403,75 +401,7 @@ function chtLocale(chart, data, options) {
 	chart.update();
 }
 
-var _newUsers = {}
-
-function chtNewUsers(chart, data, total) {
-	// get days from launch as x axis
-
-	var today = new Date();
-	var diff = daydiff(startDate, today, true);
-	var l = new Array(diff).fill("");
-
-	for (var i = 1; i < diff-1; i++) {
-		var someDate = addDays(startDate, i);
-		var q = someDate.toLocaleDateString().split("/");
-		l[i] = q[0] + getMonthName(q[1]-1);
-	}
-	l[0] = "Launch";
-	l[diff] = "Today";
-
-	// var ar = new Array(diff).fill(0);
-	_newUsers.uk = new Array(diff).fill(null);
-	_newUsers.us = new Array(diff).fill(null);
-	_newUsers.de = new Array(diff).fill(null);
-	_newUsers.ind =new Array(diff).fill(null);
-	_newUsers.ca = new Array(diff).fill(null);
-	_newUsers.jp = new Array(diff).fill(null);
-	_newUsers.au = new Array(diff).fill(null);
-	_newUsers.avg = new Array(diff).fill(0);
-
-	_newUsers.we = new Array(diff).fill(null);
-	_newUsers.mo = new Array(diff).fill(null);
-
-	var totals = new Array(diff).fill(0);
-
-	var max = 0;
-	// console.log(data)
-	for (var i = 0; i < data.length; i++) {
-		var x = data[i];	
-
-		var d = new Date(x.d*100000);
-		var day = d.getDay();
-		// console.log(day)
-		var df = daydiff(startDate, d, true)-1;
-		if (df < 0) continue;
-
-		if (x.l=="GB") _newUsers.uk[df]++;
-		else if (x.l=="US") _newUsers.us[df]++;
-		else if (x.l=="DE") _newUsers.de[df]++;
-		else if (x.l=="IN") _newUsers.ind[df]++;
-		else if (x.l=="CA") _newUsers.ca[df]++;
-		else if (x.l=="JP") _newUsers.jp[df]++;
-		else if (x.l=="AU") _newUsers.au[df]++;
-		else _newUsers.us[df]++; // assume US
-		totals[df]++;
-
-		// var day = d.getDay();
-		if (day == 0 || day >= 5) _newUsers.we[df]=3500;
-		var dt = d.getDate();
-		// console.log(dt)
-		if (dt == 1) _newUsers.mo[df]=3500;
-	}
-	// console.log(totals)
-	document.getElementById('pc_total_today').innerHTML = numberWithCommas(totals[totals.length-1]);
-	var t = 1;  // include myself
-	_newUsers.avg[0] = totals[0]
-	for (var i = 0; i < diff; i++) {
-		t += totals[i]
-		_newUsers.avg[i] = t/(i+1) 
-	}
-
-
+function chtNewUsers(chart, d, l, total) {
 
 	var red = "rgba(255,99,132,1)";
 	var blue = "rgba(54,162,235,1)";
@@ -578,15 +508,92 @@ function chtNewUsers(chart, data, total) {
 	chart.update();
 }
 
+var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
+var _newUsers = {};
+var _newUsersLabels = [];
+var _totals = [];
+
 function updateCharts(data, total) {
 	if (!data) return;
 	var x = document.getElementById('pc_total_players').getAttribute('total');
 	// console.log(x,data.length)
 	if (data.length == x) return;
 
+	// get days from launch as x axis
+
+	var today = new Date();
+	var diff = daydiff(startDate, today, true);
+
+	if (Object.keys(_newUsers).length === 0) {
+		_newUsersLabels = new Array(diff).fill("");
+
+		for (var i = 1; i < diff-1; i++) {
+			var someDate = addDays(startDate, i);
+			var q = someDate.toLocaleDateString().split("/");
+			_newUsersLabels[i] = q[0] + getMonthName(q[1]-1);
+		}
+		_newUsersLabels[0] = "Launch";
+		_newUsersLabels[diff] = "Today";
+
+		// var ar = new Array(diff).fill(0);
+		_newUsers.uk = new Array(diff).fill(null);
+		_newUsers.us = new Array(diff).fill(null);
+		_newUsers.de = new Array(diff).fill(null);
+		_newUsers.ind =new Array(diff).fill(null);
+		_newUsers.ca = new Array(diff).fill(null);
+		_newUsers.jp = new Array(diff).fill(null);
+		_newUsers.au = new Array(diff).fill(null);
+		_newUsers.avg =new Array(diff).fill(0);
+
+		_newUsers.we = new Array(diff).fill(null);
+		_newUsers.mo = new Array(diff).fill(null);
+
+		_totals = new Array(diff).fill(0);
 
 
 
+	} else {
+		// console.log ('append stuff')
 
-	chtNewUsers(newUsersChart, data, total)
+		// console.log(data)
+
+	}
+			for (var i = 0; i < data.length; i++) {
+			var x = data[i];	
+
+			var d = new Date(x.d*100000);
+			var day = d.getDay();
+			// console.log(day)
+			var df = daydiff(startDate, d, true)-1;
+			if (df < 0) continue;
+
+			if (x.l=="GB") _newUsers.uk[df]++;
+			else if (x.l=="US") _newUsers.us[df]++;
+			else if (x.l=="DE") _newUsers.de[df]++;
+			else if (x.l=="IN") _newUsers.ind[df]++;
+			else if (x.l=="CA") _newUsers.ca[df]++;
+			else if (x.l=="JP") _newUsers.jp[df]++;
+			else if (x.l=="AU") _newUsers.au[df]++;
+			else _newUsers.us[df]++; // assume US
+			_totals[df]++;
+
+			// var day = d.getDay();
+			if (day == 0 || day >= 5) _newUsers.we[df]=3500;
+			var dt = d.getDate();
+			// console.log(dt)
+			if (dt == 1) _newUsers.mo[df]=3500;
+		}
+		// console.log(totals)
+		document.getElementById('pc_total_today').innerHTML = numberWithCommas(_totals[_totals.length-1]);
+		var t = 1;  // include myself
+		_newUsers.avg[0] = _totals[0]
+		for (var i = 0; i < diff; i++) {
+			t += _totals[i]
+			_newUsers.avg[i] = t/(i+1) 
+		}
+
+	// console.log(_newUsers, _newUsersLabels, total)
+
+
+	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total)
 }
