@@ -519,6 +519,7 @@ function updateCharts(data, total) {
 	if (!data) return;
 	var x = document.getElementById('pc_total_players').getAttribute('total');
 	// console.log(x,data.length)
+	if (data.length == 0) return;
 	if (data.length == x) return;
 
 	// get days from launch as x axis
