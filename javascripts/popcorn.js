@@ -47,6 +47,7 @@ setInterval(function () {
 				var url = popcornUrl + "&timefrom=" + timeFrom;
 				httpGetStats(url, 'pc', function (err, data) {
 					timeFrom = new Date().getTime();
+					console.log(timeFrom)
 					if (!err) buildPopcornPage(data);
 				});
 				httpGetGameStats(popcornStats);
@@ -544,13 +545,17 @@ function updateCharts(data, total) {
 
 		_totals = new Array(diff).fill(0);
 	}
+
+	// TODO if diff is greater than _newUsers.uk.length > add one (new day)
+	console.log('adding',data.length)
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];	
 
-		var d = new Date(x.d*100000);
+		var d = new Date(x.d*1000);
 		var day = d.getDay();
-		// console.log(day)
+		
 		var df = daydiff(startDate, d, true)-1;
+		if (data.length < 10 ) console.log(df)
 		if (df < 0) continue;
 
 		if (x.l=="GB") _newUsers.uk[df]++;
@@ -569,7 +574,7 @@ function updateCharts(data, total) {
 		// console.log(dt)
 		if (dt == 1) _newUsers.mo[df]=3500;
 	}
-	// console.log(totals)
+	// console.log(_newUsers.uk[_newUsers.uk.length-1])
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_totals[_totals.length-1]);
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _totals[0]
@@ -577,7 +582,7 @@ function updateCharts(data, total) {
 		t += _totals[i]
 		_newUsers.avg[i] = t/(i+1) 
 	}
-
+ 	// console.log(_newUsers);
 	// console.log(_newUsers, _newUsersLabels, total)
 
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total)
