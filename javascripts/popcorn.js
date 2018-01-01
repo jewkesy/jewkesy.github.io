@@ -551,11 +551,11 @@ function updateCharts(data, total) {
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];	
 
-		var d = new Date(x.d*1000);
+		var d = new Date(x.d);
 		var day = d.getDay();
 		
 		var df = daydiff(startDate, d, true)-1;
-		if (data.length < 10 ) console.log(df)
+		// if (data.length < 10 ) console.log(df)
 		if (df < 0) continue;
 
 		if (x.l=="GB") _newUsers.uk[df]++;
