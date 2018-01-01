@@ -24,13 +24,13 @@ var startDate = new Date("28 May 2017");
 var timeFrom = 0;
 var last = 0;
 
-httpGetStats(popcornUrl, 'pc', function (err, data) {
-	if (!err) {
-		timeFrom = new Date().getTime();
-		buildPopcornPage(data);
-	}
-});
-httpGetGameStats(popcornStats);
+// httpGetStats(popcornUrl, 'pc', function (err, data) {
+// 	if (!err) {
+// 		timeFrom = new Date().getTime();
+// 		buildPopcornPage(data);
+// 	}
+// });
+// httpGetGameStats(popcornStats);
 
 httpGetAmazon(amazonUrl, function (err, data) {
 	setInterval(function () {
@@ -38,23 +38,30 @@ httpGetAmazon(amazonUrl, function (err, data) {
 	}, 60000);
 });
 
-setInterval(function () {
-	httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
-		if (!err) {
-			if (!data || !data[0]) return;
-			if (last < data[0].timestamp) {
-				last = data[0].timestamp;
-				var url = popcornUrl + "&timefrom=" + timeFrom;
-				httpGetStats(url, 'pc', function (err, data) {
-					timeFrom = new Date().getTime();
-					console.log(timeFrom)
-					if (!err) buildPopcornPage(data);
-				});
-				httpGetGameStats(popcornStats);
-			}
-		} 
-	});
-}, 5000);
+httpGetStats(popcornUrl, 'pc', function (err, data) {
+	if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d
+	console.log(timeFrom)
+	if (!err) buildPopcornPage(data);
+	setInterval(function () {
+		httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
+			if (!err) {
+				if (!data || !data[0]) return;
+				if (last < data[0].timestamp) {
+					last = data[0].timestamp;
+					var url = popcornUrl + "&timefrom=" + timeFrom;
+					console.log(url)
+					httpGetStats(url, 'pc', function (err, data) {
+						// timeFrom = new Date().getTime();
+						if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d
+						console.log(timeFrom)
+						if (!err) buildPopcornPage(data);
+					});
+					httpGetGameStats(popcornStats);
+				}
+			} 
+		});
+	}, 5000);
+});
 
 function applyLocaleHeader(locale) {
 	var elements = document.getElementsByClassName('selected');
