@@ -8,18 +8,25 @@ var amazonUrl = aws + 'getHomePageContent?amazon=true';
 var loc = getParameterByName('locale') || '';
 var c = getParameterByName('limit') || 10;
 
+if (c != 10) popcornUrl += "&limit=" + c;
+
+Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
+Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
+Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
+
 if (loc != '') {
 	applyLocaleHeader(loc);
 	popcornUrl += "&locale=" + loc;
 }
 
-
 var startDate = new Date("28 May 2017");
 
 var timeFrom = 0;
+var last = 0;
+
 httpGetStats(popcornUrl, 'pc', function (err, data) {
-	// timeFrom = new Date().getTime();
 	if (!err) {
+		timeFrom = new Date().getTime();
 		buildPopcornPage(data);
 	}
 });
@@ -31,8 +38,6 @@ httpGetAmazon(amazonUrl, function (err, data) {
 	}, 60000);
 });
 
-var last = 0;
-
 setInterval(function () {
 	httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
 		if (!err) {
@@ -40,10 +45,8 @@ setInterval(function () {
 			if (last < data[0].timestamp) {
 				last = data[0].timestamp;
 				var url = popcornUrl + "&timefrom=" + timeFrom;
-				// console.log(url)
 				httpGetStats(url, 'pc', function (err, data) {
 					timeFrom = new Date().getTime();
-					// console.log(data.newUsers)
 					if (!err) buildPopcornPage(data);
 				});
 				httpGetGameStats(popcornStats);
@@ -61,15 +64,8 @@ function applyLocaleHeader(locale) {
 	document.getElementById("th_"+loc).classList.add('selected');
 }
 
-if (c != 10) popcornUrl += "&limit=" + c;
-
-Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
-Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
-Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
-
 function buildGamePlayStats(content) {
 	// console.log(content)
-
 	var dots = [];
 
 	for (var i = content.length-1; i >= 0; i--) {	
@@ -103,12 +99,10 @@ function buildGamePlayStats(content) {
 	}
 
 	fadeyStuff("pc_games_today", dots[dots.length-1].games)
-
-	// console.log(dots)
 }
 
 function buildPopcornPage(content) {
-	// console.log(content)
+	console.log(content)
 	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
 
 	if (!content) return;
@@ -549,51 +543,42 @@ function updateCharts(data, total) {
 		_newUsers.mo = new Array(diff).fill(null);
 
 		_totals = new Array(diff).fill(0);
-
-
-
-	} else {
-		// console.log ('append stuff')
-
-		// console.log(data)
-
 	}
-			for (var i = 0; i < data.length; i++) {
-			var x = data[i];	
+	for (var i = 0; i < data.length; i++) {
+		var x = data[i];	
 
-			var d = new Date(x.d*100000);
-			var day = d.getDay();
-			// console.log(day)
-			var df = daydiff(startDate, d, true)-1;
-			if (df < 0) continue;
+		var d = new Date(x.d*100000);
+		var day = d.getDay();
+		// console.log(day)
+		var df = daydiff(startDate, d, true)-1;
+		if (df < 0) continue;
 
-			if (x.l=="GB") _newUsers.uk[df]++;
-			else if (x.l=="US") _newUsers.us[df]++;
-			else if (x.l=="DE") _newUsers.de[df]++;
-			else if (x.l=="IN") _newUsers.ind[df]++;
-			else if (x.l=="CA") _newUsers.ca[df]++;
-			else if (x.l=="JP") _newUsers.jp[df]++;
-			else if (x.l=="AU") _newUsers.au[df]++;
-			else _newUsers.us[df]++; // assume US
-			_totals[df]++;
+		if (x.l=="GB") _newUsers.uk[df]++;
+		else if (x.l=="US") _newUsers.us[df]++;
+		else if (x.l=="DE") _newUsers.de[df]++;
+		else if (x.l=="IN") _newUsers.ind[df]++;
+		else if (x.l=="CA") _newUsers.ca[df]++;
+		else if (x.l=="JP") _newUsers.jp[df]++;
+		else if (x.l=="AU") _newUsers.au[df]++;
+		else _newUsers.us[df]++; // assume US
+		_totals[df]++;
 
-			// var day = d.getDay();
-			if (day == 0 || day >= 5) _newUsers.we[df]=3500;
-			var dt = d.getDate();
-			// console.log(dt)
-			if (dt == 1) _newUsers.mo[df]=3500;
-		}
-		// console.log(totals)
-		document.getElementById('pc_total_today').innerHTML = numberWithCommas(_totals[_totals.length-1]);
-		var t = 1;  // include myself
-		_newUsers.avg[0] = _totals[0]
-		for (var i = 0; i < diff; i++) {
-			t += _totals[i]
-			_newUsers.avg[i] = t/(i+1) 
-		}
+		// var day = d.getDay();
+		if (day == 0 || day >= 5) _newUsers.we[df]=3500;
+		var dt = d.getDate();
+		// console.log(dt)
+		if (dt == 1) _newUsers.mo[df]=3500;
+	}
+	// console.log(totals)
+	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_totals[_totals.length-1]);
+	var t = 1;  // include myself
+	_newUsers.avg[0] = _totals[0]
+	for (var i = 0; i < diff; i++) {
+		t += _totals[i]
+		_newUsers.avg[i] = t/(i+1) 
+	}
 
 	// console.log(_newUsers, _newUsersLabels, total)
-
 
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total)
 }
