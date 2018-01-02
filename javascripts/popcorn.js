@@ -40,7 +40,7 @@ httpGetAmazon(amazonUrl, function (err, data) {
 
 httpGetStats(popcornUrl, 'pc', function (err, data) {
 	if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d
-	console.log(timeFrom)
+	// console.log(timeFrom)
 	if (!err) buildPopcornPage(data);
 	setInterval(function () {
 		httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
@@ -53,7 +53,7 @@ httpGetStats(popcornUrl, 'pc', function (err, data) {
 					httpGetStats(url, 'pc', function (err, data) {
 						// timeFrom = new Date().getTime();
 						if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d
-						console.log(timeFrom)
+						// console.log(timeFrom)
 						if (!err) buildPopcornPage(data);
 					});
 					httpGetGameStats(popcornStats);
@@ -546,16 +546,27 @@ function updateCharts(data, total) {
 		_newUsers.ca = new Array(diff).fill(null);
 		_newUsers.jp = new Array(diff).fill(null);
 		_newUsers.au = new Array(diff).fill(null);
+		
 		_newUsers.avg =new Array(diff).fill(0);
-
 		_newUsers.we = new Array(diff).fill(null);
 		_newUsers.mo = new Array(diff).fill(null);
 
 		_totals = new Array(diff).fill(0);
+	} else {
+		// TODO if diff is greater than _newUsers.uk.length > add one (new day)
+		if (diff > _newUsers.uk.length) resizeArr(_newUsers.uk, diff, null);
+		if (diff > _newUsers.us.length) resizeArr(_newUsers.us, diff, null);
+		if (diff > _newUsers.de.length) resizeArr(_newUsers.de, diff, null);
+		if (diff > _newUsers.ind.length)resizeArr(_newUsers.ind,diff, null);
+		if (diff > _newUsers.ca.length) resizeArr(_newUsers.ca, diff, null);
+		if (diff > _newUsers.jp.length) resizeArr(_newUsers.jp, diff, null);
+		if (diff > _newUsers.au.length) resizeArr(_newUsers.au, diff, null);
+		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
+		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
+		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
 	}
-
-	// TODO if diff is greater than _newUsers.uk.length > add one (new day)
-	console.log('adding',data.length)
+	
+	// console.log('adding',data.length)
 	for (var i = 0; i < data.length; i++) {
 		var x = data[i];	
 

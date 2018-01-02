@@ -36,6 +36,12 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function resizeArr(arr, newSize, defaultValue) {
+    while(newSize > arr.length)
+        arr.push(defaultValue);
+    arr.length = newSize;
+}
+
 function httpGetGameCount(theUrl, prefix){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
