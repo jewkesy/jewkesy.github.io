@@ -8,7 +8,9 @@ var amazonUrl = aws + 'getHomePageContent?amazon=true';
 var loc = getParameterByName('locale') || '';
 var c = getParameterByName('limit') || 10;
 
-if (c != 10) popcornUrl += "&limit=" + c;
+// if (c != 10) 
+	popcornUrl += "&limit=" + c;
+	popcornLastGameUrl += "&limit=" + c;
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
@@ -213,7 +215,9 @@ function buildPopcornLastGames(games, prefix) {
 
 			if (games[i].l) document.getElementById(prefix + '_lastgames_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + games[i].l + ".png' />";
 		}
+
 	}
+	document.getElementById(prefix + '_lg_count').innerHTML = i;
 }
 
 function buildPopcornLeague(topTen, prefix, total) {
@@ -276,8 +280,9 @@ function buildPopcornLeague(topTen, prefix, total) {
 			if (topTen[i].l) document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].l + ".png' />";
 
 		}
-		document.getElementById(prefix + '_count').innerHTML = i+1;
+		
 	}
+	document.getElementById(prefix + '_count').innerHTML = i;
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
 }
 
