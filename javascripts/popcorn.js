@@ -41,6 +41,7 @@ httpGetAmazon(amazonUrl, function (err, data) {
 });
 
 httpGetStats(popcornUrl, 'pc', function (err, data) {
+	if (!data) return;
 	if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d
 	// console.log(timeFrom)
 	if (!err) buildPopcornPage(data);
@@ -53,6 +54,7 @@ httpGetStats(popcornUrl, 'pc', function (err, data) {
 					var url = popcornUrl + "&timefrom=" + timeFrom;
 					console.log(url)
 					httpGetStats(url, 'pc', function (err, data) {
+						if (!data) return;
 						// timeFrom = new Date().getTime();
 						if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d
 						// console.log(timeFrom)
