@@ -1,3 +1,4 @@
+"use strict";
 
 var aws = "https://e94s2o5jyb.execute-api.eu-west-1.amazonaws.com/prod/";
 
@@ -32,8 +33,10 @@ function keyExists(name, arr) {
 }
 
 function numberWithCommas(x) {
-	if (!x) return("");
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	if (!x) return("0");
+	var retVal = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	// console.log(x, retVal);
+    return retVal;
 }
 
 function resizeArr(arr, newSize, defaultValue) {
@@ -62,6 +65,24 @@ function httpGetGameCount(theUrl, prefix){
 
 				document.getElementById(prefix + '_total_games').innerHTML = numberWithCommas(count);
 			}
+		}
+	}
+}
+
+function httpGetByUrl(theUrl, callback) {
+	var xmlHttp = null;
+	xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.onreadystatechange = handleReadyStateChange;
+	xmlHttp.send(null);
+
+	function handleReadyStateChange() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				var doc = JSON.parse(xmlHttp.responseText);
+				if (callback) return callback(null, doc);
+			}
+			if (callback) return callback(xmlHttp.status);
 		}
 	}
 }

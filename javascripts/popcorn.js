@@ -52,7 +52,7 @@ httpGetStats(popcornUrl, 'pc', function (err, data) {
 				if (last < data[0].timestamp) {
 					last = data[0].timestamp;
 					var url = popcornUrl + "&timefrom=" + timeFrom;
-					console.log(url)
+					// console.log(url)
 					httpGetStats(url, 'pc', function (err, data) {
 						if (!data) return;
 						// timeFrom = new Date().getTime();
