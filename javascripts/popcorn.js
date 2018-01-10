@@ -8,6 +8,8 @@ var amazonUrl = aws + 'getHomePageContent?amazon=true';
 var loc = getParameterByName('locale') || '';
 var c = getParameterByName('limit') || 10;
 
+document.getElementById('pc_more_count').innerHTML = c;
+
 // if (c != 10) 
 	popcornUrl += "&limit=" + c;
 	popcornLastGameUrl += "&limit=" + c;
@@ -222,6 +224,7 @@ function buildPopcornLastGames(games, prefix) {
 
 	}
 	document.getElementById(prefix + '_lg_count').innerHTML = i;
+	document.getElementById(prefix + '_more_count').innerHTML = i;
 }
 
 function buildPopcornLeague(topTen, prefix, total) {
@@ -609,11 +612,44 @@ function updateCharts(data, total) {
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _totals[0]
 	for (var i = 0; i < diff; i++) {
-		t += _totals[i]
-		_newUsers.avg[i] = t/(i+1) 
+		t += _totals[i];
+		_newUsers.avg[i] = t/(i+1);
 	}
  	// console.log(_newUsers);
 	// console.log(_newUsers, _newUsersLabels, total)
 
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total)
+}
+
+function increaseLimit() {
+	c = c*2;
+	var newUrl = paramReplace('limit', window.location.href, c);
+	// var newUrl2 = paramReplace('pc_league', newUrl, null);
+	if (newUrl.indexOf('#pc_league') === -1) { 
+		newUrl = newUrl + '#pc_league'
+	}
+	// console.log(newUrl)
+	window.location.href = newUrl;
+	
+}
+
+// Update the appropriate href query string parameter
+function paramReplace(param, url, value) {
+	if (url.indexOf(param) === -1) {
+		if (url.indexOf("?") === -1) {
+			return url + "?" + param + "=" + value;
+		}
+		return url + "&" + param + "="+value;
+	}
+  // Find the param with regex
+  // Grab the first character in the returned string (should be ? or &)
+  // Replace our href string with our new value, passing on the name and delimiter
+  var re = new RegExp("[\\?&#]" + param + "=([^&#]*)");
+  var pos = re.exec(url);
+  var delimiter = pos[0].charAt(0);
+
+  if (!value || value === null) return url.replace(re, delimiter + param);
+  var newString = url.replace(re, delimiter + param + "=" + value);
+ 
+  return newString;
 }
