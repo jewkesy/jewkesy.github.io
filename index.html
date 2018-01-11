@@ -164,23 +164,26 @@
       </div>
       <div class="fadedScroller_fade"></div>
       <br/>
-      <div class="centerMe">
+      <div class="centerMe" style="min-width:380px;max-width:500px;">
         <button type="button" class="btn btn-info" onclick="increaseLimit();">Load <span id="pc_more_count">10</span> more</button>
       </div>
       <br/>
-      <table id="pc_lastgames" class="centerMe borderMe" style="margin-bottom: 20px; min-width:380px;max-width: 500px;">
-        <tr><th colspan=7>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
-        <tr>
-          <th>Rank</th>
-          <th>Score</th>
-          <th>Games<br/>Played</th>
-          <th>Avg.&nbsp;Per<br/>Game</th>
-          <th>Last Played</th>
-          <th>Joined</th>
-          <th>Locale</th>
-        </tr>
-      </table>
-
+      <div class="borderMe" style="height:400px;overflow:auto;min-width:380px;max-width:500px;">
+        <table id="pc_lastgames" class="centerMe borderMe" style="margin-bottom: 20px; min-width:380px;max-width: 500px;">
+          <tr><th colspan=7>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
+          <tr>
+            <th>Rank</th>
+            <th>Score</th>
+            <th>Games<br/>Played</th>
+            <th>Avg.&nbsp;Per<br/>Game</th>
+            <th>Last Played</th>
+            <th>Joined</th>
+            <th>Locale</th>
+          </tr>
+        </table>
+      </div>
+      <div class="fadedScroller_fade"></div>
+      <br/>
       <table class="centerMe borderMe" style="margin-bottom: 20px; min-width:380px;max-width: 500px;">
         <tr><th>Total Players:</th><td id='pc_total_players'>0</td><th>Today:</th><td id='pc_total_today'>0</td></tr>
         <tr><th>Total Games:</th><td id='pc_total_games'>0</td><th>Today:</th><td id='pc_games_today'>0</td></tr>
