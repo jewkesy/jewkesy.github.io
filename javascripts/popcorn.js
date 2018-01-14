@@ -52,10 +52,11 @@ httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c, 'pc
 	// if (data.lastGame.length > 0) timeFrom = data.lastGame[0].t
 });
 
+console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom);
 httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 	if (!data) return;
 	console.log(data);
-	if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d
+	if (data.newUsers.length > 0) timeFrom = data.newUsers[data.newUsers.length-1].d
 	console.log(timeFrom)
 	if (!err) buildPopcornPage(data);
 	setInterval(function () {
@@ -74,11 +75,12 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&t
 					});
 					// var url = popcornUrl + "&timefrom=" + timeFrom;
 					// console.log(url)
+					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom);
 					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 						if (!data) return;
 						console.log(data);
 						// timeFrom = new Date().getTime();
-						if (data.newUsers.length > 0) timeFrom = data.newUsers[0].d;
+						if (data.newUsers.length > 0) timeFrom = data.newUsers[data.newUsers.length-1].d;
 						console.log(timeFrom)
 						if (!err) buildPopcornPage(data);
 					});
