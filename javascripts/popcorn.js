@@ -635,15 +635,26 @@ function increaseLimit() {
 	var newUrl = paramReplace('limit', window.location.href, c);
 	// var newUrl2 = paramReplace('pc_league', newUrl, null);
 	if (newUrl.indexOf('#pc_league') === -1) { 
-		newUrl = newUrl + '#pc_league'
+		newUrl = newUrl + '#pc_league';
 	}
-	// console.log(newUrl)
+	// console.log(newUrl);
 	window.location.href = newUrl;
 	
 }
 
 // Update the appropriate href query string parameter
 function paramReplace(param, url, value) {
+	console.log(param, url, value);
+
+	var inline = "";
+	console.log(url.indexOf("#"))
+	if (url.indexOf("#") > -1) {
+		inline = "#" + url.split("#")[1];
+		url =  url.split("#")[0];
+		console.log(url)
+		console.log(inline)
+	}
+
 	if (url.indexOf(param) === -1) {
 		if (url.indexOf("?") === -1) {
 			return url + "?" + param + "=" + value;
@@ -660,5 +671,5 @@ function paramReplace(param, url, value) {
   if (!value || value === null) return url.replace(re, delimiter + param);
   var newString = url.replace(re, delimiter + param + "=" + value);
  
-  return newString;
+  return newString + inline;
 }
