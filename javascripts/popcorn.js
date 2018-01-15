@@ -11,8 +11,8 @@ var c = getParameterByName('limit') || 10;
 document.getElementById('pc_more_count').innerHTML = c;
 
 // if (c != 10) 
-	popcornUrl += "&limit=" + c;
-	popcornLastGameUrl += "&limit=" + c;
+popcornUrl += "&limit=" + c;
+popcornLastGameUrl += "&limit=" + c;
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
@@ -41,18 +41,18 @@ httpGetAmazon(amazonUrl, function (err, data) {
 	}, 60000);
 });
 
-httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c, 'pc',  function (err, data) {
+httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 	// console.log(data);
 	buildPopcornLeague(data, 'pc');
 });
-httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c, 'pc',  function (err, data) {
+httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 	// console.log(data);
 	buildPopcornLastGames(data, 'pc');
 	// if (data.lastGame.length > 0) timeFrom = data.lastGame[0].t
 });
 
-// console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom);
-httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom, 'pc', function (err, data) {
+// console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
+httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 	if (!data) return;
 	console.log(data);
 	if (data.newUsers.length > 0) timeFrom = data.newUsers[data.newUsers.length-1].d;
@@ -64,18 +64,18 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&t
 				if (!data || !data[0]) return;
 				if (last < data[0].timestamp) {
 					last = data[0].timestamp;
-					httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c, 'pc',  function (err, data) {
+					httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 						// console.log(data);
 						buildPopcornLeague(data, 'pc');
 					});
-					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c, 'pc',  function (err, data) {
+					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 						// console.log(data);
 						buildPopcornLastGames(data, 'pc');
 					});
 					// var url = popcornUrl + "&timefrom=" + timeFrom;
 					// console.log(url)
-					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom);
-					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&timefrom=" + timeFrom, 'pc', function (err, data) {
+					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
+					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 						if (!data) return;
 						console.log(data);
 						// timeFrom = new Date().getTime();
@@ -107,12 +107,12 @@ function buildGamePlayStats(content) {
 		var s = content[i];
 
 		// get the day
-		var d = new Date(s.d)
+		var d = new Date(s.d);
 		var dd = ""+d.getFullYear()+(d.getMonth() + 1)+d.getDate();
 		var day = weekday[d.getDay()];
 		// console.log(dd);
 
-		var idx = keyExists(dd, dots)
+		var idx = keyExists(dd, dots);
 		if (idx == -1) {
 			dots.push({
 				key: dd,
@@ -130,10 +130,10 @@ function buildGamePlayStats(content) {
 			dots[i].games = dots[i].games - dots[i-1].games;
 			dots[i].hourly = dots[i].games/24;
 		}
-		else if (i == 0) dots[i].games = 0
+		else if (i == 0) dots[i].games = 0;
 	}
 
-	fadeyStuff("pc_games_today", dots[dots.length-1].games)
+	fadeyStuff("pc_games_today", dots[dots.length-1].games);
 }
 
 function buildPopcornPage(content) {
@@ -164,7 +164,7 @@ function fadeyStuff(id, val) {
 }
 
 function buildPopcornLastGames(data, prefix) {
-
+	if(!data) return;
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
@@ -237,6 +237,7 @@ function buildPopcornLastGames(data, prefix) {
 }
 
 function buildPopcornLeague(data, prefix, total) {
+	if(!data) return;
 	var topTen = data.league;
 	var container = document.getElementById(prefix + '_scores');
 	for (var i = 0; i < topTen.length; i++) {
