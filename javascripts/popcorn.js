@@ -27,14 +27,6 @@ var startDate = new Date("28 May 2017");
 var timeFrom = 0;
 var last = 0;
 
-// httpGetStats(popcornUrl, 'pc', function (err, data) {
-// 	if (!err) {
-// 		timeFrom = new Date().getTime();
-// 		buildPopcornPage(data);
-// 	}
-// });
-// httpGetGameStats(popcornStats);
-
 httpGetAmazon(amazonUrl, function (err, data) {
 	setInterval(function () {
 		httpGetAmazon(amazonUrl, function (err, data) {});
@@ -42,21 +34,15 @@ httpGetAmazon(amazonUrl, function (err, data) {
 });
 
 httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
-	// console.log(data);
 	buildPopcornLeague(data, 'pc');
 });
 httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
-	// console.log(data);
 	buildPopcornLastGames(data, 'pc');
-	// if (data.lastGame.length > 0) timeFrom = data.lastGame[0].t
 });
 
-// console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
-httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
+httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + last, 'pc', function (err, data) {
 	if (!data) return;
 	console.log(data);
-	if (data.newUsers.length > 0) timeFrom = data.newUsers[data.newUsers.length-1].d;
-	console.log(timeFrom);
 	if (!err) buildPopcornPage(data);
 	setInterval(function () {
 		httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
@@ -65,29 +51,22 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 				if (last < data[0].timestamp) {
 					last = data[0].timestamp;
 					httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
-						// console.log(data);
 						buildPopcornLeague(data, 'pc');
 					});
 					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
-						// console.log(data);
 						buildPopcornLastGames(data, 'pc');
 					});
-					// var url = popcornUrl + "&timefrom=" + timeFrom;
-					// console.log(url)
-					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
-					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
+					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + last);
+					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + last, 'pc', function (err, data) {
 						if (!data) return;
 						console.log(data);
-						// timeFrom = new Date().getTime();
-						if (data.newUsers.length > 0) timeFrom = data.newUsers[data.newUsers.length-1].d;
-						console.log(timeFrom);
 						if (!err) buildPopcornPage(data);
 					});
 					httpGetGameStats(popcornStats);
 				}
 			} 
 		});
-	}, 5000);
+	}, 50000);
 });
 
 function applyLocaleHeader(locale) {
@@ -129,8 +108,7 @@ function buildGamePlayStats(content) {
 		if (i > 0) {
 			dots[i].games = dots[i].games - dots[i-1].games;
 			dots[i].hourly = dots[i].games/24;
-		}
-		else if (i == 0) dots[i].games = 0;
+		} else if (i == 0) dots[i].games = 0;
 	}
 
 	fadeyStuff("pc_games_today", dots[dots.length-1].games);
@@ -141,23 +119,13 @@ function buildPopcornPage(content) {
 	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
 
 	if (!content) return;
-	updateCharts(content.newUsers, content.totalUsers);
-
-	// buildPopcornLastGames(content.lastGame, 'pc');
-	// buildPopcornLeague(content.league, 'pc', content.totalGames);
-
-	// fadeyStuff("pc_total_players", numberWithCommas(content.totalUsers));
-	// document.getElementById('pc_total_players').setAttribute('total', content.totalUsers);
-
-	// fadeyStuff("pc_total_games", numberWithCommas(content.totalGames));
-	// document.getElementById('pc_total_games').setAttribute('total', content.totalGames);
+	updateCharts(content.counts, content.totalUsers);
 }
 
 function fadeyStuff(id, val) {
 	if (document.getElementById(id).innerHTML == val) return;
 
 	$("#"+id).fadeOut(666, function () {
-		// console.log('here')
 		document.getElementById(id).innerHTML = val;
 		$("#"+id).fadeIn();
 	});
@@ -465,7 +433,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"India",
-			"data": _newUsers.ind,
+			"data": _newUsers.in,
 			"fill":false,
 			"borderColor":orange,
 			"backgroundColor":orange,
@@ -536,7 +504,7 @@ var _newUsersLabels = [];
 var _totals = [];
 
 function updateCharts(data, total) {
-	// console.log(data);
+	console.log(data);
 	if (!data) return;
 	if (data.length == 0) return;
 
@@ -546,7 +514,7 @@ function updateCharts(data, total) {
 	var diff = daydiff(startDate, today, true);
 
 	if (Object.keys(_newUsers).length === 0) {
-		// console.log('initial');
+		_newUsers = data;
 		_newUsersLabels = new Array(diff).fill("");
 
 		for (var i = 1; i < diff-1; i++) {
@@ -557,27 +525,12 @@ function updateCharts(data, total) {
 		_newUsersLabels[0] = "Launch";
 		_newUsersLabels[diff] = "Today";
 
-		// var ar = new Array(diff).fill(0);
-		_newUsers.uk = new Array(diff).fill(null);
-		_newUsers.us = new Array(diff).fill(null);
-		_newUsers.de = new Array(diff).fill(null);
-		_newUsers.ind =new Array(diff).fill(null);
-		_newUsers.ca = new Array(diff).fill(null);
-		_newUsers.jp = new Array(diff).fill(null);
-		_newUsers.au = new Array(diff).fill(null);
-		
-		_newUsers.avg =new Array(diff).fill(0);
-		_newUsers.we = new Array(diff).fill(null);
-		_newUsers.mo = new Array(diff).fill(null);
-
-		_totals = new Array(diff).fill(0);
 	} else {
-		// console.log('append');
 		// TODO if diff is greater than _newUsers.uk.length > add one (new day)
 		if (diff > _newUsers.uk.length) resizeArr(_newUsers.uk, diff, null);
 		if (diff > _newUsers.us.length) resizeArr(_newUsers.us, diff, null);
 		if (diff > _newUsers.de.length) resizeArr(_newUsers.de, diff, null);
-		if (diff > _newUsers.ind.length)resizeArr(_newUsers.ind,diff, null);
+		if (diff > _newUsers.in.length) resizeArr(_newUsers.in,diff, null);
 		if (diff > _newUsers.ca.length) resizeArr(_newUsers.ca, diff, null);
 		if (diff > _newUsers.jp.length) resizeArr(_newUsers.jp, diff, null);
 		if (diff > _newUsers.au.length) resizeArr(_newUsers.au, diff, null);
@@ -600,7 +553,7 @@ function updateCharts(data, total) {
 		if (x.l=="GB") _newUsers.uk[df]++;
 		else if (x.l=="US") _newUsers.us[df]++;
 		else if (x.l=="DE") _newUsers.de[df]++;
-		else if (x.l=="IN") _newUsers.ind[df]++;
+		else if (x.l=="IN") _newUsers.in[df]++;
 		else if (x.l=="CA") _newUsers.ca[df]++;
 		else if (x.l=="JP") _newUsers.jp[df]++;
 		else if (x.l=="AU") _newUsers.au[df]++;
@@ -610,11 +563,10 @@ function updateCharts(data, total) {
 		// var day = d.getDay();
 		if (day == 0 || day >= 5) _newUsers.we[df]=3500;
 		var dt = d.getDate();
-		// console.log(dt)
 		if (dt == 1) _newUsers.mo[df]=3500;
 	}
-	// console.log(_newUsers.uk[_newUsers.uk.length-1])
-	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_totals[_totals.length-1]);
+	console.log(_totals)
+	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]);
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _totals[0];
 	for (var i = 0; i < diff; i++) {
