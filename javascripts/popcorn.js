@@ -348,6 +348,7 @@ function buildAmazonReview(data) {
 }
 
 function chtLocale(chart, data, options) {
+	console.log(data)
 	if (!data) return;
 	var results = [];
 
@@ -507,12 +508,10 @@ var _newUsers = {};
 var _newUsersLabels = [];
 
 function updateCharts(data, total) {
-	// console.log(data);
 	if (!data) return;
-	if (data.length == 0) return;
+	if (data.length === 0) return;
 
 	// get days from launch as x axis
-
 	var today = new Date();
 	var diff = daydiff(startDate, today, true);
 
@@ -542,32 +541,43 @@ function updateCharts(data, total) {
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
 	}
 	
-	// console.log('adding',data.length)
-	for (var i = 0; i < data.length; i++) {
-		var x = data[i];	
-
-		var d = new Date(x.d);
-		var day = d.getDay();
-		
-		var df = daydiff(startDate, d, true)-1;
-		// if (data.length < 10 ) console.log(df)
-		if (df < 0) continue;
-
-		if (x.l=="GB") _newUsers.uk[df]++;
-		else if (x.l=="US") _newUsers.us[df]++;
-		else if (x.l=="DE") _newUsers.de[df]++;
-		else if (x.l=="IN") _newUsers.in[df]++;
-		else if (x.l=="CA") _newUsers.ca[df]++;
-		else if (x.l=="JP") _newUsers.jp[df]++;
-		else if (x.l=="AU") _newUsers.au[df]++;
-		else _newUsers.us[df]++; // assume US
-
-
-		if (day == 0 || day >= 5) _newUsers.we[df]=3500;
-		var dt = d.getDate();
-		if (dt == 1) _newUsers.mo[df]=3500;
+	console.log('merging')
+console.log(data);
+console.log(_newUsers)
+	for (var i = 0; i < data.totals.length; i++) {
+		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
 	}
 
+	for (var i = 0; i < data.uk.length; i++) {
+		if (data.uk[i] != _newUsers.uk[i]) _newUsers.uk[i] += data.uk[i];
+	}
+
+	// for (var i = 0; i < data.uk.length; i++) {
+	// 	var x = data[i];	
+
+	// 	var d = new Date(x.d);
+	// 	var day = d.getDay();
+		
+	// 	var df = daydiff(startDate, d, true)-1;
+	// 	// if (data.length < 10 ) console.log(df)
+	// 	if (df < 0) continue;
+
+	// 	if (x.l=="GB") _newUsers.uk[df]++;
+	// 	else if (x.l=="US") _newUsers.us[df]++;
+	// 	else if (x.l=="DE") _newUsers.de[df]++;
+	// 	else if (x.l=="IN") _newUsers.in[df]++;
+	// 	else if (x.l=="CA") _newUsers.ca[df]++;
+	// 	else if (x.l=="JP") _newUsers.jp[df]++;
+	// 	else if (x.l=="AU") _newUsers.au[df]++;
+	// 	else _newUsers.us[df]++; // assume US
+
+
+	// 	if (day == 0 || day >= 5) _newUsers.we[df]=3500;
+	// 	var dt = d.getDate();
+	// 	if (dt == 1) _newUsers.mo[df]=3500;
+	// }
+console.log(_newUsers.totals)
+console.log(_newUsers.totals[_newUsers.totals.length-1])
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]);
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _newUsers.totals[0];
