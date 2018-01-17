@@ -501,10 +501,9 @@ function chtNewUsers(chart, d, l, total) {
 var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 var _newUsers = {};
 var _newUsersLabels = [];
-var _totals = [];
 
 function updateCharts(data, total) {
-	console.log(data);
+	// console.log(data);
 	if (!data) return;
 	if (data.length == 0) return;
 
@@ -558,14 +557,13 @@ function updateCharts(data, total) {
 		else if (x.l=="JP") _newUsers.jp[df]++;
 		else if (x.l=="AU") _newUsers.au[df]++;
 		else _newUsers.us[df]++; // assume US
-		// _totals[df]++;
 
-		// var day = d.getDay();
+
 		if (day == 0 || day >= 5) _newUsers.we[df]=3500;
 		var dt = d.getDate();
 		if (dt == 1) _newUsers.mo[df]=3500;
 	}
-	console.log(_totals)
+
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]);
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _newUsers.totals[0];
