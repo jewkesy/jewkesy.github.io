@@ -40,8 +40,9 @@ httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&
 	buildPopcornLastGames(data, 'pc');
 });
 httpGetGameStats(popcornStats);
-httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + last, 'pc', function (err, data) {
+httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 	if (!data) return;
+	timeFrom = data.lastTime;
 	console.log(data);
 	if (!err) buildPopcornPage(data);
 	setInterval(function () {
@@ -56,10 +57,11 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 						buildPopcornLastGames(data, 'pc');
 					});
-					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + last);
-					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + last, 'pc', function (err, data) {
+					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
+					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 						if (!data) return;
 						console.log(data);
+						timeFrom = data.lastTime;
 						if (!err) buildPopcornPage(data);
 					});
 					httpGetGameStats(popcornStats);
@@ -119,6 +121,8 @@ function buildPopcornPage(content) {
 	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
 
 	if (!content) return;
+	if (content.count == 0) return;
+	console.log('NEW USERS');
 	updateCharts(content.counts, content.totalUsers);
 }
 
