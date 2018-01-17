@@ -118,7 +118,7 @@ function buildGamePlayStats(content) {
 				key: dd,
 				day: day,
 				games: s.games
-			})
+			});
 		} else {
 			dots[idx].games = s.games;
 		}
@@ -284,7 +284,6 @@ function buildPopcornLeague(data, prefix, total) {
 			cell6.innerHTML = humanTime((topTen[i].st/1000)+"");
 
 			if (topTen[i].l) cell7.innerHTML =  "<span>"+device+"</span><img class='locale' src='./images/" + topTen[i].l + ".png' />";
-			
 		} else {
 			document.getElementById(prefix + '_league_rank_' + x).innerHTML = numberWithCommas(x) + sym;
 			document.getElementById(prefix + '_league_score_' + x).innerHTML = numberWithCommas(topTen[i].s);
@@ -296,9 +295,7 @@ function buildPopcornLeague(data, prefix, total) {
 			document.getElementById(prefix + '_league_st_' + x).innerHTML = humanTime((topTen[i].st/1000)+"");
 
 			if (topTen[i].l) document.getElementById(prefix + '_league_locale_' + x).innerHTML =  "<span>"+device+"</span><img class='locale' src='./images/" + topTen[i].l + ".png' />";
-
 		}
-		
 	}
 	document.getElementById(prefix + '_count').innerHTML = i;
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
@@ -638,21 +635,17 @@ function increaseLimit() {
 		newUrl = newUrl + '#pc_league';
 	}
 	// console.log(newUrl);
-	window.location.href = newUrl;
-	
+	window.location.href = newUrl;	
 }
 
 // Update the appropriate href query string parameter
 function paramReplace(param, url, value) {
-	console.log(param, url, value);
+	// console.log(param, url, value);
 
 	var inline = "";
-	console.log(url.indexOf("#"))
 	if (url.indexOf("#") > -1) {
 		inline = "#" + url.split("#")[1];
 		url =  url.split("#")[0];
-		console.log(url)
-		console.log(inline)
 	}
 
 	if (url.indexOf(param) === -1) {
