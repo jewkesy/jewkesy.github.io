@@ -549,7 +549,10 @@ console.log(_newUsers)
 	}
 
 	for (var i = 0; i < data.uk.length; i++) {
-		if (data.uk[i] != _newUsers.uk[i]) _newUsers.uk[i] += data.uk[i];
+		if (data.uk[i] != _newUsers.uk[i]) {
+			if (!_newUsers.uk[i]) _newUsers.uk[i] = 0;
+			_newUsers.uk[i] += data.uk[i];
+		}
 	}
 
 	// for (var i = 0; i < data.uk.length; i++) {
