@@ -57,7 +57,7 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 						buildPopcornLastGames(data, 'pc');
 					});
-					console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
+					// console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
 					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 						if (!data) return;
 						console.log(data);
@@ -110,19 +110,17 @@ function buildGamePlayStats(content) {
 		if (i > 0) {
 			dots[i].games = dots[i].games - dots[i-1].games;
 			dots[i].hourly = dots[i].games/24;
-		} else if (i == 0) dots[i].games = 0;
+		} else if (i === 0) dots[i].games = 0;
 	}
 
 	fadeyStuff("pc_games_today", dots[dots.length-1].games);
 }
 
 function buildPopcornPage(content) {
-	// console.log(content);
 	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
 
 	if (!content) return;
-	if (content.count == 0) return;
-	console.log('NEW USERS');
+	if (content.count === 0) return;
 	updateCharts(content.counts, content.totalUsers);
 }
 
@@ -329,7 +327,7 @@ function buildAmazonReview(data) {
 			e.classList.remove(arClasses[j]);
 		}
 
-		     if (i == 0) e.classList.add(getCssStar(data.uk.score));
+		     if (i ===0) e.classList.add(getCssStar(data.uk.score));
 		else if (i == 1) e.classList.add(getCssStar(data.us.score));
 		else if (i == 2) e.classList.add(getCssStar(data.de.score));
 		else if (i == 3) e.classList.add(getCssStar(data.in.score));
@@ -345,55 +343,6 @@ function buildAmazonReview(data) {
 	if (document.getElementById('pc_ca_reviews')) document.getElementById('pc_ca_reviews').innerHTML = data.ca.reviews;
 	if (document.getElementById('pc_jp_reviews')) document.getElementById('pc_jp_reviews').innerHTML = data.jp.reviews;
 	if (document.getElementById('pc_au_reviews')) document.getElementById('pc_au_reviews').innerHTML = data.au.reviews;
-}
-
-function chtLocale(chart, data, options) {
-	console.log(data)
-	if (!data) return;
-	var results = [];
-
-	for (var i = 0; i < data.length; i++) {
-		var x = data[i];
-		if (!x.locale) x.locale = 'Unknown';
-		var idx = keyExists(x.locale, results);
-		if (idx == -1) {
-			results.push({
-				key: x.locale,
-				count: 1
-			});
-		} else {
-			results[idx].count ++;
-		}
-	} 
-
-	var d = {
-	    datasets: [{
-	        data: [],
-	        backgroundColor: [],
-            borderWidth: 1
-	    }],
-
-	    // These labels appear in the legend and in the tooltips when hovering different arcs
-	    labels: []
-	};
-
-	for (var i = 0; i < results.length; i++) {
-		d.datasets[0].data.push(results[i].count);
-		d.labels.push(results[i].key);
-		if (results[i].key == "en-GB") d.datasets[0].backgroundColor.push("rgba(255,99,132,1)");
-		else if (results[i].key == "en-US") d.datasets[0].backgroundColor.push("rgba(54, 162, 235, 1)");
-		else if (results[i].key == "de-DE") d.datasets[0].backgroundColor.push("rgba(255, 206, 86, 1)");
-		else if (results[i].key == "en-IN") d.datasets[0].backgroundColor.push("rgba(75, 192, 192, 1)");
-		else if (results[i].key == "en-CA") d.datasets[0].backgroundColor.push("rgba(90, 92, 192, 1)");
-		else if (results[i].key == "ja-JP") d.datasets[0].backgroundColor.push("rgba(90, 92, 192, 1)");
-		else if (results[i].key == "en-AU") d.datasets[0].backgroundColor.push("rgba(90, 92, 192, 1)");
-		else d.datasets[0].backgroundColor.push("rgba(75, 192, 192, 1)");
-	}
-
-	chart.data = d;
-	chart.options.animation.duration = 1;
-
-	chart.update();
 }
 
 function chtNewUsers(chart, d, l, total) {
@@ -528,59 +477,57 @@ function updateCharts(data, total) {
 		_newUsersLabels[diff] = "Today";
 
 	} else {
-		// TODO if diff is greater than _newUsers.uk.length > add one (new day)
 		if (diff > _newUsers.uk.length) resizeArr(_newUsers.uk, diff, null);
 		if (diff > _newUsers.us.length) resizeArr(_newUsers.us, diff, null);
 		if (diff > _newUsers.de.length) resizeArr(_newUsers.de, diff, null);
-		if (diff > _newUsers.in.length) resizeArr(_newUsers.in,diff, null);
+		if (diff > _newUsers.in.length) resizeArr(_newUsers.in, diff, null);
 		if (diff > _newUsers.ca.length) resizeArr(_newUsers.ca, diff, null);
 		if (diff > _newUsers.jp.length) resizeArr(_newUsers.jp, diff, null);
 		if (diff > _newUsers.au.length) resizeArr(_newUsers.au, diff, null);
 		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
 		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
+		if (diff > _newUsers.totals.length) resizeArr(_newUsers.totals, diff, 0);
 	}
 	
-	console.log('merging')
-console.log(data);
-console.log(_newUsers)
 	for (var i = 0; i < data.totals.length; i++) {
+		if (data.avg[i] != _newUsers.avg[i]) _newUsers.avg[i] += data.avg[i];
+		if (data.we[i] != _newUsers.we[i]) _newUsers.we[i] += data.we[i];
+		if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] += data.mo[i];
 		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
 	}
 
-	for (var i = 0; i < data.uk.length; i++) {
+	for (var i = 0; i < data.totals.length; i++) {
 		if (data.uk[i] != _newUsers.uk[i]) {
 			if (!_newUsers.uk[i]) _newUsers.uk[i] = 0;
 			_newUsers.uk[i] += data.uk[i];
 		}
+		if (data.us[i] != _newUsers.us[i]) {
+			if (!_newUsers.us[i]) _newUsers.us[i] = 0;
+			_newUsers.us[i] += data.us[i];
+		}
+		if (data.de[i] != _newUsers.de[i]) {
+			if (!_newUsers.de[i]) _newUsers.de[i] = 0;
+			_newUsers.de[i] += data.de[i];
+		}
+		if (data.in[i] != _newUsers.in[i]) {
+			if (!_newUsers.in[i]) _newUsers.in[i] = 0;
+			_newUsers.in[i] += data.in[i];
+		}
+		if (data.ca[i] != _newUsers.ca[i]) {
+			if (!_newUsers.ca[i]) _newUsers.ca[i] = 0;
+			_newUsers.ca[i] += data.ca[i];
+		}
+		if (data.jp[i] != _newUsers.jp[i]) {
+			if (!_newUsers.jp[i]) _newUsers.jp[i] = 0;
+			_newUsers.jp[i] += data.jp[i];
+		}
+		if (data.au[i] != _newUsers.au[i]) {
+			if (!_newUsers.au[i]) _newUsers.au[i] = 0;
+			_newUsers.au[i] += data.au[i];
+		}
 	}
 
-	// for (var i = 0; i < data.uk.length; i++) {
-	// 	var x = data[i];	
-
-	// 	var d = new Date(x.d);
-	// 	var day = d.getDay();
-		
-	// 	var df = daydiff(startDate, d, true)-1;
-	// 	// if (data.length < 10 ) console.log(df)
-	// 	if (df < 0) continue;
-
-	// 	if (x.l=="GB") _newUsers.uk[df]++;
-	// 	else if (x.l=="US") _newUsers.us[df]++;
-	// 	else if (x.l=="DE") _newUsers.de[df]++;
-	// 	else if (x.l=="IN") _newUsers.in[df]++;
-	// 	else if (x.l=="CA") _newUsers.ca[df]++;
-	// 	else if (x.l=="JP") _newUsers.jp[df]++;
-	// 	else if (x.l=="AU") _newUsers.au[df]++;
-	// 	else _newUsers.us[df]++; // assume US
-
-
-	// 	if (day == 0 || day >= 5) _newUsers.we[df]=3500;
-	// 	var dt = d.getDate();
-	// 	if (dt == 1) _newUsers.mo[df]=3500;
-	// }
-console.log(_newUsers.totals)
-console.log(_newUsers.totals[_newUsers.totals.length-1])
 	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]);
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _newUsers.totals[0];
@@ -588,8 +535,6 @@ console.log(_newUsers.totals[_newUsers.totals.length-1])
 		t += _newUsers.totals[i];
 		_newUsers.avg[i] = t/(i+1);
 	}
- 	// console.log(_newUsers);
-	// console.log(_newUsers, _newUsersLabels, total)
 
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total);
 }
