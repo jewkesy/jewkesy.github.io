@@ -539,6 +539,16 @@ function updateCharts(data, total) {
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total);
 }
 
+function resetLimit() {
+	var newUrl = paramReplace('limit', window.location.href, 10);
+	// var newUrl2 = paramReplace('pc_league', newUrl, null);
+	if (newUrl.indexOf('#pc_league') === -1) { 
+		newUrl = newUrl + '#pc_league';
+	}
+	// console.log(newUrl);
+	window.location.href = newUrl;	
+}
+
 function increaseLimit() {
 	c = c*2;
 	var newUrl = paramReplace('limit', window.location.href, c);
