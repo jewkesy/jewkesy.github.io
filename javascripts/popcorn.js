@@ -28,8 +28,10 @@ var timeFrom = 0;
 var last = 0;
 
 httpGetAmazon(amazonUrl, function (err, data) {
+	getEvent();
 	setInterval(function () {
 		httpGetAmazon(amazonUrl, function (err, data) {});
+		getEvent();
 	}, 60000);
 });
 
@@ -587,4 +589,50 @@ function paramReplace(param, url, value) {
   var newString = url.replace(re, delimiter + param + "=" + value);
  
   return newString + inline;
+}
+
+function getEvent() {
+
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+    var eventDate = new Date("7 Feb 2018");
+    var todayDate = new Date();
+
+    todayDate.setHours(0,0,0,0);
+
+    var dateArray = [];
+    while (eventDate < todayDate) {
+        dateArray.push(new Date (eventDate));
+        eventDate = eventDate.addDays(+EVENTGAP);
+    }
+    dateArray.push(new Date (eventDate));
+ 
+    var eD = eventDate.getTime();
+    var tD = todayDate.getTime();
+
+    var retVal = {
+      name: "default", extraGameCount: 0, multiplier: 1,
+      today: false,
+      tomorrow: false,
+      next: eventDate,
+      day: days[eventDate.getDay()]
+    };
+
+    if (eD == tD) {
+      retVal.name = "doublepoints";
+      retVal.extraGameCount = 1;
+      retVal.multiplier = 2;
+      retVal.today = true;
+      retVal.msg = "Today is a double points day!";
+    } else if (eD > tD) {
+      if (eD-tD == 86400000) {
+        retVal.tomorrow = true;
+        retVal.msg = "Tomorrow is a double points day!";
+      } else {
+        retVal.msg = "The next double point event is on " + retVal.day + ". ";
+      }
+    }
+    fadeyStuff("pc_event", retVal.msg);
+    // console.log(retVal.msg);
+    // return retVal;
 }
