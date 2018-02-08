@@ -603,7 +603,7 @@ function getEvent() {
     var dateArray = [];
     while (eventDate < todayDate) {
         dateArray.push(new Date (eventDate));
-        eventDate = eventDate.addDays(+EVENTGAP);
+        eventDate = addDays(eventDate,3);
     }
     dateArray.push(new Date (eventDate));
  
@@ -633,6 +633,6 @@ function getEvent() {
       }
     }
     fadeyStuff("pc_event", retVal.msg);
-    // console.log(retVal.msg);
+    // console.log(retVal);
     // return retVal;
 }
