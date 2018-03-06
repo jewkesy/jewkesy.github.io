@@ -41,11 +41,14 @@ httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&loc
 httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 	buildPopcornLastGames(data, 'pc');
 });
+httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + loc + "&timefrom=" + timeFrom, function (err, data) {
+	buildDailyGames(err, data);
+});
 httpGetGameStats(popcornStats);
 httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 	if (!data) return;
 	timeFrom = data.lastTime;
-	// console.log(data);
+	console.log(data);
 	if (!err) buildPopcornPage(data);
 	setInterval(function () {
 		httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
@@ -67,6 +70,10 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 						if (!err) buildPopcornPage(data);
 					});
 					httpGetGameStats(popcornStats);
+
+					httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + loc + "&timefrom=" + timeFrom, function (err, data) {
+						buildDailyGames(err, data);
+					});
 				}
 			} 
 		});
@@ -80,6 +87,12 @@ function applyLocaleHeader(locale) {
 	}
 	
 	document.getElementById("th_"+loc).classList.add('selected');
+}
+
+function buildDailyGames(err, content) {
+	if (err) {console.error(err); return;}
+	if (!content) {console.log('no data'); return;}
+	_gameinfo.dailygames = content.dailygames;
 }
 
 function buildGamePlayStats(content) {
@@ -444,6 +457,13 @@ function chtNewUsers(chart, d, l, total) {
 			"borderColor":"rgba(0, 0, 0, 1)",
 			"backgroundColor":"rgba(0, 0, 0, 1)",
 			"pointRadius":0
+		},{
+			"label":"Games",
+			"data": _gameinfo.dailygames,
+			"type": "bar",
+			"borderWidth": 1,
+			"backgroundColor":"rgba(255, 102, 255, 1)",
+			"borderColor":"rgba(255, 102, 255, 1)"
 		}],
 		options: {
 			"responsive": true
@@ -457,6 +477,9 @@ function chtNewUsers(chart, d, l, total) {
 var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 var _newUsers = {};
 var _newUsersLabels = [];
+var _gameinfo = {
+	dailygames: []
+};
 
 function updateCharts(data, total) {
 	if (!data) return;
@@ -498,6 +521,15 @@ function updateCharts(data, total) {
 		if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] += data.mo[i];
 		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
 	}
+
+	var top = Math.max.apply(null, _gameinfo.dailygames);
+	for (var i = 0; i < data.totals.length; i++) {
+		// console.log(_newUsers.we[i])
+		// if (data.we[i] != _newUsers.we[i]) _newUsers.we[i] = top;
+		// if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] = top;
+	}
+
+
 
 	for (var i = 0; i < data.totals.length; i++) {
 		if (data.uk[i] != _newUsers.uk[i]) {
