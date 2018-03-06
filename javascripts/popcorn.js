@@ -48,7 +48,7 @@ httpGetGameStats(popcornStats);
 httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 	if (!data) return;
 	timeFrom = data.lastTime;
-	console.log(data);
+	// console.log(data);
 	if (!err) buildPopcornPage(data);
 	setInterval(function () {
 		httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
@@ -437,6 +437,14 @@ function chtNewUsers(chart, d, l, total) {
 			"type":"line",
 			"pointRadius":2
 		},{
+			"label":"Games",
+			"data": _gameinfo.dailygames,
+			"type": "bar",
+			"borderWidth": 1,
+			"backgroundColor":"rgba(76, 245, 20, 0.4)",
+			"borderColor":"rgba(76, 245, 20, 0.4)"
+			
+		},{
 			"label":"", //Weekends
 			"data": _newUsers.we,
 			"type": "bar",
@@ -448,7 +456,8 @@ function chtNewUsers(chart, d, l, total) {
 			"data": _newUsers.mo,
 			"type": "bar",
 			"borderWidth": 1,
-			"backgroundColor":"rgba(76, 245, 20, 1)"
+			"backgroundColor":"rgba(255, 102, 255, 0.4)",
+			"borderColor":"rgba(255, 102, 255, 0.4)"
 		},{
 			"label":"", //avg
 			"data": _newUsers.avg,
@@ -457,13 +466,6 @@ function chtNewUsers(chart, d, l, total) {
 			"borderColor":"rgba(0, 0, 0, 1)",
 			"backgroundColor":"rgba(0, 0, 0, 1)",
 			"pointRadius":0
-		},{
-			"label":"Games",
-			"data": _gameinfo.dailygames,
-			"type": "bar",
-			"borderWidth": 1,
-			"backgroundColor":"rgba(255, 102, 255, 1)",
-			"borderColor":"rgba(255, 102, 255, 1)"
 		}],
 		options: {
 			"responsive": true

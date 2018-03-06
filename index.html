@@ -30,6 +30,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.5/chartjs-plugin-annotation.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="./javascripts/typed.min.js"></script>
 
@@ -135,7 +136,7 @@
       <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
       <h4 style="text-align: right; margin-top: 0;">"Ok! Your rank is..."</h4>
       <a name="pc_league" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
-        <table class="centerMe borderMe borderNoBottom">
+        <table class="centerMe borderMe borderNoBottom scaleme">
           <tr>
             <th id="th_" class="selected" colspan=2><a href="?#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>Global<br/><img class="locale" src="./images/global.png"></a></th>
             <th id="th_en-GB" colspan=2><a href="?locale=en-GB#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>UK<br/><img class="locale" src="./images/en-GB.png"></a></th>
@@ -147,8 +148,8 @@
             <th id="th_en-AU" colspan=2><a href="?locale=en-AU#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>AU<br/><img class="locale" src="./images/en-AU.png"></a></th>
           </tr>
         </table>
-      <div class="borderMe" style="height:400px;overflow:auto;min-width:380px;max-width:500px;">
-        <table id='pc_scores' class="centerMe" style="border: 0px solid #e5e5e5; margin-bottom: 20px; min-width:380px;max-width:500px;">
+      <div class="borderMe scaleme" style="height:400px;overflow:auto;">
+        <table id='pc_scores' class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
           <tr>
             <th>Rank</th>
             <th>Score</th>
@@ -162,13 +163,13 @@
       </div>
       <div class="fadedScroller_fade"></div>
       <br/>
-      <div class="centerMe" style="min-width:380px;max-width:500px;">
+      <div class="centerMe scaleme">
         <button type="button" class="btn btn-success" onclick="increaseLimit();">Load <span id="pc_more_count">10</span> more</button>
         <button type="button" class="btn btn-info" onclick="resetLimit();">Reset <img src="./images/reset_icon.png" /></button>
       </div>
       <br/>
-      <div class="borderMe" style="height:400px;overflow:auto;min-width:380px;max-width:500px;">
-        <table id="pc_lastgames" class="centerMe borderMe" style="margin-bottom: 20px; min-width:380px;max-width: 500px;">
+      <div class="borderMe scaleme" style="height:400px;overflow:auto;">
+        <table id="pc_lastgames" class="centerMe borderMe scaleme">
           <tr><th colspan=7>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
           <tr>
             <th>Rank</th>
@@ -181,16 +182,16 @@
           </tr>
         </table>
       </div>
-      <div class="fadedScroller_fade"></div>
+      <div class="fadedScroller_fade scaleme"></div>
       <br/>
-      <table class="centerMe borderMe" style="margin-bottom: 20px; min-width:380px;max-width: 500px;">
+      <table class="centerMe borderMe scaleme">
         <tr><th>Total Players:</th><td id='pc_total_players'>0</td><th>Today:</th><td id='pc_total_today'>0</td></tr>
         <tr><th>Total Games:</th><td id='pc_total_games'>0</td><th>Today:</th><td id='pc_games_today'>0</td></tr>
         <tr><td colspan="2"><i>This Skill was launched on 28th May 2017</i></td><td id='pc_ts' colspan="2"></td></tr>
         <tr><td colspan="4" id='pc_event'></td></tr>
       </table>
 
-      <table class="centerMe borderMe" style="margin-bottom: 20px; min-width:380px;max-width: 500px;">
+      <table class="centerMe borderMe scaleme">
         <tr><th>Player Statistics</th></tr>
         <tr>
            <td style="text-align: center;">
