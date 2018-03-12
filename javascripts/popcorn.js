@@ -26,7 +26,7 @@ if (loc != '') {
 var startDate = new Date("28 May 2017");
 var timeFrom = 0;
 var last = 0;
-var doubleDay = false;
+var doubleDayDivider = 1;
 
 httpGetAmazon(amazonUrl, function (err, data) {
 	getEvent();
@@ -129,9 +129,7 @@ function buildGamePlayStats(content) {
 		} else if (i === 0) dots[i].games = 0;
 	}
 
-	var todayCount = dots[dots.length-1].games;
-
-	if (doubleDay) todayCount = Math.floor(todayCount/2);
+	var todayCount = Math.floor(dots[dots.length-1].games/doubleDayDivider);
 
 	fadeyStuff("pc_games_today", numberWithCommas(todayCount));
 }
@@ -663,9 +661,9 @@ function getEvent() {
       retVal.multiplier = 2;
       retVal.today = true;
       retVal.msg = "Today is a double points day!";
-      doubleDay = true;
+      doubleDayDivider = 2;
     } else if (eD > tD) {
-      doubleDay = false;
+      doubleDayDivider = 1;
       if (eD-tD == 86400000) {
         retVal.tomorrow = true;
         retVal.msg = "Tomorrow is a double points day!";
