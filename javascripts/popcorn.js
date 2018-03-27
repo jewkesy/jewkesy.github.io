@@ -333,8 +333,9 @@ function buildAmazonReview(data) {
 	if (!data.ca) data.ca = {score:0,reviews:0};
 	if (!data.jp) data.jp = {score:0,reviews:0};
 	if (!data.au) data.au = {score:0,reviews:0};
+	if (!data.fr) data.fr = {score:0,reviews:0};
 
-	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars'];
+	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars'];
 	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
 	// console.log(data)
 
@@ -352,6 +353,7 @@ function buildAmazonReview(data) {
 		else if (i == 4) e.classList.add(getCssStar(data.ca.score));
 		else if (i == 5) e.classList.add(getCssStar(data.jp.score));
 		else if (i == 6) e.classList.add(getCssStar(data.au.score));
+		else if (i == 7) e.classList.add(getCssStar(data.fr.score));
 	}
 
 	if (document.getElementById('pc_uk_reviews')) document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
@@ -361,17 +363,19 @@ function buildAmazonReview(data) {
 	if (document.getElementById('pc_ca_reviews')) document.getElementById('pc_ca_reviews').innerHTML = data.ca.reviews;
 	if (document.getElementById('pc_jp_reviews')) document.getElementById('pc_jp_reviews').innerHTML = data.jp.reviews;
 	if (document.getElementById('pc_au_reviews')) document.getElementById('pc_au_reviews').innerHTML = data.au.reviews;
+	if (document.getElementById('pc_fr_reviews')) document.getElementById('pc_fr_reviews').innerHTML = data.fr.reviews;
 }
 
 function chtNewUsers(chart, d, l, total) {
 
-	var red = "rgba(255,99,132,1)";
-	var blue = "rgba(54,162,235,1)";
+	var red =    "rgba(255,99,132,1)";
+	var blue =   "rgba(54,162,235,1)";
 	var yellow = "rgba(255,206,86,1)";
 	var orange = "rgba(247,152,57,1)";
 	var purple = "rgba(195,144,212,1)";
-	var green = "rgba(22,158,22,1)";
-	var grey = "rgba(168,173,168,1)";
+	var green =  "rgba(22,158,22,1)";
+	var grey =   "rgba(168,173,168,1)";
+	var brown =  "rgba(204,102,0,1)";
 
 	var d = {
 		"labels": l,
@@ -436,6 +440,15 @@ function chtNewUsers(chart, d, l, total) {
 			"fill":false,
 			"borderColor":grey,
 			"backgroundColor":grey,
+			"lineTension":0.1,
+			"type":"line",
+			"pointRadius":2
+		},{
+			"label":"France",
+			"data": _newUsers.fr,
+			"fill":false,
+			"borderColor":brown,
+			"backgroundColor":brown,
 			"lineTension":0.1,
 			"type":"line",
 			"pointRadius":2
@@ -514,6 +527,7 @@ function updateCharts(data, total) {
 		if (diff > _newUsers.ca.length) resizeArr(_newUsers.ca, diff, null);
 		if (diff > _newUsers.jp.length) resizeArr(_newUsers.jp, diff, null);
 		if (diff > _newUsers.au.length) resizeArr(_newUsers.au, diff, null);
+		if (diff > _newUsers.fr.length) resizeArr(_newUsers.fr, diff, null);
 		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
 		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
@@ -564,6 +578,10 @@ function updateCharts(data, total) {
 		if (data.au[i] != _newUsers.au[i]) {
 			if (!_newUsers.au[i]) _newUsers.au[i] = 0;
 			_newUsers.au[i] += data.au[i];
+		}
+		if (data.fr[i] != _newUsers.fr[i]) {
+			if (!_newUsers.fr[i]) _newUsers.fr[i] = 0;
+			_newUsers.fr[i] += data.fr[i];
 		}
 	}
 
