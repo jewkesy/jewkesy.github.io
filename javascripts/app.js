@@ -109,19 +109,21 @@ function httpGetStats(theUrl, prefix, callback){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
-	xmlHttp.onreadystatechange = handleReadyStateChange;
-	xmlHttp.send(null);
-
-	function handleReadyStateChange() {
-		if (xmlHttp.readyState == 4) {
-			if (xmlHttp.status == 200) {
+	xmlHttp.onreadystatechange = function (oEvent) {
+		if (xmlHttp.readyState === 4) {  
+	        if (xmlHttp.status === 200) {  
+				// console.log(xmlHttp.responseText);
 				var doc = JSON.parse(xmlHttp.responseText);
 				buildTopTen(doc, prefix);
 				if (callback) return callback(null, doc);
-			}
-			if (callback) return callback(xmlHttp.status);
-		}
+			} else {  
+	           // console.log("Error", xmlHttp.status, xmlHttp.statusText);
+	           if (callback) return callback(xmlHttp.status);
+	        }  
+	    }
 	}
+
+	xmlHttp.send(null);
 }
 
 function buildTopTen(topTen, prefix) {
