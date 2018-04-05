@@ -56,10 +56,10 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 				if (!data || !data[0]) return;
 				if (last < data[0].timestamp) {
 					last = data[0].timestamp;
-					console.log(last)
-					console.log(canGetLeague);
-					console.log(canGetLast);
-					console.log(canGetNewUsers);
+					// console.log(last)
+					// console.log(canGetLeague);
+					// console.log(canGetLast);
+					// console.log(canGetNewUsers);
 
 					if (canGetLeague) getLeague();
 					if (canGetLast) getLast();
