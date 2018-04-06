@@ -78,39 +78,39 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 
 function getLeague() {
 	// console.log(canGetLeague);
-	canGetLeague = false;
+	// canGetLeague = false;
 	httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 		// console.log(err, data);
 		if (!err) buildPopcornLeague(data, 'pc');
-		canGetLeague = true;
+		// canGetLeague = true;
 	});
 }
 
 function getLast() {
 	// console.log(canGetLast);
-	canGetLast = false;
+	// canGetLast = false;
 	httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 		// console.log(err, data);
 		if (!data) {
-			canGetLast = true;
+			// canGetLast = true;
 		} else {
 			// console.log(data.lastGame[0])
 			timeFrom = data.lastGame[0].t;
 			if (!err) buildPopcornLastGames(data, 'pc');
-			canGetLast = true;
+			// canGetLast = true;
 		}
 	});
 }
 
 function getNewUsers() {
 	// console.log(canGetNewUsers);
-	canGetNewUsers = false;
+	// canGetNewUsers = false;
 	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 		// console.log(err, data);
 		if (!data) return;
 		// timeFrom = data.lastTime;
 		if (!err) buildPopcornPage(data);
-		canGetNewUsers = true;
+		// canGetNewUsers = true;
 	});
 }
 
