@@ -10,7 +10,6 @@ var c = getParameterByName('limit') || 10;
 
 document.getElementById('pc_more_count').innerHTML = c;
 
-// if (c != 10) 
 popcornUrl += "&limit=" + c;
 popcornLastGameUrl += "&limit=" + c;
 
@@ -45,7 +44,6 @@ httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&
 httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + loc + "&timefrom=" + timeFrom, function (err, data) {
 	buildDailyGames(err, data);
 });
-// httpGetGameStats(popcornStats);
 httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 	if (!data) return;
 	timeFrom = data.lastTime;
@@ -63,15 +61,12 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
 						buildPopcornLastGames(data, 'pc');
 					});
-					// console.log(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom);
 					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
 						if (!data) return;
 						// console.log(data);
 						timeFrom = data.lastTime;
 						if (!err) buildPopcornPage(data);
 					});
-					// httpGetGameStats(popcornStats);
-
 					httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + loc + "&timefrom=" + timeFrom, function (err, data) {
 						buildDailyGames(err, data);
 					});
@@ -96,6 +91,18 @@ function buildDailyGames(err, content) {
 	// console.log(content)
 	_gameinfo.dailygames = content.dailygames;
 	fadeyStuff("pc_games_today", numberWithCommas(content.dailygames[content.dailygames.length-1]));
+
+	var total = 0;
+	var days = 0;
+	for (var i = 0; i < content.dailygames.length; i++) {
+		if (!content.dailygames[i]) continue;
+		// console.log(content.dailygames[i]);
+		total += content.dailygames[i];
+		days++;
+	}
+	// console.log(days, total)
+	var avg = Math.round(total/days);
+	fadeyStuff('pc_games_avg', numberWithCommas(avg));
 }
 
 function buildGamePlayStats(content) {
@@ -126,7 +133,6 @@ function buildGamePlayStats(content) {
 	}
 	
 	for (var i = dots.length-1; i >= 0; i--) {
-		// console.log(dots[i])
 		if (i > 0) {
 			dots[i].games = dots[i].games - dots[i-1].games;
 			dots[i].hourly = dots[i].games/24;
@@ -200,32 +206,20 @@ function buildPopcornLastGames(data, prefix) {
 
 			var cell7 = row.insertCell(6);
 			cell7.id = prefix + "_lastgames_locale_" + x;
-
-			cell1.innerHTML = numberWithCommas(games[i].r) + sym;
-			cell2.innerHTML = numberWithCommas(games[i].s);
-			cell3.innerHTML = numberWithCommas(games[i].g);
-			cell4.innerHTML = ((+games[i].s)/(+games[i].g)).toFixed(2);
-			cell5.innerHTML = humanTime((games[i].t/1000)+"");
-			cell6.innerHTML = humanTime((games[i].st/1000)+"");
-
-			if (games[i].l) cell7.innerHTML =  "<span>"+device+"</span><img class='locale' src='./images/" + games[i].l + ".png' />";
-			
-		} else {		
-			document.getElementById(prefix + '_lastgames_rank_' + x).innerHTML = numberWithCommas(games[i].r) + sym;
-			document.getElementById(prefix + '_lastgames_score_' + x).innerHTML = numberWithCommas(games[i].s);
-			document.getElementById(prefix + '_lastgames_games_' + x).innerHTML = numberWithCommas(games[i].g);
-			document.getElementById(prefix + '_lastgames_avg_' + x).innerHTML = ((+games[i].s)/(+games[i].g)).toFixed(2);
+		} else {	
 			document.getElementById(prefix + '_lastgames_ts_' + x).title = games[i].t/1000;
-			document.getElementById(prefix + '_lastgames_ts_' + x).innerHTML = humanTime((games[i].t/1000)+"");
 			document.getElementById(prefix + '_lastgames_st_' + x).title = games[i].st/1000;
-			document.getElementById(prefix + '_lastgames_st_' + x).innerHTML = humanTime((games[i].st/1000)+"");
-
-			if (games[i].l) document.getElementById(prefix + '_lastgames_locale_' + x).innerHTML = "<span>"+device+"</span><img class='locale' src='./images/" + games[i].l + ".png' />";
 		}
-
+		fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(games[i].r) + sym);
+		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(games[i].s));
+		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
+		fadeyStuff(prefix + "_lastgames_avg_" + x, numberWithCommas(((+games[i].s)/(+games[i].g)).toFixed(2)));
+		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
+		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((games[i].st/1000)+""));
+		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' src='./images/" + games[i].l + ".png' />");
 	}
-	document.getElementById(prefix + '_lg_count').innerHTML = i;
-	document.getElementById(prefix + '_more_count').innerHTML = i;
+	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
+	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
 }
 
 function buildPopcornLeague(data, prefix, total) {
@@ -267,29 +261,20 @@ function buildPopcornLeague(data, prefix, total) {
 
 			var cell7 = row.insertCell(6);
 			cell7.id = prefix + "_league_locale_" + x;
-
-			cell1.innerHTML = numberWithCommas(x) + sym;
-			cell2.innerHTML = numberWithCommas(topTen[i].s);
-			cell3.innerHTML = numberWithCommas(topTen[i].g);
-			cell4.innerHTML = ((+topTen[i].s)/(+topTen[i].g)).toFixed(2);
-			cell5.innerHTML = humanTime((topTen[i].t/1000)+"");
-			cell6.innerHTML = humanTime((topTen[i].st/1000)+"");
-
-			if (topTen[i].l) cell7.innerHTML =  "<span>"+device+"</span><img class='locale' src='./images/" + topTen[i].l + ".png' />";
 		} else {
-			document.getElementById(prefix + '_league_rank_' + x).innerHTML = numberWithCommas(x) + sym;
-			document.getElementById(prefix + '_league_score_' + x).innerHTML = numberWithCommas(topTen[i].s);
-			document.getElementById(prefix + '_league_games_' + x).innerHTML = numberWithCommas(topTen[i].g);
-			document.getElementById(prefix + '_league_avg_' + x).innerHTML = ((+topTen[i].s)/(+topTen[i].g)).toFixed(2);
 			document.getElementById(prefix + '_league_ts_' + x).title = topTen[i].t/1000;
-			document.getElementById(prefix + '_league_ts_' + x).innerHTML = humanTime((topTen[i].t/1000)+"");
 			document.getElementById(prefix + '_league_st_' + x).title = topTen[i].st/1000;
-			document.getElementById(prefix + '_league_st_' + x).innerHTML = humanTime((topTen[i].st/1000)+"");
-
-			if (topTen[i].l) document.getElementById(prefix + '_league_locale_' + x).innerHTML =  "<span>"+device+"</span><img class='locale' src='./images/" + topTen[i].l + ".png' />";
 		}
+
+		fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
+		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
+		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
+		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
+		fadeyStuff(prefix + "_league_ts_" + x, humanTime((topTen[i].t/1000)+""));
+		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
+		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' src='./images/" + topTen[i].l + ".png' />");
 	}
-	document.getElementById(prefix + '_count').innerHTML = i;
+	fadeyStuff(prefix + '_count', numberWithCommas(i));
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
 }
 
@@ -360,14 +345,14 @@ function buildAmazonReview(data) {
 		else if (i == 7) e.classList.add(getCssStar(data.fr.score));
 	}
 
-	if (document.getElementById('pc_uk_reviews')) document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
-	if (document.getElementById('pc_us_reviews')) document.getElementById('pc_us_reviews').innerHTML = data.us.reviews;
-	if (document.getElementById('pc_de_reviews')) document.getElementById('pc_de_reviews').innerHTML = data.de.reviews;
-	if (document.getElementById('pc_in_reviews')) document.getElementById('pc_in_reviews').innerHTML = data.in.reviews;
-	if (document.getElementById('pc_ca_reviews')) document.getElementById('pc_ca_reviews').innerHTML = data.ca.reviews;
-	if (document.getElementById('pc_jp_reviews')) document.getElementById('pc_jp_reviews').innerHTML = data.jp.reviews;
-	if (document.getElementById('pc_au_reviews')) document.getElementById('pc_au_reviews').innerHTML = data.au.reviews;
-	if (document.getElementById('pc_fr_reviews')) document.getElementById('pc_fr_reviews').innerHTML = data.fr.reviews;
+	if (document.getElementById('pc_uk_reviews')) fadeyStuff('pc_uk_reviews', numberWithCommas(data.uk.reviews)); //document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
+	if (document.getElementById('pc_us_reviews')) fadeyStuff('pc_us_reviews', numberWithCommas(data.us.reviews)); //document.getElementById('pc_us_reviews').innerHTML = data.us.reviews;
+	if (document.getElementById('pc_de_reviews')) fadeyStuff('pc_de_reviews', numberWithCommas(data.de.reviews)); //document.getElementById('pc_de_reviews').innerHTML = data.de.reviews;
+	if (document.getElementById('pc_in_reviews')) fadeyStuff('pc_in_reviews', numberWithCommas(data.in.reviews)); //document.getElementById('pc_in_reviews').innerHTML = data.in.reviews;
+	if (document.getElementById('pc_ca_reviews')) fadeyStuff('pc_ca_reviews', numberWithCommas(data.ca.reviews)); //document.getElementById('pc_ca_reviews').innerHTML = data.ca.reviews;
+	if (document.getElementById('pc_jp_reviews')) fadeyStuff('pc_jp_reviews', numberWithCommas(data.jp.reviews)); //document.getElementById('pc_jp_reviews').innerHTML = data.jp.reviews;
+	if (document.getElementById('pc_au_reviews')) fadeyStuff('pc_au_reviews', numberWithCommas(data.au.reviews)); //document.getElementById('pc_au_reviews').innerHTML = data.au.reviews;
+	if (document.getElementById('pc_fr_reviews')) fadeyStuff('pc_fr_reviews', numberWithCommas(data.fr.reviews)); //document.getElementById('pc_fr_reviews').innerHTML = data.fr.reviews;
 }
 
 function chtNewUsers(chart, d, l, total) {
@@ -588,8 +573,9 @@ function updateCharts(data, total) {
 			_newUsers.fr[i] += data.fr[i];
 		}
 	}
-
-	document.getElementById('pc_total_today').innerHTML = numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]);
+	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
+	// document.getElementById('pc_total_today').innerHTML = numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]);
+	
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _newUsers.totals[0];
 	for (var i = 0; i < diff; i++) {
@@ -597,6 +583,8 @@ function updateCharts(data, total) {
 		_newUsers.avg[i] = t/(i+1);
 	}
 
+	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
+	// document.getElementById('pc_total_avg').innerHTML = numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1]));
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total);
 }
 
@@ -694,6 +682,4 @@ function getEvent() {
       }
     }
     fadeyStuff("pc_event", retVal.msg);
-    // console.log(retVal);
-    // return retVal;
 }
