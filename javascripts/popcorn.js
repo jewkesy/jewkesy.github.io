@@ -357,6 +357,12 @@ function buildAmazonReview(data) {
 
 function chtNewUsers(chart, d, l, total) {
 
+	var dailyData = JSON.parse(JSON.stringify(d));
+	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
+	dailyData.labels = JSON.parse(JSON.stringify(l));
+
+	dailyData = summariseChtData(dailyData, 1.75);
+
 	var red =    "rgba(255,99,132,1)";
 	var blue =   "rgba(54,162,235,1)";
 	var yellow = "rgba(255,206,86,1)";
@@ -366,12 +372,12 @@ function chtNewUsers(chart, d, l, total) {
 	var grey =   "rgba(168,173,168,1)";
 	var brown =  "rgba(204,102,0,1)";
 
-	var d = {
-		"labels": l,
+	var data = {
+		"labels": dailyData.labels,
 		"datasets":[
 		{
 			"label":"UK",
-			"data": _newUsers.uk,
+			"data": dailyData.uk,
 			"fill":false,
 			"borderColor":red,
 			"backgroundColor":red,
@@ -380,7 +386,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"US",
-			"data": _newUsers.us,
+			"data": dailyData.us,
 			"fill":false,
 			"borderColor":blue,
 			"backgroundColor":blue,
@@ -389,7 +395,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"Germany",
-			"data": _newUsers.de,
+			"data": dailyData.de,
 			"fill":false,
 			"borderColor":yellow,
 			"backgroundColor":yellow,
@@ -398,7 +404,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"India",
-			"data": _newUsers.in,
+			"data": dailyData.in,
 			"fill":false,
 			"borderColor":orange,
 			"backgroundColor":orange,
@@ -407,7 +413,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"Canada",
-			"data": _newUsers.ca,
+			"data": dailyData.ca,
 			"fill":false,
 			"borderColor":purple,
 			"backgroundColor":purple,
@@ -416,7 +422,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"Japan",
-			"data": _newUsers.jp,
+			"data": dailyData.jp,
 			"fill":false,
 			"borderColor":green,
 			"backgroundColor":green,
@@ -425,7 +431,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"Australia",
-			"data": _newUsers.au,
+			"data": dailyData.au,
 			"fill":false,
 			"borderColor":grey,
 			"backgroundColor":grey,
@@ -434,7 +440,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"France",
-			"data": _newUsers.fr,
+			"data": dailyData.fr,
 			"fill":false,
 			"borderColor":brown,
 			"backgroundColor":brown,
@@ -443,7 +449,7 @@ function chtNewUsers(chart, d, l, total) {
 			"pointRadius":2
 		},{
 			"label":"Games",
-			"data": _gameinfo.dailygames,
+			"data": dailyData.dailygames,
 			"type": "bar",
 			"borderWidth": 1,
 			"backgroundColor":"rgba(76, 245, 20, 0.4)",
@@ -451,21 +457,21 @@ function chtNewUsers(chart, d, l, total) {
 			
 		},{
 			"label":"", //Weekends
-			"data": _newUsers.we,
+			"data": dailyData.we,
 			"type": "bar",
 			"borderWidth": 1,
 			"backgroundColor":"rgba(238, 238, 238, 0.4)",
 			"borderColor":"rgba(238, 238, 238, 0.4)"
 		},{
 			"label":"", //Months
-			"data": _newUsers.mo,
+			"data": dailyData.mo,
 			"type": "bar",
 			"borderWidth": 1,
 			"backgroundColor":"rgba(255, 102, 255, 0.4)",
 			"borderColor":"rgba(255, 102, 255, 0.4)"
 		},{
 			"label":"", //avg
-			"data": _newUsers.avg,
+			"data": dailyData.avg,
 			"type": "line",
 			"fill":false,
 			"borderColor":"rgba(0, 0, 0, 1)",
@@ -477,7 +483,7 @@ function chtNewUsers(chart, d, l, total) {
 		}
     }
 	// console.log(mo)
-	chart.data = d;
+	chart.data = data;
 	chart.update();
 }
 
@@ -506,7 +512,7 @@ function updateCharts(data, total) {
 			_newUsersLabels[i] = q[0] + getMonthName(q[1]-1);
 		}
 		_newUsersLabels[0] = "Launch";
-		_newUsersLabels[diff] = "Today";
+		_newUsersLabels[diff-1] = "Today";
 
 	} else {
 		if (diff > _newUsers.uk.length) resizeArr(_newUsers.uk, diff, null);
@@ -682,4 +688,61 @@ function getEvent() {
       }
     }
     fadeyStuff("pc_event", retVal.msg);
+}
+
+function summariseChtData(data, fraction) {
+	// console.log(data)
+	// check all same length;
+	var initialLabel = data.labels[0];
+	var l = -1;
+	for (var property in data) {
+	    if (data.hasOwnProperty(property)) {
+	    	// console.log(data[property].length, property)
+	    	if (l == -1) { l = data[property].length; continue; }
+	    	if (data[property].length != l) { console.log("Length mismatch", l, data[property].length, property); return data; }
+	    }
+	}
+	
+	var half_length = Math.ceil(l / fraction);
+	var leftSide = {};
+	for (var property in data) {
+	    if (data.hasOwnProperty(property)) {
+	    	leftSide[property] = data[property].splice(0,half_length);
+	    }
+	}
+
+	// reduce left side
+	var newLeft = {};
+	var newSize = 10;
+	for (var property in leftSide) {
+	    if (leftSide.hasOwnProperty(property)) {
+	    	if (property == 'labels' || property == 'we' || property == 'mo') {continue;}
+	    	var sum = 0;
+	    	for( var i = 0; i < leftSide[property].length; i++ ){
+	    		if (!leftSide[property][i]) continue;
+			    sum += parseInt( leftSide[property][i], 10 ); //don't forget to add the base
+			}
+
+			var avg = Math.round(sum/leftSide[property].length);
+
+			leftSide[property] = [];
+			leftSide.labels = []
+			resizeArr(leftSide.labels, newSize, "");
+			leftSide.labels[0] = initialLabel;
+			leftSide.labels[leftSide.labels.length-1] = "..."
+
+			for (var i = 0; i < newSize; i++){
+				leftSide[property].push(avg);
+			}
+	    }
+	}
+
+	// merge new left side
+	for (var property in leftSide) {
+	    if (leftSide.hasOwnProperty(property)) {
+	    	leftSide[property] = leftSide[property].concat(data[property]);
+	    }
+	}
+
+	return leftSide;
 }
