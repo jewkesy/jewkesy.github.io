@@ -29,9 +29,11 @@ var doubleDayDivider = 1;
 
 httpGetAmazon(amazonUrl, function (err, data) {
 	getEvent();
+	getMyRank();
 	setInterval(function () {
 		httpGetAmazon(amazonUrl, function (err, data) {});
 		getEvent();
+		getMyRank();
 	}, 60000);
 });
 
@@ -75,6 +77,13 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 		});
 	}, 5000);
 });
+
+function getMyRank() {
+	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
+		console.log(err, data);
+		fadeyStuff('myrank', data.msg)
+	});
+}
 
 function applyLocaleHeader(locale) {
 	var elements = document.getElementsByClassName('selected');
@@ -729,6 +738,7 @@ function summariseChtData(data, fraction) {
 			leftSide.labels = []
 			resizeArr(leftSide.labels, newSize, "");
 			leftSide.labels[0] = initialLabel;
+		// TODO move this label to middle of array			
 			leftSide.labels[leftSide.labels.length-1] = "..."
 
 			for (var i = 0; i < newSize; i++){
