@@ -80,7 +80,7 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 
 function getMyRank() {
 	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
-		console.log(err, data);
+		// console.log(err, data);
 		fadeyStuff('myrank', data.msg)
 	});
 }
@@ -370,7 +370,7 @@ function chtNewUsers(chart, d, l, total) {
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
 
-	dailyData = summariseChtData(dailyData, 1.75);
+	dailyData = summariseChtData(dailyData);
 
 	var red =    "rgba(255,99,132,1)";
 	var blue =   "rgba(54,162,235,1)";
@@ -494,6 +494,11 @@ function chtNewUsers(chart, d, l, total) {
 	// console.log(mo)
 	chart.data = data;
 	chart.update();
+
+	// var axis = chart.scales.<scale id>;
+	// var max = axis.max;
+	// var min = axis.min;
+
 }
 
 var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
@@ -700,6 +705,8 @@ function getEvent() {
 }
 
 function summariseChtData(data, fraction) {
+	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
+
 	// console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
@@ -712,11 +719,12 @@ function summariseChtData(data, fraction) {
 	    }
 	}
 	
-	var half_length = Math.ceil(l / fraction);
+	var trunc_length = Math.ceil(l / fraction);
+	console.log(trunc_length, l);
 	var leftSide = {};
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
-	    	leftSide[property] = data[property].splice(0,half_length);
+	    	leftSide[property] = data[property].splice(0, trunc_length);
 	    }
 	}
 
@@ -729,6 +737,7 @@ function summariseChtData(data, fraction) {
 	    	var sum = 0;
 	    	for( var i = 0; i < leftSide[property].length; i++ ){
 	    		if (!leftSide[property][i]) continue;
+	    		if (!leftSide[property][i]) continue;
 			    sum += parseInt( leftSide[property][i], 10 ); //don't forget to add the base
 			}
 
@@ -738,12 +747,21 @@ function summariseChtData(data, fraction) {
 			leftSide.labels = []
 			resizeArr(leftSide.labels, newSize, "");
 			leftSide.labels[0] = initialLabel;
-		// TODO move this label to middle of array			
-			leftSide.labels[leftSide.labels.length-1] = "..."
+		
+			// TODO move this label to middle of array		
+			var mid = Math.round(leftSide.labels.length/2);
+
+			leftSide.labels[mid] = trunc_length + " days avg";
 
 			for (var i = 0; i < newSize; i++){
 				leftSide[property].push(avg);
 			}
+
+			// finally clean the 0s
+			leftSide[property].map(function (val, i) {
+				// console.log(x)
+				if (leftSide[property][i] == 0) leftSide[property][i] = null;
+			});
 	    }
 	}
 
@@ -753,6 +771,6 @@ function summariseChtData(data, fraction) {
 	    	leftSide[property] = leftSide[property].concat(data[property]);
 	    }
 	}
-
+console.log(leftSide)
 	return leftSide;
 }
