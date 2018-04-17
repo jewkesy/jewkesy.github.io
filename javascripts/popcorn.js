@@ -545,17 +545,17 @@ function updateCharts(data, total) {
 	
 	for (var i = 0; i < data.totals.length; i++) {
 		if (data.avg[i] != _newUsers.avg[i]) _newUsers.avg[i] += data.avg[i];
-		if (data.we[i] != _newUsers.we[i]) _newUsers.we[i] += data.we[i];
-		if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] += data.mo[i];
+		// if (data.we[i] != _newUsers.we[i]) _newUsers.we[i] += data.we[i];
+		// if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] += data.mo[i];
 		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
 	}
 
-	var top = Math.max.apply(null, _gameinfo.dailygames);
-	for (var i = 0; i < data.totals.length; i++) {
+	// var top = Math.max.apply(null, _gameinfo.dailygames);
+	// for (var i = 0; i < data.totals.length; i++) {
 		// console.log(_newUsers.we[i])
 		// if (data.we[i] != _newUsers.we[i]) _newUsers.we[i] = top;
 		// if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] = top;
-	}
+	// }
 
 
 
@@ -720,7 +720,7 @@ function summariseChtData(data, fraction) {
 	}
 	
 	var trunc_length = Math.ceil(l / fraction);
-	console.log(trunc_length, l);
+	// console.log(trunc_length, l);
 	var leftSide = {};
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
