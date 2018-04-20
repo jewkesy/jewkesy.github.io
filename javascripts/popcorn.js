@@ -387,75 +387,44 @@ function chtNewUsers(chart, d, l, total) {
 		{
 			"label":"UK",
 			"data": dailyData.uk,
-			"fill":false,
-			"borderColor":red,
-			"backgroundColor":red,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":red, "backgroundColor":red,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"US",
 			"data": dailyData.us,
-			"fill":false,
-			"borderColor":blue,
-			"backgroundColor":blue,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":blue, "backgroundColor":blue,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Germany",
 			"data": dailyData.de,
-			"fill":false,
-			"borderColor":yellow,
-			"backgroundColor":yellow,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":yellow, "backgroundColor":yellow,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"India",
 			"data": dailyData.in,
-			"fill":false,
-			"borderColor":orange,
-			"backgroundColor":orange,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":orange, "backgroundColor":orange,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Canada",
 			"data": dailyData.ca,
 			"fill":false,
-			"borderColor":purple,
-			"backgroundColor":purple,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":purple, "backgroundColor":purple,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Japan",
 			"data": dailyData.jp,
-			"fill":false,
-			"borderColor":green,
-			"backgroundColor":green,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":green, "backgroundColor":green,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Australia",
 			"data": dailyData.au,
-			"fill":false,
-			"borderColor":grey,
-			"backgroundColor":grey,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":grey, "backgroundColor":grey,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"France",
 			"data": dailyData.fr,
-			"fill":false,
-			"borderColor":brown,
-			"backgroundColor":brown,
-			"lineTension":0.1,
-			"type":"line",
-			"pointRadius":2
+			"borderColor":brown, "backgroundColor":brown,
+			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Games",
 			"data": dailyData.dailygames,
