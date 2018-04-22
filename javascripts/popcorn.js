@@ -97,7 +97,7 @@ function applyLocaleHeader(locale) {
 function buildDailyGames(err, content) {
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
-	// console.log(content)
+	console.log(content)
 	_gameinfo.dailygames = content.dailygames;
 	fadeyStuff("pc_games_today", numberWithCommas(content.dailygames[content.dailygames.length-1]));
 
@@ -369,9 +369,9 @@ function chtNewUsers(chart, d, l, total) {
 	var dailyData = JSON.parse(JSON.stringify(d));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
-
+console.log(dailyData)
 	dailyData = summariseChtData(dailyData);
-
+console.log(dailyData)
 	var red =    "rgba(255,99,132,1)";
 	var blue =   "rgba(54,162,235,1)";
 	var yellow = "rgba(255,206,86,1)";
@@ -383,84 +383,54 @@ function chtNewUsers(chart, d, l, total) {
 
 	var data = {
 		"labels": dailyData.labels,
-		"datasets":[
-		{
-			"label":"UK",
-			"data": dailyData.uk,
-			"borderColor":red, "backgroundColor":red,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		"datasets":[{
+			"label":"UK", "data": dailyData.uk,
+			"borderColor":red, "backgroundColor":red, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
-			"label":"US",
-			"data": dailyData.us,
-			"borderColor":blue, "backgroundColor":blue,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+			"label":"US", "data": dailyData.us,
+			"borderColor":blue, "backgroundColor":blue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
-			"label":"Germany",
-			"data": dailyData.de,
-			"borderColor":yellow, "backgroundColor":yellow,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+			"label":"Germany", "data": dailyData.de,
+			"borderColor":yellow, "backgroundColor":yellow, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
-			"label":"India",
-			"data": dailyData.in,
-			"borderColor":orange, "backgroundColor":orange,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+			"label":"India", "data": dailyData.in,
+			"borderColor":orange, "backgroundColor":orange, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
-			"label":"Canada",
-			"data": dailyData.ca,
-			"fill":false,
-			"borderColor":purple, "backgroundColor":purple,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+			"label":"Canada", "data": dailyData.ca,
+			"borderColor":purple, "backgroundColor":purple, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
-			"label":"Japan",
-			"data": dailyData.jp,
-			"borderColor":green, "backgroundColor":green,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+			"label":"Japan", "data": dailyData.jp,
+			"borderColor":green, "backgroundColor":green, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
-			"label":"Australia",
-			"data": dailyData.au,
-			"borderColor":grey, "backgroundColor":grey,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+			"label":"Australia", "data": dailyData.au,
+			"borderColor":grey, "backgroundColor":grey, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
-			"label":"France",
-			"data": dailyData.fr,
-			"borderColor":brown, "backgroundColor":brown,
-			"fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+			"label":"France", "data": dailyData.fr,
+			"borderColor":brown, "backgroundColor":brown, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Games",
 			"data": dailyData.dailygames,
-			"type": "bar",
-			"borderWidth": 1,
-			"backgroundColor":"rgba(76, 245, 20, 0.4)",
-			"borderColor":"rgba(76, 245, 20, 0.4)"
-			
+			"type": "bar", "borderWidth": 1,
+			"backgroundColor":"rgba(76, 245, 20, 0.4)", "borderColor":"rgba(76, 245, 20, 0.4)"
 		},{
 			"label":"", //Weekends
 			"data": dailyData.we,
-			"type": "bar",
-			"borderWidth": 1,
-			"backgroundColor":"rgba(238, 238, 238, 0.4)",
-			"borderColor":"rgba(238, 238, 238, 0.4)"
+			"type": "bar", "borderWidth": 1,
+			"backgroundColor":"rgba(238, 238, 238, 0.4)", "borderColor":"rgba(238, 238, 238, 0.4)"
 		},{
 			"label":"", //Months
 			"data": dailyData.mo,
-			"type": "bar",
-			"borderWidth": 1,
-			"backgroundColor":"rgba(255, 102, 255, 0.4)",
-			"borderColor":"rgba(255, 102, 255, 0.4)"
+			"type": "bar", "borderWidth": 1,
+			"backgroundColor":"rgba(255, 102, 255, 0.4)", "borderColor":"rgba(255, 102, 255, 0.4)"
 		},{
 			"label":"", //avg
-			"data": dailyData.avg,
-			"type": "line",
-			"fill":false,
-			"borderColor":"rgba(0, 0, 0, 1)",
-			"backgroundColor":"rgba(0, 0, 0, 1)",
-			"pointRadius":0
+			"data": dailyData.avg, "type": "line", "fill":false,
+			"borderColor":"rgba(0, 0, 0, 1)", "backgroundColor":"rgba(0, 0, 0, 1)", "pointRadius":0
 		}],
 		options: {
 			"responsive": true
 		}
     }
-	// console.log(mo)
 	chart.data = data;
 	chart.update();
 
