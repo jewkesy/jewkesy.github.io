@@ -190,10 +190,6 @@ hr.short {
   border:1px solid #e5e5e5;
 }
 
-table.centerMe, tr, td, th {
-  text-align: center;
-}
-
 table.borderNoBottom {
   margin-bottom: 0px; 
 }
@@ -216,6 +212,11 @@ footer {
 
 .centerMe {
   text-align: center;
+  position: relative;
+}
+
+.stars {
+  display:inline-block;
 }
 
 .min130 {
@@ -375,7 +376,7 @@ img.rounded {
 }
 
 .a-star {
-  float: left;
+  /*float: left;*/
   background-image: url(/images/amazonStars.png);
   height: 80px;
   width: 75px;  /* 15px per star */
