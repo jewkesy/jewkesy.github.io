@@ -369,9 +369,9 @@ function chtNewUsers(chart, d, l, total) {
 	var dailyData = JSON.parse(JSON.stringify(d));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
-console.log(dailyData)
-	dailyData = summariseChtData(dailyData);
-console.log(dailyData)
+	console.log(dailyData)
+	// 	dailyData = summariseChtData(dailyData);
+	// console.log(dailyData)
 	var red =    "rgba(255,99,132,1)";
 	var blue =   "rgba(54,162,235,1)";
 	var yellow = "rgba(255,206,86,1)";
@@ -643,73 +643,73 @@ function getEvent() {
     fadeyStuff("pc_event", retVal.msg);
 }
 
-function summariseChtData(data, fraction) {
-	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
+// function summariseChtData(data, fraction) {
+// 	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
 
-	// console.log(data)
-	// check all same length;
-	var initialLabel = data.labels[0];
-	var l = -1;
-	for (var property in data) {
-	    if (data.hasOwnProperty(property)) {
-	    	// console.log(data[property].length, property)
-	    	if (l == -1) { l = data[property].length; continue; }
-	    	if (data[property].length != l) { console.log("Length mismatch", l, data[property].length, property); return data; }
-	    }
-	}
+// 	// console.log(data)
+// 	// check all same length;
+// 	var initialLabel = data.labels[0];
+// 	var l = -1;
+// 	for (var property in data) {
+// 	    if (data.hasOwnProperty(property)) {
+// 	    	// console.log(data[property].length, property)
+// 	    	if (l == -1) { l = data[property].length; continue; }
+// 	    	if (data[property].length != l) { console.log("Length mismatch", l, data[property].length, property); return data; }
+// 	    }
+// 	}
 	
-	var trunc_length = Math.ceil(l / fraction);
-	// console.log(trunc_length, l);
-	var leftSide = {};
-	for (var property in data) {
-	    if (data.hasOwnProperty(property)) {
-	    	leftSide[property] = data[property].splice(0, trunc_length);
-	    }
-	}
+// 	var trunc_length = Math.ceil(l / fraction);
+// 	// console.log(trunc_length, l);
+// 	var leftSide = {};
+// 	for (var property in data) {
+// 	    if (data.hasOwnProperty(property)) {
+// 	    	leftSide[property] = data[property].splice(0, trunc_length);
+// 	    }
+// 	}
 
-	// reduce left side
-	var newLeft = {};
-	var newSize = 10;
-	for (var property in leftSide) {
-	    if (leftSide.hasOwnProperty(property)) {
-	    	if (property == 'labels' || property == 'we' || property == 'mo') {continue;}
-	    	var sum = 0;
-	    	for( var i = 0; i < leftSide[property].length; i++ ){
-	    		if (!leftSide[property][i]) continue;
-	    		if (!leftSide[property][i]) continue;
-			    sum += parseInt( leftSide[property][i], 10 ); //don't forget to add the base
-			}
+// 	// reduce left side
+// 	var newLeft = {};
+// 	var newSize = 10;
+// 	for (var property in leftSide) {
+// 	    if (leftSide.hasOwnProperty(property)) {
+// 	    	if (property == 'labels' || property == 'we' || property == 'mo') {continue;}
+// 	    	var sum = 0;
+// 	    	for( var i = 0; i < leftSide[property].length; i++ ){
+// 	    		if (!leftSide[property][i]) continue;
+// 	    		if (!leftSide[property][i]) continue;
+// 			    sum += parseInt( leftSide[property][i], 10 ); //don't forget to add the base
+// 			}
 
-			var avg = Math.round(sum/leftSide[property].length);
+// 			var avg = Math.round(sum/leftSide[property].length);
 
-			leftSide[property] = [];
-			leftSide.labels = []
-			resizeArr(leftSide.labels, newSize, "");
-			leftSide.labels[0] = initialLabel;
+// 			leftSide[property] = [];
+// 			leftSide.labels = []
+// 			resizeArr(leftSide.labels, newSize, "");
+// 			leftSide.labels[0] = initialLabel;
 		
-			// TODO move this label to middle of array		
-			var mid = Math.round(leftSide.labels.length/2);
+// 			// TODO move this label to middle of array		
+// 			var mid = Math.round(leftSide.labels.length/2);
 
-			leftSide.labels[mid] = trunc_length + " days avg";
+// 			leftSide.labels[mid] = trunc_length + " days avg";
 
-			for (var i = 0; i < newSize; i++){
-				leftSide[property].push(avg);
-			}
+// 			for (var i = 0; i < newSize; i++){
+// 				leftSide[property].push(avg);
+// 			}
 
-			// finally clean the 0s
-			leftSide[property].map(function (val, i) {
-				// console.log(x)
-				if (leftSide[property][i] == 0) leftSide[property][i] = null;
-			});
-	    }
-	}
+// 			// finally clean the 0s
+// 			leftSide[property].map(function (val, i) {
+// 				// console.log(x)
+// 				if (leftSide[property][i] == 0) leftSide[property][i] = null;
+// 			});
+// 	    }
+// 	}
 
-	// merge new left side
-	for (var property in leftSide) {
-	    if (leftSide.hasOwnProperty(property)) {
-	    	leftSide[property] = leftSide[property].concat(data[property]);
-	    }
-	}
-console.log(leftSide)
-	return leftSide;
-}
+// 	// merge new left side
+// 	for (var property in leftSide) {
+// 	    if (leftSide.hasOwnProperty(property)) {
+// 	    	leftSide[property] = leftSide[property].concat(data[property]);
+// 	    }
+// 	}
+// 	console.log(leftSide)
+// 	return leftSide;
+// }
