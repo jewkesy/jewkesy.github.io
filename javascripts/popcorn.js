@@ -1,75 +1,74 @@
 "use strict";
 
-var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=75';
-var popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc';
-var popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc';
-var amazonUrl = aws + 'getHomePageContent?amazon=true';
+var _locale = getParameterByName('locale') || '';
+var _limit = getParameterByName('limit') || 10;
 
-var loc = getParameterByName('locale') || '';
-var c = getParameterByName('limit') || 10;
+// var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=75';
+var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + _limit;
+var _popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc&limit=' + _limit;
+var _amazonUrl = aws + 'getHomePageContent?amazon=true';
 
-document.getElementById('pc_more_count').innerHTML = c;
-
-popcornUrl += "&limit=" + c;
-popcornLastGameUrl += "&limit=" + c;
+document.getElementById('pc_more_count').innerHTML = _limit;
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
-if (loc != '') {
-	applyLocaleHeader(loc);
-	popcornUrl += "&locale=" + loc;
+if (_locale != '') {
+	applyLocaleHeader(_locale);
+	_popcornUrl += "&locale=" + _locale;
 }
 
-var startDate = new Date("28 May 2017");
-var timeFrom = 0;
-var last = 0;
-var doubleDayDivider = 1;
+var _startDate = new Date("28 May 2017");
+var _timeFrom = 0;
+var _lastTimestamp = 0;
+var _doubleDayDivider = 1;
 
-httpGetAmazon(amazonUrl, function (err, data) {
+httpGetAmazon(_amazonUrl, function (err, data) {
+	checkNewDay();
 	getEvent();
 	getMyRank();
 	setInterval(function () {
-		httpGetAmazon(amazonUrl, function (err, data) {});
+		checkNewDay();
+		httpGetAmazon(_amazonUrl, function (err, data) {});
 		getEvent();
 		getMyRank();
 	}, 60000);
 });
 
-httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
+httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 	buildPopcornLeague(data, 'pc');
 });
-httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
+httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 	buildPopcornLastGames(data, 'pc');
 });
-httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + loc + "&timefrom=" + timeFrom, function (err, data) {
+httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
 	buildDailyGames(err, data);
 });
-httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
+httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
 	if (!data) return;
-	timeFrom = data.lastTime;
+	_timeFrom = data.lastTime;
 	// console.log(data);
 	if (!err) buildPopcornPage(data);
 	setInterval(function () {
-		httpGetLastPlay(popcornLastGameUrl, 'pc', function (err, data) {
+		httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
 			if (!err) {
 				if (!data || !data[0]) return;
-				if (last < data[0].timestamp) {
-					last = data[0].timestamp;
-					httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
+				if (_lastTimestamp < data[0].timestamp) {
+					_lastTimestamp = data[0].timestamp;
+					httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 						buildPopcornLeague(data, 'pc');
 					});
-					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
+					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 						buildPopcornLastGames(data, 'pc');
 					});
-					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&locale=" + loc + "&timefrom=" + timeFrom, 'pc', function (err, data) {
+					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
 						if (!data) return;
 						// console.log(data);
-						timeFrom = data.lastTime;
+						_timeFrom = data.lastTime;
 						if (!err) buildPopcornPage(data);
 					});
-					httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + loc + "&timefrom=" + timeFrom, function (err, data) {
+					httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
 						buildDailyGames(err, data);
 					});
 				}
@@ -78,8 +77,23 @@ httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + c + "&l
 	}, 5000);
 });
 
+var _daysSinceLaunch = 0;
+
+function checkNewDay() { //if new day, rebuild saved stats
+	var today = new Date();
+	var diff =  daydiff(_startDate, today, true);
+	if (_daysSinceLaunch != diff) {
+		console.log('TODO - checkout reset', _daysSinceLaunch, diff)
+		_newUsers = {};
+		_newUsersLabels = [];
+		_gameinfo = {
+			dailygames: []
+		};
+	}
+}
+
 function getMyRank() {
-	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + c + "&locale=" + loc, 'pc',  function (err, data) {
+	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		// console.log(err, data);
 		fadeyStuff('myrank', data.msg)
 	});
@@ -91,7 +105,7 @@ function applyLocaleHeader(locale) {
 	 elements[i].classList.remove("selected");
 	}
 	
-	document.getElementById("th_"+loc).classList.add('selected');
+	document.getElementById("th_"+_locale).classList.add('selected');
 }
 
 function buildDailyGames(err, content) {
@@ -148,7 +162,7 @@ function buildGamePlayStats(content) {
 		} else if (i === 0) dots[i].games = 0;
 	}
 
-	var todayCount = Math.floor(dots[dots.length-1].games/doubleDayDivider);
+	var todayCount = Math.floor(dots[dots.length-1].games/_doubleDayDivider);
 
 	fadeyStuff("pc_games_today", numberWithCommas(todayCount));
 }
@@ -453,14 +467,14 @@ function updateCharts(data, total) {
 
 	// get days from launch as x axis
 	var today = new Date();
-	var diff = daydiff(startDate, today, true);
+	var diff = daydiff(_startDate, today, true);
 
 	if (Object.keys(_newUsers).length === 0) {
 		_newUsers = data;
 		_newUsersLabels = new Array(diff).fill("");
 
 		for (var i = 1; i < diff-1; i++) {
-			var someDate = addDays(startDate, i);
+			var someDate = addDays(_startDate, i);
 			var q = someDate.toLocaleDateString().split("/");
 			_newUsersLabels[i] = q[0] + getMonthName(q[1]-1);
 		}
@@ -558,8 +572,8 @@ function resetLimit() {
 }
 
 function increaseLimit() {
-	c = c*2;
-	var newUrl = paramReplace('limit', window.location.href, c);
+	_limit = _limit * 2;
+	var newUrl = paramReplace('limit', window.location.href, _limit);
 	// var newUrl2 = paramReplace('pc_league', newUrl, null);
 	if (newUrl.indexOf('#pc_league') === -1) { 
 		newUrl = newUrl + '#pc_league';
@@ -630,9 +644,9 @@ function getEvent() {
       retVal.multiplier = 2;
       retVal.today = true;
       retVal.msg = "Today is a double points day!";
-      doubleDayDivider = 2;
+      _doubleDayDivider = 2;
     } else if (eD > tD) {
-      doubleDayDivider = 1;
+      _doubleDayDivider = 1;
       if (eD-tD == 86400000) {
         retVal.tomorrow = true;
         retVal.msg = "Tomorrow is a double points day!";
