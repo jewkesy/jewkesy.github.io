@@ -89,6 +89,7 @@ function checkNewDay() { //if new day, rebuild saved stats
 		_gameinfo = {
 			dailygames: []
 		};
+		_daysSinceLaunch = diff;
 	}
 }
 
