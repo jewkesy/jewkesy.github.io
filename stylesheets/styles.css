@@ -198,6 +198,10 @@ table.borderNoBottom > th {
   border: solid 1px #eee;
 }
 
+table.centerMe, tr, td, th { 
+  text-align: center;  
+}
+
 footer {
   width:270px;
   float:left;
