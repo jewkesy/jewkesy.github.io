@@ -32,6 +32,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
   <script src="./javascripts/typed.min.js"></script>
+  <script> 
+    $(function(){
+      $("#popcorn").load("popcorn.html", function () {
+        startPopcornQuiz();
+      });
+    });
+  </script>
 
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -88,142 +95,7 @@
       <h3><a name="projects" class="anchor" href="#"><span class="octicon octicon-link"></span></a>My Projects</h3>
       <p>A brief overview of some of my projects: -</p>
 
-      <h4 style="margin-bottom: 0;"><a name="popcorn" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank"><img class="rounded" style="float:left; margin-right: 5px;" src="./images/popcorn_s.png" width="80px" />"Alexa, play <i>Popcorn Quiz</i>"</a></h4>
-      <h4 style="text-align: right; margin-top: 0;">"Let's do this! First question, <i>true</i> or <i>false</i> - in the 2017 movie..."</h4>
-      <hr class="short">
-      <br/>
-      <p><strong>Think you know movies? Test your skills against the world!</strong></p>
-      <div class="centerMe">
-       <div class="stars a-star a-star-0" id="pc_uk_stars">
-        <a style="min-width: 100px !important;" name="popcorn" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank">Amazon<br>UK<br><br>(<span id="pc_uk_reviews">0</span>)</a>
-       </div>
-       <div class="stars a-star a-star-0" id="pc_us_stars">
-         <a style="min-width: 70px;" name="popcorn" href="https://www.amazon.com/dp/B0719TQV6W" target="_blank">Amazon<br>US<br><br>(<span id="pc_us_reviews">0</span>)</a>
-       </div>
-       <div class="stars a-star a-star-0" id="pc_de_stars">
-        <a style="min-width: 70px;" name="popcorn" href="https://www.amazon.de/dp/B0719TQV6W" target="_blank">Amazon<br>Germany<br><br>(<span id="pc_de_reviews">0</span>)</a>
-       </div>
-       <div class="stars a-star a-star-0" id="pc_de_stars">
-        <a style="min-width: 120px;" name="popcorn" href="https://www.amazon.in/dp/B0719TQV6W" target="_blank">Amazon<br>India<br><br>(<span id="pc_in_reviews">0</span>)</a>
-       </div>
-
-       <div class="stars a-star a-star-0" id="pc_ca_stars">
-        <a style="min-width: 120px;" name="popcorn" href="https://www.amazon.ca/dp/B0719TQV6W" target="_blank">Amazon<br>Canada<br><br>(<span id="pc_ca_reviews">0</span>)</a>
-       </div>
-       <div class="stars a-star a-star-0" id="pc_ca_stars">
-        <a style="min-width: 120px;" name="popcorn" href="https://www.amazon.com.au/dp/B0719TQV6W" target="_blank">Amazon<br>Australia<br><br>(<span id="pc_au_reviews">0</span>)</a>
-       </div>
-       <div class="stars a-star a-star-0" id="pc_ca_stars">
-        <a style="min-width: 120px;" name="popcorn" href="https://www.amazon.fr/dp/B0719TQV6W" target="_blank">Amazon<br>France<br><br>(<span id="pc_fr_reviews">0</span>)</a>
-       </div>
-       <div class="stars a-star a-star-0" id="pc_ca_stars">
-        <a style="min-width: 120px;" name="popcorn" href="https://www.amazon.jp/dp/B0719TQV6W" target="_blank">Amazon<br>Japan<br><br>(<span id="pc_ja_reviews">0</span>)</a>
-       </div>
-      </div>
-      <div style="clear: both;"></div>
-      <br>
-      <p><strong>Alexa</strong> will ask five true or false questions from a vast range of movies and actor biographies.</p>
-      <p>For a given movie, <strong>Alexa</strong> will quiz you for the <strong>year</strong>, <strong>actors</strong>, <strong>slogans</strong>, <strong>directors</strong> or <strong>characters</strong>. For actors, <strong>Alexa</strong> will quiz you for their <strong>birth year</strong> or <strong>place of birth</strong>.</p>
-      <p><strong>Alexa</strong> will keep your score and tell you your world ranking position compared against other <strong>Alexa</strong> players.</p>
-      <p>The more games you play and the more questions you answer correctly, the greater chance to increase your world rank. To reward your dedication, every 5th consecutive game will be a double-point round.</p>
-      <p>Double-point events happen every three days, so every player gets an fair chance to storm the ranks.</p>
-      <hr>
-      <h4 style="text-align: center;">Latest News</h4>
-      <p><strong>20th Apr</strong> - Popcorn Quiz François has been entered for Amazon Certification.</p>
-      <hr class="short">
-      <p><strong>27th Mar</strong> - Getting ready for a day of comedy movies on April Fools Day</p>
-      <hr class="short">
-      <p><strong>24th Mar</strong> - Improving the card information and optimising the use of the space on Echo Display devices</p>
-      <hr class="short">
-      <p><strong>20th Mar</strong> - <strong>250,000 GAMES PLAYED &amp; OVER 65,000 PLAYERS!</strong> To celebrate a new movie category has been added - Top Rated Movies!</p>
-      <hr class="short">
-      <p><strong>13th Mar</strong> - <strong>NEW GAMEPLAY FEATURE NOW LIVE!</strong> Reward your dedication with a bonus-point round for every 5th consecutive game you play.</p>
-      <hr class="short">
-
-      <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
-      <h4 style="text-align: right; margin-top: 0;" id="myrank">"Ok! Your rank is..."</h4>
-      <a name="pc_league" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
-        <table class="centerMe borderMe borderNoBottom scaleme">
-          <tr>
-            <th id="th_" class="selected" colspan=2><a href="?#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>Global<br/><img class="locale" src="./images/global.png"></a></th>
-            <th id="th_en-GB" colspan=2><a href="?locale=en-GB#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>UK<br/><img class="locale" src="./images/en-GB.png"></a></th>
-            <th id="th_en-US" colspan=2><a href="?locale=en-US#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>US<br/><img class="locale" src="./images/en-US.png"></a></th>
-            <th id="th_de-DE" colspan=2><a href="?locale=de-DE#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>DE<br/><img class="locale" src="./images/de-DE.png"></a></th>
-            <th id="th_en-IN" colspan=2><a href="?locale=en-IN#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>IN<br/><img class="locale" src="./images/en-IN.png"></a></th>
-            <th id="th_en-CA" colspan=2><a href="?locale=en-CA#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>CA<br/><img class="locale" src="./images/en-CA.png"></a></th>
-            <th id="th_ja-JP" colspan=2><a href="?locale=ja-JP#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>JP<br/><img class="locale" src="./images/ja-JP.png"></a></th>
-            <th id="th_en-AU" colspan=2><a href="?locale=en-AU#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>AU<br/><img class="locale" src="./images/en-AU.png"></a></th>
-            <th id="th_fr-FR" colspan=2><a href="?locale=fr-FR#pc_league">Top&nbsp;<span id="pc_count">10</span><br/>FR<br/><img class="locale" src="./images/fr-FR.png"></a></th>
-          </tr>
-        </table>
-      <div class="borderMe scaleme" style="height:400px;overflow:auto;">
-        <table id='pc_scores' class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
-          <tr>
-            <th>Rank</th>
-            <th>Score</th>
-            <th>Games<br/>Played</th>
-            <th>Avg.&nbsp;Per<br/>Game</th>
-            <th>Last Played</th>
-            <th>Joined</th>
-            <th>Locale</th>
-          </tr>
-        </table>
-      </div>
-      <div class="fadedScroller_fade"></div>
-      <br/>
-      <div class="centerMe scaleme">
-        <button type="button" class="btn btn-success" onclick="increaseLimit();">Load <span id="pc_more_count">10</span> more</button>
-        <button type="button" class="btn btn-info" onclick="resetLimit();">Reset <img src="./images/reset_icon.png" /></button>
-      </div>
-      <br/>
-      <div class="borderMe scaleme" style="height:400px;overflow:auto;">
-        <table id="pc_lastgames" class="centerMe borderMe scaleme">
-          <tr><th colspan=7>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
-          <tr>
-            <th>Rank</th>
-            <th>Score</th>
-            <th>Games<br/>Played</th>
-            <th>Avg.&nbsp;Per<br/>Game</th>
-            <th>Last Played</th>
-            <th>Joined</th>
-            <th>Locale</th>
-          </tr>
-        </table>
-      </div>
-      <div class="fadedScroller_fade scaleme"></div>
-      <br/>
-      <table class="centerMe borderMe scaleme">
-        <tr><th>Total Players:</th><td id='pc_total_players'>0</td><th>Daily Avg:</th><td id='pc_total_avg'>0</td><th>Today:</th><td id='pc_total_today'>0</td></tr>
-        <tr><th>Total Games:</th><td id='pc_total_games'>0</td><th>Daily Avg:</th><td id='pc_games_avg'>0</td><th>Today:</th><td id='pc_games_today'>0</td></tr>
-        <tr><td colspan="3"><i>This Skill was launched on 28th May 2017</i></td><td id='pc_ts' colspan="3"></td></tr>
-        <tr><td colspan="6" id='pc_event'></td></tr>
-      </table>
-
-      <table class="centerMe borderMe scaleme">
-        <tr><th>Player Statistics</th></tr>
-        <tr>
-           <td style="text-align: center;">
-            <div style="min-width: 200px; text-align: center; display: block;">
-              <canvas id="pc_cht_new_users" width="200" height="200"></canvas>
-            </div>
-        </tr>
-      </table>
-
-      <p>The Skill provides an addictive, rapid-fire game that keeps you coming back to increase your score.</p>
-
-      <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
-
-      <hr>
-      <h4 style="text-align: center;">Popcorn Quiz gets a mention...</h4>
-
-      <p><strong>2 Feb</strong> - Popcorn Quiz gets featured in the official Amazon Echo email! This introduced nearly 3300 players who played over 6200 games and helped propel PQ to almost 52,000 players and 155,000 games, making this the best day ever for PQ!</p>
-      <hr class="short">
-
-      <p><strong>12 Jan</strong> - Reddit user <a href="https://www.reddit.com/user/alexainteractions">alexainteractions</a> has made a video review of Popcorn Quiz!  Check it out: - </p>
-      <p class="centerMe"><iframe width="355" height="" src="https://www.youtube.com/embed/Eu1xGLrHyqo?rel=0&autoplay=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe></p>
-      <hr class="short">
-      <p><strong>6 Oct</strong> - Dot to Dot plays Popcorn Quiz live in a podcast!!! <a href="https://usa2day.podbean.com/e/dtd249-popcorn-quiz-and-movie-tagline-quiz/">linky here</a></p>
-      <hr class="short">
+      <div id="popcorn"></div>
 
       <h4><a name="flappy" href="http://jewkesy.github.io/Flappy/" target="_blank">FlappyJS</a></h4>
       <p>Jumping on the Flappy Bird bandwagon, a complete browser-based game written in <strong>HTML5</strong> and <strong>JavaScript</strong>. Based upon the classic original and with graphical help from a few versions that exist already.</p>
@@ -271,7 +143,7 @@
         <p><a href="https://twitter.com/JewkesD" target="_blank" class="user-mention">Twitter</a>, <a href="https://www.linkedin.com/pub/daryl-jewkes/1a/7ba/918" target="_blank" class="user-mention">LinkedIn</a> or the old, classic way <a href="mailto:contact.github.io@daryljewkes.com?Subject=Jewkesy.github.io">contact.github.io@daryljewkes.com</a>
       </p>
       <!-- Place this code where you want the badge to render. -->
-      <p class="centerMe">
+      <div class="centerMe">
         <a href="https://uk.pinterest.com/daryljewkes/"
            rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
           <img src="./icons/pinterest-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
@@ -300,7 +172,7 @@
           <img src="./icons/github-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
           <span style="font-weight:bold;">Clone me</span><br /><span>on GitHub</span>
         </a>
-        <br/>
+
         <a href="http://instagram.com/jewkesy/"
            rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
           <img src="./icons/instagram-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
@@ -323,7 +195,7 @@
           <span style="font-weight:bold;">Chase me</span><br /><span>on Strava</span>
         </a>
 
-      </p>
+      </div>
     </section>
   </div>
   <script src="./javascripts/app.js"></script>

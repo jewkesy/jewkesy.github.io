@@ -1,83 +1,92 @@
 "use strict";
 
-var _locale = getParameterByName('locale') || '';
-var _limit = getParameterByName('limit') || 10;
+var _locale = '';
+var _limit = 10;
 
 // var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=75';
 var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc&limit=' + _limit;
 var _amazonUrl = aws + 'getHomePageContent?amazon=true';
 
-document.getElementById('pc_more_count').innerHTML = _limit;
+var _startDate = new Date("28 May 2017");
+var _timeFrom = 0;
+var _lastTimestamp = 0;
+var _doubleDayDivider = 1;
+var _daysSinceLaunch = 0;
+var _newUsersChart;
+var _newUsers = {};
+var _newUsersLabels = [];
+var _gameinfo = { dailygames: [] };
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
-if (_locale != '') {
-	applyLocaleHeader(_locale);
-	_popcornUrl += "&locale=" + _locale;
-}
+function startPopcornQuiz() {
+	console.log('starting');
+	_locale = getParameterByName('locale') || '';
+	_limit = getParameterByName('limit') || 10;
+	document.getElementById('pc_more_count').innerHTML = _limit;
+	_newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
-var _startDate = new Date("28 May 2017");
-var _timeFrom = 0;
-var _lastTimestamp = 0;
-var _doubleDayDivider = 1;
+	if (_locale != '') {
+		applyLocaleHeader(_locale);
+		_popcornUrl += "&locale=" + _locale;
+	}
 
-httpGetAmazon(_amazonUrl, function (err, data) {
-	checkNewDay();
-	getEvent();
-	getMyRank();
-	setInterval(function () {
+	httpGetAmazon(_amazonUrl, function (err, data) {
 		checkNewDay();
-		httpGetAmazon(_amazonUrl, function (err, data) {});
 		getEvent();
 		getMyRank();
-	}, 60000);
-});
+		setInterval(function () {
+			checkNewDay();
+			httpGetAmazon(_amazonUrl, function (err, data) {});
+			getEvent();
+			getMyRank();
+		}, 60000);
+	});
 
-httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-	buildPopcornLeague(data, 'pc');
-});
-httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-	buildPopcornLastGames(data, 'pc');
-});
-httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
-	buildDailyGames(err, data);
-});
-httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
-	if (!data) return;
-	_timeFrom = data.lastTime;
-	// console.log(data);
-	if (!err) buildPopcornPage(data);
-	setInterval(function () {
-		httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
-			if (!err) {
-				if (!data || !data[0]) return;
-				if (_lastTimestamp < data[0].timestamp) {
-					_lastTimestamp = data[0].timestamp;
-					httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-						buildPopcornLeague(data, 'pc');
-					});
-					httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-						buildPopcornLastGames(data, 'pc');
-					});
-					httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
-						if (!data) return;
-						// console.log(data);
-						_timeFrom = data.lastTime;
-						if (!err) buildPopcornPage(data);
-					});
-					httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
-						buildDailyGames(err, data);
-					});
-				}
-			} 
-		});
-	}, 5000);
-});
-
-var _daysSinceLaunch = 0;
+	httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+		buildPopcornLeague(data, 'pc');
+	});
+	httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+		buildPopcornLastGames(data, 'pc');
+	});
+	httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+		buildDailyGames(err, data);
+	});
+	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
+		if (!data) return;
+		_timeFrom = data.lastTime;
+		// console.log(data);
+		if (!err) buildPopcornPage(data);
+		setInterval(function () {
+			httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
+				if (!err) {
+					if (!data || !data[0]) return;
+					if (_lastTimestamp < data[0].timestamp) {
+						_lastTimestamp = data[0].timestamp;
+						httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+							buildPopcornLeague(data, 'pc');
+						});
+						httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+							buildPopcornLastGames(data, 'pc');
+						});
+						httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
+							if (!data) return;
+							// console.log(data);
+							_timeFrom = data.lastTime;
+							if (!err) buildPopcornPage(data);
+						});
+						httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+							buildDailyGames(err, data);
+						});
+					}
+				} 
+			});
+		}, 5000);
+	});
+}
 
 function checkNewDay() { //if new day, rebuild saved stats
 	var today = new Date();
@@ -452,15 +461,7 @@ function chtNewUsers(chart, d, l, total) {
 	// var axis = chart.scales.<scale id>;
 	// var max = axis.max;
 	// var min = axis.min;
-
 }
-
-var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
-var _newUsers = {};
-var _newUsersLabels = [];
-var _gameinfo = {
-	dailygames: []
-};
 
 function updateCharts(data, total) {
 	if (!data) return;
