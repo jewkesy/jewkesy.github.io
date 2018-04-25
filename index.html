@@ -337,7 +337,11 @@
   </div>
   <script src="./javascripts/app.js"></script>
   <script src="./javascripts/popcorn.js"></script>
-  <script>startPopcornQuiz();</script>
+  <script>
+    $(document).ready(function() {
+      startPopcornQuiz();
+    });
+  </script>
   <script src="./javascripts/scale.fix.js"></script>
  </body>
 </html>
