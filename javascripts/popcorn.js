@@ -99,6 +99,7 @@ function checkNewDay() { //if new day, rebuild saved stats
 			dailygames: []
 		};
 		_daysSinceLaunch = diff;
+		_timeFrom = 0;
 	}
 }
 
