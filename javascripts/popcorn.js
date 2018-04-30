@@ -3,7 +3,6 @@
 var _locale = '';
 var _limit = 10;
 
-// var popcornStats = aws + 'getHomePageContent?stats=true&prefix=pc&limit=75';
 var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc&limit=' + _limit;
 var _amazonUrl = aws + 'getHomePageContent?amazon=true';
@@ -24,7 +23,6 @@ Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
 function startPopcornQuiz() {
-	console.log('starting');
 	_locale = getParameterByName('locale') || '';
 	_limit = getParameterByName('limit') || 10;
 	document.getElementById('pc_more_count').innerHTML = _limit;
@@ -397,7 +395,7 @@ function chtNewUsers(chart, d, l, total) {
 	dailyData.labels = JSON.parse(JSON.stringify(l));
 	// console.log(dailyData.mo)
 	dailyData = summariseChtData(dailyData);
-	console.log(dailyData.mo)
+	// console.log(dailyData.mo)
 	var red =    "rgba(255,99,132,1)";
 	var blue =   "rgba(54,162,235,1)";
 	var yellow = "rgba(255,206,86,1)";
@@ -505,19 +503,8 @@ function updateCharts(data, total) {
 	
 	for (var i = 0; i < data.totals.length; i++) {
 		if (data.avg[i] != _newUsers.avg[i]) _newUsers.avg[i] += data.avg[i];
-		// if (data.we[i] != _newUsers.we[i]) _newUsers.we[i] += data.we[i];
-		// if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] += data.mo[i];
 		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
 	}
-
-	// var top = Math.max.apply(null, _gameinfo.dailygames);
-	// for (var i = 0; i < data.totals.length; i++) {
-		// console.log(_newUsers.we[i])
-		// if (data.we[i] != _newUsers.we[i]) _newUsers.we[i] = top;
-		// if (data.mo[i] != _newUsers.mo[i]) _newUsers.mo[i] = top;
-	// }
-
-
 
 	for (var i = 0; i < data.totals.length; i++) {
 		if (data.uk[i] != _newUsers.uk[i]) {
@@ -554,7 +541,6 @@ function updateCharts(data, total) {
 		}
 	}
 	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
-	// document.getElementById('pc_total_today').innerHTML = numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]);
 	
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _newUsers.totals[0];
@@ -564,28 +550,21 @@ function updateCharts(data, total) {
 	}
 
 	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
-	// document.getElementById('pc_total_avg').innerHTML = numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1]));
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total);
 }
 
 function resetLimit() {
 	var newUrl = paramReplace('limit', window.location.href, 10);
-	// var newUrl2 = paramReplace('pc_league', newUrl, null);
-	if (newUrl.indexOf('#pc_league') === -1) { 
-		newUrl = newUrl + '#pc_league';
-	}
-	// console.log(newUrl);
+	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
+
 	window.location.href = newUrl;	
 }
 
 function increaseLimit() {
 	_limit = _limit * 2;
 	var newUrl = paramReplace('limit', window.location.href, _limit);
-	// var newUrl2 = paramReplace('pc_league', newUrl, null);
-	if (newUrl.indexOf('#pc_league') === -1) { 
-		newUrl = newUrl + '#pc_league';
-	}
-	// console.log(newUrl);
+	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
+
 	window.location.href = newUrl;	
 }
 
@@ -666,65 +645,41 @@ function getEvent() {
 
 function summariseChtData(data, fraction) {
 	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
+	var newSize = 10;
 
-	console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
 	var l = -1;
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
-	    	// console.log(data[property].length, property)
 	    	if (l == -1) { l = data[property].length; continue; }
 	    	if (data[property].length != l) { console.log("Length mismatch", l, data[property].length, property); return data; }
 	    }
 	}
 	
 	var trunc_length = Math.ceil(l / fraction);
-	// console.log(trunc_length, l);
 	var leftSide = {};
+	
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
 	    	leftSide[property] = data[property].splice(0, trunc_length);
 	    }
 	}
 
-	// reduce left side
-	var newLeft = {};
-	var newSize = 10;
 	for (var property in leftSide) {
 	    if (leftSide.hasOwnProperty(property)) {
-	    	//|| property == 'we' || property == 'mo'
-	    	if (property == 'labels') {continue;}
-	    	var sum = 0;
-
-	    	for( var i = 0; i < leftSide[property].length; i++ ){
-	    		if (!leftSide[property][i]) continue;
-	    		if (!leftSide[property][i]) continue;
-			    sum += parseInt( leftSide[property][i], 10 ); //don't forget to add the base
-			    if (property == 'we' || property == 'mo') sum = _chtHeight;
-			}
-
-			var avg = Math.round(sum/leftSide[property].length);
-
-			leftSide[property] = [];
-			leftSide.labels = []
-			resizeArr(leftSide.labels, newSize, "");
-			leftSide.labels[0] = initialLabel;
-		
-			// TODO move this label to middle of array		
-			var mid = Math.round(leftSide.labels.length/2);
-
-			leftSide.labels[mid] = trunc_length + " days avg";
-
-			for (var i = 0; i < newSize; i++){
-				leftSide[property].push(avg);
-			}
-
-			// finally clean the 0s
-			leftSide[property].map(function (val, i) {
-				// console.log(x)
-				if (leftSide[property][i] == 0) leftSide[property][i] = null;
-			});
+	    	if (property == 'labels') {
+	    		leftSide[property] = [];
+	    		resizeArr(leftSide[property], newSize, "");
+	    		leftSide[property][0] = initialLabel;
+	    		var mid = Math.round(leftSide[property].length/2);
+	    		leftSide[property][mid] = trunc_length + " days avg";
+	    	} else if (property == 'we' || property == 'mo') {
+	    		leftSide[property] = [];
+	    		resizeArr(leftSide[property], newSize, null);
+	    	} else {
+	    		leftSide[property] = reduceArr(leftSide[property], newSize);
+	    	}
 	    }
 	}
 
@@ -734,6 +689,36 @@ function summariseChtData(data, fraction) {
 	    	leftSide[property] = leftSide[property].concat(data[property]);
 	    }
 	}
-	console.log(leftSide)
+
 	return leftSide;
+}
+
+function reduceArr(arr, count) {
+
+	var slots = Math.ceil(arr.length/count);
+	var chk = chunkArray(arr, slots);
+	var retVal = [];
+
+	for (var i = 0; i < chk.length; i++) {
+		var x = chk[i].reduce(function(acc, val) { return acc + val; });
+		if (x == 0) x = null;
+		else x = Math.round(x/slots);
+		retVal.push(x);
+	}
+
+	return retVal;
+}
+
+function chunkArray(myArray, chunk_size){
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+    
+    for (index = 0; index < arrayLength; index += chunk_size) {
+        var myChunk = myArray.slice(index, index+chunk_size);
+        // Do something if you want with the group
+        tempArray.push(myChunk);
+    }
+
+    return tempArray;
 }
