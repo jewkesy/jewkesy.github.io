@@ -108,7 +108,7 @@ function httpGetLastPlay(theUrl, prefix, callback) {
 function httpGetStats(theUrl, prefix, callback){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("GET", theUrl, true);
+	
 	xmlHttp.onreadystatechange = function (oEvent) {
 		if (xmlHttp.readyState === 4) {  
 	        if (xmlHttp.status === 200) {  
@@ -117,13 +117,13 @@ function httpGetStats(theUrl, prefix, callback){
 				buildTopTen(doc, prefix);
 				if (callback) return callback(null, doc);
 			} else {  
-	           // console.log("Error", xmlHttp.status, xmlHttp.statusText);
+	           console.log("Error", theUrl, xmlHttp.status, xmlHttp.statusText);
 	           if (callback) return callback(xmlHttp.status);
 	        }  
 	    }
 	}
-
-	xmlHttp.send(null);
+	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.send();
 }
 
 function buildTopTen(topTen, prefix) {

@@ -17,6 +17,7 @@ var _newUsersChart;
 var _newUsers = {};
 var _newUsersLabels = [];
 var _gameinfo = { dailygames: [] };
+var _chtHeight = 2500;
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
@@ -91,7 +92,7 @@ function startPopcornQuiz() {
 function checkNewDay() { //if new day, rebuild saved stats
 	var today = new Date();
 	var diff =  daydiff(_startDate, today, true);
-	if (_daysSinceLaunch != diff) {
+	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) {
 		console.log('TODO - checkout reset', _daysSinceLaunch, diff)
 		_newUsers = {};
 		_newUsersLabels = [];
@@ -122,7 +123,7 @@ function applyLocaleHeader(locale) {
 function buildDailyGames(err, content) {
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
-	console.log(content)
+	// console.log(content)
 	_gameinfo.dailygames = content.dailygames;
 	fadeyStuff("pc_games_today", numberWithCommas(content.dailygames[content.dailygames.length-1]));
 
@@ -394,9 +395,9 @@ function chtNewUsers(chart, d, l, total) {
 	var dailyData = JSON.parse(JSON.stringify(d));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
-	console.log(dailyData)
+	// console.log(dailyData.mo)
 	dailyData = summariseChtData(dailyData);
-	console.log(dailyData)
+	console.log(dailyData.mo)
 	var red =    "rgba(255,99,132,1)";
 	var blue =   "rgba(54,162,235,1)";
 	var yellow = "rgba(255,206,86,1)";
@@ -459,9 +460,12 @@ function chtNewUsers(chart, d, l, total) {
 	chart.data = data;
 	chart.update();
 
+	// console.log(chart.scales)
 	// var axis = chart.scales.<scale id>;
 	// var max = axis.max;
 	// var min = axis.min;
+	var axis = chart.scales.y-axis-0;
+	_chtHeight = axis.max;
 }
 
 function updateCharts(data, total) {
@@ -663,7 +667,7 @@ function getEvent() {
 function summariseChtData(data, fraction) {
 	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
 
-	// console.log(data)
+	console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
 	var l = -1;
@@ -689,12 +693,15 @@ function summariseChtData(data, fraction) {
 	var newSize = 10;
 	for (var property in leftSide) {
 	    if (leftSide.hasOwnProperty(property)) {
-	    	if (property == 'labels' || property == 'we' || property == 'mo') {continue;}
+	    	//|| property == 'we' || property == 'mo'
+	    	if (property == 'labels') {continue;}
 	    	var sum = 0;
+
 	    	for( var i = 0; i < leftSide[property].length; i++ ){
 	    		if (!leftSide[property][i]) continue;
 	    		if (!leftSide[property][i]) continue;
 			    sum += parseInt( leftSide[property][i], 10 ); //don't forget to add the base
+			    if (property == 'we' || property == 'mo') sum = _chtHeight;
 			}
 
 			var avg = Math.round(sum/leftSide[property].length);
