@@ -87,19 +87,20 @@ function startPopcornQuiz() {
 	});
 }
 
+function reset() {
+	_newUsers = {};
+	_newUsersLabels = [];
+	_gameinfo = {
+		dailygames: []
+	};
+	_daysSinceLaunch = diff;
+	_timeFrom = 0;
+}
+
 function checkNewDay() { //if new day, rebuild saved stats
 	var today = new Date();
 	var diff =  daydiff(_startDate, today, true);
-	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) {
-		console.log('TODO - checkout reset', _daysSinceLaunch, diff)
-		_newUsers = {};
-		_newUsersLabels = [];
-		_gameinfo = {
-			dailygames: []
-		};
-		_daysSinceLaunch = diff;
-		_timeFrom = 0;
-	}
+	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) reset();
 }
 
 function getMyRank() {
@@ -653,7 +654,7 @@ function summariseChtData(data, fraction) {
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
 	    	if (l == -1) { l = data[property].length; continue; }
-	    	if (data[property].length != l) { console.log("Length mismatch", l, data[property].length, property); return data; }
+	    	if (data[property].length != l) { console.log("Length mismatch, resetting", l, data[property].length, property); reset(); return data; }
 	    }
 	}
 	
