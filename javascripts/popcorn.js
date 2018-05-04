@@ -1,4 +1,6 @@
-"use strict";
+(function(){
+    "use strict";
+})();
 
 var _locale = '';
 var _limit = 10;
@@ -142,7 +144,7 @@ function buildDailyGames(err, content) {
 }
 
 function buildGamePlayStats(content) {
-	console.log(content)
+	console.log(content);
 	return;
 	// console.log(content)
 	var dots = [];
@@ -315,23 +317,6 @@ function buildPopcornLeague(data, prefix, total) {
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
 }
 
-function httpGetGameStats(theUrl){
-	var xmlHttp = null;
-	xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("GET", theUrl, true);
-	xmlHttp.onreadystatechange = handleReadyStateChange;
-	xmlHttp.send(null);
-
-	function handleReadyStateChange() {
-		if (xmlHttp.readyState == 4) {
-			if (xmlHttp.status == 200) {
-				var doc = JSON.parse(xmlHttp.responseText);
-				buildGamePlayStats(doc);
-			}
-		}
-	}
-}
-
 function httpGetAmazon(theUrl, callback){
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
@@ -456,9 +441,10 @@ function chtNewUsers(chart, d, l, total) {
 			"borderColor":"rgba(0, 0, 0, 1)", "backgroundColor":"rgba(0, 0, 0, 1)", "pointRadius":0
 		}],
 		options: {
-			"responsive": true
+			"responsive": true,
+			"maintainAspectRatio": false
 		}
-    }
+    };
 	chart.data = data;
 	chart.update();
 
