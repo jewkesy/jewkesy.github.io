@@ -189,6 +189,7 @@ function buildPopcornPage(content) {
 }
 
 function fadeyStuff(id, val) {
+	if (!val) return;
 	if (document.getElementById(id).innerHTML == val) return;
 
 	$("#"+id).fadeOut(666, function () {
