@@ -88,6 +88,8 @@ function startPopcornQuiz() {
 }
 
 function reset() {
+	var today = new Date();
+	var diff =  daydiff(_startDate, today, true);
 	_newUsers = {};
 	_newUsersLabels = [];
 	_gameinfo = {
