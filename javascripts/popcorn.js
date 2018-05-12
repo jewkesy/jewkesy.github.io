@@ -202,6 +202,7 @@ function fadeyStuff(id, val) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
+	console.log(data)
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
@@ -234,17 +235,23 @@ function buildPopcornLastGames(data, prefix) {
 			cell4.id = prefix + "_lastgames_avg_" + x;
 
 			var cell5 = row.insertCell(4);
-			cell5.id = prefix + "_lastgames_ts_" + x;
-			cell5.className = "timeago";
-			cell5.title = games[i].t/1000;
+			cell5.id = prefix + "_lastgames_lg_" + x;
 
 			var cell6 = row.insertCell(5);
-			cell6.id = prefix + "_lastgames_st_" + x;
-			cell6.className = "timeago";
-			cell6.title = games[i].st/1000;
+			cell6.id = prefix + "_lastgames_gs_" + x;
 
 			var cell7 = row.insertCell(6);
-			cell7.id = prefix + "_lastgames_locale_" + x;
+			cell7.id = prefix + "_lastgames_ts_" + x;
+			cell7.className = "timeago";
+			cell7.title = games[i].t/1000;
+
+			var cell8 = row.insertCell(7);
+			cell8.id = prefix + "_lastgames_st_" + x;
+			cell8.className = "timeago";
+			cell8.title = games[i].st/1000;
+
+			var cell9 = row.insertCell(8);
+			cell9.id = prefix + "_lastgames_locale_" + x;
 		} else {	
 			document.getElementById(prefix + '_lastgames_ts_' + x).title = games[i].t/1000;
 			document.getElementById(prefix + '_lastgames_st_' + x).title = games[i].st/1000;
@@ -253,6 +260,10 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(games[i].s));
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
 		fadeyStuff(prefix + "_lastgames_avg_" + x, numberWithCommas(((+games[i].s)/(+games[i].g)).toFixed(2)));
+
+		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg);
+		fadeyStuff(prefix + "_lastgames_gs_" + x, games[i].gs);
+
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
 		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((games[i].st/1000)+""));
 		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' src='./images/" + games[i].l + ".png' />");
