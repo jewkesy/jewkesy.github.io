@@ -228,6 +228,10 @@ footer {
   max-width: 130px;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 @media print, screen and (max-width: 960px) {
 
   div.wrapper {
