@@ -217,8 +217,8 @@ function buildPopcornLastGames(data, prefix) {
 		var device = ".";
 		if (games[i].d == "Echo Show") device = ":";
 
-		if (games[i].i == 'star') {sym = " &#9734;";}
-		else if (games[i].i == 'sun') {sym = " &#9788;";}
+		if (games[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
+		else if (games[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
 		else if (games[i].i == 'note') {sym = " &#9834;";}
 		else if (games[i].i == 'hash') {sym = " #";}
 
@@ -283,8 +283,8 @@ function buildPopcornLeague(data, prefix, total) {
 		var device = ".";
 		if (topTen[i].d == "Echo Show") device = ":";
 
-		if (topTen[i].i == 'star') {sym = " &#9734;";}
-		else if (topTen[i].i == 'sun') {sym = " &#9788;";}
+		if (topTen[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
+		else if (topTen[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
 		else if (topTen[i].i == 'note') {sym = " &#9834;";}
 		else if (topTen[i].i == 'hash') {sym = " #";}
 
