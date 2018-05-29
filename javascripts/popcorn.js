@@ -20,6 +20,8 @@ var _newUsersLabels = [];
 var _gameinfo = { dailygames: [] };
 var _chtHeight = 2500;
 
+document.getElementById('captionYear').innerHTML = new Date().getFullYear();
+
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
@@ -146,40 +148,6 @@ function buildDailyGames(err, content) {
 function buildGamePlayStats(content) {
 	console.log(content);
 	return;
-	// console.log(content)
-	var dots = [];
-
-	for (var i = content.length-1; i >= 0; i--) {	
-		var s = content[i];
-
-		// get the day
-		var d = new Date(s.d);
-		var dd = ""+d.getFullYear()+(d.getMonth() + 1)+d.getDate();
-		var day = weekday[d.getDay()];
-		// console.log(dd);
-
-		var idx = keyExists(dd, dots);
-		if (idx == -1) {
-			dots.push({
-				key: dd,
-				day: day,
-				games: s.games
-			});
-		} else {
-			dots[idx].games = s.games;
-		}
-	}
-	
-	for (var i = dots.length-1; i >= 0; i--) {
-		if (i > 0) {
-			dots[i].games = dots[i].games - dots[i-1].games;
-			dots[i].hourly = dots[i].games/24;
-		} else if (i === 0) dots[i].games = 0;
-	}
-
-	var todayCount = Math.floor(dots[dots.length-1].games/_doubleDayDivider);
-
-	fadeyStuff("pc_games_today", numberWithCommas(todayCount));
 }
 
 function buildPopcornPage(content) {
@@ -642,6 +610,21 @@ function getEvent() {
         retVal.msg = "The next double point event is on " + retVal.day + ". ";
       }
     }
+
+    var mm = todayDate.getMonth();
+    var dd = todayDate.getDate();
+    if (mm == 4) { // BIRTHDAY
+      if (dd == 28) {
+        retVal.name = "triplepoints";
+        retVal.multiplier = 3;
+        retVal.extraGameCount = 2;
+        retVal.today = true;
+        retVal.msg = "Today is the Popocorn Quiz Birthday Event!";
+        _doubleDayDivider = 3;
+      }
+  }
+
+
     fadeyStuff("pc_event", retVal.msg);
 }
 
