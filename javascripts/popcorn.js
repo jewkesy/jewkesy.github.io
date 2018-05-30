@@ -36,11 +36,10 @@ function startPopcornQuiz() {
 		applyLocaleHeader(_locale);
 		_popcornUrl += "&locale=" + _locale;
 	}
-
+	getEvent();
+	checkNewDay();
+	getMyRank();
 	httpGetAmazon(_amazonUrl, function (err, data) {
-		checkNewDay();
-		getEvent();
-		getMyRank();
 		setInterval(function () {
 			checkNewDay();
 			httpGetAmazon(_amazonUrl, function (err, data) {});
@@ -568,7 +567,7 @@ function paramReplace(param, url, value) {
 }
 
 function getEvent() {
-	httpGetByUrl(aws + "getHomePageContent?getevents=true", function (err, data) {
+	httpGetByUrl(aws + "getHomePageContent?action=getevents", function (err, data) {
 		console.log(err, data);
 		fadeyStuff("pc_event", data.msg.msg);
 	});
