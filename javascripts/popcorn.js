@@ -568,64 +568,10 @@ function paramReplace(param, url, value) {
 }
 
 function getEvent() {
-
-    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-    var eventDate = new Date("7 Feb 2018");
-    var todayDate = new Date();
-
-    todayDate.setHours(0,0,0,0);
-
-    var dateArray = [];
-    while (eventDate < todayDate) {
-        dateArray.push(new Date (eventDate));
-        eventDate = addDays(eventDate,3);
-    }
-    dateArray.push(new Date (eventDate));
- 
-    var eD = eventDate.getTime();
-    var tD = todayDate.getTime();
-
-    var retVal = {
-      name: "default", extraGameCount: 0, multiplier: 1,
-      today: false,
-      tomorrow: false,
-      next: eventDate,
-      day: days[eventDate.getDay()]
-    };
-
-    if (eD == tD) {
-      retVal.name = "doublepoints";
-      retVal.extraGameCount = 1;
-      retVal.multiplier = 2;
-      retVal.today = true;
-      retVal.msg = "Today is a double points day!";
-      _doubleDayDivider = 2;
-    } else if (eD > tD) {
-      _doubleDayDivider = 1;
-      if (eD-tD == 86400000) {
-        retVal.tomorrow = true;
-        retVal.msg = "Tomorrow is a double points day!";
-      } else {
-        retVal.msg = "The next double point event is on " + retVal.day + ". ";
-      }
-    }
-
-    var mm = todayDate.getMonth();
-    var dd = todayDate.getDate();
-    if (mm == 4) { // BIRTHDAY
-      if (dd == 28) {
-        retVal.name = "triplepoints";
-        retVal.multiplier = 3;
-        retVal.extraGameCount = 2;
-        retVal.today = true;
-        retVal.msg = "Today is the Popocorn Quiz Birthday Event!";
-        _doubleDayDivider = 3;
-      }
-  }
-
-
-    fadeyStuff("pc_event", retVal.msg);
+	httpGetByUrl(aws + "getHomePageContent?getevents=true", function (err, data) {
+		console.log(err, data);
+		fadeyStuff("pc_event", data.msg.msg);
+	});
 }
 
 function summariseChtData(data, fraction) {
