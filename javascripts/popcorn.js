@@ -36,15 +36,17 @@ function startPopcornQuiz() {
 		applyLocaleHeader(_locale);
 		_popcornUrl += "&locale=" + _locale;
 	}
+	getIntro();
 	getEvent();
 	checkNewDay();
 	getMyRank();
 	httpGetAmazon(_amazonUrl, function (err, data) {
 		setInterval(function () {
-			checkNewDay();
-			httpGetAmazon(_amazonUrl, function (err, data) {});
+			getIntro();
 			getEvent();
+			checkNewDay();
 			getMyRank();
+			httpGetAmazon(_amazonUrl, function (err, data) {});
 		}, 60000);
 	});
 
@@ -159,6 +161,7 @@ function buildPopcornPage(content) {
 
 function fadeyStuff(id, val) {
 	if (!val) return;
+
 	if (document.getElementById(id).innerHTML == val) return;
 
 	$("#"+id).fadeOut(666, function () {
@@ -169,7 +172,7 @@ function fadeyStuff(id, val) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	console.log(data)
+	// console.log(data);
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
@@ -566,9 +569,14 @@ function paramReplace(param, url, value) {
   return newString + inline;
 }
 
+function getIntro() {
+	httpGetByUrl(aws + "getHomePageContent?action=getintro&locale="+_locale, function (err, data) {
+		fadeyStuff("pc_intro", data.msg);
+	});	
+}
+
 function getEvent() {
-	httpGetByUrl(aws + "getHomePageContent?action=getevents", function (err, data) {
-		console.log(err, data);
+	httpGetByUrl(aws + "getHomePageContent?action=getevents&locale="+_locale, function (err, data) {
 		fadeyStuff("pc_event", data.msg.msg);
 	});
 }
