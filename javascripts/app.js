@@ -197,7 +197,7 @@ var templates = {
     suffix: " ago",
     seconds: "less than a minute",
     minute: "about a minute",
-    minutes: "%d minutes",
+    minutes: "%d mins",
     hour: "about an hour",
     hours: "about %d hours",
     day: "a day",

@@ -234,7 +234,7 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
 		// fadeyStuff(prefix + "_lastgames_avg_" + x, numberWithCommas(((+games[i].s)/(+games[i].g)).toFixed(2)));
 
-		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg);
+		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg.replace(/ /g,''));
 		fadeyStuff(prefix + "_lastgames_gs_" + x, games[i].gs);
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
