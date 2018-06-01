@@ -172,6 +172,17 @@ function fadeyStuff(id, val) {
 	});
 }
 
+function fadeyPic(id, val) {
+	if (!val) return;
+
+	if (document.getElementById(id).src == val) return;
+console.log(document.getElementById(id).src, val)
+	$("#"+id).fadeOut(666, function () {
+		document.getElementById(id).src = val;
+		$("#"+id).fadeIn();
+	});
+}
+
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
 	// console.log(data);
@@ -590,6 +601,7 @@ function getQuestions(count, genre) {
 		// console.log(data);
 		if (!data.msg.questions) return;
 		fadeyStuff("pc_question", data.msg.questions[0].cardText);
+		fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
 	});
 }
 
