@@ -573,7 +573,7 @@ function paramReplace(param, url, value) {
 
 function getIntro() {
 	httpGetByUrl(aws + "getHomePageContent?action=getintro&locale="+_locale, function (err, data) {
-		console.log(data)
+		// console.log(data)
 		getQuestions(1, data.msg.genre)
 		fadeyStuff("pc_intro", data.msg.text);
 	});	
@@ -588,7 +588,8 @@ function getEvent() {
 function getQuestions(count, genre) {
 	httpGetByUrl(aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale, function (err, data) {
 		console.log(data);
-		// fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
+
+		fadeyStuff("pc_question", data.msg.questions[0].cardText);
 	});
 }
 
