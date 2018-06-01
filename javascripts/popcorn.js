@@ -38,12 +38,14 @@ function startPopcornQuiz() {
 	}
 	getIntro();
 	getEvent();
+	getQuestions(1);
 	checkNewDay();
 	getMyRank();
 	httpGetAmazon(_amazonUrl, function (err, data) {
 		setInterval(function () {
 			getIntro();
 			getEvent();
+			getQuestions(1);
 			checkNewDay();
 			getMyRank();
 			httpGetAmazon(_amazonUrl, function (err, data) {});
@@ -578,6 +580,13 @@ function getIntro() {
 function getEvent() {
 	httpGetByUrl(aws + "getHomePageContent?action=getevents&locale="+_locale, function (err, data) {
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
+	});
+}
+
+function getQuestions(count) {
+	httpGetByUrl(aws + "getHomePageContent?action=getquestions&count="+count+"&locale="+_locale, function (err, data) {
+		console.log(data);
+		// fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
 }
 
