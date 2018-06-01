@@ -587,8 +587,8 @@ function getEvent() {
 
 function getQuestions(count, genre) {
 	httpGetByUrl(aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale, function (err, data) {
-		console.log(data);
-
+		// console.log(data);
+		if (!data.msg.questions) return;
 		fadeyStuff("pc_question", data.msg.questions[0].cardText);
 	});
 }
