@@ -199,7 +199,7 @@ var templates = {
     minute: "about a minute",
     minutes: "%d mins",
     hour: "about an hour",
-    hours: "about %d hours",
+    hours: "about %d hrs",
     day: "a day",
     days: "%d days",
     month: "about a month",
