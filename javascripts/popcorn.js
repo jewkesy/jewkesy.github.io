@@ -577,7 +577,7 @@ function getIntro() {
 
 function getEvent() {
 	httpGetByUrl(aws + "getHomePageContent?action=getevents&locale="+_locale, function (err, data) {
-		fadeyStuff("pc_event", data.msg.msg);
+		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
 }
 
