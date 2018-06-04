@@ -26,6 +26,7 @@
   <title>jewkesy.github.io by Daryl Jewkes</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="stylesheets/gamecard.css">
   <link rel="stylesheet" href="stylesheets/pygment_trac.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -99,16 +100,31 @@
       <h4 style="margin-bottom: 0;"><a name="popcorn" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank"><img class="rounded" style="float:left; margin-right: 5px;" src="./images/popcorn_s.png" width="80px" />"Alexa, play <i>Popcorn Quiz</i>"</a></h4>
       <h4 style="text-align: right; margin-top: 0;"> "<span id='pc_intro'>Let's do this!</span>"</h4>
 
-<div style="clear: both;"></div>
-<div class="pc_gamecard">
-    <div class="pc_gamecard_img"><img width="140px" id='pc_question_poster' class="rounded" /></div>
-    <div class="pc_gamecard_text"><i>True</i> or <i>false</i> - <span id='pc_question'> in the <span id='captionYear'></span> movie...</span></div>
   <div style="clear: both;"></div>
-</div>
-  
 
-  <hr class="short">
-  <br/>
+
+  <!-- the game card -->
+  <div class="material-contact animate-in-card">
+
+        <!-- image -->
+        <img class="animate-in-image" id='pc_question_poster' src="./images/popcorn_l.png">
+        <!-- name -->
+        <h1 class="animate-in-01">Popcorn Quiz</h1>
+        <!-- title -->
+        <h2 class="animate-in-02" id="pc_question_genre"></h2>
+
+        <hr class="animate-in-03">
+
+        <!-- bio -->
+        <p class="animate-in-04" id="pc_question"></p>
+
+        <!-- contact links -->
+        <span class="actions animate-in-05">
+            <a href="#" target="_blank">True</a>
+            <a href="#" target="_blank">False</a>
+        </span>
+  </div>
+
   <p><strong>Think you know movies? Test your skills against the world!</strong></p>
   <div class="centerMe">
    <div class="stars a-star a-star-0" id="pc_uk_stars">

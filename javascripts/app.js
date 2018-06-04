@@ -14,6 +14,15 @@ weekday[4] = "Thursday";
 weekday[5] = "Friday";
 weekday[6] = "Saturday";
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function buildAmazonParts(doc, id) {
 	document.getElementById(id).innerHTML = "Amazon Rating: " + doc.uk.score + " / 5<br>" + "Reviews: " + doc.uk.reviews;
 }
@@ -291,4 +300,91 @@ function addDays(startDate,numberOfDays) {
 function getMonthName(mon) {
 	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	return " " + monthNames[+mon];
+}
+
+function reduceArr(arr, count) {
+
+	var slots = Math.ceil(arr.length/count);
+	var chk = chunkArray(arr, slots);
+	var retVal = [];
+
+	for (var i = 0; i < chk.length; i++) {
+		var x = chk[i].reduce(function(acc, val) { return acc + val; });
+		if (x == 0) x = null;
+		else x = Math.round(x/slots);
+		retVal.push(x);
+	}
+
+	return retVal;
+}
+
+function chunkArray(myArray, chunk_size){
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+    
+    for (index = 0; index < arrayLength; index += chunk_size) {
+        var myChunk = myArray.slice(index, index+chunk_size);
+        // Do something if you want with the group
+        tempArray.push(myChunk);
+    }
+
+    return tempArray;
+}
+
+// Update the appropriate href query string parameter
+function paramReplace(param, url, value) {
+	// console.log(param, url, value);
+
+	var inline = "";
+	if (url.indexOf("#") > -1) {
+		inline = "#" + url.split("#")[1];
+		url =  url.split("#")[0];
+	}
+
+	if (url.indexOf(param) === -1) {
+		if (url.indexOf("?") === -1) {
+			return url + "?" + param + "=" + value;
+		}
+		return url + "&" + param + "="+value;
+	}
+  // Find the param with regex
+  // Grab the first character in the returned string (should be ? or &)
+  // Replace our href string with our new value, passing on the name and delimiter
+  var re = new RegExp("[\\?&#]" + param + "=([^&#]*)");
+  var pos = re.exec(url);
+  var delimiter = pos[0].charAt(0);
+
+  if (!value || value === null) return url.replace(re, delimiter + param);
+  var newString = url.replace(re, delimiter + param + "=" + value);
+ 
+  return newString + inline;
+}
+
+function fadeyStuff(id, val) {
+	if (!val) return;
+	if (!document.getElementById(id)) return;
+
+	if (document.getElementById(id).innerHTML == val) return;
+
+	$("#"+id).fadeOut(666, function () {
+		document.getElementById(id).innerHTML = val;
+		$("#"+id).fadeIn();
+	});
+}
+
+function fadeyPic(id, val) {
+	if (!val) return;
+
+	if (document.getElementById(id).src == val) return;
+
+	$("#"+id).fadeOut(666, function () {
+		document.getElementById(id).src = val;
+		$("#"+id).fadeIn();
+	});
+}
+
+function cleanseText(txt) {
+	txt = txt.replaceAll(".?", "?");
+	return txt;
 }

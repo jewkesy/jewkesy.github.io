@@ -20,7 +20,7 @@ var _newUsersLabels = [];
 var _gameinfo = { dailygames: [] };
 var _chtHeight = 2500;
 
-document.getElementById('captionYear').innerHTML = new Date().getFullYear();
+if (document.getElementById('captionYear')) document.getElementById('captionYear').innerHTML = new Date().getFullYear();
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
@@ -160,28 +160,6 @@ function buildPopcornPage(content) {
 	if (!content) return;
 	if (content.count === 0) return;
 	updateCharts(content.counts, content.totalUsers);
-}
-
-function fadeyStuff(id, val) {
-	if (!val) return;
-
-	if (document.getElementById(id).innerHTML == val) return;
-
-	$("#"+id).fadeOut(666, function () {
-		document.getElementById(id).innerHTML = val;
-		$("#"+id).fadeIn();
-	});
-}
-
-function fadeyPic(id, val) {
-	if (!val) return;
-
-	if (document.getElementById(id).src == val) return;
-
-	$("#"+id).fadeOut(666, function () {
-		document.getElementById(id).src = val;
-		$("#"+id).fadeIn();
-	});
 }
 
 function buildPopcornLastGames(data, prefix) {
@@ -554,35 +532,6 @@ function increaseLimit() {
 	window.location.href = newUrl;	
 }
 
-// Update the appropriate href query string parameter
-function paramReplace(param, url, value) {
-	// console.log(param, url, value);
-
-	var inline = "";
-	if (url.indexOf("#") > -1) {
-		inline = "#" + url.split("#")[1];
-		url =  url.split("#")[0];
-	}
-
-	if (url.indexOf(param) === -1) {
-		if (url.indexOf("?") === -1) {
-			return url + "?" + param + "=" + value;
-		}
-		return url + "&" + param + "="+value;
-	}
-  // Find the param with regex
-  // Grab the first character in the returned string (should be ? or &)
-  // Replace our href string with our new value, passing on the name and delimiter
-  var re = new RegExp("[\\?&#]" + param + "=([^&#]*)");
-  var pos = re.exec(url);
-  var delimiter = pos[0].charAt(0);
-
-  if (!value || value === null) return url.replace(re, delimiter + param);
-  var newString = url.replace(re, delimiter + param + "=" + value);
- 
-  return newString + inline;
-}
-
 function getIntro() {
 	httpGetByUrl(aws + "getHomePageContent?action=getintro&locale="+_locale, function (err, data) {
 		// console.log(data)
@@ -599,10 +548,19 @@ function getEvent() {
 
 function getQuestions(count, genre) {
 	httpGetByUrl(aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale, function (err, data) {
-		// console.log(data);
+		console.log(data);
 		if (!data.msg.questions) return;
-		fadeyStuff("pc_question", data.msg.questions[0].cardText);
-		fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
+		if (data.msg.genre) fadeyStuff("pc_question_genre", capitalizeFirstLetter(data.msg.genre) + " Movies"); 
+		fadeyStuff("pc_question", cleanseText(data.msg.questions[0].cardText));
+
+$.get(data.msg.questions[0].Poster).done(function () {
+  console.log("success");
+  fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
+}).fail(function () {
+   fadeyPic("pc_question_poster", './images/popcorn_l.png');
+});
+
+		// fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
 		console.log(data.msg.questions[0].answer, data.msg.questions[0].correct);
 	});
 }
@@ -657,32 +615,3 @@ function summariseChtData(data, fraction) {
 	return leftSide;
 }
 
-function reduceArr(arr, count) {
-
-	var slots = Math.ceil(arr.length/count);
-	var chk = chunkArray(arr, slots);
-	var retVal = [];
-
-	for (var i = 0; i < chk.length; i++) {
-		var x = chk[i].reduce(function(acc, val) { return acc + val; });
-		if (x == 0) x = null;
-		else x = Math.round(x/slots);
-		retVal.push(x);
-	}
-
-	return retVal;
-}
-
-function chunkArray(myArray, chunk_size){
-    var index = 0;
-    var arrayLength = myArray.length;
-    var tempArray = [];
-    
-    for (index = 0; index < arrayLength; index += chunk_size) {
-        var myChunk = myArray.slice(index, index+chunk_size);
-        // Do something if you want with the group
-        tempArray.push(myChunk);
-    }
-
-    return tempArray;
-}
