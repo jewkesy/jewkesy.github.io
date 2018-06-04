@@ -450,6 +450,29 @@ img.rounded {
   font-weight: bold;
 }
 
+.pc_gamecard {
+  border: 1px solid #e5e5e5; 
+  margin-top:10px;
+  border-radius: 5px;
+  padding: 5px;
+  overflow: hidden; /* add this to contain floated children */
+/*  width: 500px;*/
+}
+
+.pc_gamecard_img {
+    float:left; /* add this */
+    /*border: 1px solid red;*/
+}
+
+.pc_gamecard_text {
+    max-width: 400px;
+    /*border: 1px solid green;*/
+    float: left; /* add this */
+    padding: 10px;
+    font-size: 1.4em;
+    font-color:#494949;
+}
+
 .typed-cursor{
     opacity: 1;
     -webkit-animation: blink 0.7s infinite;

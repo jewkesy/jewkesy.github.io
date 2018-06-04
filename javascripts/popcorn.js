@@ -115,6 +115,7 @@ function checkNewDay() { //if new day, rebuild saved stats
 function getMyRank() {
 	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		// console.log(err, data);
+		if (!data) return;
 		fadeyStuff('myrank', data.msg)
 	});
 }
@@ -176,7 +177,7 @@ function fadeyPic(id, val) {
 	if (!val) return;
 
 	if (document.getElementById(id).src == val) return;
-console.log(document.getElementById(id).src, val)
+
 	$("#"+id).fadeOut(666, function () {
 		document.getElementById(id).src = val;
 		$("#"+id).fadeIn();
@@ -602,6 +603,7 @@ function getQuestions(count, genre) {
 		if (!data.msg.questions) return;
 		fadeyStuff("pc_question", data.msg.questions[0].cardText);
 		fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
+		console.log(data.msg.questions[0].answer, data.msg.questions[0].correct);
 	});
 }
 
