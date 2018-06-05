@@ -45,7 +45,6 @@ function startPopcornQuiz() {
 		setInterval(function () {
 			getIntro();
 			getEvent();
-			// getQuestions(1);
 			checkNewDay();
 			getMyRank();
 			httpGetAmazon(_amazonUrl, function (err, data) {});
@@ -534,7 +533,7 @@ function increaseLimit() {
 
 function getIntro() {
 	httpGetByUrl(aws + "getHomePageContent?action=getintro&locale="+_locale, function (err, data) {
-		// console.log(data)
+		if (!data) return;
 		getQuestions(1, data.msg.genre)
 		fadeyStuff("pc_intro", data.msg.text);
 	});	
@@ -542,6 +541,7 @@ function getIntro() {
 
 function getEvent() {
 	httpGetByUrl(aws + "getHomePageContent?action=getevents&locale="+_locale, function (err, data) {
+		if (!data) return;
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
 }
@@ -549,20 +549,71 @@ function getEvent() {
 function getQuestions(count, genre) {
 	httpGetByUrl(aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale, function (err, data) {
 		console.log(data);
-		if (!data.msg.questions) return;
+		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", capitalizeFirstLetter(data.msg.genre) + " Movies"); 
 		fadeyStuff("pc_question", cleanseText(data.msg.questions[0].cardText));
 
-$.get(data.msg.questions[0].Poster).done(function () {
-  console.log("success");
-  fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
-}).fail(function () {
-   fadeyPic("pc_question_poster", './images/popcorn_l.png');
-});
+		$.get(data.msg.questions[0].Poster).done(function () {
+		  fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
+		}).fail(function () {
+		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
+		});
 
-		// fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
-		console.log(data.msg.questions[0].answer, data.msg.questions[0].correct);
+		var c;
+		console.log(data.msg.questions[0].correct)
+		if (data.msg.questions[0].correct) {
+			c = data.msg.questions[0].correct+"";
+			c = c.replace('<emphasis level="reduced">', '');
+			c = c.replace('</emphasis>', '');
+			console.log(c);
+		}
+
+		document.getElementById('pc_true').onclick = function () {showAnswer(true, data.msg.questions[0].answer, c);};
+		document.getElementById('pc_false').onclick = function () {showAnswer(false, data.msg.questions[0].answer, c);};
+
+		startProgressBar(30, data.msg.questions[0].answer, c);
 	});
+}
+
+function showAnswer(chosen, answer, correct){
+	console.log(chosen, answer, correct);
+
+	if (chosen === null) {
+		console.log('TODO')
+		return;
+	}
+
+	if (chosen == answer) {
+		console.log('CORRECT')
+
+	} else {
+		console.log('INCORRECT')
+	}
+	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
+	// if (answer) document.getElementById('pc_true').hide();
+
+	// document.getElementById('pc_truefalse').classList.add('animate-in-01');
+}
+
+function startProgressBar(seconds, answer, correct) {
+	document.getElementById('pc_truefalse').classList.add('animate-in-01');
+	document.getElementById('pc_progressbar').setAttribute('style', 'width:0px;');
+
+	var curr = 0;
+	var width = 0;
+	seconds = seconds*10;
+	var pg = setInterval(function () {
+		curr += 1;
+		width = +((curr/seconds) * 100).toFixed(0);
+		// console.log(curr, seconds, width);
+		document.getElementById('pc_progressbar').setAttribute('style', "width:" + width + "%;");
+		if (width >= 100) {
+			clearInterval(pg);
+			showAnswer(null, answer, correct);
+		}
+	}, 100);
+
+	document.getElementById('pc_progressbar').setAttribute('style', 'width:0px;');
 }
 
 function summariseChtData(data, fraction) {

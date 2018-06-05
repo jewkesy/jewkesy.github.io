@@ -8,6 +8,10 @@
     font-family:'Roboto', sans-serif;
 }*/
 
+.progress {
+    height: 1px;
+}
+
 /*basic layout*/
 .material-contact {
     width:400px;
@@ -142,19 +146,26 @@
 }
 .animate-in-03 {
     animation:animateIn 1s ease forwards;
+    animation-delay:.3s;
+    -webkit-animation:animateIn 1s ease forwards;
+    -webkit-animation-delay:.3s;
+    opacity:0;
+}
+.animate-in-04 {
+    animation:animateIn 1s ease forwards;
     animation-delay:.4s;
     -webkit-animation:animateIn 1s ease forwards;
     -webkit-animation-delay:.4s;
     opacity:0;
 }
-.animate-in-04 {
+.animate-in-05 {
     animation:animateIn 1s ease forwards;
     animation-delay:.5s;
     -webkit-animation:animateIn 1s ease forwards;
     -webkit-animation-delay:.5s;
     opacity:0;
 }
-.animate-in-05 {
+.animate-in-06 {
     animation:animateIn 1s ease forwards;
     animation-delay:.6s;
     -webkit-animation:animateIn 1s ease forwards;
