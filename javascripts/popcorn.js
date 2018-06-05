@@ -560,12 +560,11 @@ function getQuestions(count, genre) {
 		});
 
 		var c;
-		console.log(data.msg.questions[0].correct)
+
 		if (data.msg.questions[0].correct) {
 			c = data.msg.questions[0].correct+"";
 			c = c.replace('<emphasis level="reduced">', '');
 			c = c.replace('</emphasis>', '');
-			console.log(c);
 		}
 
 		document.getElementById('pc_true').onclick = function () {showAnswer(true, data.msg.questions[0].answer, c);};
@@ -577,26 +576,27 @@ function getQuestions(count, genre) {
 
 function showAnswer(chosen, answer, correct){
 	console.log(chosen, answer, correct);
-
-	if (chosen === null) {
-		console.log('TODO')
-		return;
-	}
-
-	if (chosen == answer) {
-		console.log('CORRECT')
-
-	} else {
-		console.log('INCORRECT')
-	}
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
-	// if (answer) document.getElementById('pc_true').hide();
 
-	// document.getElementById('pc_truefalse').classList.add('animate-in-01');
+	var text = "";
+	if (chosen === null) {
+		text = "The correct answer was " + answer+". ";
+		if (correct) text += "The answer is " + correct;
+	} else {
+		if (chosen == answer) {
+			text = "Correct!";
+		} else {
+			text = "Incorrect!";
+		}
+
+		if (correct) text += " The answer was " + correct;
+	}
+	fadeyStuff("pc_answer", text);
 }
 
 function startProgressBar(seconds, answer, correct) {
-	document.getElementById('pc_truefalse').classList.add('animate-in-01');
+	document.getElementById('pc_answer').setAttribute('style', 'display:none;');
+	document.getElementById('pc_truefalse').setAttribute('style', '');
 	document.getElementById('pc_progressbar').setAttribute('style', 'width:0px;');
 
 	var curr = 0;
