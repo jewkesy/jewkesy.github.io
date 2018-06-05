@@ -589,7 +589,7 @@ function showAnswer(chosen, answer, correct){
 			text = "Incorrect!";
 		}
 
-		if (correct) text += " The answer was " + correct;
+		if (correct) text += " The answer is " + correct;
 	}
 	fadeyStuff("pc_answer", text);
 }
