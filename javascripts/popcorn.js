@@ -627,7 +627,7 @@ function showAnswer(chosen, answer, correct){
 			text = _incorrectPhrases[randomInt(0, i)];
 		}
 
-		if (correct) text += " The answer is " + correct;
+		if (correct) text += " - The answer is " + correct;
 	}
 	fadeyStuff("pc_answer", text);
 }
