@@ -386,5 +386,13 @@ function fadeyPic(id, val) {
 
 function cleanseText(txt) {
 	txt = txt.replaceAll(".?", "?");
+	txt = txt.replaceAll('<emphasis level="reduced">', '<span class="standout">');
+	txt = txt.replaceAll('</emphasis>', '</span>');
+
+	txt = txt.replaceAll('<', '"<');
 	return txt;
+}
+
+function randomInt(low, high) {
+  return Math.floor(Math.random() * (high));
 }

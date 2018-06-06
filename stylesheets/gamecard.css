@@ -12,6 +12,12 @@
     height: 1px;
 }
 
+i {
+    font-style: italic;
+    font-size:1.1em;
+    color: #39c;
+}
+
 /*basic layout*/
 .material-contact {
     width:400px;

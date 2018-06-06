@@ -20,6 +20,9 @@ var _newUsersLabels = [];
 var _gameinfo = { dailygames: [] };
 var _chtHeight = 2500;
 
+var _correctPhrases = ["Correct!"];
+var _incorrectPhrases = ["Incorrect!"];
+
 if (document.getElementById('captionYear')) document.getElementById('captionYear').innerHTML = new Date().getFullYear();
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
@@ -27,7 +30,7 @@ Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
 function startPopcornQuiz() {
-	_locale = getParameterByName('locale') || '';
+	_locale = getParameterByName('locale') || 'en-GB';
 	_limit = getParameterByName('limit') || 10;
 	document.getElementById('pc_more_count').innerHTML = _limit;
 	_newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
@@ -36,9 +39,9 @@ function startPopcornQuiz() {
 		applyLocaleHeader(_locale);
 		_popcornUrl += "&locale=" + _locale;
 	}
+	getPhrases();
 	getIntro();
 	getEvent();
-	// getQuestions(1);
 	checkNewDay();
 	getMyRank();
 	httpGetAmazon(_amazonUrl, function (err, data) {
@@ -109,6 +112,27 @@ function checkNewDay() { //if new day, rebuild saved stats
 	var today = new Date();
 	var diff =  daydiff(_startDate, today, true);
 	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) reset();
+}
+
+function getPhrases() {
+	var url = aws + "getHomePageContent?action=getphrases&locale="+_locale;
+
+	httpGetStats(url, 'pc',  function (err, data) {
+		if (!data) return;
+		for (var i = 0; i < data.msg.correct.length; i++) {
+			data.msg.correct[i] = data.msg.correct[i].replace('<say-as interpret-as="interjection">', '');
+			data.msg.correct[i] = data.msg.correct[i].replace('</say-as>', '');
+			data.msg.correct[i] = capitalizeFirstLetter(data.msg.correct[i]);
+		}
+		_correctPhrases = data.msg.correct;
+
+		for (var i = 0; i < data.msg.incorrect.length; i++) {
+			data.msg.incorrect[i] = data.msg.incorrect[i].replace('<say-as interpret-as="interjection">', '');
+			data.msg.incorrect[i] = data.msg.incorrect[i].replace('</say-as>', '');
+			data.msg.incorrect[i] = capitalizeFirstLetter(data.msg.incorrect[i]);
+		}
+		_incorrectPhrases = data.msg.incorrect;
+	});
 }
 
 function getMyRank() {
@@ -534,7 +558,7 @@ function increaseLimit() {
 function getIntro() {
 	httpGetByUrl(aws + "getHomePageContent?action=getintro&locale="+_locale, function (err, data) {
 		if (!data) return;
-		getQuestions(1, data.msg.genre)
+		getQuestions(5, data.msg.genre)
 		fadeyStuff("pc_intro", data.msg.text);
 	});	
 }
@@ -547,35 +571,45 @@ function getEvent() {
 }
 
 function getQuestions(count, genre) {
-	httpGetByUrl(aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale, function (err, data) {
+	var url = aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
+	console.log(url)
+	httpGetByUrl(url, function (err, data) {
 		console.log(data);
 		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", capitalizeFirstLetter(data.msg.genre) + " Movies"); 
-		fadeyStuff("pc_question", cleanseText(data.msg.questions[0].cardText));
 
-		$.get(data.msg.questions[0].Poster).done(function () {
-		  fadeyPic("pc_question_poster", data.msg.questions[0].Poster);
+		var idx = randomInt(0, data.msg.questions.length-1);
+		var q = data.msg.questions[idx];
+		fadeyStuff("pc_question", cleanseText(q.echoShowText));
+		// fadeyStuff("pc_question", cleanseText(q.q));
+
+		$.get(q.Poster).done(function () {
+		  fadeyPic("pc_question_poster", q.Poster);
 		}).fail(function () {
 		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 		});
 
 		var c;
 
-		if (data.msg.questions[0].correct) {
-			c = data.msg.questions[0].correct+"";
+		if (q.correct) {
+			c = q.correct+"";
 			c = c.replace('<emphasis level="reduced">', '');
 			c = c.replace('</emphasis>', '');
 		}
 
-		document.getElementById('pc_true').onclick = function () {showAnswer(true, data.msg.questions[0].answer, c);};
-		document.getElementById('pc_false').onclick = function () {showAnswer(false, data.msg.questions[0].answer, c);};
+		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c);};
+		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c);};
 
-		startProgressBar(30, data.msg.questions[0].answer, c);
+		startProgressBar(30, q.answer, c);
 	});
 }
 
+var pg;
 function showAnswer(chosen, answer, correct){
 	console.log(chosen, answer, correct);
+
+	clearInterval(pg);
+	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 
 	var text = "";
@@ -584,9 +618,13 @@ function showAnswer(chosen, answer, correct){
 		if (correct) text += "The answer is " + correct;
 	} else {
 		if (chosen == answer) {
-			text = "Correct!";
+			var i = randomInt(0, _correctPhrases.length-1);
+			console.log(i)
+			text = _correctPhrases[i];
 		} else {
-			text = "Incorrect!";
+			var i = randomInt(0, _incorrectPhrases.length-1);
+			console.log(i)
+			text = _incorrectPhrases[randomInt(0, i)];
 		}
 
 		if (correct) text += " The answer is " + correct;
@@ -602,7 +640,8 @@ function startProgressBar(seconds, answer, correct) {
 	var curr = 0;
 	var width = 0;
 	seconds = seconds*10;
-	var pg = setInterval(function () {
+	clearInterval(pg);
+	pg = setInterval(function () {
 		curr += 1;
 		width = +((curr/seconds) * 100).toFixed(0);
 		// console.log(curr, seconds, width);
