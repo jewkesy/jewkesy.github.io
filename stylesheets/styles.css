@@ -215,7 +215,7 @@ footer {
 }
 
 .centerMe {
-  text-align: center;
+  text-align: center !important;
   position: relative;
 }
 

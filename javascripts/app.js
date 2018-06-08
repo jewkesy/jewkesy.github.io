@@ -389,7 +389,8 @@ function cleanseText(txt) {
 	txt = txt.replaceAll('<emphasis level="reduced">', '<span class="standout">');
 	txt = txt.replaceAll('</emphasis>', '</span>');
 
-	txt = txt.replaceAll('<', '"<');
+	txt = txt.replaceAll('<i>', '<i>"');
+	txt = txt.replaceAll('</i>', '"</i>');
 	return txt;
 }
 

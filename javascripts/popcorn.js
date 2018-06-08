@@ -582,8 +582,8 @@ function getQuestions(count, genre) {
 
 		var idx = randomInt(0, data.msg.questions.length-1);
 		var q = data.msg.questions[idx];
-		fadeyStuff("pc_question", cleanseText(q.echoShowText));
-		// fadeyStuff("pc_question", cleanseText(q.q));
+		var t = cleanseText(q.echoShowText);
+		fadeyStuff("pc_question", t);
 
 		$.get(q.Poster).done(function () {
 		  fadeyPic("pc_question_poster", q.Poster);
