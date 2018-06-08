@@ -30,7 +30,7 @@ Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
 function startPopcornQuiz() {
-	_locale = getParameterByName('locale') || 'en-GB';
+	_locale = getParameterByName('locale') || '';
 	_limit = getParameterByName('limit') || 10;
 	document.getElementById('pc_more_count').innerHTML = _limit;
 	_newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
@@ -115,7 +115,9 @@ function checkNewDay() { //if new day, rebuild saved stats
 }
 
 function getPhrases() {
-	var url = aws + "getHomePageContent?action=getphrases&locale="+_locale;
+	var l = _locale;
+	if (l == '') l = 'en-GB';
+	var url = aws + "getHomePageContent?action=getphrases&locale="+l;
 
 	httpGetStats(url, 'pc',  function (err, data) {
 		if (!data) return;
@@ -245,8 +247,8 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(games[i].r) + sym);
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(games[i].s));
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
-		// fadeyStuff(prefix + "_lastgames_avg_" + x, numberWithCommas(((+games[i].s)/(+games[i].g)).toFixed(2)));
-
+		
+		if (!games[i].lg) games[i].lg = "";
 		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg.replace(/ /g,''));
 		fadeyStuff(prefix + "_lastgames_gs_" + x, games[i].gs);
 
@@ -572,9 +574,9 @@ function getEvent() {
 
 function getQuestions(count, genre) {
 	var url = aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
-	console.log(url)
+	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		console.log(data);
+		// console.log(data);
 		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", capitalizeFirstLetter(data.msg.genre) + " Movies"); 
 
@@ -606,7 +608,7 @@ function getQuestions(count, genre) {
 
 var pg;
 function showAnswer(chosen, answer, correct){
-	console.log(chosen, answer, correct);
+	// console.log(chosen, answer, correct);
 
 	clearInterval(pg);
 	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
@@ -619,11 +621,9 @@ function showAnswer(chosen, answer, correct){
 	} else {
 		if (chosen == answer) {
 			var i = randomInt(0, _correctPhrases.length-1);
-			console.log(i)
 			text = _correctPhrases[i];
 		} else {
 			var i = randomInt(0, _incorrectPhrases.length-1);
-			console.log(i)
 			text = _incorrectPhrases[randomInt(0, i)];
 		}
 
