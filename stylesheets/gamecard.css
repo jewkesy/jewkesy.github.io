@@ -12,7 +12,7 @@
     height: 1px;
 }
 
-i {
+span.question > i {
     font-style: italic;
     font-size:1.4em;
     color: #39c;
