@@ -213,6 +213,7 @@ var templates = {
     days: "%d days",
     month: "about a month",
     months: "%d months",
+    yearExact: "a year",
     year: "about a year",
     years: "%d years"
 };
@@ -245,7 +246,8 @@ function humanTime(time) {
             hours < 42 && template('day', 1) ||
             days < 30 && template('days', days) ||
             days < 45 && template('month', 1) ||
-            days < 365 && template('months', days / 30) ||
+            days < 360 && template('months', days / 30) ||
+            days < 390 && template('yearExact', 1) ||
             years < 1.5 && template('year', 1) ||
             template('years', years)
         ) + templates.suffix;
