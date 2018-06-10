@@ -32,6 +32,7 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 function startPopcornQuiz() {
 	_locale = getParameterByName('locale') || '';
 	_limit = getParameterByName('limit') || 10;
+	// console.log(_limit, getParameterByName('limit'))
 	document.getElementById('pc_more_count').innerHTML = _limit;
 	_newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
@@ -69,30 +70,43 @@ function startPopcornQuiz() {
 		// console.log(data);
 		if (!err) buildPopcornPage(data);
 		setInterval(function () {
-			httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
-				if (!err) {
-					if (!data || !data[0]) return;
-					if (_lastTimestamp < data[0].timestamp) {
-						_lastTimestamp = data[0].timestamp;
-						httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-							buildPopcornLeague(data, 'pc');
-						});
-						httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-							buildPopcornLastGames(data, 'pc');
-						});
-						httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
-							if (!data) return;
-							// console.log(data);
-							_timeFrom = data.lastTime;
-							if (!err) buildPopcornPage(data);
-						});
-						httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
-							buildDailyGames(err, data);
-						});
-					}
-				} 
-			});
+			getStats();
 		}, 5000);
+	});
+}
+
+function getStats() {
+	document.getElementById('pc_more_count').innerHTML = _limit;
+	httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
+		if (!err) {
+			if (!data || !data[0]) return;
+			if (_lastTimestamp < data[0].timestamp) {
+				_lastTimestamp = data[0].timestamp;
+				buildLeague();
+				buildLastGames();
+				httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
+					if (!data) return;
+					// console.log(data);
+					_timeFrom = data.lastTime;
+					if (!err) buildPopcornPage(data);
+				});
+				httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+					buildDailyGames(err, data);
+				});
+			}
+		} 
+	});
+}
+
+function buildLeague() {
+	httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+		buildPopcornLeague(data, 'pc');
+	});
+}
+
+function buildLastGames() {
+	httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+		buildPopcornLastGames(data, 'pc');
 	});
 }
 
@@ -546,15 +560,15 @@ function resetLimit() {
 	var newUrl = paramReplace('limit', window.location.href, 10);
 	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
 
-	window.location.href = newUrl;	
+	window.location.href = newUrl; 
 }
 
 function increaseLimit() {
 	_limit = _limit * 2;
 	var newUrl = paramReplace('limit', window.location.href, _limit);
 	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
-
-	window.location.href = newUrl;	
+	buildLeague();
+	buildLastGames();	
 }
 
 function getIntro() {
