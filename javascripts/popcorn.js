@@ -55,12 +55,8 @@ function startPopcornQuiz() {
 		}, 60000);
 	});
 
-	httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-		buildPopcornLeague(data, 'pc');
-	});
-	httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-		buildPopcornLastGames(data, 'pc');
-	});
+	buildLeague();
+	buildLastGames();
 	httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
 		buildDailyGames(err, data);
 	});
@@ -155,7 +151,7 @@ function getMyRank() {
 	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		// console.log(err, data);
 		if (!data) return;
-		fadeyStuff('myrank', data.msg)
+		fadeyStuff('myrank', data.msg);
 	});
 }
 
@@ -574,7 +570,7 @@ function increaseLimit() {
 function getIntro() {
 	httpGetByUrl(aws + "getHomePageContent?action=getintro&locale="+_locale, function (err, data) {
 		if (!data) return;
-		getQuestions(5, data.msg.genre)
+		getQuestions(5, data.msg.genre);
 		fadeyStuff("pc_intro", data.msg.text);
 	});	
 }
