@@ -106,6 +106,13 @@ function buildLastGames() {
 	});
 }
 
+function switchLocale(locale) {
+	_locale = locale;
+	applyLocaleHeader(locale)
+	buildLeague();
+	buildLastGames();	
+}
+
 function reset() {
 	var today = new Date();
 	var diff =  daydiff(_startDate, today, true);
@@ -553,9 +560,13 @@ function updateCharts(data, total) {
 }
 
 function resetLimit() {
+	// _limit = 10;
+
+	// buildLeague();
+	// buildLastGames();
+	// return;	
 	var newUrl = paramReplace('limit', window.location.href, 10);
 	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
-
 	window.location.href = newUrl; 
 }
 

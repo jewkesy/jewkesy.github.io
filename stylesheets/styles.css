@@ -473,6 +473,11 @@ img.rounded {
     font-color:#494949;
 }
 
+tr.hover > th:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
 .typed-cursor{
     opacity: 1;
     -webkit-animation: blink 0.7s infinite;
