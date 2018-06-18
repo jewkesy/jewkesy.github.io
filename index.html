@@ -197,16 +197,19 @@
       </tr>
     </table>
   <div class="borderMe scaleme" style="height:400px;overflow:auto;">
-    <table id='pc_scores' class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Games<br/>Played</th>
-        <th>Avg.&nbsp;Per<br/>Game</th>
-        <th>Last Played</th>
-        <th>Joined</th>
-        <th>Locale</th>
-      </tr>
+    <table class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Score</th>
+          <th>Games<br/>Played</th>
+          <th>Avg.&nbsp;Per<br/>Game</th>
+          <th>Last Played</th>
+          <th>Joined</th>
+          <th>Locale</th>
+        </tr>
+      </thead>
+      <tbody id='pc_scores'></tbody>
     </table>
   </div>
   <div class="fadedScroller_fade"></div>
@@ -217,19 +220,22 @@
   </div>
   <br/>
   <div class="borderMe scaleme" style="height:400px;overflow:auto;">
-    <table id="pc_lastgames" class="centerMe borderMe scaleme">
-      <tr><th colspan=9>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Games<br/>Played</th>
-<!--         <th>Avg.&nbsp;Per<br/>Game</th> -->
-        <th>Last Game</th>
-        <th>Game Streak</th>
-        <th>Last Played</th>
-        <th>Joined</th>
-        <th>Locale</th>
-      </tr>
+    <table class="centerMe borderMe scaleme">
+      <thead>
+        <tr><th colspan=9>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
+        <tr>
+          <th>Rank</th>
+          <th>Score</th>
+          <th>Games<br/>Played</th>
+  <!--         <th>Avg.&nbsp;Per<br/>Game</th> -->
+          <th>Last Game</th>
+          <th>Game Streak</th>
+          <th>Last Played</th>
+          <th>Joined</th>
+          <th>Locale</th>
+        </tr>
+      </thead>
+      <tbody id="pc_lastgames"></tbody>
     </table>
   </div>
   <div class="fadedScroller_fade scaleme"></div>

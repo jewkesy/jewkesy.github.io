@@ -108,9 +108,14 @@ function buildLastGames() {
 
 function switchLocale(locale) {
 	_locale = locale;
-	applyLocaleHeader(locale)
-	buildLeague();
-	buildLastGames();	
+	applyLocaleHeader(locale);
+	clearLeague('pc_scores', buildLeague());
+	clearLeague('pc_lastgames', buildLastGames());
+}
+
+function clearLeague(id, callback) {
+	$("#" + id).html("");
+	return callback;
 }
 
 function reset() {
@@ -560,14 +565,8 @@ function updateCharts(data, total) {
 }
 
 function resetLimit() {
-	// _limit = 10;
-
-	// buildLeague();
-	// buildLastGames();
-	// return;	
-	var newUrl = paramReplace('limit', window.location.href, 10);
-	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
-	window.location.href = newUrl; 
+	clearLeague('pc_scores', buildLeague());
+	clearLeague('pc_lastgames', buildLastGames());
 }
 
 function increaseLimit() {
