@@ -29,6 +29,9 @@ Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
+var aInt;
+var sInt;
+
 function startPopcornQuiz() {
 	_locale = getParameterByName('locale') || '';
 	_limit = getParameterByName('limit') || 10;
@@ -46,13 +49,7 @@ function startPopcornQuiz() {
 	checkNewDay();
 	getMyRank();
 	httpGetAmazon(_amazonUrl, function (err, data) {
-		setInterval(function () {
-			getIntro();
-			getEvent();
-			checkNewDay();
-			getMyRank();
-			httpGetAmazon(_amazonUrl, function (err, data) {});
-		}, 60000);
+		amazonTimer();
 	});
 
 	buildLeague();
@@ -65,10 +62,24 @@ function startPopcornQuiz() {
 		_timeFrom = data.lastTime;
 		// console.log(data);
 		if (!err) buildPopcornPage(data);
-		setInterval(function () {
-			getStats();
-		}, 5000);
+		statsTimer();
 	});
+}
+
+function amazonTimer() {
+	aInt = setInterval(function () {
+		getIntro();
+		getEvent();
+		checkNewDay();
+		getMyRank();
+		httpGetAmazon(_amazonUrl, function (err, data) {});
+	}, 60000);
+}
+
+function statsTimer() {
+	sInt = setInterval(function () {
+		getStats();
+	}, 5000);
 }
 
 function getStats() {
@@ -109,6 +120,10 @@ function buildLastGames() {
 function switchLocale(locale) {
 	_locale = locale;
 	applyLocaleHeader(locale);
+
+	clearInterval(sInt);
+	statsTimer();
+	
 	clearLeague('pc_scores', buildLeague());
 	clearLeague('pc_lastgames', buildLastGames());
 }
