@@ -580,6 +580,7 @@ function updateCharts(data, total) {
 }
 
 function resetLimit() {
+	_limit = 10;
 	clearLeague('pc_scores', buildLeague());
 	clearLeague('pc_lastgames', buildLastGames());
 }
