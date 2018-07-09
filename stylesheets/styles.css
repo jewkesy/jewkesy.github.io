@@ -232,6 +232,10 @@ footer {
   white-space: nowrap;
 }
 
+.boldme {
+  font-weight: bold !important;
+}
+
 @media print, screen and (max-width: 960px) {
 
   div.wrapper {
