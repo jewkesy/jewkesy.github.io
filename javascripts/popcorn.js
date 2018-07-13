@@ -418,7 +418,7 @@ function chtNewUsers(chart, d, l, total) {
 	var dailyData = JSON.parse(JSON.stringify(d));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
-	// console.log(dailyData.mo)
+	console.log(dailyData)
 	dailyData = summariseChtData(dailyData);
 	// console.log(dailyData.mo)
 	var red =    "rgba(255,99,132,1)";
