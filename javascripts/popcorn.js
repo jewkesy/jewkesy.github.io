@@ -18,7 +18,7 @@ var _newUsersChart;
 var _newUsers = {};
 var _newUsersLabels = [];
 var _gameinfo = { dailygames: [] };
-var _chtHeight = 2500;
+var _chtHeight = 3500;
 
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
@@ -206,8 +206,9 @@ function buildDailyGames(err, content) {
 		total += content.dailygames[i];
 		days++;
 	}
-	// console.log(days, total)
+	
 	var avg = Math.round(total/days);
+	// console.log(days, total, avg)
 	fadeyStuff('pc_games_avg', numberWithCommas(avg));
 }
 
@@ -490,6 +491,7 @@ function chtNewUsers(chart, d, l, total) {
 	// var min = axis.min;
 	var axis = chart.scales.y-axis-0;
 	_chtHeight = axis.max;
+	// console.log(_chtHeight)
 }
 
 function updateCharts(data, total) {

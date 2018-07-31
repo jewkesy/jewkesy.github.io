@@ -272,10 +272,11 @@ function getCssStar(score) {
 }
 
 function daydiff(first, second, includeLast) {
-
+	// console.log(first.getDate(), first.getUTCDate())
+	// console.log(second.getDate(), second.getUTCDate())
     // Copy date parts of the timestamps, discarding the time parts.
-    var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
-    var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+    var one = new Date(first.getFullYear(), first.getMonth(), first.getUTCDate());
+    var two = new Date(second.getFullYear(), second.getMonth(), second.getUTCDate());
 
     // Do the math.
     var millisecondsPerDay = 1000 * 60 * 60 * 24;
@@ -292,7 +293,7 @@ function addDays(startDate,numberOfDays) {
 	var returnDate = new Date(
 		startDate.getFullYear(),
 		startDate.getMonth(),
-		startDate.getDate()+numberOfDays,
+		startDate.getUTCDate()+numberOfDays,
 		startDate.getHours(),
 		startDate.getMinutes(),
 		startDate.getSeconds());
