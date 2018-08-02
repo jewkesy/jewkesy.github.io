@@ -60,7 +60,7 @@ function startPopcornQuiz() {
 	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
 		if (!data) return;
 		_timeFrom = data.lastTime;
-		// console.log(data);
+		console.log(data);
 		if (!err) buildPopcornPage(data);
 		statsTimer();
 	});
@@ -382,8 +382,10 @@ function buildAmazonReview(data) {
 	if (!data.jp) data.jp = {score:0,reviews:0};
 	if (!data.au) data.au = {score:0,reviews:0};
 	if (!data.fr) data.fr = {score:0,reviews:0};
+	if (!data.es) data.es = {score:0,reviews:0};
+	if (!data.it) data.it = {score:0,reviews:0};
 
-	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars'];
+	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_es_stars', 'pc_it_stars'];
 	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
 	// console.log(data)
 
@@ -402,6 +404,8 @@ function buildAmazonReview(data) {
 		else if (i == 5) e.classList.add(getCssStar(data.jp.score));
 		else if (i == 6) e.classList.add(getCssStar(data.au.score));
 		else if (i == 7) e.classList.add(getCssStar(data.fr.score));
+		else if (i == 8) e.classList.add(getCssStar(data.es.score));
+		else if (i == 9) e.classList.add(getCssStar(data.it.score));
 	}
 
 	if (document.getElementById('pc_uk_reviews')) fadeyStuff('pc_uk_reviews', numberWithCommas(data.uk.reviews)); //document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
@@ -412,6 +416,8 @@ function buildAmazonReview(data) {
 	if (document.getElementById('pc_jp_reviews')) fadeyStuff('pc_jp_reviews', numberWithCommas(data.jp.reviews)); //document.getElementById('pc_jp_reviews').innerHTML = data.jp.reviews;
 	if (document.getElementById('pc_au_reviews')) fadeyStuff('pc_au_reviews', numberWithCommas(data.au.reviews)); //document.getElementById('pc_au_reviews').innerHTML = data.au.reviews;
 	if (document.getElementById('pc_fr_reviews')) fadeyStuff('pc_fr_reviews', numberWithCommas(data.fr.reviews)); //document.getElementById('pc_fr_reviews').innerHTML = data.fr.reviews;
+	if (document.getElementById('pc_es_reviews')) fadeyStuff('pc_es_reviews', numberWithCommas(data.es.reviews));
+	if (document.getElementById('pc_it_reviews')) fadeyStuff('pc_it_reviews', numberWithCommas(data.it.reviews));
 }
 
 function chtNewUsers(chart, d, l, total) {
@@ -430,6 +436,8 @@ function chtNewUsers(chart, d, l, total) {
 	var green =  "rgba(22,158,22,1)";
 	var grey =   "rgba(168,173,168,1)";
 	var brown =  "rgba(204,102,0,1)";
+	var seaGreen = "rgba(46,139,87,1)";
+	var coral = "rgba(255,127,80,1)";
 
 	var data = {
 		"labels": dailyData.labels,
@@ -457,6 +465,12 @@ function chtNewUsers(chart, d, l, total) {
 		},{
 			"label":"France", "data": dailyData.fr,
 			"borderColor":brown, "backgroundColor":brown, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{
+			"label":"Spain", "data": dailyData.es,
+			"borderColor":coral, "backgroundColor":coral, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{
+			"label":"Italy", "data": dailyData.it,
+			"borderColor":seaGreen, "backgroundColor":seaGreen, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Games",
 			"data": dailyData.dailygames,
@@ -523,6 +537,8 @@ function updateCharts(data, total) {
 		if (diff > _newUsers.jp.length) resizeArr(_newUsers.jp, diff, null);
 		if (diff > _newUsers.au.length) resizeArr(_newUsers.au, diff, null);
 		if (diff > _newUsers.fr.length) resizeArr(_newUsers.fr, diff, null);
+		if (diff > _newUsers.es.length) resizeArr(_newUsers.es, diff, null);
+		if (diff > _newUsers.it.length) resizeArr(_newUsers.it, diff, null);
 		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
 		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
@@ -566,6 +582,14 @@ function updateCharts(data, total) {
 		if (data.fr[i] != _newUsers.fr[i]) {
 			if (!_newUsers.fr[i]) _newUsers.fr[i] = 0;
 			_newUsers.fr[i] += data.fr[i];
+		}
+		if (data.es[i] != _newUsers.es[i]) {
+			if (!_newUsers.es[i]) _newUsers.es[i] = 0;
+			_newUsers.es[i] += data.es[i];
+		}
+		if (data.it[i] != _newUsers.it[i]) {
+			if (!_newUsers.it[i]) _newUsers.it[i] = 0;
+			_newUsers.it[i] += data.it[i];
 		}
 	}
 	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
