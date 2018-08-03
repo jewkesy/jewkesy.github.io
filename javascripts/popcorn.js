@@ -9,7 +9,7 @@ var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + 
 var _popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc&limit=' + _limit;
 var _amazonUrl = aws + 'getHomePageContent?amazon=true';
 
-var _startDate = new Date("28 May 2017");
+var _startDate = new Date("2017-05-28T12:00:00Z");
 var _timeFrom = 0;
 var _lastTimestamp = 0;
 var _doubleDayDivider = 1;
@@ -60,7 +60,7 @@ function startPopcornQuiz() {
 	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
 		if (!data) return;
 		_timeFrom = data.lastTime;
-		console.log(data);
+		// console.log(data);
 		if (!err) buildPopcornPage(data);
 		statsTimer();
 	});
@@ -222,6 +222,7 @@ function buildPopcornPage(content) {
 
 	if (!content) return;
 	if (content.count === 0) return;
+	// console.log(content);
 	updateCharts(content.counts, content.totalUsers);
 }
 
@@ -425,7 +426,7 @@ function chtNewUsers(chart, d, l, total) {
 	var dailyData = JSON.parse(JSON.stringify(d));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
-	console.log(dailyData)
+	// console.log(dailyData)
 	dailyData = summariseChtData(dailyData);
 	// console.log(dailyData.mo)
 	var red =    "rgba(255,99,132,1)";
@@ -514,14 +515,16 @@ function updateCharts(data, total) {
 
 	// get days from launch as x axis
 	var today = new Date();
+	// console.log(_startDate, today)
 	var diff = daydiff(_startDate, today, true);
 
 	if (Object.keys(_newUsers).length === 0) {
 		_newUsers = data;
 		_newUsersLabels = new Array(diff).fill("");
-
+		// console.log(diff)
 		for (var i = 1; i < diff-1; i++) {
 			var someDate = addDays(_startDate, i);
+			// console.log(someDate)
 			var q = someDate.toLocaleDateString().split("/");
 			_newUsersLabels[i] = q[0] + getMonthName(q[1]-1);
 		}
@@ -544,7 +547,7 @@ function updateCharts(data, total) {
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
 		if (diff > _newUsers.totals.length) resizeArr(_newUsers.totals, diff, 0);
 	}
-	
+
 	for (var i = 0; i < data.totals.length; i++) {
 		if (data.avg[i] != _newUsers.avg[i]) _newUsers.avg[i] += data.avg[i];
 		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
@@ -596,7 +599,9 @@ function updateCharts(data, total) {
 	
 	var t = 1;  // include myself
 	_newUsers.avg[0] = _newUsers.totals[0];
+
 	for (var i = 0; i < diff; i++) {
+		if (!_newUsers.totals[i]) break;
 		t += _newUsers.totals[i];
 		_newUsers.avg[i] = t/(i+1);
 	}
@@ -727,7 +732,7 @@ function summariseChtData(data, fraction) {
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
 	    	if (l == -1) { l = data[property].length; continue; }
-	    	if (data[property].length != l) { console.log("Length mismatch, resetting", l, data[property].length, property); reset(); return data; }
+	    	if (data[property].length != l) { console.log("Length mismatch, resetting", l, data[property].length, property, data); reset(); return data; }
 	    }
 	}
 	
