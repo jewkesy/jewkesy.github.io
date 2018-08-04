@@ -60,7 +60,6 @@ function startPopcornQuiz() {
 	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
 		if (!data) return;
 		_timeFrom = data.lastTime;
-		// console.log(data);
 		if (!err) buildPopcornPage(data);
 		statsTimer();
 	});
@@ -222,7 +221,7 @@ function buildPopcornPage(content) {
 
 	if (!content) return;
 	if (content.count === 0) return;
-	// console.log(content);
+	console.log(content);
 	updateCharts(content.counts, content.totalUsers);
 }
 
@@ -596,16 +595,6 @@ function updateCharts(data, total) {
 		}
 	}
 	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
-	
-	var t = 1;  // include myself
-	_newUsers.avg[0] = _newUsers.totals[0];
-
-	for (var i = 0; i < diff; i++) {
-		if (!_newUsers.totals[i]) break;
-		t += _newUsers.totals[i];
-		_newUsers.avg[i] = t/(i+1);
-	}
-
 	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total);
 }
