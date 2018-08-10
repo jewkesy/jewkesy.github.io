@@ -17,8 +17,10 @@ var _daysSinceLaunch = 0;
 var _newUsersChart;
 var _newUsers = {};
 var _newUsersLabels = [];
+var _total = 0;
 var _gameinfo = { dailygames: [] };
 var _chtHeight = 3500;
+var _dailyPlayers = [];
 
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
@@ -54,6 +56,9 @@ function startPopcornQuiz() {
 
 	buildLeague();
 	buildLastGames();
+	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+		buildDailyPlayers(err, data);
+	});
 	httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
 		buildDailyGames(err, data);
 	});
@@ -98,6 +103,9 @@ function getStats() {
 				});
 				httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
 					buildDailyGames(err, data);
+				});
+				httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+					buildDailyPlayers(err, data);
 				});
 			}
 		} 
@@ -188,6 +196,15 @@ function applyLocaleHeader(locale) {
 	}
 	
 	document.getElementById("th_"+_locale).classList.add('selected');
+}
+
+function buildDailyPlayers(err, players) {
+	if (err) {console.error(err); return;}
+	if (!players) {console.log('no data'); return;}
+	// console.log(players);
+	_dailyPlayers = players.dailyplayers;
+	// console.log(_newUsersChart);
+	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
 
 function buildDailyGames(err, content) {
@@ -424,6 +441,7 @@ function chtNewUsers(chart, d, l, total) {
 
 	var dailyData = JSON.parse(JSON.stringify(d));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
+	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
 	// console.log(dailyData)
 	dailyData = summariseChtData(dailyData);
@@ -489,6 +507,10 @@ function chtNewUsers(chart, d, l, total) {
 		},{
 			"label":"", //avg
 			"data": dailyData.avg, "type": "line", "fill":false,
+			"borderColor":"rgba(0, 0, 0, 1)", "backgroundColor":"rgba(0, 0, 0, 1)", "pointRadius":0
+		},{
+			"label":"", //daily players
+			"data": dailyData.dailyplayers, "type": "line", "fill":false,
 			"borderColor":"rgba(0, 0, 0, 1)", "backgroundColor":"rgba(0, 0, 0, 1)", "pointRadius":0
 		}],
 		options: {
@@ -596,7 +618,8 @@ function updateCharts(data, total) {
 	}
 	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
 	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
-	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, total);
+	_total = total;
+	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
 
 function resetLimit() {
@@ -714,7 +737,7 @@ function startProgressBar(seconds, answer, correct) {
 function summariseChtData(data, fraction) {
 	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
 	var newSize = 10;
-
+console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
 	var l = -1;
