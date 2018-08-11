@@ -203,7 +203,13 @@ function buildDailyPlayers(err, players) {
 	if (!players) {console.log('no data'); return;}
 	// console.log(players);
 	_dailyPlayers = players.dailyplayers;
-	// console.log(_newUsersChart);
+
+	var total = _dailyPlayers[_dailyPlayers.length-1];
+	// console.log(_dailyPlayers[_dailyPlayers.length-1]);
+	var avg = Math.round(players.l/total);
+	// console.log(avg, total, players.l)
+	fadeyStuff('pc_daily_players', numberWithCommas(total));
+	fadeyStuff('pc_daily_players_avg', numberWithCommas(avg));
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
 
@@ -238,7 +244,7 @@ function buildPopcornPage(content) {
 
 	if (!content) return;
 	if (content.count === 0) return;
-	console.log(content);
+	// console.log(content);
 	updateCharts(content.counts, content.totalUsers);
 }
 
@@ -401,8 +407,9 @@ function buildAmazonReview(data) {
 	if (!data.fr) data.fr = {score:0,reviews:0};
 	if (!data.es) data.es = {score:0,reviews:0};
 	if (!data.it) data.it = {score:0,reviews:0};
+	if (!data.mx) data.mx = {score:0,reviews:0};
 
-	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_es_stars', 'pc_it_stars'];
+	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_es_stars', 'pc_it_stars', 'pc_mx_stars'];
 	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
 	// console.log(data)
 
@@ -423,18 +430,20 @@ function buildAmazonReview(data) {
 		else if (i == 7) e.classList.add(getCssStar(data.fr.score));
 		else if (i == 8) e.classList.add(getCssStar(data.es.score));
 		else if (i == 9) e.classList.add(getCssStar(data.it.score));
+		else if (i ==10) e.classList.add(getCssStar(data.mx.score));
 	}
 
-	if (document.getElementById('pc_uk_reviews')) fadeyStuff('pc_uk_reviews', numberWithCommas(data.uk.reviews)); //document.getElementById('pc_uk_reviews').innerHTML = data.uk.reviews;
-	if (document.getElementById('pc_us_reviews')) fadeyStuff('pc_us_reviews', numberWithCommas(data.us.reviews)); //document.getElementById('pc_us_reviews').innerHTML = data.us.reviews;
-	if (document.getElementById('pc_de_reviews')) fadeyStuff('pc_de_reviews', numberWithCommas(data.de.reviews)); //document.getElementById('pc_de_reviews').innerHTML = data.de.reviews;
-	if (document.getElementById('pc_in_reviews')) fadeyStuff('pc_in_reviews', numberWithCommas(data.in.reviews)); //document.getElementById('pc_in_reviews').innerHTML = data.in.reviews;
-	if (document.getElementById('pc_ca_reviews')) fadeyStuff('pc_ca_reviews', numberWithCommas(data.ca.reviews)); //document.getElementById('pc_ca_reviews').innerHTML = data.ca.reviews;
-	if (document.getElementById('pc_jp_reviews')) fadeyStuff('pc_jp_reviews', numberWithCommas(data.jp.reviews)); //document.getElementById('pc_jp_reviews').innerHTML = data.jp.reviews;
-	if (document.getElementById('pc_au_reviews')) fadeyStuff('pc_au_reviews', numberWithCommas(data.au.reviews)); //document.getElementById('pc_au_reviews').innerHTML = data.au.reviews;
-	if (document.getElementById('pc_fr_reviews')) fadeyStuff('pc_fr_reviews', numberWithCommas(data.fr.reviews)); //document.getElementById('pc_fr_reviews').innerHTML = data.fr.reviews;
+	if (document.getElementById('pc_uk_reviews')) fadeyStuff('pc_uk_reviews', numberWithCommas(data.uk.reviews));
+	if (document.getElementById('pc_us_reviews')) fadeyStuff('pc_us_reviews', numberWithCommas(data.us.reviews));
+	if (document.getElementById('pc_de_reviews')) fadeyStuff('pc_de_reviews', numberWithCommas(data.de.reviews));
+	if (document.getElementById('pc_in_reviews')) fadeyStuff('pc_in_reviews', numberWithCommas(data.in.reviews));
+	if (document.getElementById('pc_ca_reviews')) fadeyStuff('pc_ca_reviews', numberWithCommas(data.ca.reviews));
+	if (document.getElementById('pc_jp_reviews')) fadeyStuff('pc_jp_reviews', numberWithCommas(data.jp.reviews));
+	if (document.getElementById('pc_au_reviews')) fadeyStuff('pc_au_reviews', numberWithCommas(data.au.reviews));
+	if (document.getElementById('pc_fr_reviews')) fadeyStuff('pc_fr_reviews', numberWithCommas(data.fr.reviews));
 	if (document.getElementById('pc_es_reviews')) fadeyStuff('pc_es_reviews', numberWithCommas(data.es.reviews));
 	if (document.getElementById('pc_it_reviews')) fadeyStuff('pc_it_reviews', numberWithCommas(data.it.reviews));
+	if (document.getElementById('pc_mx_reviews')) fadeyStuff('pc_mx_reviews', numberWithCommas(data.mx.reviews));
 }
 
 function chtNewUsers(chart, d, l, total) {
@@ -488,6 +497,9 @@ function chtNewUsers(chart, d, l, total) {
 			"borderColor":coral, "backgroundColor":coral, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Italy", "data": dailyData.it,
+			"borderColor":seaGreen, "backgroundColor":seaGreen, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{
+			"label":"Mexico", "data": dailyData.mx,
 			"borderColor":seaGreen, "backgroundColor":seaGreen, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
 		},{
 			"label":"Games",
@@ -563,6 +575,7 @@ function updateCharts(data, total) {
 		if (diff > _newUsers.fr.length) resizeArr(_newUsers.fr, diff, null);
 		if (diff > _newUsers.es.length) resizeArr(_newUsers.es, diff, null);
 		if (diff > _newUsers.it.length) resizeArr(_newUsers.it, diff, null);
+		if (diff > _newUsers.mx.length) resizeArr(_newUsers.mx, diff, null);
 		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
 		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
@@ -614,6 +627,10 @@ function updateCharts(data, total) {
 		if (data.it[i] != _newUsers.it[i]) {
 			if (!_newUsers.it[i]) _newUsers.it[i] = 0;
 			_newUsers.it[i] += data.it[i];
+		}
+		if (data.mx[i] != _newUsers.mx[i]) {
+			if (!_newUsers.mx[i]) _newUsers.mx[i] = 0;
+			_newUsers.mx[i] += data.mx[i];
 		}
 	}
 	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
@@ -737,14 +754,18 @@ function startProgressBar(seconds, answer, correct) {
 function summariseChtData(data, fraction) {
 	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
 	var newSize = 10;
-console.log(data)
+// console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
 	var l = -1;
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
 	    	if (l == -1) { l = data[property].length; continue; }
-	    	if (data[property].length != l) { console.log("Length mismatch, resetting", l, data[property].length, property, data); reset(); return data; }
+	    	if (data[property].length != l) { 
+	    		// console.log("Length mismatch, resetting", l, data[property].length, property, data); 
+	    		reset(); 
+	    		return data; 
+	    	}
 	    }
 	}
 	
