@@ -206,10 +206,10 @@ function buildDailyPlayers(err, players) {
 
 	var total = _dailyPlayers[_dailyPlayers.length-1];
 	// console.log(_dailyPlayers[_dailyPlayers.length-1]);
-	var avg = Math.round(players.l/total);
+	// var avg = Math.round(players.l/total);
 	// console.log(avg, total, players.l)
 	fadeyStuff('pc_daily_players', numberWithCommas(total));
-	fadeyStuff('pc_daily_players_avg', numberWithCommas(avg));
+	// fadeyStuff('pc_daily_players_avg', numberWithCommas(avg));
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
 
