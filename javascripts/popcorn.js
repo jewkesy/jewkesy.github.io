@@ -162,9 +162,10 @@ function getPhrases() {
 	var l = _locale;
 	if (l == '') l = 'en-GB';
 	var url = aws + "getHomePageContent?action=getphrases&locale="+l;
-
+	console.log(url)
 	httpGetStats(url, 'pc',  function (err, data) {
 		if (!data) return;
+		console.log(data)
 		for (var i = 0; i < data.msg.correct.length; i++) {
 			data.msg.correct[i] = data.msg.correct[i].replace('<say-as interpret-as="interjection">', '');
 			data.msg.correct[i] = data.msg.correct[i].replace('</say-as>', '');
