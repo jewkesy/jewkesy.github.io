@@ -131,9 +131,8 @@ function switchLocale(locale) {
 	getPhrases();
 	getQuestions(5, "");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
-	setTrueFalse(locale);
-	setWakeWords(locale);
-
+	
+	setGameElements(locale);
 	
 	clearInterval(sInt);
 	statsTimer();
@@ -142,30 +141,47 @@ function switchLocale(locale) {
 	clearLeague('pc_lastgames', buildLastGames());
 }
 
-function setTrueFalse(locale) {
-	// pc_true
-	// pc_false
-	var l = locale.split('-')[0];
-
-		 if (l == "de") { fadeyStuff("pc_true", "Wahr"); fadeyStuff("pc_false", "Falsch"); }
-	else if (l == "fr") { fadeyStuff("pc_true", "Vrai"); fadeyStuff("pc_false", "Faux"); }
-	else if (l == "ja") { fadeyStuff("pc_true", "マル"); fadeyStuff("pc_false", "バツ"); }
-	else if (l == "es") { fadeyStuff("pc_true", "Cierto"); fadeyStuff("pc_false", "Falso"); }
-	else if (l == "it") { fadeyStuff("pc_true", "Vero"); fadeyStuff("pc_false", "Falso"); }
-	else { fadeyStuff("pc_true", "True"); fadeyStuff("pc_false", "False"); }
-}
-
-function setWakeWords(locale) {
-	pc_wake_start
+function setGameElements(locale) {
 
 	var l = locale.split('-')[0];
-
-		 if (l == "de") { fadeyStuff("pc_wake_start", "Alexa, spiel"); fadeyStuff("pc_pq_name", "Popcorn Quiz"); }
-	else if (l == "fr") { fadeyStuff("pc_wake_start", "Alexa, lance"); fadeyStuff("pc_pq_name", "Popcorn Quiz"); }
-	else if (l == "ja") { fadeyStuff("pc_wake_start", "アレクサ、ポップコーンクイズ"); fadeyStuff("pc_pq_name", "を始める"); }
-	else if (l == "es") { fadeyStuff("pc_wake_start", "Alexa, jugar"); fadeyStuff("pc_pq_name", "Popcorn Quiz"); }
-	else if (l == "it") { fadeyStuff("pc_wake_start", "Alexa, gioca con"); fadeyStuff("pc_pq_name", "Popcorn Quiz"); }
-	else { fadeyStuff("Alexa, play", "True"); fadeyStuff("pc_pq_name", "Popcorn Quiz"); }
+// pc_h1_name
+	if (l == "de") { 
+	 	fadeyStuff("pc_wake_start", "Alexa, spiel"); 
+	 	fadeyStuff("pc_pq_name", "Popcorn Quiz");
+	 	fadeyStuff("pc_h1_name", "Popcorn Quiz");
+	 	fadeyStuff("pc_true", "Wahr");
+	 	fadeyStuff("pc_false", "Falsch");
+	} else if (l == "fr") { 
+		fadeyStuff("pc_wake_start", "Alexa, lance"); 
+		fadeyStuff("pc_pq_name", "Popcorn Quiz");
+		fadeyStuff("pc_h1_name", "Popcorn Quiz");
+		fadeyStuff("pc_true", "Vrai");
+		fadeyStuff("pc_false", "Faux");
+	} else if (l == "ja") { 
+		fadeyStuff("pc_wake_start", "アレクサ、ポップコーンクイズ"); 
+		fadeyStuff("pc_pq_name", "を始める");
+		fadeyStuff("pc_h1_name", "ポップコーンクイズ");
+		fadeyStuff("pc_true", "マル");
+		fadeyStuff("pc_false", "バツ");
+	} else if (l == "es") { 
+		fadeyStuff("pc_wake_start", "Alexa, jugar"); 
+		fadeyStuff("pc_pq_name", "Popcorn Quiz");
+		fadeyStuff("pc_h1_name", "Popcorn Quiz");
+		fadeyStuff("pc_true", "Cierto"); 
+		fadeyStuff("pc_false", "Falso");
+	} else if (l == "it") { 
+		fadeyStuff("pc_wake_start", "Alexa, gioca con"); 
+		fadeyStuff("pc_pq_name", "Popcorn Quiz");
+		fadeyStuff("pc_h1_name", "Popcorn Quiz");
+		fadeyStuff("pc_true", "Vero"); 
+		fadeyStuff("pc_false", "Falso");
+	} else { 
+		fadeyStuff("pc_wake_start", "Alexa, play"); 
+		fadeyStuff("pc_pq_name", "Popcorn Quiz");
+		fadeyStuff("pc_h1_name", "Popcorn Quiz");
+		fadeyStuff("pc_true", "True"); 
+		fadeyStuff("pc_false", "False");
+	}
 }
 
 function clearLeague(id, callback) {
@@ -195,10 +211,10 @@ function getPhrases() {
 	var l = _locale;
 	if (l == '') l = 'en-GB';
 	var url = aws + "getHomePageContent?action=getphrases&locale="+l;
-	console.log(url)
+	// console.log(url)
 	httpGetStats(url, 'pc',  function (err, data) {
 		if (!data) return;
-		console.log(data)
+		// console.log(data)
 		for (var i = 0; i < data.msg.correct.length; i++) {
 			data.msg.correct[i] = data.msg.correct[i].replace('<say-as interpret-as="interjection">', '');
 			data.msg.correct[i] = data.msg.correct[i].replace('</say-as>', '');
