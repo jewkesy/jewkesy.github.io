@@ -314,7 +314,7 @@ function buildPopcornLastGames(data, prefix) {
 		var sym = "";
 		var device = ".";
 		if (games[i].d == "Echo Show") device = ":";
-
+		else if (games[i].d == "Google") device = "|";
 		if (games[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
 		else if (games[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
 		else if (games[i].i == 'note') {sym = " &#9834;";}
@@ -706,7 +706,7 @@ function getQuestions(count, genre) {
 	var url = aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		// console.log(data);
+		console.log(data);
 		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", capitalizeFirstLetter(data.msg.genre) + " Movies"); 
 
