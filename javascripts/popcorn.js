@@ -300,7 +300,7 @@ function buildPopcornPage(content) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	// console.log(data);
+	console.log(data);
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
@@ -313,8 +313,9 @@ function buildPopcornLastGames(data, prefix) {
 		var x = i + 1;		
 		var sym = "";
 		var device = ".";
-		if (games[i].d == "Echo Show") device = ":";
-		else if (games[i].d == "Google") device = "|";
+		var deviceIcon = "alexa";
+		if (games[i].d == "Echo Show")    device = ":";
+		else if (games[i].d == "Google"){ device = ""; deviceIcon = "google"; }
 		if (games[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
 		else if (games[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
 		else if (games[i].i == 'note') {sym = " &#9834;";}
@@ -323,38 +324,44 @@ function buildPopcornLastGames(data, prefix) {
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
 			var row = container.insertRow(-1);
 			row.id = prefix + '_lastgames_' + x;
-			var cell1 = row.insertCell(0);
+
+			var cell0 =  row.insertCell(0);
+			cell0.id = prefix + "_lastgames_device_" + x;
+			var cell1 = row.insertCell(1);
 			cell1.id = prefix + "_lastgames_rank_" + x;
-			var cell2 = row.insertCell(1);
+			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_lastgames_score_" + x;
-			var cell3 = row.insertCell(2);
+			var cell3 = row.insertCell(3);
 			cell3.id = prefix + "_lastgames_games_" + x;
 			// var cell4 = row.insertCell(3);
 			// cell4.id = prefix + "_lastgames_avg_" + x;
 
-			var cell5 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
 			cell5.id = prefix + "_lastgames_lg_" + x;
 			cell5.className = "nowrap";
 
-			var cell6 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
 			cell6.id = prefix + "_lastgames_gs_" + x;
 
-			var cell7 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
 			cell7.id = prefix + "_lastgames_ts_" + x;
 			cell7.className = "timeago";
 			cell7.title = games[i].t/1000;
 
-			var cell8 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
 			cell8.id = prefix + "_lastgames_st_" + x;
 			cell8.className = "timeago";
 			cell8.title = games[i].st/1000;
 
-			var cell9 = row.insertCell(7);
+			var cell9 = row.insertCell(8);
 			cell9.id = prefix + "_lastgames_locale_" + x;
 		} else {	
 			document.getElementById(prefix + '_lastgames_ts_' + x).title = games[i].t/1000;
 			document.getElementById(prefix + '_lastgames_st_' + x).title = games[i].st/1000;
 		}
+		
+		fadeyStuff(prefix + "_lastgames_device_" + x, "<img width='22' class='device' src='./images/" + deviceIcon + ".png' />");
+
 		fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(games[i].r) + sym);
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(games[i].s));
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
