@@ -3,6 +3,7 @@
 })();
 
 var _locale = '';
+var _deviceFilter = '';
 var _limit = 10;
 
 var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + _limit;
@@ -56,13 +57,13 @@ function startPopcornQuiz() {
 
 	buildLeague();
 	buildLastGames();
-	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		buildDailyPlayers(err, data);
 	});
-	httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+	httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		buildDailyGames(err, data);
 	});
-	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
+	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, 'pc', function (err, data) {
 		if (!data) return;
 		_timeFrom = data.lastTime;
 		if (!err) buildPopcornPage(data);
@@ -137,6 +138,31 @@ function switchLocale(locale) {
 	clearInterval(sInt);
 	statsTimer();
 	
+	clearLeague('pc_scores', buildLeague());
+	clearLeague('pc_lastgames', buildLastGames());
+}
+
+function switchDevice(device) {
+	
+	if (!device) device = "ga_aa";
+
+	if (device == 'Google') {
+		device = 'ga';
+		_deviceFilter = "&device=Google";
+	} else if (device == 'Echo') {
+		device = 'aa';
+		_deviceFilter = "&device=Echo";
+	} else {
+		device = 'ga_aa';
+	}
+
+	var elements = document.getElementsByClassName('devicelist');
+	for(var i=0, l=elements.length; i<l; i++){
+	 elements[i].classList.remove("selected");
+	}
+
+	document.getElementById("th_"+device).classList.add('selected');
+
 	clearLeague('pc_scores', buildLeague());
 	clearLeague('pc_lastgames', buildLastGames());
 }
@@ -245,7 +271,7 @@ function applyLocaleHeader(locale) {
 	 elements[i].classList.remove("selected");
 	}
 	
-	document.getElementById("th_"+_locale).classList.add('selected');
+	document.getElementById("th_"+locale).classList.add('selected');
 }
 
 function buildDailyPlayers(err, players) {
@@ -386,7 +412,9 @@ function buildPopcornLeague(data, prefix, total) {
 		var x = i + 1;		
 		var sym = "";
 		var device = ".";
-		if (topTen[i].d == "Echo Show") device = ":";
+		var deviceIcon = "alexa";
+		if (topTen[i].d == "Echo Show")    device = ":";
+		else if (topTen[i].d == "Google"){ device = ""; deviceIcon = "google"; }
 
 		if (topTen[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
 		else if (topTen[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
@@ -396,32 +424,31 @@ function buildPopcornLeague(data, prefix, total) {
 		if (!document.getElementById(prefix + '_league_' + x)) {
 			var row = container.insertRow(-1);
 			row.id = prefix + '_league_' + x;
-			var cell1 = row.insertCell(0);
+			var cell0 = row.insertCell(0);
+			cell0.id = prefix + "_league_device_" + x;
+			var cell1 = row.insertCell(1);
 			cell1.id = prefix + "_league_rank_" + x;
-			var cell2 = row.insertCell(1);
+			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_league_score_" + x;
-			var cell3 = row.insertCell(2);
+			var cell3 = row.insertCell(3);
 			cell3.id = prefix + "_league_games_" + x;
-			var cell4 = row.insertCell(3);
+			var cell4 = row.insertCell(4);
 			cell4.id = prefix + "_league_avg_" + x;
-
-			var cell5 = row.insertCell(4);
+			var cell5 = row.insertCell(5);
 			cell5.id = prefix + "_league_ts_" + x;
 			cell5.className = "timeago";
 			cell5.title = topTen[i].t/1000;
-
-			var cell6 = row.insertCell(5);
+			var cell6 = row.insertCell(6);
 			cell6.id = prefix + "_league_st_" + x;
 			cell6.className = "timeago";
 			cell6.title = topTen[i].st/1000;
-
-			var cell7 = row.insertCell(6);
+			var cell7 = row.insertCell(7);
 			cell7.id = prefix + "_league_locale_" + x;
 		} else {
 			document.getElementById(prefix + '_league_ts_' + x).title = topTen[i].t/1000;
 			document.getElementById(prefix + '_league_st_' + x).title = topTen[i].st/1000;
 		}
-
+		fadeyStuff(prefix + "_league_device_" + x, "<img width='22' class='device' src='./images/" + deviceIcon + ".png' />");
 		fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
 		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
 		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
@@ -795,7 +822,7 @@ function startProgressBar(seconds, answer, correct) {
 function summariseChtData(data, fraction) {
 	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
 	var newSize = 10;
-// console.log(data)
+	// console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
 	var l = -1;
