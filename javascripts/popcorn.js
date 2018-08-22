@@ -154,6 +154,7 @@ function switchDevice(device) {
 		_deviceFilter = "&device=Echo";
 	} else {
 		device = 'ga_aa';
+		_deviceFilter = "";
 	}
 
 	var elements = document.getElementsByClassName('devicelist');
@@ -326,7 +327,7 @@ function buildPopcornPage(content) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	console.log(data);
+	// console.log(data);
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
