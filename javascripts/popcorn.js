@@ -96,16 +96,16 @@ function getStats() {
 				_lastTimestamp = data[0].timestamp;
 				buildLeague();
 				buildLastGames();
-				httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom, 'pc', function (err, data) {
+				httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, 'pc', function (err, data) {
 					if (!data) return;
 					// console.log(data);
 					_timeFrom = data.lastTime;
 					if (!err) buildPopcornPage(data);
-				});
-				httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+				});			
+				httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 					buildDailyGames(err, data);
 				});
-				httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom, function (err, data) {
+				httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 					buildDailyPlayers(err, data);
 				});
 			}
@@ -114,13 +114,13 @@ function getStats() {
 }
 
 function buildLeague() {
-	httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+	httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter, 'pc',  function (err, data) {
 		buildPopcornLeague(data, 'pc');
 	});
 }
 
 function buildLastGames() {
-	httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+	httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter, 'pc',  function (err, data) {
 		buildPopcornLastGames(data, 'pc');
 	});
 }
