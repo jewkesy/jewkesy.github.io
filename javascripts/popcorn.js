@@ -539,8 +539,6 @@ function chtNewUsers(chart, d, l, total) {
 	dailyData.labels = JSON.parse(JSON.stringify(l));
 	// console.log(dailyData)
 	dailyData = summariseChtData(dailyData);
-	// console.log(dailyData.mo)
-
 
 	var data = {
 		"labels": dailyData.labels,
@@ -593,6 +591,10 @@ function chtNewUsers(chart, d, l, total) {
 			"label":"Weekends", //Weekends
 			"data": dailyData.we,
 			"backgroundColor":AliceBlue, "borderColor":AliceBlue, "type": "bar", "borderWidth": 1
+		},{
+			"label":"Months", //Months
+			"data": dailyData.mo,
+			"backgroundColor":BurlyWood, "borderColor":BurlyWood, "type": "bar", "borderWidth": 1
 		}],
 		options: {
 			"responsive": true,
