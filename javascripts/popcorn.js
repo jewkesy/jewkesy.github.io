@@ -539,7 +539,7 @@ function chtNewUsers(chart, d, l, total) {
 	dailyData.labels = JSON.parse(JSON.stringify(l));
 	// console.log(dailyData)
 	dailyData = summariseChtData(dailyData);
-
+	
 	var data = {
 		"labels": dailyData.labels,
 		"datasets":[{
