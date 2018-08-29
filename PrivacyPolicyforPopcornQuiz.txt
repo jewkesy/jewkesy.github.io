@@ -1,0 +1,7 @@
+Privacy Policy for Popcorn Quiz
+
+Popcorn Quiz runs on the Amazon Alexa and the Google Assistant Platforms.
+
+Popcorn Quiz has been developed by Daryl Jewkes. Popcorn Quiz runs on systems provided by Amazon and Google, depending on the device you are using. Popcorn Quiz has no ability to access any information outside the app nor access to any information on your device.
+
+Depending on the device you are using, Popcorn Quiz may receive non-personally identifying information about the use of Popcorn Quiz from Amazon or Google. For instance, Popcorn Quiz can access usage information regarding how many users are using the app, which geographical regions they are located in, and basic data including users’ language, device type, and length and frequency of use. None of the information Popcorn Quiz receives from either Amazon or Google identifies you personnaly.
