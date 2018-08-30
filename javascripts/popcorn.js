@@ -3,6 +3,7 @@
 })();
 
 var _locale = '';
+var _device = 'ga_aa';
 var _deviceFilter = '';
 var _limit = 10;
 
@@ -43,7 +44,7 @@ function startPopcornQuiz() {
 	_newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 	if (_locale != '') {
-		applyLocaleHeader(_locale);
+		applyLocaleHeader(_locale, _device);
 		_popcornUrl += "&locale=" + _locale;
 	}
 	getPhrases();
@@ -127,7 +128,7 @@ function buildLastGames() {
 
 function switchLocale(locale) {
 	_locale = locale;
-	applyLocaleHeader(locale);
+	applyLocaleHeader(locale, _device);
 
 	getPhrases();
 	getQuestions(5, "");
@@ -147,13 +148,13 @@ function switchDevice(device) {
 	if (!device) device = "ga_aa";
 
 	if (device == 'Google') {
-		device = 'ga';
+		_device = 'ga';
 		_deviceFilter = "&device=Google";
 	} else if (device == 'Echo') {
-		device = 'aa';
+		_device = 'aa';
 		_deviceFilter = "&device=Echo";
 	} else {
-		device = 'ga_aa';
+		_device = 'ga_aa';
 		_deviceFilter = "";
 	}
 
@@ -162,7 +163,7 @@ function switchDevice(device) {
 	 elements[i].classList.remove("selected");
 	}
 
-	document.getElementById("th_"+device).classList.add('selected');
+	document.getElementById("th_"+_device).classList.add('selected');
 
 	clearLeague('pc_scores', buildLeague());
 	clearLeague('pc_lastgames', buildLastGames());
@@ -266,12 +267,19 @@ function getMyRank() {
 	});
 }
 
-function applyLocaleHeader(locale) {
+function applyLocaleHeader(locale, device) {
+	// console.log(locale, device)
 	var elements = document.getElementsByClassName('selected');
-	for(var i=0, l=elements.length; i<l; i++){
-	 elements[i].classList.remove("selected");
+	// console.log(elements)
+	console.log(elements.length)
+	for(var i = 1; i < elements.length; i++){
+		// console.log(i);
+		console.log(elements[i].id);
+		elements[i].classList.remove("selected");
+	
 	}
 	
+	document.getElementById("th_"+device).classList.add('selected');
 	document.getElementById("th_"+locale).classList.add('selected');
 }
 
@@ -743,7 +751,7 @@ function getQuestions(count, genre) {
 	var url = aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		console.log(data);
+		// console.log(data);
 		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", capitalizeFirstLetter(data.msg.genre) + " Movies"); 
 
