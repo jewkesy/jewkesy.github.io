@@ -106,22 +106,25 @@ function amazonTimer() {
 	}, 60000);
 }
 
+var _runStats = true;
 function statsTimer() {
 	sInt = setInterval(function () {
-		getStats();
-	}, 5000);
+		if (_runStats) getStats();
+	}, 2500);
 }
 
 function getStats() {
+	_runStats = false;
 	document.getElementById('pc_more_count').innerHTML = _limit;
 	httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
 		if (!err) {
-			if (!data || !data[0]) return;
+			if (!data || !data[0]){ _runStats = true; return; }
 			if (_lastTimestamp < data[0].timestamp) {
 				_lastTimestamp = data[0].timestamp;
 				getEverything();
-			}
-		} 
+				_runStats = true;
+			} else { _runStats = true; }
+		}  else { _runStats = true; }
 	});
 }
 
@@ -211,6 +214,7 @@ function setGameElements(locale) {
 	var playWord = ", play"
 
 	if (_device == 'ga') {
+		document.getElementById("linkToPQ").href="https://assistant.google.com/explore";
 		document.getElementById("deviceLogo").src="/images/google.png";
 		wakeWord = "Ok Google";
 		if (l == "de") playWord = ", ";
@@ -220,6 +224,7 @@ function setGameElements(locale) {
 		else if (l == "it") playWord = ", ";
 		else playWord = ", talk to";
 	} else {
+		document.getElementById("linkToPQ").href="https://www.amazon.co.uk/dp/B0719TQV6W";
 		document.getElementById("deviceLogo").src="/images/alexa.png";
 	}
 
