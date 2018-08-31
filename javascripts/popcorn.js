@@ -6,6 +6,7 @@ var _locale = '';
 var _device = 'ga_aa';
 var _deviceFilter = '';
 var _limit = 10;
+var _keywords;
 
 var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc&limit=' + _limit;
@@ -36,6 +37,26 @@ Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 var aInt;
 var sInt;
 
+window.addEventListener('popstate', function (event) {
+	console.log(history.state);
+    if (history.state && history.state.id === 'homepage') {
+    	_locale = history.state.locale;
+    	_device = history.state.device;
+    	_limit = history.state.limit;
+    	startPopcornQuiz();
+        // Render new content for the hompage
+    }
+}, false);
+
+function changeUrl(title, url) {
+	console.log(history)
+	if (typeof (history.pushState) == "undefined") return;
+	
+	var obj = { id: 'homepage', pageTitle: title, Url: url, locale: _locale, device: _device, limit: _limit };
+	history.pushState(obj, obj.Page, obj.Url);
+	// console.log(history.state)
+}
+
 function startPopcornQuiz() {
 	_locale = getParameterByName('locale') || '';
 	_limit = getParameterByName('limit') || 10;
@@ -47,6 +68,7 @@ function startPopcornQuiz() {
 		applyLocaleHeader(_locale, _device);
 		_popcornUrl += "&locale=" + _locale;
 	}
+	getKeywords();
 	getPhrases();
 	getIntro();
 	getEvent();
@@ -128,8 +150,8 @@ function buildLastGames() {
 
 function switchLocale(locale) {
 	_locale = locale;
+	getKeywords();
 	applyLocaleHeader(locale, _device);
-
 	getPhrases();
 	getQuestions(5, "");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
@@ -144,7 +166,6 @@ function switchLocale(locale) {
 }
 
 function switchDevice(device) {
-	
 	if (!device) device = "ga_aa";
 
 	if (device == 'Google') {
@@ -167,48 +188,46 @@ function switchDevice(device) {
 
 	clearLeague('pc_scores', buildLeague());
 	clearLeague('pc_lastgames', buildLastGames());
+	setGameElements(_locale);
 }
 
 function setGameElements(locale) {
 
 	var l = locale.split('-')[0];
-// pc_h1_name
-	if (l == "de") { 
-	 	fadeyStuff("pc_wake_start", "Alexa, spiel"); 
-	 	fadeyStuff("pc_pq_name", "Popcorn Quiz");
-	 	fadeyStuff("pc_h1_name", "Popcorn Quiz");
-	 	fadeyStuff("pc_true", "Wahr");
-	 	fadeyStuff("pc_false", "Falsch");
+	
+	fadeyStuff("pc_pq_name", "Popcorn Quiz");
+	fadeyStuff("pc_h1_name", "Popcorn Quiz");
+
+	var wakeWord = "Alexa";
+	var playWord = ", play"
+
+	if (_device == 'ga') {
+		document.getElementById("deviceLogo").src="/images/google.png";
+		wakeWord = "Ok Google";
+		if (l == "de") playWord = ", ";
+		else if (l == "fr") playWord = ", "; 
+		else if (l == "ja") playWord = ", ";
+		else if (l == "es") playWord = ", ";
+		else if (l == "it") playWord = ", ";
+		else playWord = ", talk to";
+	} else {
+		document.getElementById("deviceLogo").src="/images/alexa.png";
+	}
+
+	if (l == "de") {
+	 	fadeyStuff("pc_wake_start", wakeWord + ", spiel"); 
 	} else if (l == "fr") { 
-		fadeyStuff("pc_wake_start", "Alexa, lance"); 
-		fadeyStuff("pc_pq_name", "Popcorn Quiz");
-		fadeyStuff("pc_h1_name", "Popcorn Quiz");
-		fadeyStuff("pc_true", "Vrai");
-		fadeyStuff("pc_false", "Faux");
+		fadeyStuff("pc_wake_start", wakeWord + ", lance"); 
 	} else if (l == "ja") { 
 		fadeyStuff("pc_wake_start", "アレクサ、ポップコーンクイズ"); 
 		fadeyStuff("pc_pq_name", "を始める");
 		fadeyStuff("pc_h1_name", "ポップコーンクイズ");
-		fadeyStuff("pc_true", "マル");
-		fadeyStuff("pc_false", "バツ");
 	} else if (l == "es") { 
-		fadeyStuff("pc_wake_start", "Alexa, jugar"); 
-		fadeyStuff("pc_pq_name", "Popcorn Quiz");
-		fadeyStuff("pc_h1_name", "Popcorn Quiz");
-		fadeyStuff("pc_true", "Cierto"); 
-		fadeyStuff("pc_false", "Falso");
+		fadeyStuff("pc_wake_start", wakeWord + ", jugar"); 
 	} else if (l == "it") { 
-		fadeyStuff("pc_wake_start", "Alexa, gioca con"); 
-		fadeyStuff("pc_pq_name", "Popcorn Quiz");
-		fadeyStuff("pc_h1_name", "Popcorn Quiz");
-		fadeyStuff("pc_true", "Vero"); 
-		fadeyStuff("pc_false", "Falso");
+		fadeyStuff("pc_wake_start", wakeWord + ", gioca con"); 
 	} else { 
-		fadeyStuff("pc_wake_start", "Alexa, play"); 
-		fadeyStuff("pc_pq_name", "Popcorn Quiz");
-		fadeyStuff("pc_h1_name", "Popcorn Quiz");
-		fadeyStuff("pc_true", "True"); 
-		fadeyStuff("pc_false", "False");
+		fadeyStuff("pc_wake_start", wakeWord + playWord); 
 	}
 }
 
@@ -239,7 +258,6 @@ function getPhrases() {
 	var l = _locale;
 	if (l == '') l = 'en-GB';
 	var url = aws + "getHomePageContent?action=getphrases&locale="+l;
-	// console.log(url)
 	httpGetStats(url, 'pc',  function (err, data) {
 		if (!data) return;
 		// console.log(data)
@@ -261,22 +279,15 @@ function getPhrases() {
 
 function getMyRank() {
 	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
-		// console.log(err, data);
 		if (!data) return;
 		fadeyStuff('myrank', data.msg);
 	});
 }
 
 function applyLocaleHeader(locale, device) {
-	// console.log(locale, device)
 	var elements = document.getElementsByClassName('selected');
-	// console.log(elements)
-	console.log(elements.length)
 	for(var i = 1; i < elements.length; i++){
-		// console.log(i);
-		console.log(elements[i].id);
 		elements[i].classList.remove("selected");
-	
 	}
 	
 	document.getElementById("th_"+device).classList.add('selected');
@@ -286,15 +297,12 @@ function applyLocaleHeader(locale, device) {
 function buildDailyPlayers(err, players) {
 	if (err) {console.error(err); return;}
 	if (!players) {console.log('no data'); return;}
-	// console.log(players);
+
 	_dailyPlayers = players.dailyplayers;
 
 	var total = _dailyPlayers[_dailyPlayers.length-1];
-	// console.log(_dailyPlayers[_dailyPlayers.length-1]);
-	// var avg = Math.round(players.l/total);
-	// console.log(avg, total, players.l)
+
 	fadeyStuff('pc_daily_players', numberWithCommas(total));
-	// fadeyStuff('pc_daily_players_avg', numberWithCommas(avg));
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
 
@@ -317,11 +325,6 @@ function buildDailyGames(err, content) {
 	var avg = Math.round(total/days);
 	// console.log(days, total, avg)
 	fadeyStuff('pc_games_avg', numberWithCommas(avg));
-}
-
-function buildGamePlayStats(content) {
-	console.log(content);
-	return;
 }
 
 function buildPopcornPage(content) {
@@ -550,64 +553,24 @@ function chtNewUsers(chart, d, l, total) {
 	
 	var data = {
 		"labels": dailyData.labels,
-		"datasets":[{
-			"label":"UK", "data": dailyData.uk,
-			"borderColor":Crimson, "backgroundColor":Crimson, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"US", "data": dailyData.us,
-			"borderColor":SteelBlue, "backgroundColor":SteelBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"Germany", "data": dailyData.de,
-			"borderColor":Gold, "backgroundColor":Gold, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"India", "data": dailyData.in,
-			"borderColor":Khaki, "backgroundColor":Khaki, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"Canada", "data": dailyData.ca,
-			"borderColor":Red, "backgroundColor":Red, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"Japan", "data": dailyData.jp,
-			"borderColor":LightPink, "backgroundColor":LightPink, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"Australia", "data": dailyData.au,
-			"borderColor":MidnightBlue, "backgroundColor":MidnightBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"France", "data": dailyData.fr,
-			"borderColor":LightSkyBlue, "backgroundColor":LightSkyBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"Spain", "data": dailyData.es,
-			"borderColor":Coral, "backgroundColor":Coral, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"Italy", "data": dailyData.it,
-			"borderColor":Moccasin, "backgroundColor":Moccasin, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"Mexico", "data": dailyData.mx,
-			"borderColor":SeaGreen, "backgroundColor":SeaGreen, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{
-			"label":"DailyAvg", //avg
-			"data": dailyData.avg, 
-			"borderColor":Black, "backgroundColor":Black, "pointRadius":0, "type": "line", "fill":false
-		},{
-			"label":"DailyPlayers", //daily players
-			"data": dailyData.dailyplayers, 
-			"borderColor":LightSlateGray, "backgroundColor":LightSlateGray, "pointRadius":0, "type": "line", "fill":false
-		},{
-			"label":"Games",
-			"data": dailyData.dailygames,
-			"backgroundColor":LightGreen, "borderColor":LightGreen, "type": "bar", "borderWidth": 1
-		},{
-			"label":"Weekends", //Weekends
-			"data": dailyData.we,
-			"backgroundColor":AliceBlue, "borderColor":AliceBlue, "type": "bar", "borderWidth": 1
-		},{
-			"label":"Months", //Months
-			"data": dailyData.mo,
-			"backgroundColor":BurlyWood, "borderColor":BurlyWood, "type": "bar", "borderWidth": 1
-		}],
-		options: {
-			"responsive": true,
-			"maintainAspectRatio": false
-		}
+		"datasets":[
+		  {"label":"UK", "data": dailyData.uk, "borderColor":Crimson, "backgroundColor":Crimson, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"US", "data": dailyData.us, "borderColor":SteelBlue, "backgroundColor":SteelBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"Germany", "data": dailyData.de, "borderColor":Gold, "backgroundColor":Gold, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"India", "data": dailyData.in, "borderColor":Khaki, "backgroundColor":Khaki, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"Canada", "data": dailyData.ca, "borderColor":Red, "backgroundColor":Red, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"Japan", "data": dailyData.jp, "borderColor":LightPink, "backgroundColor":LightPink, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"Australia", "data": dailyData.au, "borderColor":MidnightBlue, "backgroundColor":MidnightBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"France", "data": dailyData.fr, "borderColor":LightSkyBlue, "backgroundColor":LightSkyBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"Spain", "data": dailyData.es, "borderColor":Coral, "backgroundColor":Coral, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"Italy", "data": dailyData.it, "borderColor":Moccasin, "backgroundColor":Moccasin, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"Mexico", "data": dailyData.mx, "borderColor":SeaGreen, "backgroundColor":SeaGreen, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
+		},{"label":"DailyAvg", "data": dailyData.avg, "borderColor":Black, "backgroundColor":Black, "pointRadius":0, "type": "line", "fill":false
+		},{"label":"DailyPlayers", "data": dailyData.dailyplayers, "borderColor":LightSlateGray, "backgroundColor":LightSlateGray, "pointRadius":0, "type": "line", "fill":false
+		},{"label":"Games", "data": dailyData.dailygames, "backgroundColor":LightGreen, "borderColor":LightGreen, "type": "bar", "borderWidth": 1
+		},{"label":"Weekends", "data": dailyData.we, "backgroundColor":AliceBlue, "borderColor":AliceBlue, "type": "bar", "borderWidth": 1
+		},{"label":"Months", "data": dailyData.mo, "backgroundColor":BurlyWood, "borderColor":BurlyWood, "type": "bar", "borderWidth": 1}],
+		options: { "responsive": true, "maintainAspectRatio": false }
     };
 	chart.data = data;
 	chart.update();
@@ -728,6 +691,7 @@ function increaseLimit() {
 	_limit = _limit * 2;
 	var newUrl = paramReplace('limit', window.location.href, _limit);
 	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
+	changeUrl('', newUrl);
 	buildLeague();
 	buildLastGames();	
 }
@@ -744,6 +708,15 @@ function getEvent() {
 	httpGetByUrl(aws + "getHomePageContent?action=getevents&locale="+_locale, function (err, data) {
 		if (!data) return;
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
+	});
+}
+
+function getKeywords() {
+	httpGetByUrl(aws + "getHomePageContent?action=getkeywords&locale="+_locale, function (err, data) {
+		if (!data) return;
+		_keywords = data.msg;
+		fadeyStuff("pc_true", _keywords.true);
+		fadeyStuff("pc_false", _keywords.false);
 	});
 }
 
