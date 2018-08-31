@@ -68,6 +68,8 @@ function startPopcornQuiz() {
 		applyLocaleHeader(_locale, _device);
 		_popcornUrl += "&locale=" + _locale;
 	}
+	buildLeague();
+	buildLastGames();
 	getKeywords();
 	getPhrases();
 	getIntro();
@@ -78,8 +80,8 @@ function startPopcornQuiz() {
 		amazonTimer();
 	});
 
-	buildLeague();
-	buildLastGames();
+
+	
 	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		buildDailyPlayers(err, data);
 	});
@@ -117,22 +119,27 @@ function getStats() {
 			if (!data || !data[0]) return;
 			if (_lastTimestamp < data[0].timestamp) {
 				_lastTimestamp = data[0].timestamp;
-				buildLeague();
-				buildLastGames();
-				httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, 'pc', function (err, data) {
-					if (!data) return;
-					// console.log(data);
-					_timeFrom = data.lastTime;
-					if (!err) buildPopcornPage(data);
-				});			
-				httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
-					buildDailyGames(err, data);
-				});
-				httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
-					buildDailyPlayers(err, data);
-				});
+				getEverything();
 			}
 		} 
+	});
+}
+
+
+function getEverything() {
+	buildLeague();
+	buildLastGames();
+	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, 'pc', function (err, data) {
+		if (!data) return;
+		// console.log(data);
+		_timeFrom = data.lastTime;
+		if (!err) buildPopcornPage(data);
+	});			
+	httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
+		buildDailyGames(err, data);
+	});
+	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
+		buildDailyPlayers(err, data);
 	});
 }
 
@@ -161,8 +168,9 @@ function switchLocale(locale) {
 	clearInterval(sInt);
 	statsTimer();
 	
-	clearLeague('pc_scores', buildLeague());
-	clearLeague('pc_lastgames', buildLastGames());
+	clearLeague('pc_scores', null); // buildLeague()
+	clearLeague('pc_lastgames', null); // buildLastGames()
+	getEverything();
 }
 
 function switchDevice(device) {
@@ -186,8 +194,9 @@ function switchDevice(device) {
 
 	document.getElementById("th_"+_device).classList.add('selected');
 
-	clearLeague('pc_scores', buildLeague());
-	clearLeague('pc_lastgames', buildLastGames());
+	clearLeague('pc_scores', null); // buildLeague()
+	clearLeague('pc_lastgames', null); // buildLastGames()
+	getEverything();
 	setGameElements(_locale);
 }
 
