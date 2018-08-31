@@ -263,7 +263,7 @@ function humanTime(time) {
         }
     }
     // update time every minute
-    setTimeout(timeAgo, 5000);
+    setTimeout(timeAgo, 10000);
 })();
 
 function getCssStar(score) {
