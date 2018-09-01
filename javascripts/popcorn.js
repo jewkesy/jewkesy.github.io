@@ -17,7 +17,7 @@ var _timeFrom = 0;
 var _lastTimestamp = 0;
 var _doubleDayDivider = 1;
 var _daysSinceLaunch = 0;
-var _newUsersChart;
+var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 var _newUsers = {};
 var _newUsersLabels = [];
 var _total = 0;
@@ -49,7 +49,6 @@ window.addEventListener('popstate', function (event) {
 }, false);
 
 function changeUrl(title, url) {
-	console.log(history)
 	if (typeof (history.pushState) == "undefined") return;
 	
 	var obj = { id: 'homepage', pageTitle: title, Url: url, locale: _locale, device: _device, limit: _limit };
@@ -62,7 +61,6 @@ function startPopcornQuiz() {
 	_limit = getParameterByName('limit') || 10;
 	// console.log(_limit, getParameterByName('limit'))
 	document.getElementById('pc_more_count').innerHTML = _limit;
-	_newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 
 	if (_locale != '') {
 		applyLocaleHeader(_locale, _device);
@@ -566,36 +564,98 @@ function chtNewUsers(chart, d, l, total) {
 	dailyData = summariseChtData(dailyData);
 	
 	var data = {
-		"labels": dailyData.labels,
-		"datasets":[
-		  {"label":"UK", "data": dailyData.uk, "borderColor":Crimson, "backgroundColor":Crimson, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"US", "data": dailyData.us, "borderColor":SteelBlue, "backgroundColor":SteelBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"Germany", "data": dailyData.de, "borderColor":Gold, "backgroundColor":Gold, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"India", "data": dailyData.in, "borderColor":Khaki, "backgroundColor":Khaki, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"Canada", "data": dailyData.ca, "borderColor":Red, "backgroundColor":Red, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"Japan", "data": dailyData.jp, "borderColor":LightPink, "backgroundColor":LightPink, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"Australia", "data": dailyData.au, "borderColor":MidnightBlue, "backgroundColor":MidnightBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"France", "data": dailyData.fr, "borderColor":LightSkyBlue, "backgroundColor":LightSkyBlue, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"Spain", "data": dailyData.es, "borderColor":Coral, "backgroundColor":Coral, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"Italy", "data": dailyData.it, "borderColor":Moccasin, "backgroundColor":Moccasin, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"Mexico", "data": dailyData.mx, "borderColor":SeaGreen, "backgroundColor":SeaGreen, "fill":false, "lineTension":0.1, "type":"line", "pointRadius":2
-		},{"label":"DailyAvg", "data": dailyData.avg, "borderColor":Black, "backgroundColor":Black, "pointRadius":0, "type": "line", "fill":false
-		},{"label":"DailyPlayers", "data": dailyData.dailyplayers, "borderColor":LightSlateGray, "backgroundColor":LightSlateGray, "pointRadius":0, "type": "line", "fill":false
-		},{"label":"Games", "data": dailyData.dailygames, "backgroundColor":LightGreen, "borderColor":LightGreen, "type": "bar", "borderWidth": 1
-		},{"label":"Weekends", "data": dailyData.we, "backgroundColor":AliceBlue, "borderColor":AliceBlue, "type": "bar", "borderWidth": 1
-		},{"label":"Months", "data": dailyData.mo, "backgroundColor":BurlyWood, "borderColor":BurlyWood, "type": "bar", "borderWidth": 1}],
-		options: { "responsive": true, "maintainAspectRatio": false }
+		labels: dailyData.labels,
+		datasets:[
+			{label:"UK", data: dailyData.uk, borderColor:Crimson, backgroundColor:Crimson, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"US", data: dailyData.us, borderColor:SteelBlue, backgroundColor:SteelBlue, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Germany", data: dailyData.de, borderColor:Gold, backgroundColor:Gold, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"India", data: dailyData.in, borderColor:Khaki, backgroundColor:Khaki, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Canada", data: dailyData.ca, borderColor:Red, backgroundColor:Red, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Japan", data: dailyData.jp, borderColor:LightPink, backgroundColor:LightPink, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Australia", data: dailyData.au, borderColor:MidnightBlue, backgroundColor:MidnightBlue, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"France", data: dailyData.fr, borderColor:LightSkyBlue, backgroundColor:LightSkyBlue, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Spain", data: dailyData.es, borderColor:Coral, backgroundColor:Coral, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Italy", data: dailyData.it, borderColor:Moccasin, backgroundColor:Moccasin, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Mexico", data: dailyData.mx, borderColor:SeaGreen, backgroundColor:SeaGreen, fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"DailyAvg", data: dailyData.avg, borderColor:Black, backgroundColor:Black, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
+			{label:"DailyPlayers", data: dailyData.dailyplayers, borderColor:LightSlateGray, backgroundColor:LightSlateGray, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
+
+			{label:"Games", data: dailyData.dailygames, backgroundColor:LightGreen, borderColor:LightGreen, yAxisID: 'right-y-axis', type: "bar", borderWidth: 1},
+			{label:"Weekends", data: dailyData.we, backgroundColor:AliceBlue, borderColor:AliceBlue, yAxisID: 'right-y-axis', type: "bar", borderWidth: 1},
+			{label:"Months", data: dailyData.mo, backgroundColor:BurlyWood, borderColor:BurlyWood, yAxisID: 'right-y-axis', type: "bar", borderWidth: 1}
+		],
+		
+		options: {
+			responsive: true,
+			scales: {
+				yAxes: [{
+	            	id: 'left-y-axis',
+	            	type: 'linear',
+	            	position: 'left',
+	                ticks: {
+	                    beginAtZero:true
+	                },
+	                scaleLabel: {
+		        		display: true,
+		        		labelString: "Player Counts"
+		        	}
+	            },{
+	            	id: 'right-y-axis',
+	                type: 'linear',
+	                position: 'right',
+	                ticks: {
+	                    beginAtZero:true
+	                },
+	                scaleLabel: {
+		        		display: true,
+		        		labelString: "Games Per Day"
+		        	}
+	            }]
+	        }
+		}
     };
+
+
+ //    data = {
+	//   type: 'line',
+	//   data: {
+	//     labels: ['1', '2', '3', '4', '5'],
+	//     datasets: [{
+	//       label: 'A',
+	//       yAxisID: 'A',
+	//       data: [100, 96, 84, 76, 69]
+	//     }, {
+	//       label: 'B',
+	//       yAxisID: 'B',
+	//       data: [1, 1, 1, 1, 0]
+	//     }]
+	//   },
+	//   options: {
+	//     scales: {
+	//       yAxes: [{
+	//         id: 'A',
+	//         type: 'linear',
+	//         position: 'left',
+	//       }, {
+	//         id: 'B',
+	//         type: 'linear',
+	//         position: 'right',
+	//         ticks: {
+	//           max: 1,
+	//           min: 0
+	//         }
+	//       }]
+	//     }
+	//   }
+	// }
+
 	chart.data = data;
+	chart.options = data.options;
+
 	chart.update();
 
-	// console.log(chart.scales)
-	// var axis = chart.scales.<scale id>;
-	// var max = axis.max;
-	// var min = axis.min;
 	var axis = chart.scales.y-axis-0;
 	_chtHeight = axis.max;
-	// console.log(_chtHeight)
 }
 
 function updateCharts(data, total) {
