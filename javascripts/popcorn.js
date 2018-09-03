@@ -212,7 +212,7 @@ function setGameElements(locale) {
 	var playWord = ", play"
 
 	if (_device == 'ga') {
-		document.getElementById("linkToPQ").href="https://assistant.google.com/explore";
+		document.getElementById("linkToPQ").href="https://assistant.google.com/services/a/uid/000000b88782db03?hl=en-GB";
 		document.getElementById("deviceLogo").src="/images/google.png";
 		wakeWord = "Ok Google";
 		if (l == "de") playWord = ", ";
@@ -614,40 +614,6 @@ function chtNewUsers(chart, d, l, total) {
 	        }
 		}
     };
-
-
- //    data = {
-	//   type: 'line',
-	//   data: {
-	//     labels: ['1', '2', '3', '4', '5'],
-	//     datasets: [{
-	//       label: 'A',
-	//       yAxisID: 'A',
-	//       data: [100, 96, 84, 76, 69]
-	//     }, {
-	//       label: 'B',
-	//       yAxisID: 'B',
-	//       data: [1, 1, 1, 1, 0]
-	//     }]
-	//   },
-	//   options: {
-	//     scales: {
-	//       yAxes: [{
-	//         id: 'A',
-	//         type: 'linear',
-	//         position: 'left',
-	//       }, {
-	//         id: 'B',
-	//         type: 'linear',
-	//         position: 'right',
-	//         ticks: {
-	//           max: 1,
-	//           min: 0
-	//         }
-	//       }]
-	//     }
-	//   }
-	// }
 
 	chart.data = data;
 	chart.options = data.options;
