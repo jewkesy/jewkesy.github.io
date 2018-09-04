@@ -48,6 +48,11 @@ window.addEventListener('popstate', function (event) {
     }
 }, false);
 
+
+function getFlag(locale) {
+	return locale;
+}
+
 function changeUrl(title, url) {
 	if (typeof (history.pushState) == "undefined") return;
 	
@@ -370,6 +375,7 @@ function buildPopcornLastGames(data, prefix) {
 		else if (games[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
 		else if (games[i].i == 'note') {sym = " &#9834;";}
 		else if (games[i].i == 'hash') {sym = " #";}
+		else if (games[i].i == 'phone') {sym = " 📱";}
 
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
 			var row = container.insertRow(-1);
@@ -422,7 +428,7 @@ function buildPopcornLastGames(data, prefix) {
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
 		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((games[i].st/1000)+""));
-		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' src='./images/" + games[i].l + ".png' />");
+		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' src='./flags/" + getFlag(games[i].l) + ".png' />");
 	}
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
@@ -479,7 +485,7 @@ function buildPopcornLeague(data, prefix, total) {
 		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
 		fadeyStuff(prefix + "_league_ts_" + x, humanTime((topTen[i].t/1000)+""));
 		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
-		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' src='./images/" + topTen[i].l + ".png' />");
+		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' src='./flags/" + getFlag(topTen[i].l) + ".png' />");
 	}
 	fadeyStuff(prefix + '_count', numberWithCommas(i));
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
