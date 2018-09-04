@@ -428,7 +428,7 @@ function buildPopcornLastGames(data, prefix) {
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
 		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((games[i].st/1000)+""));
-		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' src='./flags/" + getFlag(games[i].l) + ".png' />");
+		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+games[i].l+"' alt='"+games[i].l+"' src='./flags/" + getFlag(games[i].l) + ".png' />");
 	}
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
@@ -485,7 +485,7 @@ function buildPopcornLeague(data, prefix, total) {
 		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
 		fadeyStuff(prefix + "_league_ts_" + x, humanTime((topTen[i].t/1000)+""));
 		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
-		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' src='./flags/" + getFlag(topTen[i].l) + ".png' />");
+		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+topTen[i].l+"' alt='"+topTen[i].l+"' src='./flags/" + getFlag(topTen[i].l) + ".png' />");
 	}
 	fadeyStuff(prefix + '_count', numberWithCommas(i));
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
