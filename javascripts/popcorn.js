@@ -510,7 +510,7 @@ function httpGetAmazon(theUrl, callback){
 }
 
 function buildAmazonReview(data) {
-	// console.log(data)
+	console.log(data)
 	if (!data.uk) data.uk = {score:0,reviews:0};
 	if (!data.us) data.us = {score:0,reviews:0};
 	if (!data.de) data.de = {score:0,reviews:0};
@@ -522,10 +522,10 @@ function buildAmazonReview(data) {
 	if (!data.es) data.es = {score:0,reviews:0};
 	if (!data.it) data.it = {score:0,reviews:0};
 	if (!data.mx) data.mx = {score:0,reviews:0};
+	if (!data.ga) data.ga = {score:0,reviews:0};
 
-	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_es_stars', 'pc_it_stars', 'pc_mx_stars'];
+	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_es_stars', 'pc_it_stars', 'pc_mx_stars', 'pc_ga_stars'];
 	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
-	// console.log(data)
 
 	for (var i = 0; i < arIds.length; i++) {
 		var e = document.getElementById(arIds[i]);
@@ -545,6 +545,7 @@ function buildAmazonReview(data) {
 		else if (i == 8) e.classList.add(getCssStar(data.es.score));
 		else if (i == 9) e.classList.add(getCssStar(data.it.score));
 		else if (i ==10) e.classList.add(getCssStar(data.mx.score));
+		else if (i ==11) e.classList.add(getCssStar(Math.ceil(data.ga.score)));
 	}
 
 	if (document.getElementById('pc_uk_reviews')) fadeyStuff('pc_uk_reviews', numberWithCommas(data.uk.reviews));
@@ -558,6 +559,7 @@ function buildAmazonReview(data) {
 	if (document.getElementById('pc_es_reviews')) fadeyStuff('pc_es_reviews', numberWithCommas(data.es.reviews));
 	if (document.getElementById('pc_it_reviews')) fadeyStuff('pc_it_reviews', numberWithCommas(data.it.reviews));
 	if (document.getElementById('pc_mx_reviews')) fadeyStuff('pc_mx_reviews', numberWithCommas(data.mx.reviews));
+	if (document.getElementById('pc_ga_reviews')) fadeyStuff('pc_ga_reviews', numberWithCommas(data.ga.reviews));
 }
 
 function chtNewUsers(chart, d, l, total) {
