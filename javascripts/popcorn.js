@@ -349,8 +349,14 @@ function buildPopcornPage(content) {
 
 	if (!content) return;
 	if (content.count === 0) return;
-	// console.log(content);
+	updateDeviceTypes(content.devices);
 	updateCharts(content.counts, content.totalUsers);
+}
+
+function updateDeviceTypes(devices) {
+	console.log(devices)
+	fadeyStuff("pc_device_alexa", numberWithCommas(devices[0].count+devices[1].count));
+	fadeyStuff("pc_device_google", numberWithCommas(devices[2].count));
 }
 
 function buildPopcornLastGames(data, prefix) {
