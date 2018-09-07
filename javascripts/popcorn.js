@@ -355,8 +355,19 @@ function buildPopcornPage(content) {
 
 function updateDeviceTypes(devices) {
 	console.log(devices)
-	fadeyStuff("pc_device_alexa", numberWithCommas(devices[0].count+devices[1].count));
-	fadeyStuff("pc_device_google", numberWithCommas(devices[2].count));
+
+	var eCount = 0;// parseInt($("#pc_device_alexa").html().replace(',', ''));
+	var gCount = 0;// parseInt($("#pc_device_google").html().replace(',', ''));
+
+	console.log(eCount, gCount)
+
+	for (var i = 0; i < devices.length; i++) {
+		if (devices[i].Id.indexOf('Echo') > -1) eCount += devices[i].count;
+		else if (devices[i].Id.indexOf('Google') > -1) gCount += devices[i].count;
+	}
+
+	fadeyStuff("pc_device_alexa", numberWithCommas(eCount));
+	fadeyStuff("pc_device_google", numberWithCommas(gCount));
 }
 
 function buildPopcornLastGames(data, prefix) {
