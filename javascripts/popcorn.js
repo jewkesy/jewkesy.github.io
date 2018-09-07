@@ -748,6 +748,9 @@ function updateCharts(data, total) {
 
 function resetLimit() {
 	_limit = 10;
+	var newUrl = paramReplace('limit', window.location.href, _limit);
+	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
+	changeUrl('', newUrl);
 	clearLeague('pc_scores', buildLeague());
 	clearLeague('pc_lastgames', buildLastGames());
 }
