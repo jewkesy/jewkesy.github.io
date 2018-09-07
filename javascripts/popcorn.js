@@ -181,18 +181,18 @@ function switchLocale(locale) {
 
 function switchDevice(device) {
 	if (!device) device = "ga_aa";
-
+	_timeFrom = 0;
 	if (device == 'Google') {
 		_device = 'ga';
 		_deviceFilter = "&device=Google";
 	} else if (device == 'Echo') {
 		_device = 'aa';
-		_deviceFilter = "&device=Echo";
+		_deviceFilter = "&device=Echo,Echo%20Show,$exists:false";
 	} else {
 		_device = 'ga_aa';
 		_deviceFilter = "";
 	}
-
+	console.log(_deviceFilter)
 	var elements = document.getElementsByClassName('devicelist');
 	for(var i=0, l=elements.length; i<l; i++){
 	 elements[i].classList.remove("selected");
@@ -354,12 +354,12 @@ function buildPopcornPage(content) {
 }
 
 function updateDeviceTypes(devices) {
-	console.log(devices)
+	// console.log(devices)
 
 	var eCount = 0;// parseInt($("#pc_device_alexa").html().replace(',', ''));
 	var gCount = 0;// parseInt($("#pc_device_google").html().replace(',', ''));
 
-	console.log(eCount, gCount)
+	// console.log(eCount, gCount)
 
 	for (var i = 0; i < devices.length; i++) {
 		if (devices[i].Id.indexOf('Echo') > -1) eCount += devices[i].count;
@@ -527,7 +527,7 @@ function httpGetAmazon(theUrl, callback){
 }
 
 function buildAmazonReview(data) {
-	console.log(data)
+	// console.log(data)
 	if (!data.uk) data.uk = {score:0,reviews:0};
 	if (!data.us) data.us = {score:0,reviews:0};
 	if (!data.de) data.de = {score:0,reviews:0};
