@@ -400,3 +400,57 @@ function cleanseText(txt) {
 function randomInt(low, high) {
   return Math.floor(Math.random() * (high));
 }
+
+function summariseChtData(data, fraction) {
+	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
+	var newSize = 10;
+	// console.log(data)
+	// check all same length;
+	var initialLabel = data.labels[0];
+	var l = -1;
+	for (var property in data) {
+	    if (data.hasOwnProperty(property)) {
+	    	if (l == -1) { l = data[property].length; continue; }
+	    	if (data[property].length != l) { 
+	    		// console.log("Length mismatch, resetting", l, data[property].length, property, data); 
+	    		reset(); 
+	    		return data; 
+	    	}
+	    }
+	}
+	
+	var trunc_length = Math.ceil(l / fraction);
+	var leftSide = {};
+	
+	for (var property in data) {
+	    if (data.hasOwnProperty(property)) {
+	    	leftSide[property] = data[property].splice(0, trunc_length);
+	    }
+	}
+
+	for (var property in leftSide) {
+	    if (leftSide.hasOwnProperty(property)) {
+	    	if (property == 'labels') {
+	    		leftSide[property] = [];
+	    		resizeArr(leftSide[property], newSize, "");
+	    		leftSide[property][0] = initialLabel;
+	    		var mid = Math.round(leftSide[property].length/2);
+	    		leftSide[property][mid] = trunc_length + " days avg";
+	    	} else if (property == 'we' || property == 'mo') {
+	    		leftSide[property] = [];
+	    		resizeArr(leftSide[property], newSize, null);
+	    	} else {
+	    		leftSide[property] = reduceArr(leftSide[property], newSize);
+	    	}
+	    }
+	}
+
+	// merge new left side
+	for (var property in leftSide) {
+	    if (leftSide.hasOwnProperty(property)) {
+	    	leftSide[property] = leftSide[property].concat(data[property]);
+	    }
+	}
+
+	return leftSide;
+}

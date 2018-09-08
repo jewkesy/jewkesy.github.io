@@ -10,7 +10,6 @@ var _keywords;
 
 var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc&limit=' + _limit;
-var _amazonUrl = aws + 'getHomePageContent?amazon=true';
 
 var _startDate = new Date("2017-05-28T12:00:00Z");
 var _timeFrom = 0;
@@ -48,11 +47,6 @@ window.addEventListener('popstate', function (event) {
     }
 }, false);
 
-
-function getFlag(locale) {
-	return locale;
-}
-
 function changeUrl(title, url) {
 	if (typeof (history.pushState) == "undefined") return;
 	
@@ -79,11 +73,6 @@ function startPopcornQuiz() {
 	getEvent();
 	checkNewDay();
 	getMyRank();
-	httpGetAmazon(_amazonUrl, function (err, data) {
-		amazonTimer();
-	});
-
-
 	
 	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		buildDailyPlayers(err, data);
@@ -105,7 +94,6 @@ function amazonTimer() {
 		getEvent();
 		checkNewDay();
 		getMyRank();
-		httpGetAmazon(_amazonUrl, function (err, data) {});
 	}, 60000);
 }
 
@@ -445,7 +433,7 @@ function buildPopcornLastGames(data, prefix) {
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
 		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((games[i].st/1000)+""));
-		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+games[i].l+"' alt='"+games[i].l+"' src='./flags/" + getFlag(games[i].l) + ".png' />");
+		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+games[i].l+"' alt='"+games[i].l+"' src='./flags/" + games[i].l + ".png' />");
 	}
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
@@ -502,81 +490,10 @@ function buildPopcornLeague(data, prefix, total) {
 		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
 		fadeyStuff(prefix + "_league_ts_" + x, humanTime((topTen[i].t/1000)+""));
 		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
-		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+topTen[i].l+"' alt='"+topTen[i].l+"' src='./flags/" + getFlag(topTen[i].l) + ".png' />");
+		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+topTen[i].l+"' alt='"+topTen[i].l+"' src='./flags/" + topTen[i].l + ".png' />");
 	}
 	fadeyStuff(prefix + '_count', numberWithCommas(i));
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
-}
-
-function httpGetAmazon(theUrl, callback){
-	var xmlHttp = null;
-	xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("GET", theUrl, true);
-	xmlHttp.onreadystatechange = handleReadyStateChange;
-	xmlHttp.send(null);
-
-	function handleReadyStateChange() {
-		if (xmlHttp.readyState == 4) {
-			if (xmlHttp.status == 200) {
-				var doc = JSON.parse(xmlHttp.responseText);
-				buildAmazonReview(doc.reviews[0]);
-				return callback();
-			}
-		}
-	}
-}
-
-function buildAmazonReview(data) {
-	// console.log(data)
-	if (!data.uk) data.uk = {score:0,reviews:0};
-	if (!data.us) data.us = {score:0,reviews:0};
-	if (!data.de) data.de = {score:0,reviews:0};
-	if (!data.in) data.in = {score:0,reviews:0};
-	if (!data.ca) data.ca = {score:0,reviews:0};
-	if (!data.jp) data.jp = {score:0,reviews:0};
-	if (!data.au) data.au = {score:0,reviews:0};
-	if (!data.fr) data.fr = {score:0,reviews:0};
-	if (!data.es) data.es = {score:0,reviews:0};
-	if (!data.it) data.it = {score:0,reviews:0};
-	if (!data.mx) data.mx = {score:0,reviews:0};
-	if (!data.ga) data.ga = {score:0,reviews:0};
-
-	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_es_stars', 'pc_it_stars', 'pc_mx_stars', 'pc_ga_stars'];
-	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
-
-	for (var i = 0; i < arIds.length; i++) {
-		var e = document.getElementById(arIds[i]);
-		if (!e) continue;
-		for (var j = 0; j < arClasses.length; j++) {
-			e.classList.remove(arClasses[j]);
-		}
-
-		     if (i ===0) e.classList.add(getCssStar(data.uk.score));
-		else if (i == 1) e.classList.add(getCssStar(data.us.score));
-		else if (i == 2) e.classList.add(getCssStar(data.de.score));
-		else if (i == 3) e.classList.add(getCssStar(data.in.score));
-		else if (i == 4) e.classList.add(getCssStar(data.ca.score));
-		else if (i == 5) e.classList.add(getCssStar(data.jp.score));
-		else if (i == 6) e.classList.add(getCssStar(data.au.score));
-		else if (i == 7) e.classList.add(getCssStar(data.fr.score));
-		else if (i == 8) e.classList.add(getCssStar(data.es.score));
-		else if (i == 9) e.classList.add(getCssStar(data.it.score));
-		else if (i ==10) e.classList.add(getCssStar(data.mx.score));
-		else if (i ==11) e.classList.add(getCssStar(Math.ceil(data.ga.score)));
-	}
-
-	if (document.getElementById('pc_uk_reviews')) fadeyStuff('pc_uk_reviews', numberWithCommas(data.uk.reviews));
-	if (document.getElementById('pc_us_reviews')) fadeyStuff('pc_us_reviews', numberWithCommas(data.us.reviews));
-	if (document.getElementById('pc_de_reviews')) fadeyStuff('pc_de_reviews', numberWithCommas(data.de.reviews));
-	if (document.getElementById('pc_in_reviews')) fadeyStuff('pc_in_reviews', numberWithCommas(data.in.reviews));
-	if (document.getElementById('pc_ca_reviews')) fadeyStuff('pc_ca_reviews', numberWithCommas(data.ca.reviews));
-	if (document.getElementById('pc_jp_reviews')) fadeyStuff('pc_jp_reviews', numberWithCommas(data.jp.reviews));
-	if (document.getElementById('pc_au_reviews')) fadeyStuff('pc_au_reviews', numberWithCommas(data.au.reviews));
-	if (document.getElementById('pc_fr_reviews')) fadeyStuff('pc_fr_reviews', numberWithCommas(data.fr.reviews));
-	if (document.getElementById('pc_es_reviews')) fadeyStuff('pc_es_reviews', numberWithCommas(data.es.reviews));
-	if (document.getElementById('pc_it_reviews')) fadeyStuff('pc_it_reviews', numberWithCommas(data.it.reviews));
-	if (document.getElementById('pc_mx_reviews')) fadeyStuff('pc_mx_reviews', numberWithCommas(data.mx.reviews));
-	if (document.getElementById('pc_ga_reviews')) fadeyStuff('pc_ga_reviews', numberWithCommas(data.ga.reviews));
 }
 
 function chtNewUsers(chart, d, l, total) {
@@ -870,58 +787,3 @@ function startProgressBar(seconds, answer, correct) {
 
 	document.getElementById('pc_progressbar').setAttribute('style', 'width:0px;');
 }
-
-function summariseChtData(data, fraction) {
-	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
-	var newSize = 10;
-	// console.log(data)
-	// check all same length;
-	var initialLabel = data.labels[0];
-	var l = -1;
-	for (var property in data) {
-	    if (data.hasOwnProperty(property)) {
-	    	if (l == -1) { l = data[property].length; continue; }
-	    	if (data[property].length != l) { 
-	    		// console.log("Length mismatch, resetting", l, data[property].length, property, data); 
-	    		reset(); 
-	    		return data; 
-	    	}
-	    }
-	}
-	
-	var trunc_length = Math.ceil(l / fraction);
-	var leftSide = {};
-	
-	for (var property in data) {
-	    if (data.hasOwnProperty(property)) {
-	    	leftSide[property] = data[property].splice(0, trunc_length);
-	    }
-	}
-
-	for (var property in leftSide) {
-	    if (leftSide.hasOwnProperty(property)) {
-	    	if (property == 'labels') {
-	    		leftSide[property] = [];
-	    		resizeArr(leftSide[property], newSize, "");
-	    		leftSide[property][0] = initialLabel;
-	    		var mid = Math.round(leftSide[property].length/2);
-	    		leftSide[property][mid] = trunc_length + " days avg";
-	    	} else if (property == 'we' || property == 'mo') {
-	    		leftSide[property] = [];
-	    		resizeArr(leftSide[property], newSize, null);
-	    	} else {
-	    		leftSide[property] = reduceArr(leftSide[property], newSize);
-	    	}
-	    }
-	}
-
-	// merge new left side
-	for (var property in leftSide) {
-	    if (leftSide.hasOwnProperty(property)) {
-	    	leftSide[property] = leftSide[property].concat(data[property]);
-	    }
-	}
-
-	return leftSide;
-}
-
