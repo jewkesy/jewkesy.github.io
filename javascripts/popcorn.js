@@ -27,8 +27,6 @@ var _dailyPlayers = [];
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
 
-if (document.getElementById('captionYear')) document.getElementById('captionYear').innerHTML = new Date().getFullYear();
-
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
@@ -99,28 +97,28 @@ function amazonTimer() {
 
 var _runStats = true;
 function statsTimer() {
-	sInt = setInterval(function () {
-		if (_runStats) getStats();
+	sInt = setTimeout(function () {
+		clearTimeout(sInt);
+		getStats();
 	}, 2500);
 }
 
 function getStats() {
-	_runStats = false;
-	document.getElementById('pc_more_count').innerHTML = _limit;
 	httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
-		if (!err) {
-			if (!data || !data[0]){ _runStats = true; return; }
-			if (_lastTimestamp < data[0].timestamp) {
-				_lastTimestamp = data[0].timestamp;
-				getEverything();
-				_runStats = true;
-			} else { _runStats = true; }
-		}  else { _runStats = true; }
+		if (err) {console.error(err); return statsTimer();}
+
+		if (data && _lastTimestamp < data[0].timestamp) {
+			_lastTimestamp = data[0].timestamp;
+			getEverything(function (e, r) {
+				 return statsTimer();
+			});
+		} else {
+			return statsTimer();
+		}
 	});
 }
 
-
-function getEverything() {
+function getEverything(callback) {
 	buildLeague();
 	buildLastGames();
 	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, 'pc', function (err, data) {
@@ -135,6 +133,8 @@ function getEverything() {
 	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		buildDailyPlayers(err, data);
 	});
+
+	return callback();
 }
 
 function buildLeague() {
@@ -314,7 +314,7 @@ function buildDailyPlayers(err, players) {
 function buildDailyGames(err, content) {
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
-	// console.log(content)
+	console.log(content)
 	_gameinfo.dailygames = content.dailygames;
 	fadeyStuff("pc_games_today", numberWithCommas(content.dailygames[content.dailygames.length-1]));
 
@@ -674,6 +674,7 @@ function resetLimit() {
 
 function increaseLimit() {
 	_limit = _limit * 2;
+	document.getElementById('pc_more_count').innerHTML = _limit;
 	var newUrl = paramReplace('limit', window.location.href, _limit);
 	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
 	changeUrl('', newUrl);
