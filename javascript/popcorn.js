@@ -28,6 +28,7 @@ var _dailyPlayers = [];
 
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
+var _answerPhrases = ["The answer is "];
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
@@ -48,6 +49,7 @@ window.addEventListener('popstate', function (event) {
 }, false);
 
 function startPopcornQuiz(locale, limit, device) {
+	amazonTimer();
 	getStats();
 	// console.log(_limit, getParameterByName('limit'))
 	document.getElementById('pc_more_count').innerHTML = _limit;
@@ -56,18 +58,19 @@ function startPopcornQuiz(locale, limit, device) {
 		applyLocaleHeader(_locale, _device);
 		_popcornUrl += "&locale=" + _locale;
 	}
-	// buildLeague();
-	// buildLastGames();
+
 	getKeywords();
-	getPhrases();
+	
+	
+}
+
+function amazonTimer() {
 	getIntro();
 	getEvent();
 	checkNewDay();
 	getMyRank();
-}
-
-function amazonTimer() {
 	aInt = setInterval(function () {
+		getPhrases();
 		getIntro();
 		getEvent();
 		checkNewDay();
@@ -186,7 +189,7 @@ function switchLocale(locale) {
 	_locale = locale;
 
 	applyLocaleHeader(locale, _device);
-
+	getIntro();
 	getKeywords();
 	getPhrases();
 	getQuestions(5, "");
@@ -301,6 +304,8 @@ function getPhrases() {
 	httpGetStats(url, 'pc',  function (err, data) {
 		if (!data) return;
 		// console.log(data)
+		_answerPhrases = data.msg.answerPhrases;
+
 		for (var i = 0; i < data.msg.correct.length; i++) {
 			data.msg.correct[i] = data.msg.correct[i].replace('<say-as interpret-as="interjection">', '');
 			data.msg.correct[i] = data.msg.correct[i].replace('</say-as>', '');
@@ -785,10 +790,12 @@ function showAnswer(chosen, answer, correct){
 	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 
+	var a = _answerPhrases[randomInt(0, _answerPhrases.length-1)].replace('&&','');
+
 	var text = "";
 	if (chosen === null) {
-		text = "The correct answer was " + answer+". ";
-		if (correct) text += "The answer is " + correct;
+		text = "The correct answer was " + answer +". ";
+		if (correct) text += a + correct;
 	} else {
 		if (chosen == answer) {
 			var i = randomInt(0, _correctPhrases.length-1);
@@ -798,7 +805,7 @@ function showAnswer(chosen, answer, correct){
 			text = _incorrectPhrases[randomInt(0, i)];
 		}
 
-		if (correct) text += " - The answer is " + correct;
+		if (correct) text += " - " + a + correct;
 	}
 	fadeyStuff("pc_answer", text);
 }
