@@ -192,7 +192,7 @@ function switchDevice(device) {
 		_device = 'ga_aa';
 		_deviceFilter = "";
 	}
-	console.log(_deviceFilter)
+	// console.log(_deviceFilter)
 	var elements = document.getElementsByClassName('devicelist');
 	for(var i=0, l=elements.length; i<l; i++){
 	 elements[i].classList.remove("selected");
