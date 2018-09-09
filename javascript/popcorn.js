@@ -182,10 +182,9 @@ function getDailyPlayers(callback) {
 	});
 }
 
-
 function switchLocale(locale) {
 	_locale = locale;
-	
+
 	applyLocaleHeader(locale, _device);
 	getIntro();
 	getKeywords();
@@ -816,6 +815,9 @@ function showAnswer(chosen, answer, correct){
 		if (correct) text += " - " + a + correct;
 	}
 	fadeyStuff("pc_answer", text);
+	setTimeout(function(){
+		getIntro();
+	}, 4000);
 }
 
 function startProgressBar(seconds, answer, correct) {
