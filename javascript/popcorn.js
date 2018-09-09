@@ -60,8 +60,6 @@ function startPopcornQuiz(locale, limit, device) {
 	}
 
 	getKeywords();
-	
-	
 }
 
 function amazonTimer() {
@@ -187,7 +185,7 @@ function getDailyPlayers(callback) {
 
 function switchLocale(locale) {
 	_locale = locale;
-
+	
 	applyLocaleHeader(locale, _device);
 	getIntro();
 	getKeywords();
@@ -199,7 +197,7 @@ function switchLocale(locale) {
 	
 	clearInterval(sInt);
 	statsTimer();
-	
+	_dailyPlayers = [];
 	clearLeague('pc_scores', null);
 	clearLeague('pc_lastgames', null);
 	// getGamePlay();
@@ -225,7 +223,7 @@ function switchDevice(device) {
 	}
 
 	document.getElementById("th_"+_device).classList.add('selected');
-
+	_dailyPlayers = [];
 	clearLeague('pc_scores', null);
 	clearLeague('pc_lastgames', null);
 	getGamePlay();
@@ -560,6 +558,9 @@ function chtNewUsers(chart, d, l, total) {
 			{label:"Spain", data: dailyData.es, borderColor:Coral, backgroundColor:Coral, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
 			{label:"Italy", data: dailyData.it, borderColor:Moccasin, backgroundColor:Moccasin, yAxisID: 'left-y-axis', fill:false, lineTension:0.1, type:"line", pointRadius:2},
 			{label:"Mexico", data: dailyData.mx, borderColor:SeaGreen, backgroundColor:SeaGreen, fill:false, lineTension:0.1, type:"line", pointRadius:2},
+
+			{label:"Spanish (Latin America)", data: dailyData.esla, borderColor:DarkGoldenRod, backgroundColor:DarkGoldenRod, fill:false, lineTension:0.1, type:"line", pointRadius:2},
+
 			{label:"DailyAvg", data: dailyData.avg, borderColor:Black, backgroundColor:Black, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
 			{label:"DailyPlayers", data: dailyData.dailyplayers, borderColor:LightSlateGray, backgroundColor:LightSlateGray, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
 
@@ -641,6 +642,7 @@ function updateCharts(data, total) {
 		if (diff > _newUsers.es.length) resizeArr(_newUsers.es, diff, null);
 		if (diff > _newUsers.it.length) resizeArr(_newUsers.it, diff, null);
 		if (diff > _newUsers.mx.length) resizeArr(_newUsers.mx, diff, null);
+		if (diff > _newUsers.esla.length) resizeArr(_newUsers.esla, diff, null);
 		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
 		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
@@ -651,6 +653,9 @@ function updateCharts(data, total) {
 		if (data.avg[i] != _newUsers.avg[i]) _newUsers.avg[i] += data.avg[i];
 		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
 	}
+
+	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
+	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
 
 	for (var i = 0; i < data.totals.length; i++) {
 		if (data.uk[i] != _newUsers.uk[i]) {
@@ -697,9 +702,12 @@ function updateCharts(data, total) {
 			if (!_newUsers.mx[i]) _newUsers.mx[i] = 0;
 			_newUsers.mx[i] += data.mx[i];
 		}
+		if (data.esla[i] != _newUsers.esla[i]) {
+			if (!_newUsers.esla[i]) _newUsers.esla[i] = 0;
+			_newUsers.esla[i] += data.esla[i];
+		}
 	}
-	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
-	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
+	
 	_total = total;
 	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
