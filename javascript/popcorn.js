@@ -200,7 +200,7 @@ function switchLocale(locale) {
 	_dailyPlayers = [];
 	clearLeague('pc_scores', null);
 	clearLeague('pc_lastgames', null);
-	// getGamePlay();
+	getGamePlay();
 }
 
 function switchDevice(device) {
