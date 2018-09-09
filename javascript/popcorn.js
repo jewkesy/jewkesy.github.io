@@ -834,7 +834,7 @@ function showAnswer(chosen, answer, correct){
 
 	setTimeout(function(){
 		getIntro();
-	}, 4000);
+	}, 2500);
 }
 
 function startProgressBar(seconds, answer, correct) {
