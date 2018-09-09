@@ -28,7 +28,7 @@ var _dailyPlayers = [];
 
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
-var _answerPhrases = ["The answer is "];
+var _answerPhrases = ["The answer is &&"];
 
 Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
@@ -63,6 +63,7 @@ function startPopcornQuiz(locale, limit, device) {
 }
 
 function amazonTimer() {
+	getPhrases();
 	getIntro();
 	getEvent();
 	checkNewDay();
@@ -797,12 +798,12 @@ function showAnswer(chosen, answer, correct){
 	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 
-	var a = _answerPhrases[randomInt(0, _answerPhrases.length-1)].replace('&&','');
-
+	var a = _answerPhrases[randomInt(0, _answerPhrases.length-1)];
+	// console.log(_answerPhrases)
 	var text = "";
 	if (chosen === null) {
-		text = "The correct answer was " + answer +". ";
-		if (correct) text += a + correct;
+		text = "The correct answer was " + answer + ". ";
+		if (correct) text += a.replace('&&', correct); // + correct;
 	} else {
 		if (chosen == answer) {
 			var i = randomInt(0, _correctPhrases.length-1);
@@ -812,9 +813,25 @@ function showAnswer(chosen, answer, correct){
 			text = _incorrectPhrases[randomInt(0, i)];
 		}
 
-		if (correct) text += " - " + a + correct;
+		if (correct) text += " - " + a.replace('&&', correct);// + correct;
 	}
 	fadeyStuff("pc_answer", text);
+
+	// var curr = 200;
+	// var width = 0;
+	// var seconds = 4000*10;
+	// pg = setInterval(function () {
+	// 	curr -= 1;
+	// 	width = +((curr/seconds) * 100).toFixed(0);
+	// 	console.log(curr, seconds, width);
+	// 	document.getElementById('pc_progressbar').setAttribute('style', "width:" + width + "%;");
+	// 	if (width <= 0) {
+	// 		clearInterval(pg);
+	// 		getIntro();
+	// 	}
+	// }, 100);
+
+
 	setTimeout(function(){
 		getIntro();
 	}, 4000);
