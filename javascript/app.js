@@ -371,6 +371,7 @@ function fadeyStuff(id, val) {
 	if (document.getElementById(id).innerHTML == val) return;
 
 	$("#"+id).fadeOut(666, function () {
+		if (!document.getElementById(id)) return false;
 		document.getElementById(id).innerHTML = val;
 		$("#"+id).fadeIn();
 	});

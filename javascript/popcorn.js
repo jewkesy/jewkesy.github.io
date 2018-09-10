@@ -86,7 +86,7 @@ function statsTimer() {
 }
 
 function getStats() {
-	// console.log(_popcornLastGameUrl);
+	// console.log('getStats');
 	httpGetLastPlay(_popcornLastGameUrl, 'pc', function (err, data) {
 		if (err) { console.error(err); return statsTimer(); }
 		// console.log(_lastTimestamp, data[0].timestamp)
@@ -102,8 +102,6 @@ function getStats() {
 }
 
 function getGamePlay(callback) {
-	// console.log('getGamePlay')
-
 	async.parallel([
 	    function(callback) {
 	        buildLeague(function () {
@@ -375,17 +373,19 @@ function buildPopcornPage(content) {
 
 	if (!content) return;
 	if (content.count === 0) return;
-	updateDeviceTypes(content.devices);
+	updateDeviceTypes(content.devices, content.timeFrom);
 	updateCharts(content.counts, content.totalUsers);
 }
 
-function updateDeviceTypes(devices) {
-	// console.log(devices)
+function updateDeviceTypes(devices, timeFrom) {
 
-	var eCount = 0;// parseInt($("#pc_device_alexa").html().replace(',', ''));
-	var gCount = 0;// parseInt($("#pc_device_google").html().replace(',', ''));
+	var eCount = 0;
+	var gCount = 0; 
 
-	// console.log(eCount, gCount)
+	if (timeFrom > 0) {
+		eCount += +$("#pc_device_alexa").html().replace(',', '');
+		gCount += +$("#pc_device_google").html().replace(',', '');
+	}
 
 	for (var i = 0; i < devices.length; i++) {
 		if (devices[i].Id.indexOf('Echo') > -1) eCount += devices[i].count;
