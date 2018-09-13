@@ -501,6 +501,7 @@ function buildPopcornLeague(data, prefix, total) {
 			cell0.id = prefix + "_league_device_" + x;
 			var cell1 = row.insertCell(1);
 			cell1.id = prefix + "_league_rank_" + x;
+			cell1.className = "font16 strong italic";
 			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_league_score_" + x;
 			var cell3 = row.insertCell(3);
@@ -521,7 +522,7 @@ function buildPopcornLeague(data, prefix, total) {
 			document.getElementById(prefix + '_league_ts_' + x).title = topTen[i].t/1000;
 			document.getElementById(prefix + '_league_st_' + x).title = topTen[i].st/1000;
 		}
-		fadeyStuff(prefix + "_league_device_" + x, "<img width='22' class='device' src='./images/" + deviceIcon + ".png' />");
+		fadeyStuff(prefix + "_league_device_" + x, "<img width='22' class='device' title='"+ deviceIcon +"' alt='"+deviceIcon+"' src='./images/" + deviceIcon + ".png' />");
 		fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
 		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
 		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));

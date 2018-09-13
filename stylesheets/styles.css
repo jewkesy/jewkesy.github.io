@@ -398,7 +398,7 @@ img.rounded {
   margin-right: 10px;
   margin-top: 0px;
   background-position: 0px 20px;
-  /*border: 1px solid;*/
+
   text-align: center;
 }
 
@@ -481,6 +481,31 @@ img.rounded {
 tr.hover > th:hover {
   cursor: pointer;
   background-color: #eee;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.font12 {
+  font-size: 12px !important;
+}
+
+.font16 {
+  font-size: 16px !important;
+}
+
+.reviewTile {
+  min-width: 120px;
+}
+
+.reviewTile:hover {
+  background-color: red;
+  text-decoration: none;
 }
 
 .typed-cursor{
