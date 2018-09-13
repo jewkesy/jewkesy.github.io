@@ -395,7 +395,7 @@ img.rounded {
   width: 75px;  /* 15px per star */
   background-repeat: no-repeat;
   background-size: 303px 14px;
-  margin-right: 10px;
+  margin-right: 0px;
   margin-top: 0px;
   background-position: 0px 20px;
 
@@ -504,7 +504,6 @@ tr.hover > th:hover {
 }
 
 .reviewTile:hover {
-  background-color: red;
   text-decoration: none;
 }
 
