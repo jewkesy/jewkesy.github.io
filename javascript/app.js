@@ -19,6 +19,10 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.split(search).join(replacement);
 };
 
+function percentage(partialValue, totalValue) {
+   return (100 * partialValue) / totalValue;
+} 
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

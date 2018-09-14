@@ -392,6 +392,20 @@ function updateDeviceTypes(devices, timeFrom) {
 		else if (devices[i].Id.indexOf('Google') > -1) gCount += devices[i].count;
 	}
 
+	var aWidth = percentage(eCount, eCount+gCount);
+	var gWidth = percentage(gCount, eCount+gCount);
+
+	document.getElementById('barAlexa').setAttribute('style', 'width:'+aWidth+'%');
+	document.getElementById('barGoogle').setAttribute('style','width:'+gWidth+'%');
+
+	if (aWidth > gWidth) {
+		fadeyStuff("barAlexa", aWidth.toFixed(0)+'%');
+		fadeyStuff("barGoogle", '');
+	} else {
+		fadeyStuff("barAlexa", '');
+		fadeyStuff("barGoogle", gWidth.toFixed(0)+'%');
+	}
+
 	fadeyStuff("pc_device_alexa", numberWithCommas(eCount));
 	fadeyStuff("pc_device_google", numberWithCommas(gCount));
 }
