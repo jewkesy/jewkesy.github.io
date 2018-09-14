@@ -500,13 +500,16 @@ tr.hover > th:hover {
 }
 
 .reviewTile {
-  min-width: 120px;
+  min-width: 90px;
+  max-width: 90px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background-color: #FDFEFE;
 }
 
 .reviewTile:hover {
   text-decoration: none;
 }
-
 
 .stacked-bar-graph {
   width: 100%;
