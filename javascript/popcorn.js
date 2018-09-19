@@ -138,21 +138,25 @@ function getGamePlay(callback) {
 }
 
 function buildLeague(callback) {
-	httpGetStats(aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter, 'pc',  function (err, data) {
+	var uri = aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
+	console.log(uri)
+	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLeague(data, 'pc');
 		if (callback) return callback();
 	});
 }
 
 function buildLastGames(callback) {
-	httpGetStats(aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter, 'pc',  function (err, data) {
+	var uri = aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
+	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLastGames(data, 'pc');
 		if (callback) return callback();
 	});
 }
 
 function getGraphData(callback) {
-	httpGetStats(aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, 'pc', function (err, data) {
+	var uri = aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter;
+	httpGetStats(uri, 'pc', function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
 		// console.log(data);
@@ -206,7 +210,7 @@ function switchDevice(device) {
 	_timeFrom = 0;
 	if (device == 'Google') {
 		_device = 'ga';
-		_deviceFilter = "&device=Google";
+		_deviceFilter = "&device=Google,Google%20Phone,Google%20Surface,Google%20SpeakerP";
 	} else if (device == 'Echo') {
 		_device = 'aa';
 		_deviceFilter = "&device=Echo,Echo%20Show,$exists:false";
@@ -412,7 +416,7 @@ function updateDeviceTypes(devices, timeFrom) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	// console.log(data);
+	console.log(data);
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
@@ -427,7 +431,9 @@ function buildPopcornLastGames(data, prefix) {
 		var device = ".";
 		var deviceIcon = "alexa";
 		if (games[i].d == "Echo Show")    device = ":";
-		else if (games[i].d == "Google"){ device = ""; deviceIcon = "google"; }
+		else if (games[i].d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
+		else if (games[i].d == "Google Phone"){ device = "."; deviceIcon = "google"; }
+		else if (games[i].d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
 		if (games[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
 		else if (games[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
 		else if (games[i].i == 'note') {sym = " &#9834;";}
@@ -502,6 +508,9 @@ function buildPopcornLeague(data, prefix, total) {
 		var deviceIcon = "alexa";
 		if (topTen[i].d == "Echo Show")    device = ":";
 		else if (topTen[i].d == "Google"){ device = ""; deviceIcon = "google"; }
+		else if (topTen[i].d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
+		else if (topTen[i].d == "Google Phone"){ device = "."; deviceIcon = "google"; }
+		else if (topTen[i].d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
 
 		if (topTen[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
 		else if (topTen[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
