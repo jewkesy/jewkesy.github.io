@@ -431,6 +431,7 @@ function buildPopcornLastGames(data, prefix) {
 		var device = ".";
 		var deviceIcon = "alexa";
 		if (games[i].d == "Echo Show")    device = ":";
+		else if (games[i].d == "Google"){ device = ""; deviceIcon = "google"; }
 		else if (games[i].d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
 		else if (games[i].d == "Google Phone"){ device = "."; deviceIcon = "google"; }
 		else if (games[i].d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
@@ -516,6 +517,7 @@ function buildPopcornLeague(data, prefix, total) {
 		else if (topTen[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
 		else if (topTen[i].i == 'note') {sym = " &#9834;";}
 		else if (topTen[i].i == 'hash') {sym = " #";}
+		else if (topTen[i].i == 'phone') {sym = " 📱";}
 
 		if (!document.getElementById(prefix + '_league_' + x)) {
 			var row = container.insertRow(-1);
