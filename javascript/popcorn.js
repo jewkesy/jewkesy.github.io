@@ -210,7 +210,7 @@ function switchDevice(device) {
 	_timeFrom = 0;
 	if (device == 'Google') {
 		_device = 'ga';
-		_deviceFilter = "&device=Google,Google%20Phone,Google%20Surface,Google%20SpeakerP";
+		_deviceFilter = "&device=Google,Google%20Phone,Google%20Surface,Google%20Speaker";
 	} else if (device == 'Echo') {
 		_device = 'aa';
 		_deviceFilter = "&device=Echo,Echo%20Show,$exists:false";
