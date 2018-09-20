@@ -139,7 +139,6 @@ function getGamePlay(callback) {
 
 function buildLeague(callback) {
 	var uri = aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
-	console.log(uri)
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLeague(data, 'pc');
 		if (callback) return callback();
@@ -416,7 +415,6 @@ function updateDeviceTypes(devices, timeFrom) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	console.log(data);
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
