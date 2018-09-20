@@ -369,7 +369,7 @@ function paramReplace(param, url, value) {
 }
 
 function fadeyStuff(id, val) {
-	if (!val) return;
+	// if (!val) return;
 	if (!document.getElementById(id)) return;
 
 	if (document.getElementById(id).innerHTML == val) return;
