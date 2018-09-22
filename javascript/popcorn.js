@@ -148,6 +148,7 @@ function buildLeague(callback) {
 function buildLastGames(callback) {
 	var uri = aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
+		console.log(data)
 		buildPopcornLastGames(data, 'pc');
 		if (callback) return callback();
 	});
@@ -485,7 +486,7 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
 		
 		if (!games[i].lg) games[i].lg = "";
-		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg.replace(/ /g,'')+"<br/>"+games[i].ge );
+		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg+"<br/>"+games[i].ge );
 		fadeyStuff(prefix + "_lastgames_gs_" + x, games[i].gs);
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
