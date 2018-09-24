@@ -251,6 +251,7 @@ function setGameElements(locale) {
 		else if (l == "ja") playWord = ", ";
 		else if (l == "es") playWord = ", ";
 		else if (l == "it") playWord = ", ";
+		else if (l == "pt") playWord = ", ";
 		else playWord = ", talk to";
 	} else {
 		document.getElementById("linkToPQ").href="https://www.amazon.co.uk/dp/B0719TQV6W";
@@ -585,6 +586,7 @@ function chtNewUsers(chart, d, l, total) {
 			{label:"Mexico", data: dailyData.mx, borderColor:SeaGreen, backgroundColor:SeaGreen, fill:false, lineTension:0.1, type:"line", pointRadius:2},
 
 			{label:"Spanish (Latin America)", data: dailyData.esla, borderColor:DarkGoldenRod, backgroundColor:DarkGoldenRod, fill:false, lineTension:0.1, type:"line", pointRadius:2},
+			{label:"Brazil", data: dailyData.br, borderColor:LightSteelBlue, backgroundColor:LightSteelBlue, fill:false, lineTension:0.1, type:"line", pointRadius:2},
 
 			{label:"DailyAvg", data: dailyData.avg, borderColor:Black, backgroundColor:Black, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
 			{label:"DailyPlayers", data: dailyData.dailyplayers, borderColor:LightSlateGray, backgroundColor:LightSlateGray, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
@@ -636,7 +638,7 @@ function chtNewUsers(chart, d, l, total) {
 function updateCharts(data, total) {
 	if (!data) return;
 	if (data.length === 0) return;
-
+	// console.log(data)
 	// get days from launch as x axis
 	var today = new Date();
 	// console.log(_startDate, today)
@@ -668,6 +670,7 @@ function updateCharts(data, total) {
 		if (diff > _newUsers.it.length) resizeArr(_newUsers.it, diff, null);
 		if (diff > _newUsers.mx.length) resizeArr(_newUsers.mx, diff, null);
 		if (diff > _newUsers.esla.length) resizeArr(_newUsers.esla, diff, null);
+		if (diff > _newUsers.br.length) resizeArr(_newUsers.br, diff, null);
 		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
 		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
 		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
@@ -730,6 +733,10 @@ function updateCharts(data, total) {
 		if (data.esla[i] != _newUsers.esla[i]) {
 			if (!_newUsers.esla[i]) _newUsers.esla[i] = 0;
 			_newUsers.esla[i] += data.esla[i];
+		}
+		if (data.br[i] != _newUsers.br[i]) {
+			if (!_newUsers.br[i]) _newUsers.br[i] = 0;
+			_newUsers.br[i] += data.br[i];
 		}
 	}
 	
