@@ -148,7 +148,7 @@ function buildLeague(callback) {
 function buildLastGames(callback) {
 	var uri = aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
-		console.log(data)
+		// console.log(data)
 		buildPopcornLastGames(data, 'pc');
 		if (callback) return callback();
 	});
