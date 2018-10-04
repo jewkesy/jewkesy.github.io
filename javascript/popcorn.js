@@ -423,6 +423,9 @@ function buildPopcornLastGames(data, prefix) {
 	fadeyStuff("pc_total_games", numberWithCommas(data.totalGames));
 	document.getElementById('pc_total_games').setAttribute('total', data.totalGames);
 
+	fadeyStuff("approxPlayers", numberWithCommas(data.totalUsers));
+	fadeyStuff("approxGames", numberWithCommas(data.totalGames));
+
 	var container = document.getElementById(prefix + '_lastgames');
 	var games = data.lastGame;
 	for (var i = 0; i < games.length; i++) {
