@@ -359,7 +359,7 @@
         <th id="th_ga" class="devicelist" onclick="switchDevice('Google');" colspan="4"><span><img width="22" class="device" src="./images/google.png"></span></th>
       </tr>
       <tr class="hover">
-        <th id="th_" class="selected" onclick="switchLocale('');"><span>Global<br/><img class="locale" src="./images/global.png"></span></th>
+        <th id="th_" class="selected" onclick="switchLocale('');"><span>Global<br/><img class="locale" width="29" src="./images/global.png"></span></th>
         <th id="th_en-GB" onclick="switchLocale('en-GB');"><span>UK<br/><img class="locale" src="./flags/en-GB.png"></span></th>
         <th id="th_en-US" onclick="switchLocale('en-US');"><span>US<br/><img class="locale" src="./flags/en-US.png"></span></th>
         <th id="th_de-DE" onclick="switchLocale('de-DE');"><span>DE<br/><img class="locale" src="./flags/de-DE.png"></span></th>
@@ -375,18 +375,17 @@
         <th id="th_da-DK" onclick="switchLocale('da-DK');"><span>DK<br/><img class="locale" src="./flags/da-DK.png"></span></th>
       </tr>
     </table>
-  <div class="borderMe scaleme font12" style="height:400px;overflow:auto;">
+  <div class="borderMe scaleme font12" style="height:410px;overflow:auto;">
     <table class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
       <thead>
         <tr>
-          <th>Device</th>
+          <th>Device<br/>Locale</th>
           <th>Rank</th>
           <th>Score</th>
           <th>Games<br/>Played</th>
           <th>Avg.<br/>Score</th>
           <th>Last Played</th>
           <th>Joined</th>
-          <th>Locale</th>
         </tr>
       </thead>
       <tbody id='pc_scores'></tbody>
@@ -399,10 +398,10 @@
     <button type="button" class="btn btn-info hvr-grow" onclick="resetLimit();">Reset <img src="./images/reset_icon.png" /></button>
   </div>
   <br/>
-  <div class="borderMe scaleme" style="height:400px;overflow:auto;">
+  <div class="borderMe scaleme" style="height:450px;overflow:auto;">
     <table class="centerMe borderMe scaleme ">
       <thead>
-        <tr><th colspan=9>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
+        <tr><th colspan=8>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
         <tr class="font12">
           <th>Device</th>
           <th>Rank</th>
@@ -413,7 +412,6 @@
           <th>Game<br/>Streak</th>
           <th>Last<br/>Played</th>
           <th>Joined</th>
-          <th>Locale</th>
         </tr>
       </thead>
       <tbody id="pc_lastgames" class="font12"></tbody>
@@ -425,7 +423,7 @@
     <tr><th>Total Players:</th><td id='pc_total_players'>0</td><th>Daily Avg:</th><td id='pc_total_avg'>0</td><th>Today:</th><td id='pc_daily_players'>0</td></tr>
     <tr><th colspan="4" style="padding-left: 50px">└ &nbsp;&nbsp;New Players:</th><th>Today:</th><td id='pc_total_today'>0</td></tr>
     <tr><th>Total Games:</th><td id='pc_total_games'>0</td><th>Daily Avg:</th><td id='pc_games_avg'>0</td><th>Today:</th><td id='pc_games_today'>0</td></tr>
-    <tr><td colspan="3" id='pc_event'></td><td id='pc_ts' colspan="3"></td></tr>
+    <tr><td colspan="4" id='pc_event'></td><td id='pc_ts' colspan="2"></td></tr>
     <tr><td><img height="18" class="device" style="padding-right:5px;" src="./images/alexa.png">Alexa</td><td id='pc_device_alexa'>0</td>
       <td colspan="2">
         <div class="stacked-bar-graph">

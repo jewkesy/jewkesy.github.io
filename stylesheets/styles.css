@@ -376,6 +376,27 @@ img.rounded {
   border-radius: 10px;
 }
 
+.iconMerge {
+  float: left; position: relative;
+
+}
+
+.iconMerge > img.locale {
+  padding: 0px !important;
+  margin: 0px !important;
+  margin-left: 6px !important;
+  margin-top: 6px !important;
+  width: 24px;
+  opacity: 1.0;
+}
+
+.iconMergeCorner { 
+  position: absolute; top: 0; left: 0;
+  border: 1px solid white;
+  border-bottom-right-radius: 25%;
+  background: white;
+}
+
 .fadedScroller_fade {
   /*max-width: 500px;*/
   content:'';

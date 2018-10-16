@@ -484,7 +484,8 @@ function buildPopcornLastGames(data, prefix) {
 			document.getElementById(prefix + '_lastgames_st_' + x).title = games[i].st/1000;
 		}
 		
-		fadeyStuff(prefix + "_lastgames_device_" + x, "<img width='22' class='device' src='./images/" + deviceIcon + ".png' />");
+		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, games[i].l, device));
+		//fadeyStuff(prefix + "_lastgames_device_" + x, "<img width='18' class='device' src='./images/" + deviceIcon + ".png' />");
 
 		fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(games[i].r) + sym);
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(games[i].s));
@@ -496,7 +497,7 @@ function buildPopcornLastGames(data, prefix) {
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
 		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((games[i].st/1000)+""));
-		if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+games[i].l+"' alt='"+games[i].l+"' src='./flags/" + games[i].l + ".png' />");
+		//if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+games[i].l+"' alt='"+games[i].l+"' src='./flags/" + games[i].l + ".png' />");
 	}
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
@@ -545,23 +546,33 @@ function buildPopcornLeague(data, prefix, total) {
 			cell6.id = prefix + "_league_st_" + x;
 			cell6.className = "timeago";
 			cell6.title = topTen[i].st/1000;
-			var cell7 = row.insertCell(7);
-			cell7.id = prefix + "_league_locale_" + x;
+			// var cell7 = row.insertCell(7);
+			// cell7.id = prefix + "_league_locale_" + x;
 		} else {
 			document.getElementById(prefix + '_league_ts_' + x).title = topTen[i].t/1000;
 			document.getElementById(prefix + '_league_st_' + x).title = topTen[i].st/1000;
 		}
-		fadeyStuff(prefix + "_league_device_" + x, "<img width='22' class='device' title='"+ deviceIcon +"' alt='"+deviceIcon+"' src='./images/" + deviceIcon + ".png' />");
+		
+		fadeyStuff(prefix + "_league_device_" + x, buildIconHTML(deviceIcon, topTen[i].l, device));
+		//fadeyStuff(prefix + "_league_device_" + x, "<img width='22' class='device' title='"+ deviceIcon +"' alt='"+deviceIcon+"' src='./images/" + deviceIcon + ".png' />");
 		fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
 		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
 		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
 		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
 		fadeyStuff(prefix + "_league_ts_" + x, humanTime((topTen[i].t/1000)+""));
 		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
-		if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+topTen[i].l+"' alt='"+topTen[i].l+"' src='./flags/" + topTen[i].l + ".png' />");
+		//if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+topTen[i].l+"' alt='"+topTen[i].l+"' src='./flags/" + topTen[i].l + ".png' />");
 	}
 	fadeyStuff(prefix + '_count', numberWithCommas(i));
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
+}
+
+function buildIconHTML(deviceIcon, locale, deviceType) {
+	var lIcon = "<img class='locale' width='20' title='"+locale+"' src='./flags/"+locale+".png' />";
+
+	var dIcon = "<img width='18' class='device iconMergeCorner' title='"+deviceIcon+"' alt='"+deviceIcon+"' src='./images/"+deviceIcon+".png' />";
+
+	return "<span>"+deviceType+"</span><div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + "</div>";
 }
 
 function chtNewUsers(chart, d, l, total) {
