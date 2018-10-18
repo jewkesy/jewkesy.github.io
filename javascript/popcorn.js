@@ -25,6 +25,7 @@ var _total = 0;
 var _gameinfo = { dailygames: [] };
 var _chtHeight = 3500;
 var _dailyPlayers = [];
+var _chartSummary = getParameterByName('chtsum') || 75;
 
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
@@ -159,7 +160,7 @@ function getGraphData(callback) {
 	httpGetStats(uri, 'pc', function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		// console.log(data);
+		//console.log(data);
 		_timeFrom = data.lastTime;
 		buildPopcornPage(data);
 		return callback();
@@ -369,7 +370,7 @@ function buildDailyGames(err, content) {
 		days++;
 	}
 	
-	var avg = Math.round(total/days);
+	var avg = Math.round(total/days).toFixed(2);
 	// console.log(days, total, avg)
 	fadeyStuff('pc_games_avg', numberWithCommas(avg));
 }
@@ -582,7 +583,7 @@ function chtNewUsers(chart, d, l, total) {
 	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
 	// console.log(dailyData)
-	dailyData = summariseChtData(dailyData);
+	dailyData = summariseChtData(dailyData, _chartSummary);
 	// console.log(dailyData)
 
 	var data = {
@@ -654,7 +655,7 @@ function chtNewUsers(chart, d, l, total) {
 function updateCharts(data, total) {
 	if (!data) return;
 	if (data.length === 0) return;
-	// console.log(data)
+	//console.log(data)
 	// get days from launch as x axis
 	var today = new Date();
 	// console.log(_startDate, today)
@@ -871,21 +872,6 @@ function showAnswer(chosen, answer, correct){
 	}
 	fadeyStuff("pc_answer", text);
 
-	// var curr = 200;
-	// var width = 0;
-	// var seconds = 4000*10;
-	// pg = setInterval(function () {
-	// 	curr -= 1;
-	// 	width = +((curr/seconds) * 100).toFixed(0);
-	// 	console.log(curr, seconds, width);
-	// 	document.getElementById('pc_progressbar').setAttribute('style', "width:" + width + "%;");
-	// 	if (width <= 0) {
-	// 		clearInterval(pg);
-	// 		getIntro();
-	// 	}
-	// }, 100);
-
-
 	setTimeout(function(){
 		getIntro();
 	}, 2500);
@@ -919,4 +905,15 @@ function changeUrl(title, url) {
 	
 	var obj = { id: 'homepage', pageTitle: title, Url: url, locale: _locale, device: _device, limit: _limit };
 	history.pushState(obj, obj.Page, obj.Url);
+}
+
+var slider = document.getElementById("truncatePercentage");
+
+// slider.oninput = function() {
+slider.onchange = function() {
+	// console.log(this.value);
+	_chartSummary = this.value;
+	var newUrl = paramReplace('chtsum', window.location.href, _chartSummary);
+	changeUrl('', newUrl);
+	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }

@@ -406,8 +406,8 @@ function randomInt(low, high) {
   return Math.floor(Math.random() * (high));
 }
 
-function summariseChtData(data, fraction) {
-	if (!fraction) fraction = 1.2;  // lower = more recent; 100 = full, 1.2 = half
+function summariseChtData(data, percentage) {
+	if (!percentage) percentage = 75;  // lower = more recent; 100 = full, 1.2 = half
 	var newSize = 10;
 	// console.log(data)
 	// check all same length;
@@ -423,39 +423,42 @@ function summariseChtData(data, fraction) {
 	    	}
 	    }
 	}
-	
-	var trunc_length = Math.ceil(l / fraction);
-	var leftSide = {};
+
+	// var trunc_length = Math.ceil(l / fraction); // no of days to compress
+	var trunc_length = (l/100)*percentage;
+	// console.log(l, percentage, trunc_length)
+
+	var summarised = {};
 	
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
-	    	leftSide[property] = data[property].splice(0, trunc_length);
+	    	summarised[property] = data[property].splice(0, trunc_length);
 	    }
 	}
 
-	for (var property in leftSide) {
-	    if (leftSide.hasOwnProperty(property)) {
+	for (var property in summarised) {
+	    if (summarised.hasOwnProperty(property)) {
 	    	if (property == 'labels') {
-	    		leftSide[property] = [];
-	    		resizeArr(leftSide[property], newSize, "");
-	    		leftSide[property][0] = initialLabel;
-	    		var mid = Math.round(leftSide[property].length/2);
-	    		leftSide[property][mid] = trunc_length + " days avg";
+	    		summarised[property] = [];
+	    		resizeArr(summarised[property], newSize, "");
+	    		summarised[property][0] = initialLabel;
+	    		var mid = Math.round(summarised[property].length/2);
+	    		summarised[property][mid] = trunc_length + " days avg";
 	    	} else if (property == 'we' || property == 'mo') {
-	    		leftSide[property] = [];
-	    		resizeArr(leftSide[property], newSize, null);
+	    		summarised[property] = [];
+	    		resizeArr(summarised[property], newSize, null);
 	    	} else {
-	    		leftSide[property] = reduceArr(leftSide[property], newSize);
+	    		summarised[property] = reduceArr(summarised[property], newSize);
 	    	}
 	    }
 	}
 
 	// merge new left side
-	for (var property in leftSide) {
-	    if (leftSide.hasOwnProperty(property)) {
-	    	leftSide[property] = leftSide[property].concat(data[property]);
+	for (var property in summarised) {
+	    if (summarised.hasOwnProperty(property)) {
+	    	summarised[property] = summarised[property].concat(data[property]);
 	    }
 	}
-
-	return leftSide;
+	console.log(summarised)
+	return summarised;
 }
