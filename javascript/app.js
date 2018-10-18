@@ -443,7 +443,7 @@ function summariseChtData(data, percentage) {
 	    		resizeArr(summarised[property], newSize, "");
 	    		summarised[property][0] = initialLabel;
 	    		var mid = Math.round(summarised[property].length/2);
-	    		summarised[property][mid] = trunc_length + " days avg";
+	    		summarised[property][mid] = +(trunc_length).toFixed(0) + " days avg";
 	    	} else if (property == 'we' || property == 'mo') {
 	    		summarised[property] = [];
 	    		resizeArr(summarised[property], newSize, null);
