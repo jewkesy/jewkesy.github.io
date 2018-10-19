@@ -23,7 +23,7 @@ var _newUsers = {};
 var _newUsersLabels = [];
 var _total = 0;
 var _gameinfo = { dailygames: [] };
-var _chtHeight = 3500;
+var _chtHeight = 4000;
 var _dailyPlayers = [];
 var _chartSummary = getParameterByName('chtsum') || 75;
 
@@ -44,6 +44,7 @@ window.addEventListener('popstate', function (event) {
     	_locale = history.state.locale;
     	_device = history.state.device;
     	_limit = history.state.limit;
+    	_chartSummary = history.state.chartSummary;
     	startPopcornQuiz();
         // Render new content for the hompage
     }
@@ -53,6 +54,7 @@ function startPopcornQuiz(locale, limit, device) {
 	amazonTimer();
 	getStats();
 	// console.log(_limit, getParameterByName('limit'))
+	document.getElementById('truncatePercentage').value = _chartSummary;
 	document.getElementById('pc_more_count').innerHTML = _limit;
 
 	if (_locale != '') {
@@ -580,7 +582,7 @@ function chtNewUsers(chart, d, l, total) {
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
 	dailyData.labels = JSON.parse(JSON.stringify(l));
-	// console.log(dailyData)
+	// console.log(_chartSummary)
 	dailyData = summariseChtData(dailyData, _chartSummary);
 	// console.log(dailyData)
 
