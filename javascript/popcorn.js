@@ -406,11 +406,11 @@ function updateDeviceTypes(devices, timeFrom) {
 	document.getElementById('barGoogle').setAttribute('style','width:'+gWidth+'%');
 
 	if (aWidth > gWidth) {
-		fadeyStuff("barAlexa", aWidth.toFixed(0)+'%');
+		fadeyStuff("barAlexa", aWidth.toFixed(2)+'%');
 		fadeyStuff("barGoogle", '');
 	} else {
 		fadeyStuff("barAlexa", '');
-		fadeyStuff("barGoogle", gWidth.toFixed(0)+'%');
+		fadeyStuff("barGoogle", gWidth.toFixed(2)+'%');
 	}
 
 	fadeyStuff("pc_device_alexa", numberWithCommas(eCount));
@@ -570,9 +570,7 @@ function buildPopcornLeague(data, prefix, total) {
 
 function buildIconHTML(deviceIcon, locale, deviceType) {
 	var lIcon = "<img class='locale' width='20' title='"+locale+"' src='./flags/"+locale+".png' />";
-
 	var dIcon = "<img width='18' class='device iconMergeCorner' title='"+deviceIcon+"' alt='"+deviceIcon+"' src='./images/"+deviceIcon+".png' />";
-
 	return "<span>"+deviceType+"</span><div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + "</div>";
 }
 
@@ -605,8 +603,8 @@ function chtNewUsers(chart, d, l, total) {
 			{label:"Brazil", data: dailyData.br, borderColor:LightSteelBlue, backgroundColor:LightSteelBlue, fill:false, lineTension:0.1, type:"line", pointRadius:2},
 			{label:"Denmark", data: dailyData.dk, borderColor:FireBrick, backgroundColor:FireBrick, fill:false, lineTension:0.1, type:"line", pointRadius:2},
 
-			{label:"DailyAvg", data: dailyData.avg, borderColor:Black, backgroundColor:Black, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
-			{label:"DailyPlayers", data: dailyData.dailyplayers, borderColor:LightSlateGray, backgroundColor:LightSlateGray, yAxisID: 'left-y-axis', pointRadius:0, type: "line", fill:false},
+			{label:"DailyAvg", data: dailyData.avg, borderColor:Black, backgroundColor:Black, yAxisID: 'left-y-axis', pointRadius:1, type: "line", fill:false},
+			{label:"DailyPlayers", data: dailyData.dailyplayers, borderColor:LightSlateGray, backgroundColor:LightSlateGray, yAxisID: 'left-y-axis', pointRadius:2, type: "line", fill:false},
 
 			{label:"Games", data: dailyData.dailygames, backgroundColor:LightGreen, borderColor:LightGreen, yAxisID: 'right-y-axis', type: "bar", borderWidth: 1},
 			{label:"Weekends", data: dailyData.we, backgroundColor:AliceBlue, borderColor:AliceBlue, yAxisID: 'right-y-axis', type: "bar", borderWidth: 1},
