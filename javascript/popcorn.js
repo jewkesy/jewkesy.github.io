@@ -495,7 +495,7 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
 		
 		if (!games[i].lg) games[i].lg = "";
-		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg+"<br/>"+games[i].ge );
+		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg+getGenreEventTitle(games[i].ge));
 		fadeyStuff(prefix + "_lastgames_gs_" + x, games[i].gs);
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
@@ -504,6 +504,26 @@ function buildPopcornLastGames(data, prefix) {
 	}
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
+}
+
+function getGenreEventTitle(genre, suffix) {
+	//console.log(_locale);
+	if (genre == "Horror_Seasonal") {
+		var l = _locale.split('-')[0];
+		var br = "<br/>🎃 ";
+
+			 if (l == 'es') return br + "Evento de halloween";
+		else if (l == 'it') return br + "Evento di Halloween";
+		else if (l == 'fr') return br + "Événement d'Halloween";
+		else if (l == 'de') return br + "Halloween-Veranstaltung";
+		else if (l == "pt") return br + "Evento de Halloween";
+		else if (l == "da") return br + "Halloween begivenhed";
+		else if (l == "nl") return br + "Halloween-evenement";
+		else if (l == 'ja') return br + "ハロウィーンイベント";
+		return br + "Halloween Event";
+	}
+	if (suffix && suffix.length > 0) return genre + " " + suffix;
+	return genre;
 }
 
 function buildPopcornLeague(data, prefix, total) {
@@ -815,9 +835,9 @@ function getQuestions(count, genre) {
 	var url = aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		// console.log(data);
+		console.log(data);
 		if (!data || !data.msg.questions) return;
-		if (data.msg.genre) fadeyStuff("pc_question_genre", capitalizeFirstLetter(data.msg.genre) + " Movies"); 
+		if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 
 		var idx = randomInt(0, data.msg.questions.length-1);
 		var q = data.msg.questions[idx];

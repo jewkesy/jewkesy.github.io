@@ -318,7 +318,7 @@ function reduceArr(arr, count) {
 	for (var i = 0; i < chk.length; i++) {
 		var x = chk[i].reduce(function(acc, val) { return acc + val; });
 		if (x == 0) x = null;
-		else x = Math.round(x/slots);
+		else x = Math.ceil(x/slots);
 		retVal.push(x);
 	}
 
@@ -459,6 +459,6 @@ function summariseChtData(data, percentage) {
 	    	summarised[property] = summarised[property].concat(data[property]);
 	    }
 	}
-	console.log(summarised)
+	// console.log(summarised)
 	return summarised;
 }
