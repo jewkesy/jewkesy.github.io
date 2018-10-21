@@ -208,6 +208,7 @@ function getParameterByName(name, url) {
 var templates = {
     prefix: "",
     suffix: " ago",
+    just: " %d seconds",
     seconds: "less than a minute",
     minute: "about a minute",
     minutes: "%d mins",
@@ -242,6 +243,7 @@ function humanTime(time) {
     var years = days / 365;
 
     return templates.prefix + (
+    		seconds < 30 && template('just', seconds) || 
             seconds < 45 && template('seconds', seconds) ||
             seconds < 90 && template('minute', 1) ||
             minutes < 45 && template('minutes', minutes) ||

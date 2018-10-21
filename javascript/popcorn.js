@@ -680,6 +680,7 @@ function updateCharts(data, total) {
 	var today = new Date();
 	// console.log(_startDate, today)
 	var diff = daydiff(_startDate, today, true);
+	var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
 
 	if (Object.keys(_newUsers).length === 0) {
 		_newUsers = data;
@@ -695,20 +696,9 @@ function updateCharts(data, total) {
 		_newUsersLabels[diff-1] = "Today";
 
 	} else {
-		if (diff > _newUsers.uk.length) resizeArr(_newUsers.uk, diff, null);
-		if (diff > _newUsers.us.length) resizeArr(_newUsers.us, diff, null);
-		if (diff > _newUsers.de.length) resizeArr(_newUsers.de, diff, null);
-		if (diff > _newUsers.in.length) resizeArr(_newUsers.in, diff, null);
-		if (diff > _newUsers.ca.length) resizeArr(_newUsers.ca, diff, null);
-		if (diff > _newUsers.jp.length) resizeArr(_newUsers.jp, diff, null);
-		if (diff > _newUsers.au.length) resizeArr(_newUsers.au, diff, null);
-		if (diff > _newUsers.fr.length) resizeArr(_newUsers.fr, diff, null);
-		if (diff > _newUsers.es.length) resizeArr(_newUsers.es, diff, null);
-		if (diff > _newUsers.it.length) resizeArr(_newUsers.it, diff, null);
-		if (diff > _newUsers.mx.length) resizeArr(_newUsers.mx, diff, null);
-		if (diff > _newUsers.esla.length) resizeArr(_newUsers.esla, diff, null);
-		if (diff > _newUsers.br.length) resizeArr(_newUsers.br, diff, null);
-		if (diff > _newUsers.dk.length) resizeArr(_newUsers.dk, diff, null);
+		for (var l = 0; l < locales.length; l++) {
+			if (diff > _newUsers[locales[l]].length) resizeArr(_newUsers[locales[l]], diff, null);
+		}
 
 		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
 		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
@@ -725,61 +715,11 @@ function updateCharts(data, total) {
 	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
 
 	for (var i = 0; i < data.totals.length; i++) {
-		if (data.uk[i] != _newUsers.uk[i]) {
-			if (!_newUsers.uk[i]) _newUsers.uk[i] = 0;
-			_newUsers.uk[i] += data.uk[i];
-		}
-		if (data.us[i] != _newUsers.us[i]) {
-			if (!_newUsers.us[i]) _newUsers.us[i] = 0;
-			_newUsers.us[i] += data.us[i];
-		}
-		if (data.de[i] != _newUsers.de[i]) {
-			if (!_newUsers.de[i]) _newUsers.de[i] = 0;
-			_newUsers.de[i] += data.de[i];
-		}
-		if (data.in[i] != _newUsers.in[i]) {
-			if (!_newUsers.in[i]) _newUsers.in[i] = 0;
-			_newUsers.in[i] += data.in[i];
-		}
-		if (data.ca[i] != _newUsers.ca[i]) {
-			if (!_newUsers.ca[i]) _newUsers.ca[i] = 0;
-			_newUsers.ca[i] += data.ca[i];
-		}
-		if (data.jp[i] != _newUsers.jp[i]) {
-			if (!_newUsers.jp[i]) _newUsers.jp[i] = 0;
-			_newUsers.jp[i] += data.jp[i];
-		}
-		if (data.au[i] != _newUsers.au[i]) {
-			if (!_newUsers.au[i]) _newUsers.au[i] = 0;
-			_newUsers.au[i] += data.au[i];
-		}
-		if (data.fr[i] != _newUsers.fr[i]) {
-			if (!_newUsers.fr[i]) _newUsers.fr[i] = 0;
-			_newUsers.fr[i] += data.fr[i];
-		}
-		if (data.es[i] != _newUsers.es[i]) {
-			if (!_newUsers.es[i]) _newUsers.es[i] = 0;
-			_newUsers.es[i] += data.es[i];
-		}
-		if (data.it[i] != _newUsers.it[i]) {
-			if (!_newUsers.it[i]) _newUsers.it[i] = 0;
-			_newUsers.it[i] += data.it[i];
-		}
-		if (data.mx[i] != _newUsers.mx[i]) {
-			if (!_newUsers.mx[i]) _newUsers.mx[i] = 0;
-			_newUsers.mx[i] += data.mx[i];
-		}
-		if (data.esla[i] != _newUsers.esla[i]) {
-			if (!_newUsers.esla[i]) _newUsers.esla[i] = 0;
-			_newUsers.esla[i] += data.esla[i];
-		}
-		if (data.br[i] != _newUsers.br[i]) {
-			if (!_newUsers.br[i]) _newUsers.br[i] = 0;
-			_newUsers.br[i] += data.br[i];
-		}
-		if (data.dk[i] != _newUsers.dk[i]) {
-			if (!_newUsers.dk[i]) _newUsers.dk[i] = 0;
-			_newUsers.dk[i] += data.dk[i];
+		for (var l = 0; l < locales.length; l++) {
+			if (data[locales[l]][i] != _newUsers[locales[l]][i]) {
+				if (!_newUsers[locales[l]][i]) _newUsers[locales[l]][i] = 0;
+				_newUsers[locales[l]][i] += data[locales[l]][i];
+			}
 		}
 	}
 	
@@ -835,7 +775,7 @@ function getQuestions(count, genre) {
 	var url = aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		console.log(data);
+		// console.log(data);
 		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 
