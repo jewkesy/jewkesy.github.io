@@ -508,22 +508,24 @@ function buildPopcornLastGames(data, prefix) {
 
 function getGenreEventTitle(genre, suffix) {
 	//console.log(_locale);
+	var br = "<br/>";
 	if (genre == "Horror_Seasonal") {
 		var l = _locale.split('-')[0];
-		var br = "<br/>🎃 ";
+		
 
-			 if (l == 'es') return br + "Evento de halloween";
-		else if (l == 'it') return br + "Evento di Halloween";
-		else if (l == 'fr') return br + "Événement d'Halloween";
-		else if (l == 'de') return br + "Halloween-Veranstaltung";
-		else if (l == "pt") return br + "Evento de Halloween";
-		else if (l == "da") return br + "Halloween begivenhed";
-		else if (l == "nl") return br + "Halloween-evenement";
-		else if (l == 'ja') return br + "ハロウィーンイベント";
-		return br + "Halloween Event";
+			 if (l == 'es') return br + "🎃 Evento de halloween";
+		else if (l == 'it') return br + "🎃 Evento di Halloween";
+		else if (l == 'fr') return br + "🎃 Événement d'Halloween";
+		else if (l == 'de') return br + "🎃 Halloween-Veranstaltung";
+		else if (l == "pt") return br + "🎃 Evento de Halloween";
+		else if (l == "da") return br + "🎃 Halloween begivenhed";
+		else if (l == "nl") return br + "🎃 Halloween-evenement";
+		else if (l == 'ja') return br + "🎃 ハロウィーンイベント";
+		return br + "🎃 Halloween Event";
 	}
-	if (suffix && suffix.length > 0) return br + genre + " " + suffix;
-	return genre;
+	if (suffix && suffix.length > 0) return genre + " " + suffix;
+	if (genre.length > 0) return br + genre;
+	return "";
 }
 
 function buildPopcornLeague(data, prefix, total) {
