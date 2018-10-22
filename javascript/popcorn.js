@@ -522,7 +522,7 @@ function getGenreEventTitle(genre, suffix) {
 		else if (l == 'ja') return br + "ハロウィーンイベント";
 		return br + "Halloween Event";
 	}
-	if (suffix && suffix.length > 0) return genre + " " + suffix;
+	if (suffix && suffix.length > 0) return br + genre + " " + suffix;
 	return genre;
 }
 
