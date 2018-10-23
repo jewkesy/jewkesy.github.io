@@ -371,7 +371,10 @@ function buildDailyPlayers(err, players) {
 	var total = _dailyPlayers[_dailyPlayers.length-1];
 
 	fadeyStuff('pc_daily_players', numberWithCommas(total));
-	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
+	console.log('calling chtNewUsers');
+	var chtData = prepDataForChart();
+	chtNewUsers(_newUsersChart, chtData, _total);
+	// chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
 
 function buildDailyGames(err, content) {
@@ -617,18 +620,11 @@ function buildIconHTML(deviceIcon, locale, deviceType) {
 }
 
 var _chtStuffRunning = false;
-function chtNewUsers(chart, d, l, total) {
-	console.log(_chtStuffRunning);
+function chtNewUsers(chart, dailyData, total) {	
+	// console.log(_chtStuffRunning)
 	if (_chtStuffRunning) return;
+	if (dailyData.labels.length == 0) return;
 	_chtStuffRunning = true;
-	var dailyData = JSON.parse(JSON.stringify(d));
-	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
-	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
-	dailyData.labels = JSON.parse(JSON.stringify(l));
-	// console.log(_chartSummary)
-	dailyData = summariseChtData(dailyData, _chartSummary);
-	// console.log(dailyData)
-
 	var data = {
 		labels: dailyData.labels,
 		datasets:[
@@ -748,8 +744,23 @@ function updateCharts(data, total) {
 	}
 	
 	_total = total;
-	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
+	console.log('calling chtNewUsers');
+	var chtData = prepDataForChart();
+	chtNewUsers(_newUsersChart, chtData, _total);
+	// chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
 }
+
+function prepDataForChart() {
+
+	var dailyData = JSON.parse(JSON.stringify(_newUsers));
+	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
+	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
+	dailyData.labels = JSON.parse(JSON.stringify(_newUsersLabels));
+	// console.log(_chartSummary)
+	dailyData = summariseChtData(dailyData, _chartSummary);
+	return dailyData;
+}
+
 
 function resetLimit() {
 	_limit = 10;
@@ -899,5 +910,7 @@ slider.onchange = function() {
 	_chartSummary = this.value;
 	var newUrl = paramReplace('chtsum', window.location.href, _chartSummary);
 	changeUrl('', newUrl);
-	chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
+	console.log('calling chtNewUsers');
+	var chtData = prepDataForChart();
+	chtNewUsers(_newUsersChart, chtData, _total);
 }
