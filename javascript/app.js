@@ -409,9 +409,10 @@ function randomInt(low, high) {
 }
 
 function summariseChtData(data, percentage) {
+	var s = new Date;
 	if (!percentage) percentage = 75;  // lower = more recent; 100 = full, 1.2 = half
 	var newSize = 10;
-	// console.log(data)
+	console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
 	var l = -1;
@@ -462,5 +463,7 @@ function summariseChtData(data, percentage) {
 	    }
 	}
 	// console.log(summarised)
+	var e = new Date();
+	console.log(s, e)
 	return summarised;
 }

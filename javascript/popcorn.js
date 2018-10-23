@@ -25,7 +25,7 @@ var _total = 0;
 var _gameinfo = { dailygames: [] };
 var _chtHeight = 4000;
 var _dailyPlayers = [];
-var _chartSummary = getParameterByName('chtsum') || 75;
+var _chartSummary = getParameterByName('chtsum') || 95;
 
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
@@ -35,8 +35,26 @@ Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
+const worker = new Worker("./javascript/worker.js");
+worker.onmessage = e => {
+	const message = e.data.msg;
+	//console.log(`[From Worker]: ${message}`);
+	const reply = setTimeout(() => worker.postMessage({msg: "Marco!", timestamp: _lastTimestamp}), 1000);
+};
+worker.postMessage({msg: "Marco!"});
+
 var aInt;
 var sInt;
+
+// window.requestAnimationFrame = window.requestAnimationFrame
+//                                || window.mozRequestAnimationFrame
+//                                || window.webkitRequestAnimationFrame
+//                                || window.msRequestAnimationFrame
+//                                || function(f){return setTimeout(f, 1000/60)}
+
+// window.cancelAnimationFrame = window.cancelAnimationFrame
+//                               || window.mozCancelAnimationFrame
+//                               || function(requestID){clearTimeout(requestID)} //fall back
 
 window.addEventListener('popstate', function (event) {
 	console.log(history.state);
@@ -598,8 +616,11 @@ function buildIconHTML(deviceIcon, locale, deviceType) {
 	return "<span>"+deviceType+"</span><div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + "</div>";
 }
 
+var _chtStuffRunning = false;
 function chtNewUsers(chart, d, l, total) {
-
+	console.log(_chtStuffRunning);
+	if (_chtStuffRunning) return;
+	_chtStuffRunning = true;
 	var dailyData = JSON.parse(JSON.stringify(d));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
@@ -672,6 +693,7 @@ function chtNewUsers(chart, d, l, total) {
 
 	var axis = chart.scales.y-axis-0;
 	_chtHeight = axis.max;
+	_chtStuffRunning = false;
 }
 
 function updateCharts(data, total) {
