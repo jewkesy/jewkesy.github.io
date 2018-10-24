@@ -21,7 +21,7 @@ var _daysSinceLaunch = 0;
 var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 var _newUsers = {};
 var _newUsersLabels = [];
-var _total = 0;
+
 var _gameinfo = { dailygames: [] };
 var _chtHeight = 4000;
 var _dailyPlayers = [];
@@ -57,7 +57,7 @@ var sInt;
 //                               || function(requestID){clearTimeout(requestID)} //fall back
 
 window.addEventListener('popstate', function (event) {
-	console.log(history.state);
+	// console.log(history.state);
     if (history.state && history.state.id === 'homepage') {
     	_locale = history.state.locale;
     	_device = history.state.device;
@@ -371,10 +371,9 @@ function buildDailyPlayers(err, players) {
 	var total = _dailyPlayers[_dailyPlayers.length-1];
 
 	fadeyStuff('pc_daily_players', numberWithCommas(total));
-	console.log('calling chtNewUsers');
+	// console.log('calling chtNewUsers');
 	var chtData = prepDataForChart();
-	chtNewUsers(_newUsersChart, chtData, _total);
-	// chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
+	chtNewUsers(_newUsersChart, chtData);
 }
 
 function buildDailyGames(err, content) {
@@ -458,16 +457,18 @@ function buildPopcornLastGames(data, prefix) {
 		var sym = "";
 		var device = ".";
 		var deviceIcon = "alexa";
-		if (games[i].d == "Echo Show")    device = ":";
-		else if (games[i].d == "Google"){ device = ""; deviceIcon = "google"; }
-		else if (games[i].d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
-		else if (games[i].d == "Google Phone"){ device = "."; deviceIcon = "google"; }
-		else if (games[i].d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
-		if (games[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
-		else if (games[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
-		else if (games[i].i == 'note') {sym = " &#9834;";}
-		else if (games[i].i == 'hash') {sym = " #";}
-		else if (games[i].i == 'phone') {sym = " 📱";}
+		var g = games[i];
+		if (g.d == "Echo Show")    device = ":";
+		else if (g.d == "Google"){ device = ""; deviceIcon = "google"; }
+		else if (g.d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
+		else if (g.d == "Google Phone"){ device = "."; deviceIcon = "google"; }
+		else if (g.d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
+
+		if (g.i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
+		else if (g.i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
+		else if (g.i == 'note') {sym = " &#9834;";}
+		else if (g.i == 'hash') {sym = " #";}
+		else if (g.i == 'phone') {sym = " 📱";}
 
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
 			var row = container.insertRow(-1);
@@ -494,7 +495,7 @@ function buildPopcornLastGames(data, prefix) {
 			var cell7 = row.insertCell(6);
 			cell7.id = prefix + "_lastgames_ts_" + x;
 			cell7.className = "timeago";
-			cell7.title = games[i].t/1000;
+			cell7.title = g.t/1000;
 
 			var cell8 = row.insertCell(7);
 			cell8.id = prefix + "_lastgames_st_" + x;
@@ -504,24 +505,22 @@ function buildPopcornLastGames(data, prefix) {
 			var cell9 = row.insertCell(8);
 			cell9.id = prefix + "_lastgames_locale_" + x;
 		} else {	
-			document.getElementById(prefix + '_lastgames_ts_' + x).title = games[i].t/1000;
-			document.getElementById(prefix + '_lastgames_st_' + x).title = games[i].st/1000;
+			document.getElementById(prefix + '_lastgames_ts_' + x).title = g.t/1000;
+			document.getElementById(prefix + '_lastgames_st_' + x).title = g.st/1000;
 		}
 		
-		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, games[i].l, device));
-		//fadeyStuff(prefix + "_lastgames_device_" + x, "<img width='18' class='device' src='./images/" + deviceIcon + ".png' />");
+		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, g.l, device));
 
-		fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(games[i].r) + sym);
-		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(games[i].s));
-		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(games[i].g));
+		fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
+		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s));
+		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.g));
 		
-		if (!games[i].lg) games[i].lg = "";
-		fadeyStuff(prefix + "_lastgames_lg_" + x, games[i].lg+getGenreEventTitle(games[i].ge));
-		fadeyStuff(prefix + "_lastgames_gs_" + x, games[i].gs);
+		if (!g.lg) g.lg = "";
+		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+getGenreEventTitle(g.ge));
+		fadeyStuff(prefix + "_lastgames_gs_" + x, g.gs);
 
-		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((games[i].t/1000)+""));
-		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((games[i].st/1000)+""));
-		//if (games[i].l) fadeyStuff(prefix + "_lastgames_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+games[i].l+"' alt='"+games[i].l+"' src='./flags/" + games[i].l + ".png' />");
+		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((g.t/1000)+""));
+		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((g.st/1000)+""));
 	}
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
@@ -533,7 +532,6 @@ function getGenreEventTitle(genre, suffix) {
 	if (genre == "Horror_Seasonal") {
 		var l = _locale.split('-')[0];
 		
-
 			 if (l == 'es') return br + "🎃 Evento de halloween";
 		else if (l == 'it') return br + "🎃 Evento di Halloween";
 		else if (l == 'fr') return br + "🎃 Événement d'Halloween";
@@ -621,7 +619,6 @@ function buildIconHTML(deviceIcon, locale, deviceType) {
 
 var _chtStuffRunning = false;
 function chtNewUsers(chart, dailyData, total) {	
-	// console.log(_chtStuffRunning)
 	if (_chtStuffRunning) return;
 	if (dailyData.labels.length == 0) return;
 	_chtStuffRunning = true;
@@ -743,15 +740,12 @@ function updateCharts(data, total) {
 		}
 	}
 	
-	_total = total;
-	console.log('calling chtNewUsers');
+	//console.log('calling chtNewUsers');
 	var chtData = prepDataForChart();
-	chtNewUsers(_newUsersChart, chtData, _total);
-	// chtNewUsers(_newUsersChart, _newUsers, _newUsersLabels, _total);
+	chtNewUsers(_newUsersChart, chtData);
 }
 
 function prepDataForChart() {
-
 	var dailyData = JSON.parse(JSON.stringify(_newUsers));
 	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
 	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
@@ -760,7 +754,6 @@ function prepDataForChart() {
 	dailyData = summariseChtData(dailyData, _chartSummary);
 	return dailyData;
 }
-
 
 function resetLimit() {
 	_limit = 10;
@@ -910,7 +903,7 @@ slider.onchange = function() {
 	_chartSummary = this.value;
 	var newUrl = paramReplace('chtsum', window.location.href, _chartSummary);
 	changeUrl('', newUrl);
-	console.log('calling chtNewUsers');
+	// console.log('calling chtNewUsers');
 	var chtData = prepDataForChart();
-	chtNewUsers(_newUsersChart, chtData, _total);
+	chtNewUsers(_newUsersChart, chtData);
 }
