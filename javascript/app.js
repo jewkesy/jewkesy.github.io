@@ -260,16 +260,17 @@ function humanTime(time) {
 }
 
 (function timeAgo(selector) {
-    var elements = document.getElementsByClassName('timeago');
+	setTimeout(function(){
+	    var elements = document.getElementsByClassName('timeago');
 
-    for (var i in elements) {
-        var $this = elements[i];
-        if (typeof $this === 'object') {
-            $this.innerHTML = humanTime($this.getAttribute('title') || $this.getAttribute('datetime'));
-        }
-    }
-    // update time every minute
-    setTimeout(timeAgo, 10000);
+	    for (var i in elements) {
+	        var $this = elements[i];
+	        if (typeof $this === 'object') {
+	            $this.innerHTML = humanTime($this.getAttribute('title') || $this.getAttribute('datetime'));
+	        }
+	    }
+	    requestAnimationFrame(timeAgo);
+	}, 5000);
 })();
 
 function getCssStar(score) {

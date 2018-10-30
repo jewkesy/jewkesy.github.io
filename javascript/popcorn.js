@@ -393,7 +393,7 @@ function buildDailyGames(err, content) {
 	}
 	
 	var avg = Math.round(total/days);
-	console.log(days, total, avg)
+	// console.log(days, total, avg)
 	fadeyStuff('pc_games_avg', numberWithCommas(avg));
 }
 
