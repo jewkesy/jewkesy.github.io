@@ -35,13 +35,13 @@ Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
-const worker = new Worker("./javascript/worker.js");
-worker.onmessage = e => {
-	const message = e.data.msg;
-	//console.log(`[From Worker]: ${message}`);
-	const reply = setTimeout(() => worker.postMessage({msg: "Marco!", timestamp: _lastTimestamp}), 1000);
-};
-worker.postMessage({msg: "Marco!"});
+// const worker = new Worker("./javascript/worker.js");
+// worker.onmessage = e => {
+// 	const message = e.data.msg;
+// 	//console.log(`[From Worker]: ${message}`);
+// 	const reply = setTimeout(() => worker.postMessage({msg: "Marco!", timestamp: _lastTimestamp}), 1000);
+// };
+// worker.postMessage({msg: "Marco!"});
 
 var aInt;
 var sInt;
