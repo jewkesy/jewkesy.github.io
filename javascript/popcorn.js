@@ -464,10 +464,10 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.d == "Google Phone"){ device = "."; deviceIcon = "google"; }
 		else if (g.d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
 
-		if (g.i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
-		else if (g.i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
-		else if (g.i == 'note') {sym = " &#9834;";}
-		else if (g.i == 'hash') {sym = " #";}
+		if (g.i == 'star') {sym = " ⭐";}
+		else if (g.i == 'sun') {sym = " 🌞";}
+		else if (g.i == 'note') {sym = " 🎵";}
+		else if (g.i == 'hash') {sym = " 🌭";}
 		else if (g.i == 'phone') {sym = " 📱";}
 
 		var cell1;
@@ -479,6 +479,7 @@ function buildPopcornLastGames(data, prefix) {
 			cell0.id = prefix + "_lastgames_device_" + x;
 			cell1 = row.insertCell(1);
 			cell1.id = prefix + "_lastgames_rank_" + x;
+			cell1.className = "font20";
 			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_lastgames_score_" + x;
 			var cell3 = row.insertCell(3);
@@ -519,6 +520,7 @@ function buildPopcornLastGames(data, prefix) {
 		} else if (g.r == 3) {
 			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥉" + sym);
 		} else {
+			cell1.className = "";
 			fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
 		}
 
@@ -573,10 +575,10 @@ function buildPopcornLeague(data, prefix, total) {
 		else if (topTen[i].d == "Google Phone"){ device = "."; deviceIcon = "google"; }
 		else if (topTen[i].d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
 
-		if (topTen[i].i == 'star') {sym = '<span style="color:DarkOrange;"> &#9734;</span>';}
-		else if (topTen[i].i == 'sun') {sym = '<span style="color:DarkOrange;"> &#9788;</span>';}
-		else if (topTen[i].i == 'note') {sym = " &#9834;";}
-		else if (topTen[i].i == 'hash') {sym = " #";}
+		if (topTen[i].i == 'star') {sym = " ⭐";}
+		else if (topTen[i].i == 'sun') {sym = " 🌞";}
+		else if (topTen[i].i == 'note') {sym = " 🎵";}
+		else if (topTen[i].i == 'hash') {sym = " 🌭";}
 		else if (topTen[i].i == 'phone') {sym = " 📱";}
 		
 		var cell1;
@@ -620,7 +622,7 @@ function buildPopcornLeague(data, prefix, total) {
 		} else if (x == 3) {
 			fadeyStuff(prefix + "_league_rank_" + x, "🥉" + sym);
 		} else {
-			if (cell1) cell1.className = "font16 strong italic";
+			if (cell1) cell1.className = "font16 strong";
 			fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
 		}
 
