@@ -479,7 +479,7 @@ function buildPopcornLastGames(data, prefix) {
 			cell0.id = prefix + "_lastgames_device_" + x;
 			cell1 = row.insertCell(1);
 			cell1.id = prefix + "_lastgames_rank_" + x;
-			cell1.className = "";
+			//cell1.className = "";
 			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_lastgames_score_" + x;
 			var cell3 = row.insertCell(3);
@@ -523,7 +523,7 @@ function buildPopcornLastGames(data, prefix) {
 			// cell1.className = "font20";
 			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥉" + sym);
 		} else {
-			cell1.className = "";
+			//cell1.className = "";
 			fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
 		}
 
