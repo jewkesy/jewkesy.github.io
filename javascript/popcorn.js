@@ -520,7 +520,7 @@ function buildPopcornLastGames(data, prefix) {
 		} else if (g.r == 3) {
 			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥉" + sym);
 		} else {
-			cell1.className = "";
+			if (cell1) cell1.className = "";
 			fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
 		}
 
