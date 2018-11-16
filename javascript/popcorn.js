@@ -470,13 +470,14 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.i == 'hash') {sym = " #";}
 		else if (g.i == 'phone') {sym = " 📱";}
 
+		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
 			var row = container.insertRow(-1);
 			row.id = prefix + '_lastgames_' + x;
 
 			var cell0 =  row.insertCell(0);
 			cell0.id = prefix + "_lastgames_device_" + x;
-			var cell1 = row.insertCell(1);
+			cell1 = row.insertCell(1);
 			cell1.id = prefix + "_lastgames_rank_" + x;
 			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_lastgames_score_" + x;
@@ -511,7 +512,17 @@ function buildPopcornLastGames(data, prefix) {
 		
 		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, g.l, device));
 
-		fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
+		if (g.r == 1) {
+			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥇" + sym);
+		} else if (g.r == 2) {
+			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥈" + sym);
+		} else if (g.r == 3) {
+			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥉" + sym);
+		} else {
+			fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
+		}
+
+		// fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s));
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.g));
 		
@@ -567,15 +578,17 @@ function buildPopcornLeague(data, prefix, total) {
 		else if (topTen[i].i == 'note') {sym = " &#9834;";}
 		else if (topTen[i].i == 'hash') {sym = " #";}
 		else if (topTen[i].i == 'phone') {sym = " 📱";}
+		
+		var cell1;
 
 		if (!document.getElementById(prefix + '_league_' + x)) {
 			var row = container.insertRow(-1);
 			row.id = prefix + '_league_' + x;
 			var cell0 = row.insertCell(0);
 			cell0.id = prefix + "_league_device_" + x;
-			var cell1 = row.insertCell(1);
+			cell1 = row.insertCell(1);
 			cell1.id = prefix + "_league_rank_" + x;
-			cell1.className = "font16 strong italic";
+			cell1.className = "font20";
 			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_league_score_" + x;
 			var cell3 = row.insertCell(3);
@@ -599,7 +612,18 @@ function buildPopcornLeague(data, prefix, total) {
 		
 		fadeyStuff(prefix + "_league_device_" + x, buildIconHTML(deviceIcon, topTen[i].l, device));
 		//fadeyStuff(prefix + "_league_device_" + x, "<img width='22' class='device' title='"+ deviceIcon +"' alt='"+deviceIcon+"' src='./images/" + deviceIcon + ".png' />");
-		fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
+		
+		if (x == 1) {
+			fadeyStuff(prefix + "_league_rank_" + x, "🥇" + sym);
+		} else if (x == 2) {
+			fadeyStuff(prefix + "_league_rank_" + x, "🥈" + sym);
+		} else if (x == 3) {
+			fadeyStuff(prefix + "_league_rank_" + x, "🥉" + sym);
+		} else {
+			if (cell1) cell1.className = "font16 strong italic";
+			fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
+		}
+
 		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
 		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
 		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
