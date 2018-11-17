@@ -2,7 +2,7 @@
     "use strict";
 })();
 
-var _amazonUrl = aws + 'getHomePageContent?amazon=true';
+var _amazonUrl = aws + '?amazon=true';
 var _intervalid;
 var _interval = 60000;
 
