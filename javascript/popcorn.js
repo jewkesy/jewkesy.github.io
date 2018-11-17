@@ -10,8 +10,8 @@ var _deviceFilter = '';
 
 var _keywords;
 
-var _popcornUrl = aws + 'getHomePageContent?action=getstats&prefix=pc&limit=' + _limit;
-var _popcornLastGameUrl = aws + 'getHomePageContent?last=true&prefix=pc&limit=' + _limit;
+var _popcornUrl = aws + '?action=getstats&prefix=pc&limit=' + _limit;
+var _popcornLastGameUrl = aws + '?last=true&prefix=pc&limit=' + _limit;
 
 var _startDate = new Date("2017-05-28T12:00:00Z");
 var _timeFrom = 0;
@@ -159,7 +159,7 @@ function getGamePlay(callback) {
 }
 
 function buildLeague(callback) {
-	var uri = aws + "getHomePageContent?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
+	var uri = aws + "?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLeague(data, 'pc');
 		if (callback) return callback();
@@ -167,7 +167,7 @@ function buildLeague(callback) {
 }
 
 function buildLastGames(callback) {
-	var uri = aws + "getHomePageContent?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
+	var uri = aws + "?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
 		// console.log(data)
 		buildPopcornLastGames(data, 'pc');
@@ -176,7 +176,7 @@ function buildLastGames(callback) {
 }
 
 function getGraphData(callback) {
-	var uri = aws + "getHomePageContent?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter;
+	var uri = aws + "?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter;
 	httpGetStats(uri, 'pc', function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
@@ -188,7 +188,7 @@ function getGraphData(callback) {
 }
 
 function getDailyGames(callback) {
-	httpGetByUrl(aws + "getHomePageContent?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
+	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
 		buildDailyGames(err, data);
@@ -197,7 +197,7 @@ function getDailyGames(callback) {
 }
 
 function getDailyPlayers(callback) {
-	httpGetByUrl(aws + "getHomePageContent?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
+	httpGetByUrl(aws + "?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
 		// console.log(data)
@@ -323,7 +323,7 @@ function checkNewDay() { //if new day, rebuild saved stats
 function getPhrases() {
 	var l = _locale;
 	if (l == '') l = 'en-GB';
-	var url = aws + "getHomePageContent?action=getphrases&locale="+l;
+	var url = aws + "?action=getphrases&locale="+l;
 	httpGetStats(url, 'pc',  function (err, data) {
 		if (!data) return;
 		// console.log(data)
@@ -346,7 +346,7 @@ function getPhrases() {
 }
 
 function getMyRank() {
-	httpGetStats(aws + "getHomePageContent?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
+	httpGetStats(aws + "?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		if (!data) return;
 		fadeyStuff('myrank', data.msg);
 	});
@@ -804,7 +804,7 @@ function increaseLimit() {
 }
 
 function getIntro() {
-	httpGetByUrl(aws + "getHomePageContent?action=getintro&locale="+_locale, function (err, data) {
+	httpGetByUrl(aws + "?action=getintro&locale="+_locale, function (err, data) {
 		if (!data) return;
 		getQuestions(5, data.msg.genre);
 		fadeyStuff("pc_intro", data.msg.text);
@@ -812,14 +812,14 @@ function getIntro() {
 }
 
 function getEvent() {
-	httpGetByUrl(aws + "getHomePageContent?action=getevents&locale="+_locale, function (err, data) {
+	httpGetByUrl(aws + "?action=getevents&locale="+_locale, function (err, data) {
 		if (!data) return;
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
 }
 
 function getKeywords() {
-	httpGetByUrl(aws + "getHomePageContent?action=getkeywords&locale="+_locale, function (err, data) {
+	httpGetByUrl(aws + "?action=getkeywords&locale="+_locale, function (err, data) {
 		if (!data) return;
 		_keywords = data.msg;
 		fadeyStuff("pc_true", _keywords.true);
@@ -828,7 +828,7 @@ function getKeywords() {
 }
 
 function getQuestions(count, genre) {
-	var url = aws + "getHomePageContent?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
+	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
 		// console.log(data);
@@ -842,7 +842,8 @@ function getQuestions(count, genre) {
 
 		$.get(q.Poster).done(function () {
 		  fadeyPic("pc_question_poster", q.Poster);
-		}).fail(function () {
+		}).fail(function (e) {
+			console.log('FAILED', e)
 		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 		});
 

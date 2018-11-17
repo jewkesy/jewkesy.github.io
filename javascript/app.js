@@ -1,6 +1,6 @@
 "use strict";
 
-var aws = "https://e94s2o5jyb.execute-api.eu-west-1.amazonaws.com/prod/";
+var aws = "https://e94s2o5jyb.execute-api.eu-west-1.amazonaws.com/prod/getHomePageContent";
 
 var displayCount = getParameterByName('count') || 10;
 var displayLocale = getParameterByName('locale') || '';
@@ -125,9 +125,7 @@ function httpGetStats(theUrl, prefix, callback){
 	xmlHttp.onreadystatechange = function (oEvent) {
 		if (xmlHttp.readyState === 4) {  
 	        if (xmlHttp.status === 200) {  
-				// console.log(xmlHttp.responseText);
 				var doc = JSON.parse(xmlHttp.responseText);
-				buildTopTen(doc, prefix);
 				if (callback) return callback(null, doc);
 			} else {  
 	           console.log("Error", theUrl, xmlHttp.status, xmlHttp.statusText);
@@ -137,60 +135,6 @@ function httpGetStats(theUrl, prefix, callback){
 	}
 	xmlHttp.open("GET", theUrl, true);
 	xmlHttp.send();
-}
-
-function buildTopTen(topTen, prefix) {
-	var container = document.getElementById(prefix + '_scores')
-
-	for (var i = 0; i < topTen.length; i++) {
-		if (i >= displayCount) break;
-		var x = i + 1;
-		var id = prefix + "_" + x;
-		var sym = "";
-		if (topTen[i].icon == 'star') {sym = " &#9734;";}
-		else if (topTen[i].icon == 'sun') {sym = " &#9788;";}
-		else if (topTen[i].icon == 'note') {sym = " &#9834;";}
-
-		if (!document.getElementById(prefix + '_' + x)) {
-			var row = container.insertRow(-1);
-			row.id = prefix + '_' + x;
-			var cell1 = row.insertCell(0);
-			cell1.id = prefix + "_rank_" + x;
-			var cell2 = row.insertCell(1);
-			cell2.id = prefix + "_score_" + x;
-			var cell3 = row.insertCell(2);
-			cell3.id = prefix + "_games_" + x;
-			var cell4 = row.insertCell(3);
-			cell4.id = prefix + "_avg_" + x;
-
-			var cell5 = row.insertCell(4)
-			cell5.id = prefix + "_ts_" + x;
-			cell5.className = "timeago";
-			cell5.title = topTen[i].timestamp/1000;
-			var cell6 = row.insertCell(5);
-			cell6.id = prefix + "_locale_" + x;
-
-			cell1.innerHTML = x + sym;
-			cell2.innerHTML = topTen[i].score;
-			cell3.innerHTML = topTen[i].games;
-			cell4.innerHTML = ((+topTen[i].score)/(+topTen[i].games)).toFixed(2);
-			cell5.innerHTML = "...";
-
-			if (topTen[i].locale) {
-				cell6.innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
-			}
-			
-		} else {
-			document.getElementById(prefix + '_rank_' + x).innerHTML = x + sym;
-			document.getElementById(prefix + '_score_' + x).innerHTML = topTen[i].score;
-			document.getElementById(prefix + '_games_' + x).innerHTML = topTen[i].games;
-			document.getElementById(prefix + '_ts_' + x).title = topTen[i].timestamp/1000;
-			if (topTen[i].locale) {
-				document.getElementById(prefix + '_locale_' + x).innerHTML =  "<img class='locale' src='./images/" + topTen[i].locale + ".png' />";
-			}
-		}
-		document.getElementById(prefix + '_count').innerHTML = i+1;
-	}
 }
 
 function getParameterByName(name, url) {
