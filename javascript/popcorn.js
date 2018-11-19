@@ -515,13 +515,13 @@ function buildPopcornLastGames(data, prefix) {
 
 		if (g.r == 1) {
 			// cell1.className = "font20";
-			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥇" + sym);
+			fadeyStuff(prefix + "_lastgames_rank_" + x, "<span class='font26'>🥇</span>" + sym);
 		} else if (g.r == 2) {
 			// cell1.className = "font20";
-			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥈" + sym);
+			fadeyStuff(prefix + "_lastgames_rank_" + x, "<span class='font26'>🥈</span>" + sym);
 		} else if (g.r == 3) {
 			// cell1.className = "font20";
-			fadeyStuff(prefix + "_lastgames_rank_" + x, "🥉" + sym);
+			fadeyStuff(prefix + "_lastgames_rank_" + x, "<span class='font26'>🥉</span>" + sym);
 		} else {
 			//cell1.className = "";
 			fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
@@ -619,11 +619,11 @@ function buildPopcornLeague(data, prefix, total) {
 		//fadeyStuff(prefix + "_league_device_" + x, "<img width='22' class='device' title='"+ deviceIcon +"' alt='"+deviceIcon+"' src='./images/" + deviceIcon + ".png' />");
 		
 		if (x == 1) {
-			fadeyStuff(prefix + "_league_rank_" + x, "🥇" + sym);
+			fadeyStuff(prefix + "_league_rank_" + x, "<span class='font26'>🥇</span>" + sym);
 		} else if (x == 2) {
-			fadeyStuff(prefix + "_league_rank_" + x, "🥈" + sym);
+			fadeyStuff(prefix + "_league_rank_" + x, "<span class='font26'>🥈</span>" + sym);
 		} else if (x == 3) {
-			fadeyStuff(prefix + "_league_rank_" + x, "🥉" + sym);
+			fadeyStuff(prefix + "_league_rank_" + x, "<span class='font26'>🥉</span>" + sym);
 		} else {
 			if (cell1) cell1.className = "font16 strong";
 			fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
@@ -843,7 +843,6 @@ function getQuestions(count, genre) {
 		$.get(q.Poster).done(function () {
 		  fadeyPic("pc_question_poster", q.Poster);
 		}).fail(function (e) {
-			console.log('FAILED', e)
 		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 		});
 

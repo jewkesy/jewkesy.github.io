@@ -524,6 +524,10 @@ tr.hover > th:hover {
   font-size: 20px !important;
 }
 
+.font26 {
+  font-size: 26px !important;
+}
+
 .reviewTile {
   min-width: 90px;
   max-width: 90px;
