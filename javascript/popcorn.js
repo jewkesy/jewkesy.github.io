@@ -443,7 +443,7 @@ function updateBonusPanel(stats) {
 	console.log(stats);
 	fadeyStuff("pc_bonus_wins", numberWithCommas(stats.w));
 	fadeyStuff("pc_bonus_loses", numberWithCommas(stats.l));
-	fadeyStuff("pc_bonus_skipss", numberWithCommas(stats.s));
+	fadeyStuff("pc_bonus_skips", numberWithCommas(stats.s));
 }
 
 function buildPopcornLastGames(data, prefix) {
