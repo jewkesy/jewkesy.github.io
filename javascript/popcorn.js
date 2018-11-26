@@ -439,8 +439,16 @@ function updateDeviceTypes(devices, timeFrom) {
 	fadeyStuff("pc_device_google", numberWithCommas(gCount));
 }
 
+function updateBonusPanel(stats) {
+	console.log(stats);
+	fadeyStuff("pc_bonus_wins", numberWithCommas(stats.w));
+	fadeyStuff("pc_bonus_loses", numberWithCommas(stats.l));
+	fadeyStuff("pc_bonus_skipss", numberWithCommas(stats.s));
+}
+
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
+	updateBonusPanel(data.bonus);
 	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
