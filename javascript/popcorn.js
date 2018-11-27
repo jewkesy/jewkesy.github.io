@@ -455,9 +455,9 @@ function updateBonusPanel(stats) {
 	document.getElementById('barWins').setAttribute('style', 'width:'+wWidth+'%');
 	document.getElementById('barLoses').setAttribute('style','width:'+lWidth+'%');
 	document.getElementById('barSkips').setAttribute('style','width:'+sWidth+'%');
-	if (wWidth > 10) fadeyStuff("barWins", wWidth.toFixed(2)+'%');
-	if (lWidth > 10) fadeyStuff("barLoses", lWidth.toFixed(2)+'%');
-	if (sWidth > 10) fadeyStuff("barSkips", sWidth.toFixed(2)+'%');
+	if (wWidth > 13) fadeyStuff("barWins", wWidth.toFixed(2)+'%');
+	if (lWidth > 13) fadeyStuff("barLoses", lWidth.toFixed(2)+'%');
+	if (sWidth > 13) fadeyStuff("barSkips", sWidth.toFixed(2)+'%');
 }
 
 function buildPopcornLastGames(data, prefix) {
