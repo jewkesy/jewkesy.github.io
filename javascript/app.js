@@ -315,7 +315,7 @@ function paramReplace(param, url, value) {
   return newString + inline;
 }
 
-function fadeyStuff(id, val) {
+function fadeyStuff(id, val, attr) {
 	// if (!val) return;
 	if (!document.getElementById(id)) return;
 

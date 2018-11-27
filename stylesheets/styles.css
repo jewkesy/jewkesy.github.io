@@ -555,7 +555,8 @@ tr.hover > th:hover {
     font-weight: bold;
     font-family: arial, sans-serif;
     padding: 0px;
-
+    color: white;
+    -webkit-text-stroke: 0.5px #f4f4f4;
   }
 
   .stacked-bar-graph > span.bar-1 {
@@ -568,6 +569,16 @@ tr.hover > th:hover {
 
   .stacked-bar-graph > span.bar-3 {
     background: #D57E00;
+  }
+
+  .stacked-bar-graph > span.bar-g {
+    background: #238823;
+  }
+  .stacked-bar-graph > span.bar-a {
+    background: #FFBF00;
+  }
+  .stacked-bar-graph > span.bar-r {
+    background: #D2222D;
   }
   
 .slidecontainer {

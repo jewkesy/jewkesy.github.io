@@ -439,10 +439,25 @@ function updateDeviceTypes(devices, timeFrom) {
 	fadeyStuff("pc_device_google", numberWithCommas(gCount));
 }
 
+var _bonusTotal = 0;
+
 function updateBonusPanel(stats) {
+	if (stats.w+stats.l+stats.s == _bonusTotal) return;
+	_bonusTotal = stats.w+stats.l+stats.s;
+	var wWidth = percentage(stats.w, _bonusTotal);
+	var lWidth = percentage(stats.l, _bonusTotal);
+	var sWidth = percentage(stats.s, _bonusTotal);
+	console.log(_bonusTotal);
+
 	fadeyStuff("pc_bonus_wins", numberWithCommas(stats.w));
 	fadeyStuff("pc_bonus_loses", numberWithCommas(stats.l));
 	fadeyStuff("pc_bonus_skips", numberWithCommas(stats.s));
+	document.getElementById('barWins').setAttribute('style', 'width:'+wWidth+'%');
+	document.getElementById('barLoses').setAttribute('style','width:'+lWidth+'%');
+	document.getElementById('barSkips').setAttribute('style','width:'+sWidth+'%');
+	if (wWidth > 10) fadeyStuff("barWins", wWidth.toFixed(2)+'%');
+	if (lWidth > 10) fadeyStuff("barLoses", lWidth.toFixed(2)+'%');
+	if (sWidth > 10) fadeyStuff("barSkips", sWidth.toFixed(2)+'%');
 }
 
 function buildPopcornLastGames(data, prefix) {
