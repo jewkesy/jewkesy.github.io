@@ -447,7 +447,7 @@ function updateBonusPanel(stats) {
 	var wWidth = percentage(stats.w, _bonusTotal);
 	var lWidth = percentage(stats.l, _bonusTotal);
 	var sWidth = percentage(stats.s, _bonusTotal);
-	console.log(_bonusTotal);
+	// console.log(_bonusTotal);
 
 	fadeyStuff("pc_bonus_wins", numberWithCommas(stats.w));
 	fadeyStuff("pc_bonus_loses", numberWithCommas(stats.l));
@@ -623,13 +623,15 @@ function buildPopcornLeague(data, prefix, total) {
 			var cell4 = row.insertCell(4);
 			cell4.id = prefix + "_league_avg_" + x;
 			var cell5 = row.insertCell(5);
-			cell5.id = prefix + "_league_ts_" + x;
-			cell5.className = "timeago";
-			cell5.title = topTen[i].t/1000;
+			cell5.id = prefix + "_league_bonus_" + x;
 			var cell6 = row.insertCell(6);
-			cell6.id = prefix + "_league_st_" + x;
+			cell6.id = prefix + "_league_ts_" + x;
 			cell6.className = "timeago";
-			cell6.title = topTen[i].st/1000;
+			cell6.title = topTen[i].t/1000;
+			var cell7 = row.insertCell(7);
+			cell7.id = prefix + "_league_st_" + x;
+			cell7.className = "timeago";
+			cell7.title = topTen[i].st/1000;
 			// var cell7 = row.insertCell(7);
 			// cell7.id = prefix + "_league_locale_" + x;
 		} else {
@@ -650,10 +652,11 @@ function buildPopcornLeague(data, prefix, total) {
 			if (cell1) cell1.className = "font16 strong";
 			fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
 		}
-
+		if (!topTen[i].b) topTen[i].b = {wins:"-", loses:"-", skips:"-"};
 		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
 		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
 		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
+		fadeyStuff(prefix + "_league_bonus_" + x, numberWithCommas(topTen[i].b.wins) + " / " + numberWithCommas(topTen[i].b.loses) + " / " + numberWithCommas(topTen[i].b.skips));
 		fadeyStuff(prefix + "_league_ts_" + x, humanTime((topTen[i].t/1000)+""));
 		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
 		//if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+topTen[i].l+"' alt='"+topTen[i].l+"' src='./flags/" + topTen[i].l + ".png' />");
