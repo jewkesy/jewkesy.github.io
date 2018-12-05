@@ -364,8 +364,9 @@ function applyLocaleHeader(locale, device) {
 
 function buildDailyPlayers(err, players) {
 	if (err) {console.error(err); return;}
-	if (!players) {console.log('no data'); return;}
+	if (!players) {console.log(players); return;}
 
+	if (!players.dailyplayers) return;
 	_dailyPlayers = players.dailyplayers;
 
 	var total = _dailyPlayers[_dailyPlayers.length-1];
@@ -407,7 +408,7 @@ function buildPopcornPage(content) {
 }
 
 function updateDeviceTypes(devices, timeFrom) {
-
+	if (!devices) return;
 	var eCount = 0;
 	var gCount = 0; 
 
