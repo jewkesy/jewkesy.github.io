@@ -348,6 +348,7 @@ function getPhrases() {
 function getMyRank() {
 	httpGetStats(aws + "?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		if (!data) return;
+		console.log(data)
 		fadeyStuff('myrank', data.msg);
 	});
 }
@@ -380,7 +381,43 @@ function buildDailyPlayers(err, players) {
 function buildDailyGames(err, content) {
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
-	// console.log(content)
+	if (!content.g) {console.log(content); return;}
+
+	console.log(content);
+	// TODO Don't forget to cache earlier days!
+
+	// find today
+
+	var d = new Date();
+    formatDate = "d_"+ formatDate(d);
+
+	var today = content.g[0][formatDate].c;
+	var days = 0;  // get from first day recorde
+	var total = 0;
+	
+	fadeyStuff("pc_games_today", numberWithCommas(today));
+
+	// var total = 0;
+	// var days = 0;
+	// for (var i = 0; i < content.dailygames.length; i++) {
+	// 	if (!content.dailygames[i]) continue;
+	// 	// console.log(content.dailygames[i]);
+	// 	total += content.dailygames[i];
+	// 	days++;
+	// }
+	
+	var avg = Math.round(total/days);
+	// console.log(days, total, avg)
+	fadeyStuff('pc_games_avg', numberWithCommas(avg));
+}
+
+
+
+function buildDailyGamesBAK(err, content) {
+	if (err) {console.error(err); return;}
+	if (!content) {console.log('no data'); return;}
+	if (!content.dailygames) {console.log(content); return;}
+
 	_gameinfo.dailygames = content.dailygames;
 	fadeyStuff("pc_games_today", numberWithCommas(content.dailygames[content.dailygames.length-1]));
 
