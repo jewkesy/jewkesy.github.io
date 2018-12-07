@@ -389,7 +389,7 @@ function buildDailyGames(err, content) {
 	// find today
 
 	var d = new Date();
-    formatDate = "d_"+ formatDate(d);
+    var formatDate = "d_"+ formatDate(d);
 
 	var today = content.g[0][formatDate].c;
 	var days = 0;  // get from first day recorde
