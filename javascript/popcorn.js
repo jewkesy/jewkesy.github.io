@@ -383,7 +383,7 @@ function buildDailyGames(err, content) {
 	if (!content) {console.log('no data'); return;}
 	if (!content.g) {console.log(content); return;}
 
-	// console.log(content);
+	console.log(content);
 	// TODO Don't forget to cache earlier days!
 
 	// find today
@@ -391,9 +391,9 @@ function buildDailyGames(err, content) {
 	var d = new Date();
     var formattedDate = "d_"+ formatDate(d);
 
-	var today = content.g[0][formattedDate].c;
-	var days = 0;  // get from first day recorde
-	var total = 0;
+	var today = content.g[0][formattedDate].games;
+	// var days = 0;  // get from first day recorde
+	// var total = 0;
 	
 	fadeyStuff("pc_games_today", numberWithCommas(today));
 
@@ -406,9 +406,10 @@ function buildDailyGames(err, content) {
 	// 	days++;
 	// }
 	
-	var avg = Math.round(total/days);
+	// var avg = Math.round(total/days);
 	// console.log(days, total, avg)
-	fadeyStuff('pc_games_avg', numberWithCommas(avg));
+	// fadeyStuff('pc_games_avg', numberWithCommas(avg));
+	fadeyStuff('pc_total_today', numberWithCommas(content.g[0][formattedDate].total));
 }
 
 
@@ -819,7 +820,7 @@ function updateCharts(data, total) {
 		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
 	}
 
-	fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
+	// fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
 	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
 
 	for (var i = 0; i < data.totals.length; i++) {
