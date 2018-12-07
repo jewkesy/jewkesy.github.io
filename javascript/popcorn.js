@@ -384,6 +384,8 @@ function buildDailyGames(err, content) {
 	if (!content.g) {console.log(content); return;}
 
 	console.log(content);
+
+	updateDeviceTypes(content.g[0]);
 	// TODO Don't forget to cache earlier days!
 
 	// find today
@@ -412,7 +414,48 @@ function buildDailyGames(err, content) {
 	fadeyStuff('pc_total_today', numberWithCommas(content.g[0][formattedDate].total));
 }
 
+var deviceCounts;
 
+function countDevices(obj, stack) {
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+            if (typeof obj[property] == "object") {
+                countDevices(obj[property], stack + '.' + property);
+            } else {
+            	if (property.toLowerCase().indexOf('echo') == 0) {
+            		deviceCounts.Echo += obj[property];
+            		// console.log(stack, property, obj[property]);
+            	} else if (property.toLowerCase().indexOf('google') == 0) {
+            		deviceCounts.Google += obj[property];
+                	// console.log(stack, property, obj[property]);
+            	}
+            }
+        }
+    }
+}
+
+function updateDeviceTypes(obj) {
+	deviceCounts = {Echo: 0, Google: 0, Total: 0};
+	countDevices(obj, '');
+	deviceCounts.Total = deviceCounts.Echo + deviceCounts.Google;
+
+	var aWidth = percentage(deviceCounts.Echo, deviceCounts.Total);
+	var gWidth = percentage(deviceCounts.Google, deviceCounts.Total);
+
+	document.getElementById('barAlexa').setAttribute('style', 'width:'+aWidth+'%');
+	document.getElementById('barGoogle').setAttribute('style','width:'+gWidth+'%');
+
+	if (aWidth > gWidth) {
+		fadeyStuff("barAlexa", aWidth.toFixed(2)+'%');
+		fadeyStuff("barGoogle", '');
+	} else {
+		fadeyStuff("barAlexa", '');
+		fadeyStuff("barGoogle", gWidth.toFixed(2)+'%');
+	}
+
+	fadeyStuff("pc_device_alexa", numberWithCommas(deviceCounts.Echo));
+	fadeyStuff("pc_device_google", numberWithCommas(deviceCounts.Google));
+}
 
 function buildDailyGamesBAK(err, content) {
 	if (err) {console.error(err); return;}
@@ -441,11 +484,11 @@ function buildPopcornPage(content) {
 
 	if (!content) return;
 	if (content.count === 0) return;
-	updateDeviceTypes(content.devices, content.timeFrom);
+	// updateDeviceTypes(content.devices, content.timeFrom);
 	updateCharts(content.counts, content.totalUsers);
 }
 
-function updateDeviceTypes(devices, timeFrom) {
+function updateDeviceTypesBAK(devices, timeFrom) {
 	if (!devices) return;
 	var eCount = 0;
 	var gCount = 0; 
