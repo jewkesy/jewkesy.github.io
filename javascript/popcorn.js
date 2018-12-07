@@ -348,7 +348,7 @@ function getPhrases() {
 function getMyRank() {
 	httpGetStats(aws + "?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		if (!data) return;
-		console.log(data)
+		// console.log(data)
 		fadeyStuff('myrank', data.msg);
 	});
 }
@@ -383,15 +383,15 @@ function buildDailyGames(err, content) {
 	if (!content) {console.log('no data'); return;}
 	if (!content.g) {console.log(content); return;}
 
-	console.log(content);
+	// console.log(content);
 	// TODO Don't forget to cache earlier days!
 
 	// find today
 
 	var d = new Date();
-    var formatDate = "d_"+ formatDate(d);
+    var formattedDate = "d_"+ formatDate(d);
 
-	var today = content.g[0][formatDate].c;
+	var today = content.g[0][formattedDate].c;
 	var days = 0;  // get from first day recorde
 	var total = 0;
 	
