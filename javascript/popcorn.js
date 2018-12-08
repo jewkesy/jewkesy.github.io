@@ -348,7 +348,7 @@ function getPhrases() {
 function getMyRank() {
 	httpGetStats(aws + "?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		if (!data) return;
-		console.log(data)
+		// console.log(data)
 		
 		fadeyStuff('pc_total_players', numberWithCommas(data.myRank.total));
 		document.getElementById('pc_total_players').setAttribute('total', data.myRank.total);
@@ -389,6 +389,7 @@ function buildDailyGames(err, content) {
 	console.log(content);
 
 	updateDeviceTypes(content.g[0]);
+	updateBonusPanel(content.g[0]);
 	// TODO Don't forget to cache earlier days!
 
 	// find today
@@ -417,7 +418,7 @@ function buildDailyGames(err, content) {
 	fadeyStuff('pc_total_today', numberWithCommas(content.g[0][formattedDate].total));
 }
 
-var deviceCounts;
+var _deviceCounts;
 
 function countDevices(obj, stack) {
     for (var property in obj) {
@@ -426,10 +427,10 @@ function countDevices(obj, stack) {
                 countDevices(obj[property], stack + '.' + property);
             } else {
             	if (property.toLowerCase().indexOf('echo') == 0) {
-            		deviceCounts.Echo += obj[property];
+            		_deviceCounts.Echo += obj[property];
             		// console.log(stack, property, obj[property]);
             	} else if (property.toLowerCase().indexOf('google') == 0) {
-            		deviceCounts.Google += obj[property];
+            		_deviceCounts.Google += obj[property];
                 	// console.log(stack, property, obj[property]);
             	}
             }
@@ -438,12 +439,12 @@ function countDevices(obj, stack) {
 }
 
 function updateDeviceTypes(obj) {
-	deviceCounts = {Echo: 0, Google: 0, Total: 0};
+	_deviceCounts = {Echo: 0, Google: 0, Total: 0};
 	countDevices(obj, '');
-	deviceCounts.Total = deviceCounts.Echo + deviceCounts.Google;
+	_deviceCounts.Total = _deviceCounts.Echo + _deviceCounts.Google;
 
-	var aWidth = percentage(deviceCounts.Echo, deviceCounts.Total);
-	var gWidth = percentage(deviceCounts.Google, deviceCounts.Total);
+	var aWidth = percentage(_deviceCounts.Echo, _deviceCounts.Total);
+	var gWidth = percentage(_deviceCounts.Google, _deviceCounts.Total);
 
 	document.getElementById('barAlexa').setAttribute('style', 'width:'+aWidth+'%');
 	document.getElementById('barGoogle').setAttribute('style','width:'+gWidth+'%');
@@ -456,8 +457,8 @@ function updateDeviceTypes(obj) {
 		fadeyStuff("barGoogle", gWidth.toFixed(2)+'%');
 	}
 
-	fadeyStuff("pc_device_alexa", numberWithCommas(deviceCounts.Echo));
-	fadeyStuff("pc_device_google", numberWithCommas(deviceCounts.Google));
+	fadeyStuff("pc_device_alexa", numberWithCommas(_deviceCounts.Echo));
+	fadeyStuff("pc_device_google", numberWithCommas(_deviceCounts.Google));
 }
 
 function buildDailyGamesBAK(err, content) {
@@ -491,63 +492,50 @@ function buildPopcornPage(content) {
 	updateCharts(content.counts, content.totalUsers);
 }
 
-function updateDeviceTypesBAK(devices, timeFrom) {
-	if (!devices) return;
-	var eCount = 0;
-	var gCount = 0; 
+function countBonuses(obj, stack) {
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+        	// console.log(property)
 
-	if (timeFrom > 0) {
-		eCount += +$("#pc_device_alexa").html().replace(',', '');
-		gCount += +$("#pc_device_google").html().replace(',', '');
-	}
-
-	for (var i = 0; i < devices.length; i++) {
-		if (devices[i].Id.indexOf('Echo') > -1) eCount += devices[i].count;
-		else if (devices[i].Id.indexOf('Google') > -1) gCount += devices[i].count;
-	}
-
-	var aWidth = percentage(eCount, eCount+gCount);
-	var gWidth = percentage(gCount, eCount+gCount);
-
-	document.getElementById('barAlexa').setAttribute('style', 'width:'+aWidth+'%');
-	document.getElementById('barGoogle').setAttribute('style','width:'+gWidth+'%');
-
-	if (aWidth > gWidth) {
-		fadeyStuff("barAlexa", aWidth.toFixed(2)+'%');
-		fadeyStuff("barGoogle", '');
-	} else {
-		fadeyStuff("barAlexa", '');
-		fadeyStuff("barGoogle", gWidth.toFixed(2)+'%');
-	}
-
-	fadeyStuff("pc_device_alexa", numberWithCommas(eCount));
-	fadeyStuff("pc_device_google", numberWithCommas(gCount));
+            if (typeof obj[property] == "object") {
+                countBonuses(obj[property], stack + '.' + property);
+            } else {
+            	if (stack.indexOf(".bonus.") > 0 ) {
+            		// console.log(property, obj[property])
+            			 if (property == "wins") _bonusCounts.Wins += obj[property];
+            		else if (property == "loses") _bonusCounts.Loses += obj[property];
+                	else if (property == "skips") _bonusCounts.Skips += obj[property];
+            	}
+            	// console.log(stack, property, obj[property]);
+            }
+        }
+    }
 }
 
-var _bonusTotal = 0;
+var _bonusCounts = 0;
 
-function updateBonusPanel(stats) {
-	if (stats.w+stats.l+stats.s == _bonusTotal) return;
-	_bonusTotal = stats.w+stats.l+stats.s;
-	var wWidth = percentage(stats.w, _bonusTotal);
-	var lWidth = percentage(stats.l, _bonusTotal);
-	var sWidth = percentage(stats.s, _bonusTotal);
-	// console.log(_bonusTotal);
+function updateBonusPanel(obj) {
+	_bonusCounts = {Wins: 0, Loses: 0, Skips: 0, Total: 0};
+	countBonuses(obj, '');
+	_bonusCounts.Total = _bonusCounts.Wins + _bonusCounts.Loses + _bonusCounts.Skips;
+	var wWidth = percentage(_bonusCounts.Wins, _bonusCounts.Total);
+	var lWidth = percentage(_bonusCounts.Loses, _bonusCounts.Total);
+	var sWidth = percentage(_bonusCounts.Skips, _bonusCounts.Total);
 
-	fadeyStuff("pc_bonus_wins", numberWithCommas(stats.w));
-	fadeyStuff("pc_bonus_loses", numberWithCommas(stats.l));
-	fadeyStuff("pc_bonus_skips", numberWithCommas(stats.s));
+	fadeyStuff("pc_bonus_wins", numberWithCommas(_bonusCounts.Wins));
+	fadeyStuff("pc_bonus_loses", numberWithCommas(_bonusCounts.Loses));
+	fadeyStuff("pc_bonus_skips", numberWithCommas(_bonusCounts.Skips));
 	document.getElementById('barWins').setAttribute('style', 'width:'+wWidth+'%');
 	document.getElementById('barLoses').setAttribute('style','width:'+lWidth+'%');
 	document.getElementById('barSkips').setAttribute('style','width:'+sWidth+'%');
 	if (wWidth > 13) fadeyStuff("barWins", wWidth.toFixed(2)+'%');
 	if (lWidth > 13) fadeyStuff("barLoses", lWidth.toFixed(2)+'%');
-	if (sWidth > 13) fadeyStuff("barSkips", sWidth.toFixed(2)+'%');
+	if (sWidth > 13) fadeyStuff("barSkips", sWidth.toFixed(2)+'%');	
 }
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	updateBonusPanel(data.bonus);
+	// updateBonusPanel(data.bonus);
 	// fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
 	// document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
