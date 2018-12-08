@@ -348,7 +348,10 @@ function getPhrases() {
 function getMyRank() {
 	httpGetStats(aws + "?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		if (!data) return;
-		// console.log(data)
+		console.log(data)
+		
+		fadeyStuff('pc_total_players', numberWithCommas(data.myRank.total));
+		document.getElementById('pc_total_players').setAttribute('total', data.myRank.total);
 		fadeyStuff('myrank', data.msg);
 	});
 }
@@ -545,8 +548,8 @@ function updateBonusPanel(stats) {
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
 	updateBonusPanel(data.bonus);
-	fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
-	document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
+	// fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
+	// document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
 
 	fadeyStuff("pc_total_games", numberWithCommas(data.totalGames));
 	document.getElementById('pc_total_games').setAttribute('total', data.totalGames);
