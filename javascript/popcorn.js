@@ -134,20 +134,20 @@ function getGamePlay(callback) {
 	        	callback(null, 'buildLastGames');
 	        });
 	    },
-	    function(callback) {
-	    	getGraphData(function () {
-	    		callback(null, 'getGraphData');
-	    	});
-	    },
+	    // function(callback) {
+	    // 	getGraphData(function () {
+	    // 		callback(null, 'getGraphData');
+	    // 	});
+	    // },
 	    function(callback) {
 	    	getDailyGames(function () {
 	    		callback(null, 'getDailyGames');
 	    	});
-	    },
-	    function(callback) {
-	    	getDailyPlayers(function () {
-	    		callback(null, 'getDailyPlayers');
-	    	});
+	    // },
+	    // function(callback) {
+	    // 	getDailyPlayers(function () {
+	    // 		callback(null, 'getDailyPlayers');
+	    // 	});
 	    }
 	],
 	function(err, results) {
@@ -175,17 +175,17 @@ function buildLastGames(callback) {
 	});
 }
 
-function getGraphData(callback) {
-	var uri = aws + "?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter;
-	httpGetStats(uri, 'pc', function (err, data) {
-		if (err) console.error(err);
-		if (!data) return callback();
-		//console.log(data);
-		_timeFrom = data.lastTime;
-		buildPopcornPage(data);
-		return callback();
-	});	
-}
+// function getGraphData(callback) {
+// 	var uri = aws + "?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter;
+// 	httpGetStats(uri, 'pc', function (err, data) {
+// 		if (err) console.error(err);
+// 		if (!data) return callback();
+// 		console.log(data);
+// 		_timeFrom = data.lastTime;
+// 		buildPopcornPage(data);
+// 		return callback();
+// 	});	
+// }
 
 function getDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
@@ -196,15 +196,15 @@ function getDailyGames(callback) {
 	});
 }
 
-function getDailyPlayers(callback) {
-	httpGetByUrl(aws + "?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
-		if (err) console.error(err);
-		if (!data) return callback();
-		// console.log(data)
-		buildDailyPlayers(err, data);
-		return callback();
-	});
-}
+// function getDailyPlayers(callback) {
+// 	httpGetByUrl(aws + "?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
+// 		if (err) console.error(err);
+// 		if (!data) return callback();
+// 		// console.log(data)
+// 		buildDailyPlayers(err, data);
+// 		return callback();
+// 	});
+// }
 
 function switchLocale(locale) {
 	_locale = locale;
@@ -397,24 +397,28 @@ function buildDailyGames(err, content) {
 	var d = new Date();
     var formattedDate = "d_"+ formatDate(d);
 
+    // TODO - If incorrect data for date, the sort order by assumes today is first
 	var today = content.g[0][formattedDate].games;
 	// var days = 0;  // get from first day recorde
 	// var total = 0;
 	
 	fadeyStuff("pc_games_today", numberWithCommas(today));
 
-	// var total = 0;
-	// var days = 0;
-	// for (var i = 0; i < content.dailygames.length; i++) {
-	// 	if (!content.dailygames[i]) continue;
-	// 	// console.log(content.dailygames[i]);
-	// 	total += content.dailygames[i];
-	// 	days++;
-	// }
-	
-	// var avg = Math.round(total/days);
-	// console.log(days, total, avg)
-	// fadeyStuff('pc_games_avg', numberWithCommas(avg));
+	var total = 0;
+	var days = 0;
+	for (var i = 0; i < content.g.length; i++) {
+		if (content.g[i].games === 0) continue;
+		total += content.g[i].games;
+		for (k in content.g[i]) {
+			if (k.indexOf('d_') == 0) days++;
+		}
+	}
+
+	var avg = Math.round(total/days);
+	fadeyStuff('pc_games_avg', numberWithCommas(avg));
+
+	fadeyStuff('pc_total_games', numberWithCommas(total));
+	document.getElementById('pc_total_games').setAttribute('total', total);
 	fadeyStuff('pc_total_today', numberWithCommas(content.g[0][formattedDate].total));
 }
 
@@ -459,28 +463,6 @@ function updateDeviceTypes(obj) {
 
 	fadeyStuff("pc_device_alexa", numberWithCommas(_deviceCounts.Echo));
 	fadeyStuff("pc_device_google", numberWithCommas(_deviceCounts.Google));
-}
-
-function buildDailyGamesBAK(err, content) {
-	if (err) {console.error(err); return;}
-	if (!content) {console.log('no data'); return;}
-	if (!content.dailygames) {console.log(content); return;}
-
-	_gameinfo.dailygames = content.dailygames;
-	fadeyStuff("pc_games_today", numberWithCommas(content.dailygames[content.dailygames.length-1]));
-
-	var total = 0;
-	var days = 0;
-	for (var i = 0; i < content.dailygames.length; i++) {
-		if (!content.dailygames[i]) continue;
-		// console.log(content.dailygames[i]);
-		total += content.dailygames[i];
-		days++;
-	}
-	
-	var avg = Math.round(total/days);
-	// console.log(days, total, avg)
-	fadeyStuff('pc_games_avg', numberWithCommas(avg));
 }
 
 function buildPopcornPage(content) {
@@ -535,12 +517,6 @@ function updateBonusPanel(obj) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	// updateBonusPanel(data.bonus);
-	// fadeyStuff("pc_total_players", numberWithCommas(data.totalUsers));
-	// document.getElementById('pc_total_players').setAttribute('total', data.totalUsers);
-
-	fadeyStuff("pc_total_games", numberWithCommas(data.totalGames));
-	document.getElementById('pc_total_games').setAttribute('total', data.totalGames);
 
 	fadeyStuff("approxPlayers", numberWithCommas(data.totalUsers));
 	fadeyStuff("approxGames", numberWithCommas(data.totalGames));
