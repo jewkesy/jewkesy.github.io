@@ -103,7 +103,7 @@ function statsTimer() {
 	sInt = setTimeout(function () {
 		clearTimeout(sInt);
 		getStats();
-	}, 2500);
+	}, 5000);
 }
 
 function getStats() {
@@ -603,7 +603,10 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.g));
 		
 		if (!g.lg) g.lg = "";
-		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+getGenreEventTitle(g.ge));
+		var bonusInfo = "";
+		if (g.b) bonusInfo = "<br/>"+g.b.wins+" / "+g.b.loses+" / "+g.b.skips;
+
+		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+getGenreEventTitle(g.ge)+bonusInfo);
 		fadeyStuff(prefix + "_lastgames_gs_" + x, g.gs);
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((g.t/1000)+""));
