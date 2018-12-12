@@ -23,7 +23,7 @@ var _newUsers = {};
 var _newUsersLabels = [];
 
 var _gameinfo = { dailygames: [] };
-var _chtHeight = 4000;
+var _chtHeight = 7000;
 var _dailyPlayers = [];
 var _chartSummary = getParameterByName('chtsum') || 95;
 
@@ -759,7 +759,7 @@ function chtNewUsers(chart, dailyData, total) {
 	chart.update();
 
 	var axis = chart.scales.y-axis-0;
-	_chtHeight = axis.max;
+	_chtHeight = axis.max || _chtHeight;
 	_chtStuffRunning = false;
 }
 
@@ -819,12 +819,9 @@ function updateCharts(data) {
 }
 
 function prepDataForChart(data) {
-	// Sort by date
-	// data = data.slice(0).reverse();
+	data.sort(dynamicSort("month"));
+	data.sort(dynamicSort("year")); //"-year"
 
-data.sort(dynamicSort("month"));
-data.sort(dynamicSort("year"));
-// data.sort(dynamicSort("-Surname"));
 
 	console.log(data);
 
@@ -832,22 +829,32 @@ data.sort(dynamicSort("year"));
 	var dailyGames = [];
 	var dailyLabels = [];
 	var dailyTotals = [];
+	var weekends = [];
+	var months = [];
 
 	var today = new Date();
 	// console.log(_startDate, today)
 	var diff = daydiff(_startDate, today, true);
 	var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
 
-		dailyLabels = new Array(diff).fill("");
-		// console.log(diff)
-		for (var i = 1; i < diff-1; i++) {
-			var someDate = addDays(_startDate, i);
-			// console.log(someDate)
-			var q = someDate.toLocaleDateString().split("/");
-			dailyLabels[i] = q[0] + getMonthName(q[1]-1);
-		}
-		dailyLabels[0] = "Launch";
-		dailyLabels[diff-1] = "Today";
+	dailyLabels = new Array(diff).fill("");
+	// console.log(diff)
+	for (var i = 1; i < diff-1; i++) {
+		var someDate = addDays(_startDate, i);
+		// console.log(someDate)
+		var q = someDate.toLocaleDateString().split("/");
+		dailyLabels[i] = q[0] + getMonthName(q[1]-1);
+
+		var day = someDate.getDay();
+		if (day == 0 || day > 5) weekends.push(_chtHeight);
+		else weekends.push(null);
+
+        var dt = someDate.getDate();
+        if (dt == 1) months.push(_chtHeight);
+        else months.push(null);
+	}
+	dailyLabels[0] = "Launch";
+	dailyLabels[diff-1] = "Today";
 
 	for (var i = 0; i < data.length; i++) {
 		var day = data[i];
@@ -900,14 +907,16 @@ data.sort(dynamicSort("year"));
 	    }
 	    
 	}
-	console.log(dailyTotals);
+	
 
 	var dailyData = {
 		labels: dailyLabels,
 		dailygames: dailyGames,
-		dailyplayers: dailyTotals
+		dailyplayers: dailyTotals,
+		we: weekends,
+		mo: months
 	}
-
+	console.log(dailyData);
 	return dailyData;
 }
 
