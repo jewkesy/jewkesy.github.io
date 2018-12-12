@@ -831,6 +831,7 @@ data.sort(dynamicSort("year"));
 	// start from day 0
 	var dailyGames = [];
 	var dailyLabels = [];
+	var dailyTotals = [];
 
 	var today = new Date();
 	// console.log(_startDate, today)
@@ -856,20 +857,42 @@ data.sort(dynamicSort("year"));
 		for (var x in day) {
 	        if (day.hasOwnProperty(x)) {
 	        	
-
 	        	if (x.indexOf("d_") != 0) continue;
 	        	// counter++;
 	        	// console.log(day[x].games)
+	        	var sum = 0;
 	        	if (day[x].games) {
 	        		dailyGames.push(day[x].games);
 	        	} else {
 	        		dailyGames.push(null);
 	        	}
+	        	
 	            if (typeof day[x] == "object") {
-	            	// console.log(day[x])
+	            	for (var y in day[x]) {
+	            		if (day[x].hasOwnProperty(y)) {
+	            			// console.log(y);
+	            			if (y.indexOf("-") == 2) {
+	            				// console.log(day[x][y])
+	            				sum += sumObjCounts(day[x][y]);
+	            				
+	            				switch (y){
+	            					case "en-GB":
+
+	            						break;
+	            					default:
+	            						break;
+	            				}
+
+
+	            			}
+
+	            		}
+	            	}
+	            	// console.log(day[x].indexOf("-"))
+	            	// if (day[x].indexOf("-") === 1) {}
 
 	            }
-
+	            dailyTotals.push(sum);
 
 
 	            //dailyLabels.push(""+counter);
@@ -877,14 +900,28 @@ data.sort(dynamicSort("year"));
 	    }
 	    
 	}
-	// console.log(dailyGames);
+	console.log(dailyTotals);
 
 	var dailyData = {
 		labels: dailyLabels,
-		dailygames: dailyGames
+		dailygames: dailyGames,
+		dailyplayers: dailyTotals
 	}
 
 	return dailyData;
+}
+
+function sumObjCounts(obj) {
+	// console.log(obj)
+	var total = 0;
+
+	for (var x in obj) {
+		if (obj.hasOwnProperty(x)) {
+			total += obj[x];
+		}
+	}
+
+	return total;
 }
 
 function resetLimit() {
