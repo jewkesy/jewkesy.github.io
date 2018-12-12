@@ -35,26 +35,8 @@ Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
-// const worker = new Worker("./javascript/worker.js");
-// worker.onmessage = e => {
-// 	const message = e.data.msg;
-// 	//console.log(`[From Worker]: ${message}`);
-// 	const reply = setTimeout(() => worker.postMessage({msg: "Marco!", timestamp: _lastTimestamp}), 1000);
-// };
-// worker.postMessage({msg: "Marco!"});
-
 var aInt;
 var sInt;
-
-// window.requestAnimationFrame = window.requestAnimationFrame
-//                                || window.mozRequestAnimationFrame
-//                                || window.webkitRequestAnimationFrame
-//                                || window.msRequestAnimationFrame
-//                                || function(f){return setTimeout(f, 1000/60)}
-
-// window.cancelAnimationFrame = window.cancelAnimationFrame
-//                               || window.mozCancelAnimationFrame
-//                               || function(requestID){clearTimeout(requestID)} //fall back
 
 window.addEventListener('popstate', function (event) {
 	// console.log(history.state);
@@ -175,18 +157,6 @@ function buildLastGames(callback) {
 	});
 }
 
-// function getGraphData(callback) {
-// 	var uri = aws + "?newusers=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter;
-// 	httpGetStats(uri, 'pc', function (err, data) {
-// 		if (err) console.error(err);
-// 		if (!data) return callback();
-// 		console.log(data);
-// 		_timeFrom = data.lastTime;
-// 		buildPopcornPage(data);
-// 		return callback();
-// 	});	
-// }
-
 function getDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		if (err) console.error(err);
@@ -195,16 +165,6 @@ function getDailyGames(callback) {
 		return callback();
 	});
 }
-
-// function getDailyPlayers(callback) {
-// 	httpGetByUrl(aws + "?getdailyplayers=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
-// 		if (err) console.error(err);
-// 		if (!data) return callback();
-// 		// console.log(data)
-// 		buildDailyPlayers(err, data);
-// 		return callback();
-// 	});
-// }
 
 function switchLocale(locale) {
 	_locale = locale;
@@ -367,6 +327,7 @@ function applyLocaleHeader(locale, device) {
 }
 
 function buildDailyPlayers(err, players) {
+	console.log("HERE?")
 	if (err) {console.error(err); return;}
 	if (!players) {console.log(players); return;}
 
@@ -386,10 +347,17 @@ function buildDailyGames(err, content) {
 	if (!content) {console.log('no data'); return;}
 	if (!content.g) {console.log(content); return;}
 
-	console.log(content);
+	// console.log(content);
 
-	updateDeviceTypes(content.g[0]);
-	updateBonusPanel(content.g[0]);
+	updateDeviceTypes(content.g[content.g.length-1]);
+	updateBonusPanel(content.g[content.g.length-1]);
+
+	var chtData = prepDataForChart(content.g);
+	chtNewUsers(_newUsersChart, chtData);
+
+	// updateCharts(chtData);
+
+	//updateCharts(content.g);
 	// TODO Don't forget to cache earlier days!
 
 	// find today
@@ -398,7 +366,7 @@ function buildDailyGames(err, content) {
     var formattedDate = "d_"+ formatDate(d);
 
     // TODO - If incorrect data for date, the sort order by assumes today is first
-	var today = content.g[0][formattedDate].games;
+	var today = content.g[content.g.length-1][formattedDate].games;
 	// var days = 0;  // get from first day recorde
 	// var total = 0;
 	
@@ -419,7 +387,7 @@ function buildDailyGames(err, content) {
 
 	fadeyStuff('pc_total_games', numberWithCommas(total));
 	document.getElementById('pc_total_games').setAttribute('total', total);
-	fadeyStuff('pc_total_today', numberWithCommas(content.g[0][formattedDate].total));
+	fadeyStuff('pc_total_today', numberWithCommas(content.g[content.g.length-1][formattedDate].total));
 }
 
 var _deviceCounts;
@@ -471,7 +439,7 @@ function buildPopcornPage(content) {
 	if (!content) return;
 	if (content.count === 0) return;
 	// updateDeviceTypes(content.devices, content.timeFrom);
-	updateCharts(content.counts, content.totalUsers);
+	//updateCharts(content.counts, content.totalUsers);
 }
 
 function countBonuses(obj, stack) {
@@ -728,6 +696,7 @@ function chtNewUsers(chart, dailyData, total) {
 	if (_chtStuffRunning) return;
 	if (dailyData.labels.length == 0) return;
 	_chtStuffRunning = true;
+
 	var data = {
 		labels: dailyData.labels,
 		datasets:[
@@ -794,10 +763,10 @@ function chtNewUsers(chart, dailyData, total) {
 	_chtStuffRunning = false;
 }
 
-function updateCharts(data, total) {
+function updateCharts(data) {
 	if (!data) return;
 	if (data.length === 0) return;
-	//console.log(data)
+	console.log(data)
 	// get days from launch as x axis
 	var today = new Date();
 	// console.log(_startDate, today)
@@ -834,7 +803,7 @@ function updateCharts(data, total) {
 	}
 
 	// fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
-	fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
+	// fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
 
 	for (var i = 0; i < data.totals.length; i++) {
 		for (var l = 0; l < locales.length; l++) {
@@ -845,18 +814,76 @@ function updateCharts(data, total) {
 		}
 	}
 	
-	//console.log('calling chtNewUsers');
 	var chtData = prepDataForChart();
 	chtNewUsers(_newUsersChart, chtData);
 }
 
-function prepDataForChart() {
-	var dailyData = JSON.parse(JSON.stringify(_newUsers));
-	dailyData.dailygames = JSON.parse(JSON.stringify(_gameinfo.dailygames));
-	dailyData.dailyplayers = JSON.parse(JSON.stringify(_dailyPlayers));
-	dailyData.labels = JSON.parse(JSON.stringify(_newUsersLabels));
-	// console.log(_chartSummary)
-	dailyData = summariseChtData(dailyData, _chartSummary);
+function prepDataForChart(data) {
+	// Sort by date
+	// data = data.slice(0).reverse();
+
+data.sort(dynamicSort("month"));
+data.sort(dynamicSort("year"));
+// data.sort(dynamicSort("-Surname"));
+
+	console.log(data);
+
+	// start from day 0
+	var dailyGames = [];
+	var dailyLabels = [];
+
+	var today = new Date();
+	// console.log(_startDate, today)
+	var diff = daydiff(_startDate, today, true);
+	var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
+
+		dailyLabels = new Array(diff).fill("");
+		// console.log(diff)
+		for (var i = 1; i < diff-1; i++) {
+			var someDate = addDays(_startDate, i);
+			// console.log(someDate)
+			var q = someDate.toLocaleDateString().split("/");
+			dailyLabels[i] = q[0] + getMonthName(q[1]-1);
+		}
+		dailyLabels[0] = "Launch";
+		dailyLabels[diff-1] = "Today";
+
+	for (var i = 0; i < data.length; i++) {
+		var day = data[i];
+		var monthGames = day.games;
+
+		var counter = 0;
+		for (var x in day) {
+	        if (day.hasOwnProperty(x)) {
+	        	
+
+	        	if (x.indexOf("d_") != 0) continue;
+	        	// counter++;
+	        	// console.log(day[x].games)
+	        	if (day[x].games) {
+	        		dailyGames.push(day[x].games);
+	        	} else {
+	        		dailyGames.push(null);
+	        	}
+	            if (typeof day[x] == "object") {
+	            	// console.log(day[x])
+
+	            }
+
+
+
+	            //dailyLabels.push(""+counter);
+	        }
+	    }
+	    
+	}
+	// console.log(dailyGames);
+
+	var dailyData = {
+		labels: dailyLabels,
+		dailygames: dailyGames
+	}
+
 	return dailyData;
 }
 

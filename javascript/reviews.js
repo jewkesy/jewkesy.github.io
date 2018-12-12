@@ -34,7 +34,7 @@ function httpGetAmazon(theUrl, callback){
 }
 
 function buildAmazonReview(data) {
-	// console.log(data)
+	console.log(data)
 	if (!data.uk) data.uk = {score:0,reviews:0};
 	if (!data.us) data.us = {score:0,reviews:0};
 	if (!data.de) data.de = {score:0,reviews:0};
