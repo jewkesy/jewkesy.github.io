@@ -13,7 +13,7 @@ var _keywords;
 var _popcornUrl = aws + '?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + '?last=true&prefix=pc&limit=' + _limit;
 
-var _startDate = new Date("2017-05-28T12:00:00Z");
+var _startDate = new Date("2017-05-27T12:00:00Z");
 var _timeFrom = 0;
 var _lastTimestamp = 0;
 var _doubleDayDivider = 1;
@@ -116,26 +116,14 @@ function getGamePlay(callback) {
 	        	callback(null, 'buildLastGames');
 	        });
 	    },
-	    // function(callback) {
-	    // 	getGraphData(function () {
-	    // 		callback(null, 'getGraphData');
-	    // 	});
-	    // },
 	    function(callback) {
 	    	getDailyGames(function () {
 	    		callback(null, 'getDailyGames');
 	    	});
-	    // },
-	    // function(callback) {
-	    // 	getDailyPlayers(function () {
-	    // 		callback(null, 'getDailyPlayers');
-	    // 	});
 	    }
 	],
 	function(err, results) {
 		if (err) console.error(err);
-	    // else console.log(results);
-	    // console.info(_gameinfo)
 	    if (callback) return callback();
 	});
 }
@@ -685,12 +673,6 @@ function buildPopcornLeague(data, prefix, total) {
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
 }
 
-function buildIconHTML(deviceIcon, locale, deviceType) {
-	var lIcon = "<img class='locale' width='20' title='"+locale+"' src='./flags/"+locale+".png' />";
-	var dIcon = "<img width='18' class='device iconMergeCorner' title='"+deviceIcon+"' alt='"+deviceIcon+"' src='./images/"+deviceIcon+".png' />";
-	return "<span>"+deviceType+"</span><div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + "</div>";
-}
-
 var _chtStuffRunning = false;
 function chtNewUsers(chart, dailyData, total) {	
 	if (_chtStuffRunning) return;
@@ -819,9 +801,10 @@ function updateCharts(data) {
 }
 
 function prepDataForChart(data) {
+
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year")); //"-year"
-
+// data = data.slice(0, 2)
 
 	console.log(data);
 
@@ -835,7 +818,7 @@ function prepDataForChart(data) {
 	var today = new Date();
 	// console.log(_startDate, today)
 	var diff = daydiff(_startDate, today, true);
-	var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
+	
 
 	dailyLabels = new Array(diff).fill("");
 	// console.log(diff)
@@ -856,67 +839,127 @@ function prepDataForChart(data) {
 	dailyLabels[0] = "Launch";
 	dailyLabels[diff-1] = "Today";
 
-	for (var i = 0; i < data.length; i++) {
-		var day = data[i];
-		var monthGames = day.games;
+	var uk = new Array(diff).fill(null);
+	var us = new Array(diff).fill(null);
+	var de = new Array(diff).fill(null);
+	var ind= new Array(diff).fill(null);
+	var ca = new Array(diff).fill(null);
+	var jp = new Array(diff).fill(null);
+	var au = new Array(diff).fill(null);
+	var fr = new Array(diff).fill(null);
+	var es = new Array(diff).fill(null);
+	var it = new Array(diff).fill(null);
+	var mx = new Array(diff).fill(null);
+	var esla=new Array(diff).fill(null);
+	var br = new Array(diff).fill(null);
+	var dk = new Array(diff).fill(null);
 
-		var counter = 0;
-		for (var x in day) {
-	        if (day.hasOwnProperty(x)) {
-	        	
+	var counter = 0;
+	for (var i = 0; i < data.length; i++) {
+		var month = data[i];
+		var monthGames = month.games;
+		// console.log(month)
+		
+		for (var x in month) {
+	        if (month.hasOwnProperty(x)) {
 	        	if (x.indexOf("d_") != 0) continue;
-	        	// counter++;
-	        	// console.log(day[x].games)
-	        	var sum = 0;
-	        	if (day[x].games) {
-	        		dailyGames.push(day[x].games);
+	        	var day = month[x];
+
+	        	// console.log(day);
+
+	        	if (day.games) {
+	        		dailyGames.push(day.games);
 	        	} else {
 	        		dailyGames.push(null);
 	        	}
-	        	
-	            if (typeof day[x] == "object") {
-	            	for (var y in day[x]) {
-	            		if (day[x].hasOwnProperty(y)) {
-	            			// console.log(y);
-	            			if (y.indexOf("-") == 2) {
-	            				// console.log(day[x][y])
-	            				sum += sumObjCounts(day[x][y]);
-	            				
-	            				switch (y){
-	            					case "en-GB":
+	        	dailyTotals.push(day.total);
 
-	            						break;
-	            					default:
-	            						break;
-	            				}
-
-
-	            			}
-
-	            		}
-	            	}
-	            	// console.log(day[x].indexOf("-"))
-	            	// if (day[x].indexOf("-") === 1) {}
-
-	            }
-	            dailyTotals.push(sum);
-
-
-	            //dailyLabels.push(""+counter);
+	        	// get locales
+            	for (var y in day) {
+            		if (day.hasOwnProperty(y)) {
+            			if (y.indexOf("-") == 2) {
+            				var s = sumObjCounts(day[y]);
+            				var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
+            				switch (y){
+		    					case "en-GB":
+		    						uk[counter] = s;
+		    						break;
+		    					case "en-US":
+		    						us[counter] = s;
+		    						break;
+		    					case "de-DE":
+		    						de[counter] = s;
+		    						break;
+		    					case "en-IN":
+		    						ind[counter] = s;
+		    						break;
+		    					case "en-CA":
+		    						ca[counter] = s;
+		    						break;
+		    					case "ja_JP":
+		    						jp[counter] = s;
+		    						break;
+		    					case "en-AU":
+		    						au[counter] = s;
+		    						break;
+		    					case "fr-fR":
+		    						fr[counter] = s;
+		    						break;
+		    					case "es-ES":
+		    						es[counter] = s;
+		    						break;
+		    					case "it-IT":
+		    						it[counter] = s;
+		    						break;
+		    					case "es-MX":
+		    						mx[counter] = s;
+		    						break;
+		    					case "pt-BR":
+		    						br[counter] = s;
+		    						break;
+		    					case "da_DK":
+		    						dk[counter] = s;
+		    						break;
+		    					default:
+		    						esla[counter] = s;
+		    						// uk.push(null)
+		    						break;
+		    				}
+            			}
+            		}
+            	}
+            	
 	        }
+	        // console.log(counter)
+	        counter++;
 	    }
-	    
 	}
 	
-
 	var dailyData = {
 		labels: dailyLabels,
+
+		uk: uk,
+		us: us,
+		de: de,
+		in: ind,
+		ca: ca,
+		jp: jp,
+		au: au,
+		fr: fr,
+		es: es,
+		it: it,
+		mx: mx,
+		br: br,
+		dk: dk,
+		esla: esla,
+
 		dailygames: dailyGames,
 		dailyplayers: dailyTotals,
 		we: weekends,
 		mo: months
 	}
 	console.log(dailyData);
+	// fkeorkfer
 	return dailyData;
 }
 
