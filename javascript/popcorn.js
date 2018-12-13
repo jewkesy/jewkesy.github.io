@@ -1095,6 +1095,6 @@ slider.onchange = function() {
 	var newUrl = paramReplace('chtsum', window.location.href, _chartSummary);
 	changeUrl('', newUrl);
 	// console.log('calling chtNewUsers');
-	var chtData = prepDataForChart();
+	var chtData = prepDataForChart(_chtData);
 	chtNewUsers(_newUsersChart, chtData);
 }
