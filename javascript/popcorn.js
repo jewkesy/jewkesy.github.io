@@ -26,6 +26,7 @@ var _gameinfo = { dailygames: [] };
 var _chtHeight = 7000;
 var _dailyPlayers = [];
 var _chartSummary = getParameterByName('chtsum') || 95;
+var _chtData = {};
 
 var _correctPhrases = ["Correct!"];
 var _incorrectPhrases = ["Incorrect!"];
@@ -314,22 +315,6 @@ function applyLocaleHeader(locale, device) {
 	document.getElementById("th_"+locale).classList.add('selected');
 }
 
-function buildDailyPlayers(err, players) {
-	console.log("HERE?")
-	if (err) {console.error(err); return;}
-	if (!players) {console.log(players); return;}
-
-	if (!players.dailyplayers) return;
-	_dailyPlayers = players.dailyplayers;
-
-	var total = _dailyPlayers[_dailyPlayers.length-1];
-
-	fadeyStuff('pc_daily_players', numberWithCommas(total));
-	// console.log('calling chtNewUsers');
-	var chtData = prepDataForChart();
-	chtNewUsers(_newUsersChart, chtData);
-}
-
 function buildDailyGames(err, content) {
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
@@ -340,23 +325,16 @@ function buildDailyGames(err, content) {
 	updateDeviceTypes(content.g[content.g.length-1]);
 	updateBonusPanel(content.g[content.g.length-1]);
 
-	var chtData = prepDataForChart(content.g);
+	_chtData = content.g;
+
+	var chtData = prepDataForChart(content.g, _chartSummary);
 	chtNewUsers(_newUsersChart, chtData);
-
-	// updateCharts(chtData);
-
-	//updateCharts(content.g);
-	// TODO Don't forget to cache earlier days!
-
-	// find today
 
 	var d = new Date();
     var formattedDate = "d_"+ formatDate(d);
 
     // TODO - If incorrect data for date, the sort order by assumes today is first
 	var today = content.g[content.g.length-1][formattedDate].games;
-	// var days = 0;  // get from first day recorde
-	// var total = 0;
 	
 	fadeyStuff("pc_games_today", numberWithCommas(today));
 
@@ -419,15 +397,6 @@ function updateDeviceTypes(obj) {
 
 	fadeyStuff("pc_device_alexa", numberWithCommas(_deviceCounts.Echo));
 	fadeyStuff("pc_device_google", numberWithCommas(_deviceCounts.Google));
-}
-
-function buildPopcornPage(content) {
-	fadeyStuff("pc_ts", moment().format("MMM Do, HH:mm:ss"));
-
-	if (!content) return;
-	if (content.count === 0) return;
-	// updateDeviceTypes(content.devices, content.timeFrom);
-	//updateCharts(content.counts, content.totalUsers);
 }
 
 function countBonuses(obj, stack) {
@@ -748,6 +717,7 @@ function chtNewUsers(chart, dailyData, total) {
 function updateCharts(data) {
 	if (!data) return;
 	if (data.length === 0) return;
+	console.log("HERE?");
 	console.log(data)
 	// get days from launch as x axis
 	var today = new Date();
@@ -800,15 +770,17 @@ function updateCharts(data) {
 	chtNewUsers(_newUsersChart, chtData);
 }
 
-function prepDataForChart(data) {
+function prepDataForChart(data, history) {
+
+	history = -10;
 
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year")); //"-year"
-// data = data.slice(0, 2)
+
+	//if (history) data = data.slice(history);
 
 	console.log(data);
 
-	// start from day 0
 	var dailyGames = [];
 	var dailyLabels = [];
 	var dailyTotals = [];
@@ -864,8 +836,6 @@ function prepDataForChart(data) {
 	        if (month.hasOwnProperty(x)) {
 	        	if (x.indexOf("d_") != 0) continue;
 	        	var day = month[x];
-
-	        	// console.log(day);
 
 	        	if (day.games) {
 	        		dailyGames.push(day.games);
@@ -934,29 +904,29 @@ function prepDataForChart(data) {
 	        counter++;
 	    }
 	}
-	
+
 	var dailyData = {
-		labels: dailyLabels,
+		labels: dailyLabels.slice(history),
 
-		uk: uk,
-		us: us,
-		de: de,
-		in: ind,
-		ca: ca,
-		jp: jp,
-		au: au,
-		fr: fr,
-		es: es,
-		it: it,
-		mx: mx,
-		br: br,
-		dk: dk,
-		esla: esla,
+		uk: uk.slice(history),
+		us: us.slice(history),
+		de: de.slice(history),
+		in: ind.slice(history),
+		ca: ca.slice(history),
+		jp: jp.slice(history),
+		au: au.slice(history),
+		fr: fr.slice(history),
+		es: es.slice(history),
+		it: it.slice(history),
+		mx: mx.slice(history),
+		br: br.slice(history),
+		dk: dk.slice(history),
+		esla: esla.slice(history),
 
-		dailygames: dailyGames,
-		dailyplayers: dailyTotals,
-		we: weekends,
-		mo: months
+		dailygames: dailyGames.slice(history),
+		dailyplayers: dailyTotals.slice(history),
+		we: weekends.slice(history),
+		mo: months.slice(history)
 	}
 	console.log(dailyData);
 	// fkeorkfer
