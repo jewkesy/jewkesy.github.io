@@ -14,6 +14,7 @@ var _popcornUrl = aws + '?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + '?last=true&prefix=pc&limit=' + _limit;
 
 var _startDate = new Date("2017-05-27T12:00:00Z");
+var _diff = daydiff(_startDate, new Date(), true);
 var _timeFrom = 0;
 var _lastTimestamp = 0;
 var _doubleDayDivider = 1;
@@ -23,7 +24,7 @@ var _newUsers = {};
 var _newUsersLabels = [];
 
 var _gameinfo = { dailygames: [] };
-var _chtHeight = 4000;
+var _chtHeight = 3000;
 var _dailyPlayers = [];
 var _chartSummary = getParameterByName('chtsum') || 95;
 var _chtData = {};
@@ -253,13 +254,13 @@ function clearLeague(id, callback) {
 
 function reset() {
 	var today = new Date();
-	var diff =  daydiff(_startDate, today, true);
+	_diff =  daydiff(_startDate, today, true);
 	_newUsers = {};
 	_newUsersLabels = [];
 	_gameinfo = {
 		dailygames: []
 	};
-	_daysSinceLaunch = diff;
+	_daysSinceLaunch = _diff;
 	_timeFrom = 0;
 }
 
@@ -327,7 +328,7 @@ function buildDailyGames(err, content) {
 
 	_chtData = content.g;
 
-	var chtData = prepDataForChart(content.g, _chartSummary);
+	var chtData = prepDataForChart(content.g, calculateHistory(content.g.length));
 	chtNewUsers(_newUsersChart, chtData);
 
 	var d = new Date();
@@ -366,10 +367,8 @@ function countDevices(obj, stack) {
             } else {
             	if (property.toLowerCase().indexOf('echo') == 0) {
             		_deviceCounts.Echo += obj[property];
-            		// console.log(stack, property, obj[property]);
             	} else if (property.toLowerCase().indexOf('google') == 0) {
             		_deviceCounts.Google += obj[property];
-                	// console.log(stack, property, obj[property]);
             	}
             }
         }
@@ -402,18 +401,14 @@ function updateDeviceTypes(obj) {
 function countBonuses(obj, stack) {
     for (var property in obj) {
         if (obj.hasOwnProperty(property)) {
-        	// console.log(property)
-
             if (typeof obj[property] == "object") {
                 countBonuses(obj[property], stack + '.' + property);
             } else {
             	if (stack.indexOf(".bonus.") > 0 ) {
-            		// console.log(property, obj[property])
             			 if (property == "wins") _bonusCounts.Wins += obj[property];
             		else if (property == "loses") _bonusCounts.Loses += obj[property];
                 	else if (property == "skips") _bonusCounts.Skips += obj[property];
             	}
-            	// console.log(stack, property, obj[property]);
             }
         }
     }
@@ -539,27 +534,6 @@ function buildPopcornLastGames(data, prefix) {
 	}
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
-}
-
-function getGenreEventTitle(genre, suffix) {
-	//console.log(_locale);
-	var br = "<br/>";
-	if (genre == "Horror_Seasonal") {
-		var l = _locale.split('-')[0];
-		
-			 if (l == 'es') return br + "🎃 Evento de halloween";
-		else if (l == 'it') return br + "🎃 Evento di Halloween";
-		else if (l == 'fr') return br + "🎃 Événement d'Halloween";
-		else if (l == 'de') return br + "🎃 Halloween-Veranstaltung";
-		else if (l == "pt") return br + "🎃 Evento de Halloween";
-		else if (l == "da") return br + "🎃 Halloween begivenhed";
-		else if (l == "nl") return br + "🎃 Halloween-evenement";
-		else if (l == 'ja') return br + "🎃 ハロウィーンイベント";
-		return br + "🎃 Halloween Event";
-	}
-	if (suffix && suffix.length > 0) return genre + " " + suffix;
-	if (genre.length > 0) return br + genre;
-	return "";
 }
 
 function buildPopcornLeague(data, prefix, total) {
@@ -715,72 +689,14 @@ function chtNewUsers(chart, dailyData, total) {
 	_chtStuffRunning = false;
 }
 
-function updateCharts(data) {
-	if (!data) return;
-	if (data.length === 0) return;
-	console.log("HERE?");
-	console.log(data)
-	// get days from launch as x axis
-	var today = new Date();
-	// console.log(_startDate, today)
-	var diff = daydiff(_startDate, today, true);
-	var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
-
-	if (Object.keys(_newUsers).length === 0) {
-		_newUsers = data;
-		_newUsersLabels = new Array(diff).fill("");
-		// console.log(diff)
-		for (var i = 1; i < diff-1; i++) {
-			var someDate = addDays(_startDate, i);
-			// console.log(someDate)
-			var q = someDate.toLocaleDateString().split("/");
-			_newUsersLabels[i] = q[0] + getMonthName(q[1]-1);
-		}
-		_newUsersLabels[0] = "Launch";
-		_newUsersLabels[diff-1] = "Today";
-
-	} else {
-		for (var l = 0; l < locales.length; l++) {
-			if (diff > _newUsers[locales[l]].length) resizeArr(_newUsers[locales[l]], diff, null);
-		}
-
-		if (diff > _newUsers.avg.length)resizeArr(_newUsers.avg,diff, null);
-		if (diff > _newUsers.we.length) resizeArr(_newUsers.we, diff, null);
-		if (diff > _newUsers.mo.length) resizeArr(_newUsers.mo, diff, null);
-		if (diff > _newUsers.totals.length) resizeArr(_newUsers.totals, diff, 0);
-	}
-
-	for (var i = 0; i < data.totals.length; i++) {
-		if (data.avg[i] != _newUsers.avg[i]) _newUsers.avg[i] += data.avg[i];
-		if (data.totals[i] != _newUsers.totals[i]) _newUsers.totals[i] += data.totals[i];
-	}
-
-	// fadeyStuff('pc_total_today', numberWithCommas(_newUsers.totals[_newUsers.totals.length-1]));
-	// fadeyStuff('pc_total_avg', numberWithCommas(Math.round(_newUsers.avg[_newUsers.avg.length-1])));
-
-	for (var i = 0; i < data.totals.length; i++) {
-		for (var l = 0; l < locales.length; l++) {
-			if (data[locales[l]][i] != _newUsers[locales[l]][i]) {
-				if (!_newUsers[locales[l]][i]) _newUsers[locales[l]][i] = 0;
-				_newUsers[locales[l]][i] += data[locales[l]][i];
-			}
-		}
-	}
-	
-	var chtData = prepDataForChart();
-	chtNewUsers(_newUsersChart, chtData);
-}
-
 function prepDataForChart(data, history) {
 
-	history = -10;
+	// if (!history) history = -10;
 
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year")); //"-year"
 
-	//if (history) data = data.slice(history);
-
-	console.log(data);
+	// console.log(data);
 
 	var dailyGames = [];
 	var dailyLabels = [];
@@ -790,12 +706,12 @@ function prepDataForChart(data, history) {
 
 	var today = new Date();
 	// console.log(_startDate, today)
-	var diff = daydiff(_startDate, today, true);
+	
 	// console.log(_chtHeight)
 
-	dailyLabels = new Array(diff).fill("");
+	dailyLabels = new Array(_diff).fill("");
 	// console.log(diff)
-	for (var i = 0; i < diff; i++) {
+	for (var i = 0; i < _diff; i++) {
 		var someDate = addDays(_startDate, i);
 		// console.log(someDate)
 		var q = someDate.toLocaleDateString().split("/");
@@ -810,22 +726,22 @@ function prepDataForChart(data, history) {
         else months.push(null);
 	}
 	dailyLabels[0] = "Launch";
-	dailyLabels[diff-1] = "Today";
+	dailyLabels[_diff-1] = "Today";
 
-	var uk = new Array(diff).fill(null);
-	var us = new Array(diff).fill(null);
-	var de = new Array(diff).fill(null);
-	var ind= new Array(diff).fill(null);
-	var ca = new Array(diff).fill(null);
-	var jp = new Array(diff).fill(null);
-	var au = new Array(diff).fill(null);
-	var fr = new Array(diff).fill(null);
-	var es = new Array(diff).fill(null);
-	var it = new Array(diff).fill(null);
-	var mx = new Array(diff).fill(null);
-	var esla=new Array(diff).fill(null);
-	var br = new Array(diff).fill(null);
-	var dk = new Array(diff).fill(null);
+	var uk = new Array(_diff).fill(null);
+	var us = new Array(_diff).fill(null);
+	var de = new Array(_diff).fill(null);
+	var ind= new Array(_diff).fill(null);
+	var ca = new Array(_diff).fill(null);
+	var jp = new Array(_diff).fill(null);
+	var au = new Array(_diff).fill(null);
+	var fr = new Array(_diff).fill(null);
+	var es = new Array(_diff).fill(null);
+	var it = new Array(_diff).fill(null);
+	var mx = new Array(_diff).fill(null);
+	var esla=new Array(_diff).fill(null);
+	var br = new Array(_diff).fill(null);
+	var dk = new Array(_diff).fill(null);
 
 	var counter = 0;
 	for (var i = 0; i < data.length; i++) {
@@ -901,7 +817,6 @@ function prepDataForChart(data, history) {
             	}
             	
 	        }
-	        // console.log(counter)
 	        counter++;
 	    }
 	}
@@ -930,7 +845,7 @@ function prepDataForChart(data, history) {
 		mo: months.slice(history)
 	}
 	console.log(dailyData);
-	// fkeorkfer
+
 	return dailyData;
 }
 
@@ -1080,6 +995,16 @@ function startProgressBar(seconds, answer, correct) {
 	document.getElementById('pc_progressbar').setAttribute('style', 'width:0px;');
 }
 
+function calculateHistory(historyLength) {
+	if (!_chartSummary || _chartSummary > 10) return -10;
+
+	if (_chartSummary==10) return -10;
+	if (_chartSummary==0) return 0;
+	var d = (_diff/10)*_chartSummary;
+	var p = (_diff) - d;
+	return Math.abs(+p) * -1
+}
+
 function changeUrl(title, url) {
 	if (typeof (history.pushState) == "undefined") return;
 	
@@ -1096,6 +1021,7 @@ slider.onchange = function() {
 	var newUrl = paramReplace('chtsum', window.location.href, _chartSummary);
 	changeUrl('', newUrl);
 	// console.log('calling chtNewUsers');
-	var chtData = prepDataForChart(_chtData);
+	console.log(_chtData)
+	var chtData = prepDataForChart(_chtData, calculateHistory(_chtData.length));
 	chtNewUsers(_newUsersChart, chtData);
 }
