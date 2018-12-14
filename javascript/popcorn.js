@@ -23,7 +23,7 @@ var _newUsers = {};
 var _newUsersLabels = [];
 
 var _gameinfo = { dailygames: [] };
-var _chtHeight = 7000;
+var _chtHeight = 4000;
 var _dailyPlayers = [];
 var _chartSummary = getParameterByName('chtsum') || 95;
 var _chtData = {};
@@ -710,7 +710,8 @@ function chtNewUsers(chart, dailyData, total) {
 	chart.update();
 
 	var axis = chart.scales.y-axis-0;
-	_chtHeight = axis.max || _chtHeight;
+// console.log(axis.max)
+	// _chtHeight = axis.max;
 	_chtStuffRunning = false;
 }
 
@@ -790,11 +791,11 @@ function prepDataForChart(data, history) {
 	var today = new Date();
 	// console.log(_startDate, today)
 	var diff = daydiff(_startDate, today, true);
-	
+	// console.log(_chtHeight)
 
 	dailyLabels = new Array(diff).fill("");
 	// console.log(diff)
-	for (var i = 1; i < diff-1; i++) {
+	for (var i = 0; i < diff; i++) {
 		var someDate = addDays(_startDate, i);
 		// console.log(someDate)
 		var q = someDate.toLocaleDateString().split("/");
