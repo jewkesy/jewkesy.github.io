@@ -8,8 +8,6 @@ var _limit = getParameterByName('limit') || 10;
 var _device = 'ga_aa';
 var _deviceFilter = '';
 
-var _keywords;
-
 var _popcornUrl = aws + '?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + '?last=true&prefix=pc&limit=' + _limit;
 
@@ -301,6 +299,7 @@ function getMyRank() {
 		// console.log(data)
 		
 		fadeyStuff('pc_total_players', numberWithCommas(data.myRank.total));
+		fadeyStuff('pc_total_avg', numberWithCommas( Math.round(data.myRank.total/_diff)) );
 		document.getElementById('pc_total_players').setAttribute('total', data.myRank.total);
 		fadeyStuff('myrank', data.msg);
 	});
@@ -323,8 +322,8 @@ function buildDailyGames(err, content) {
 
 	// console.log(content);
 
-	updateDeviceTypes(content.g[content.g.length-1]);
-	updateBonusPanel(content.g[content.g.length-1]);
+	updateDeviceTypes(content.g);
+	updateBonusPanel(content.g);
 
 	_chtData = content.g;
 
@@ -337,8 +336,6 @@ function buildDailyGames(err, content) {
     // TODO - If incorrect data for date, the sort order by assumes today is first
 	var today = content.g[content.g.length-1][formattedDate].games;
 	
-	fadeyStuff("pc_games_today", numberWithCommas(today));
-
 	var total = 0;
 	var days = 0;
 	for (var i = 0; i < content.g.length; i++) {
@@ -348,6 +345,8 @@ function buildDailyGames(err, content) {
 			if (k.indexOf('d_') == 0) days++;
 		}
 	}
+
+	fadeyStuff("pc_games_today", numberWithCommas(today));
 
 	var avg = Math.round(total/days);
 	fadeyStuff('pc_games_avg', numberWithCommas(avg));
@@ -417,6 +416,7 @@ function countBonuses(obj, stack) {
 var _bonusCounts = 0;
 
 function updateBonusPanel(obj) {
+
 	_bonusCounts = {Wins: 0, Loses: 0, Skips: 0, Total: 0};
 	countBonuses(obj, '');
 	_bonusCounts.Total = _bonusCounts.Wins + _bonusCounts.Loses + _bonusCounts.Skips;
@@ -844,9 +844,13 @@ function prepDataForChart(data, history) {
 		we: weekends.slice(history),
 		mo: months.slice(history)
 	}
-	console.log(dailyData);
+	// console.log(dailyData);
 
 	return dailyData;
+}
+
+function getSum(total, num) {
+    return total + num;
 }
 
 function sumObjCounts(obj) {
@@ -897,104 +901,6 @@ function getEvent() {
 	});
 }
 
-function getKeywords() {
-	httpGetByUrl(aws + "?action=getkeywords&locale="+_locale, function (err, data) {
-		if (!data) return;
-		_keywords = data.msg;
-		fadeyStuff("pc_true", _keywords.true);
-		fadeyStuff("pc_false", _keywords.false);
-	});
-}
-
-function getQuestions(count, genre) {
-	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
-	// console.log(url)
-	httpGetByUrl(url, function (err, data) {
-		// console.log(data);
-		if (!data || !data.msg.questions) return;
-		if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
-
-		var idx = randomInt(0, data.msg.questions.length-1);
-		var q = data.msg.questions[idx];
-		var t = cleanseText(q.echoShowText);
-		fadeyStuff("pc_question", t);
-
-		$.get(q.Poster).done(function () {
-		  fadeyPic("pc_question_poster", q.Poster);
-		}).fail(function (e) {
-		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
-		});
-
-		var c;
-
-		if (q.correct) {
-			c = q.correct+"";
-			c = c.replace('<emphasis level="reduced">', '');
-			c = c.replace('</emphasis>', '');
-		}
-
-		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c);};
-		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c);};
-
-		startProgressBar(30, q.answer, c);
-	});
-}
-
-var pg;
-function showAnswer(chosen, answer, correct){
-	// console.log(chosen, answer, correct);
-
-	clearInterval(pg);
-	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
-	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
-
-	var a = _answerPhrases[randomInt(0, _answerPhrases.length-1)];
-	// console.log(_answerPhrases)
-	var text = "";
-	if (chosen === null) {
-		text = "The correct answer was " + answer + ". ";
-		if (correct) text += a.replace('&&', correct); // + correct;
-	} else {
-		if (chosen == answer) {
-			var i = randomInt(0, _correctPhrases.length-1);
-			text = _correctPhrases[i];
-		} else {
-			var i = randomInt(0, _incorrectPhrases.length-1);
-			text = _incorrectPhrases[randomInt(0, i)];
-		}
-
-		if (correct) text += " - " + a.replace('&&', correct);// + correct;
-	}
-	fadeyStuff("pc_answer", text);
-
-	setTimeout(function(){
-		getIntro();
-	}, 2500);
-}
-
-function startProgressBar(seconds, answer, correct) {
-	document.getElementById('pc_answer').setAttribute('style', 'display:none;');
-	document.getElementById('pc_truefalse').setAttribute('style', '');
-	document.getElementById('pc_progressbar').setAttribute('style', 'width:0px;');
-
-	var curr = 0;
-	var width = 0;
-	seconds = seconds*10;
-	clearInterval(pg);
-	pg = setInterval(function () {
-		curr += 1;
-		width = +((curr/seconds) * 100).toFixed(0);
-		// console.log(curr, seconds, width);
-		document.getElementById('pc_progressbar').setAttribute('style', "width:" + width + "%;");
-		if (width >= 100) {
-			clearInterval(pg);
-			showAnswer(null, answer, correct);
-		}
-	}, 100);
-
-	document.getElementById('pc_progressbar').setAttribute('style', 'width:0px;');
-}
-
 function calculateHistory(historyLength) {
 	if (!_chartSummary || _chartSummary > 10) return -10;
 
@@ -1021,7 +927,7 @@ slider.onchange = function() {
 	var newUrl = paramReplace('chtsum', window.location.href, _chartSummary);
 	changeUrl('', newUrl);
 	// console.log('calling chtNewUsers');
-	console.log(_chtData)
+	// console.log(_chtData)
 	var chtData = prepDataForChart(_chtData, calculateHistory(_chtData.length));
 	chtNewUsers(_newUsersChart, chtData);
 }
