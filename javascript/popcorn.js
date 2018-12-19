@@ -437,7 +437,7 @@ function updateBonusPanel(obj) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-
+	console.log(data)
 	fadeyStuff("approxPlayers", numberWithCommas(data.totalUsers));
 	fadeyStuff("approxGames", numberWithCommas(data.totalGames));
 
@@ -519,7 +519,9 @@ function buildPopcornLastGames(data, prefix) {
 		}
 
 		// fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
-		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s));
+		var needed = "";
+		if (g.n) needed = "<br/>(<i>"+g.n+"</i>)";
+		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s)+needed);
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.g));
 		
 		if (!g.lg) g.lg = "";
