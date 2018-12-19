@@ -437,7 +437,7 @@ function updateBonusPanel(obj) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	console.log(data)
+	// console.log(data)
 	fadeyStuff("approxPlayers", numberWithCommas(data.totalUsers));
 	fadeyStuff("approxGames", numberWithCommas(data.totalGames));
 
@@ -521,7 +521,7 @@ function buildPopcornLastGames(data, prefix) {
 		// fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
 		var needed = "";
 
-		if (g.n && +g.n > -1) needed = "<br/>(<i>"+g.n+"</i>)";
+		if (g.n && +g.n > -1) needed = "<br/>(<i>"+numberWithCommas(g.n)+"</i>)";
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s)+needed);
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.g));
 		
