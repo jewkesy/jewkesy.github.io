@@ -11,12 +11,12 @@ var _deviceFilter = '';
 var _popcornUrl = aws + '?action=getstats&prefix=pc&limit=' + _limit;
 var _popcornLastGameUrl = aws + '?last=true&prefix=pc&limit=' + _limit;
 
-var _startDate = new Date("2017-05-27T12:00:00Z");
+var _startDate = new Date("2017-05-27T02:00:00Z");
 var _diff = daydiff(_startDate, new Date(), true);
 var _timeFrom = 0;
 var _lastTimestamp = 0;
 var _doubleDayDivider = 1;
-var _daysSinceLaunch = 0;
+var _daysSinceLaunch = _diff;
 var _newUsersChart = new Chart(document.getElementById("pc_cht_new_users").getContext('2d'), { type: 'bar' });
 var _newUsers = {};
 var _newUsersLabels = [];
@@ -251,6 +251,7 @@ function clearLeague(id, callback) {
 }
 
 function reset() {
+	// console.log(reset)
 	var today = new Date();
 	_diff =  daydiff(_startDate, today, true);
 	_newUsers = {};
@@ -265,7 +266,10 @@ function reset() {
 function checkNewDay() { //if new day, rebuild saved stats
 	var today = new Date();
 	var diff =  daydiff(_startDate, today, true);
+	console.log(diff);
+	console.log(_daysSinceLaunch);
 	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) reset();
+
 }
 
 function getPhrases() {
