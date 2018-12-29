@@ -338,6 +338,7 @@ function buildDailyGames(err, content) {
     var formattedDate = "d_"+ formatDate(d);
 
     // TODO - If incorrect data for date, the sort order by assumes today is first
+    if (!content.g[content.g.length-1][formattedDate]) return;
 	var today = content.g[content.g.length-1][formattedDate].games;
 	
 	var total = 0;
