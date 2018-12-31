@@ -266,8 +266,8 @@ function reset() {
 function checkNewDay() { //if new day, rebuild saved stats
 	var today = new Date();
 	var diff =  daydiff(_startDate, today, true);
-	console.log(diff);
-	console.log(_daysSinceLaunch);
+	// console.log(diff);
+	// console.log(_daysSinceLaunch);
 	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) reset();
 
 }
