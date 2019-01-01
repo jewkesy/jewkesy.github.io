@@ -690,10 +690,10 @@ function chtNewUsers(chart, dailyData, total) {
 	chart.options = data.options;
 
 	chart.update();
-
-	var axis = chart.scales.y-axis-0;
-// console.log(axis.max)
-	// _chtHeight = axis.max;
+	// console.log(chart.scales)
+	var axis = chart.scales["right-y-axis"];
+	// console.log(chart.scales["right-y-axis"].max)
+	_chtHeight = axis.max;
 	_chtStuffRunning = false;
 }
 
