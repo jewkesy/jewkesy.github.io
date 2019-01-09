@@ -566,6 +566,8 @@ function buildPopcornLeague(data, prefix, total) {
 		else if (topTen[i].i == 'phone') {sym = " 📱";}
 		
 		var cell1;
+		var needed = "-";
+		if (i > 0) needed = (topTen[i-1].s - topTen[i].s)+1;
 
 		if (!document.getElementById(prefix + '_league_' + x)) {
 			var row = container.insertRow(-1);
@@ -612,7 +614,8 @@ function buildPopcornLeague(data, prefix, total) {
 			fadeyStuff(prefix + "_league_rank_" + x, numberWithCommas(x) + sym);
 		}
 		if (!topTen[i].b) topTen[i].b = {wins:"-", loses:"-", skips:"-"};
-		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
+
+		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s) + "<br/>(<i>" + numberWithCommas(needed)+"</i>)" );
 		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
 		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
 		fadeyStuff(prefix + "_league_bonus_" + x, numberWithCommas(topTen[i].b.wins) + " / " + numberWithCommas(topTen[i].b.loses) + " / " + numberWithCommas(topTen[i].b.skips));
