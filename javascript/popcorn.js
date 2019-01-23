@@ -528,7 +528,7 @@ function buildPopcornLastGames(data, prefix) {
 
 		if (g.n && +g.n > -1) needed = "<br/>(<i>"+numberWithCommas(g.n)+"</i>)";
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s)+needed);
-		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.g));
+		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.g)+"<br/>(<i>"+numberWithCommas(g.ls)+"</i>)");
 		
 		if (!g.lg) g.lg = "";
 		var bonusInfo = "";
