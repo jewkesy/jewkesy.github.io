@@ -615,9 +615,10 @@ function buildPopcornLeague(data, prefix, total) {
 		}
 		if (!topTen[i].b) topTen[i].b = {wins:"-", loses:"-", skips:"-"};
 
-		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s) + "<br/>(<i>" + numberWithCommas(needed)+"</i>)" );
-		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
-		fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
+		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
+		// fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
+		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(needed));
+		// fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
 		fadeyStuff(prefix + "_league_bonus_" + x, numberWithCommas(topTen[i].b.wins) + " / " + numberWithCommas(topTen[i].b.loses) + " / " + numberWithCommas(topTen[i].b.skips));
 		fadeyStuff(prefix + "_league_ts_" + x, humanTime((topTen[i].t/1000)+""));
 		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
