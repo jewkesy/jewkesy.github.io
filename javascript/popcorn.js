@@ -661,6 +661,11 @@ function chtNewUsers(chart, dailyData, total) {
 		],
 		
 		options: {
+
+	         legend: {
+	            display: false
+	         },
+
 			responsive: true,
 			maintainAspectRatio: false,
 			aspectRatio: 1,
