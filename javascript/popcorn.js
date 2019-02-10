@@ -663,7 +663,7 @@ function chtNewUsers(chart, dailyData, total) {
 		options: {
 
 	         legend: {
-	            display: false
+	            display: isBigEnough()
 	         },
 
 			responsive: true,
@@ -706,6 +706,12 @@ function chtNewUsers(chart, dailyData, total) {
 	// console.log(chart.scales["right-y-axis"].max)
 	_chtHeight = axis.max;
 	_chtStuffRunning = false;
+}
+
+function isBigEnough() {
+	var x = document.getElementById('pc_cht_new_users').width || 1200;
+	if (x > 1200) return true;
+	return false;
 }
 
 function prepDataForChart(data, history) {
