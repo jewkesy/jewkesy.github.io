@@ -667,8 +667,8 @@ function chtNewUsers(chart, dailyData, total) {
 	         },
 
 			responsive: true,
-			maintainAspectRatio: false,
-			aspectRatio: 1,
+			maintainAspectRatio: true,
+			aspectRatio: 0,
 			scales: {
 				yAxes: [{
 	            	id: 'left-y-axis',
