@@ -28,8 +28,9 @@ function buildIconHTML(deviceIcon, locale, deviceType) {
 function getGenreEventTitle(genre, suffix) {
 	//console.log(_locale);
 	var br = "<br/>";
+	var l = _locale.split('-')[0];
 	if (genre == "Horror_Seasonal") {
-		var l = _locale.split('-')[0];
+		
 		
 			 if (l == 'es') return br + "🎃 Evento de halloween";
 		else if (l == 'it') return br + "🎃 Evento di Halloween";
@@ -40,7 +41,10 @@ function getGenreEventTitle(genre, suffix) {
 		else if (l == "nl") return br + "🎃 Halloween-evenement";
 		else if (l == 'ja') return br + "🎃 ハロウィーンイベント";
 		return br + "🎃 Halloween Event";
+	} else if (genre == "Romance_Seasonal") {
+		return br + "🥰 Valentines Event";
 	}
+	genre = genre.replace("_", " ");
 	if (suffix && suffix.length > 0) return genre + " " + suffix;
 	if (genre.length > 0) return br + genre;
 	return "";
