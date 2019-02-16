@@ -572,13 +572,13 @@ tr.hover > th:hover {
   }
 
   .stacked-bar-graph > span.bar-g {
-    background: #238823;
+    background: #48C9B0;
   }
   .stacked-bar-graph > span.bar-a {
-    background: #FFBF00;
+    background: #F5B041;
   }
   .stacked-bar-graph > span.bar-r {
-    background: #D2222D;
+    background: #E74C3C;
   }
   
 .slidecontainer {
@@ -591,7 +591,7 @@ tr.hover > th:hover {
     appearance: none;
     width: 100%; /* Full-width */
     height: 25px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
+    background: #CCD1D1; /* Grey background */
     outline: none; /* Remove outline */
     opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -609,14 +609,14 @@ tr.hover > th:hover {
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
+    background: #5D6D7E; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
 
 .slider::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
+    background: #5D6D7E; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
   
