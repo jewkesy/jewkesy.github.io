@@ -465,6 +465,7 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.i == 'note') {sym = " 🎵";}
 		else if (g.i == 'hash') {sym = " 🌭";}
 		else if (g.i == 'phone') {sym = " 📱";}
+		else if (g.i == 'en-us') {sym = " 🍔";}
 
 		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
