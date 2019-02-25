@@ -580,6 +580,19 @@ tr.hover > th:hover {
   .stacked-bar-graph > span.bar-r {
     background: #E74C3C;
   }
+
+  .stacked-bar-graph > span.bar-30 {
+    background: #7FB3D5;
+  }
+
+  .stacked-bar-graph > span.bar-50 {
+    background: #85C1E9;
+  }
+
+  .stacked-bar-graph > span.bar-100 {
+    background: #76D7C4;
+  }
+
   
 .slidecontainer {
     width: 100%; /* Width of the outside container */

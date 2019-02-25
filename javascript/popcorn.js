@@ -131,6 +131,7 @@ function getGamePlay(callback) {
 function buildLeague(callback) {
 	var uri = aws + "?league=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
+		// console.log(data)
 		buildPopcornLeague(data, 'pc');
 		if (callback) return callback();
 	});
@@ -149,6 +150,7 @@ function getDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
+		// console.log(data)
 		buildDailyGames(err, data);
 		return callback();
 	});
@@ -328,6 +330,7 @@ function buildDailyGames(err, content) {
 
 	updateDeviceTypes(content.g);
 	updateBonusPanel(content.g);
+	updateBoosterPanel(content.boo);
 
 	_chtData = content.g;
 
@@ -421,7 +424,6 @@ function countBonuses(obj, stack) {
 var _bonusCounts = 0;
 
 function updateBonusPanel(obj) {
-
 	_bonusCounts = {Wins: 0, Loses: 0, Skips: 0, Total: 0};
 	countBonuses(obj, '');
 	_bonusCounts.Total = _bonusCounts.Wins + _bonusCounts.Loses + _bonusCounts.Skips;
@@ -440,6 +442,30 @@ function updateBonusPanel(obj) {
 	if (sWidth > 13) fadeyStuff("barSkips", sWidth.toFixed(2)+'%');	
 }
 
+function updateBoosterPanel(obj) {
+	var boos = obj[0].boosterStats;
+	if (!boos.booster_30) boos.booster_30 = 0;
+	if (!boos.booster_50) boos.booster_50 = 0;
+	if (!boos.booster_100)boos.booster_100= 0;
+
+	var boosterTotal = boos.booster_30 + boos.booster_50 + boos.booster_100;
+	
+	var aWidth = percentage(boos.booster_30, boosterTotal);
+	var bWidth = percentage(boos.booster_50, boosterTotal);
+	var cWidth = percentage(boos.booster_100,boosterTotal);
+
+	fadeyStuff("pc_booster_30", numberWithCommas(boos.booster_30));
+	fadeyStuff("pc_booster_50", numberWithCommas(boos.booster_50));
+	fadeyStuff("pc_booster_100",numberWithCommas(boos.booster_100));
+
+	document.getElementById('bar30').setAttribute('style', 'width:'+aWidth+'%');
+	document.getElementById('bar50').setAttribute('style','width:'+bWidth+'%');
+	document.getElementById('bar100').setAttribute('style','width:'+cWidth+'%');
+	if (aWidth > 13) fadeyStuff("bar30", aWidth.toFixed(2)+'%');
+	if (bWidth > 13) fadeyStuff("bar50", bWidth.toFixed(2)+'%');
+	if (cWidth > 13) fadeyStuff("bar100", cWidth.toFixed(2)+'%');	
+}
+
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
 	// console.log(data)
@@ -451,6 +477,7 @@ function buildPopcornLastGames(data, prefix) {
 	for (var i = 0; i < games.length; i++) {
 		var x = i + 1;		
 		var sym = "";
+		var booster = "";
 		var device = ".";
 		var deviceIcon = "alexa";
 		var g = games[i];
@@ -466,6 +493,8 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.i == 'hash') {sym = " 🌭";}
 		else if (g.i == 'phone') {sym = " 📱";}
 		else if (g.i == 'en-us') {sym = " 🍔";}
+
+		if (g.tpd && g.tpd >= 0) {booster = " 🚀";}
 
 		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
@@ -535,7 +564,7 @@ function buildPopcornLastGames(data, prefix) {
 		var bonusInfo = "";
 		if (g.b) bonusInfo = "<br/>"+g.b.wins+" / "+g.b.loses+" / "+g.b.skips;
 
-		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+getGenreEventTitle(g.ge)+bonusInfo);
+		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+booster+getGenreEventTitle(g.ge)+bonusInfo);
 		fadeyStuff(prefix + "_lastgames_gs_" + x, g.gs);
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((g.t/1000)+""));
@@ -552,6 +581,7 @@ function buildPopcornLeague(data, prefix, total) {
 	for (var i = 0; i < topTen.length; i++) {
 		var x = i + 1;		
 		var sym = "";
+		var booster = "";
 		var device = ".";
 		var deviceIcon = "alexa";
 		if (topTen[i].d == "Echo Show")    device = ":";
@@ -565,6 +595,9 @@ function buildPopcornLeague(data, prefix, total) {
 		else if (topTen[i].i == 'note') {sym = " 🎵";}
 		else if (topTen[i].i == 'hash') {sym = " 🌭";}
 		else if (topTen[i].i == 'phone') {sym = " 📱";}
+		else if (topTen[i].i == 'en-us') {sym = " 🍔";}
+
+		if (topTen[i].tpd && topTen[i].tpd >= 0) {booster = " 🚀";}
 		
 		var cell1;
 		var needed = "-";
