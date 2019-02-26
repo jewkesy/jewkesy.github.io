@@ -140,7 +140,7 @@ function buildLeague(callback) {
 function buildLastGames(callback) {
 	var uri = aws + "?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
-		// console.log(data)
+		console.log(data)
 		buildPopcornLastGames(data, 'pc');
 		if (callback) return callback();
 	});
@@ -494,7 +494,7 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.i == 'phone') {sym = " 📱";}
 		else if (g.i == 'en-us') {sym = " 🍔";}
 
-		if (g.tpd && g.tpd >= 0) {booster = " 🚀";}
+		if (g.tpb && g.tpb >= 0) {booster = " 🚀";}
 
 		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
