@@ -495,6 +495,7 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.i == 'en-us') {sym = " 🍔";}
 
 		if (g.tpb && g.tpb >= 0) {booster = " 🚀";}
+		else if (g.tpb === 0) booster = " 👍";
 
 		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
