@@ -140,7 +140,7 @@ function buildLeague(callback) {
 function buildLastGames(callback) {
 	var uri = aws + "?lastgames=true&prefix=pc&limit=" + _limit + "&locale=" + _locale + _deviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
-		console.log(data)
+		// console.log(data)
 		buildPopcornLastGames(data, 'pc');
 		if (callback) return callback();
 	});
@@ -577,6 +577,7 @@ function buildPopcornLastGames(data, prefix) {
 
 function buildPopcornLeague(data, prefix, total) {
 	if(!data) return;
+	// console.log(data)
 	var topTen = data.league;
 	var container = document.getElementById(prefix + '_scores');
 	for (var i = 0; i < topTen.length; i++) {
@@ -598,8 +599,10 @@ function buildPopcornLeague(data, prefix, total) {
 		else if (topTen[i].i == 'phone') {sym = " 📱";}
 		else if (topTen[i].i == 'en-us') {sym = " 🍔";}
 
-		if (topTen[i].tpd && topTen[i].tpd >= 0) {booster = " 🚀";}
-		
+		if (topTen[i].tpb && topTen[i].tpb >= 0) {
+			booster = "<br>🚀 "+numberWithCommas(topTen[i].tpb)+"";
+		}
+		// console.log(booster, topTen[i].tpb)
 		var cell1;
 		var needed = "-";
 		if (i > 0) needed = (topTen[i-1].s - topTen[i].s)+1;
@@ -650,7 +653,7 @@ function buildPopcornLeague(data, prefix, total) {
 		}
 		if (!topTen[i].b) topTen[i].b = {wins:"-", loses:"-", skips:"-"};
 
-		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s));
+		fadeyStuff(prefix + "_league_score_" + x, numberWithCommas(topTen[i].s)+booster);
 		// fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(topTen[i].g));
 		fadeyStuff(prefix + "_league_games_" + x, numberWithCommas(needed));
 		// fadeyStuff(prefix + "_league_avg_" + x, numberWithCommas(((+topTen[i].s)/(+topTen[i].g)).toFixed(2)));
