@@ -599,10 +599,8 @@ function buildPopcornLeague(data, prefix, total) {
 		else if (topTen[i].i == 'phone') {sym = " 📱";}
 		else if (topTen[i].i == 'en-us') {sym = " 🍔";}
 
-		if (topTen[i].tpb && topTen[i].tpb >= 0) {
-			booster = "<br>🚀 "+numberWithCommas(topTen[i].tpb)+"";
-		}
-		// console.log(booster, topTen[i].tpb)
+		if (topTen[i].tpb || topTen[i].tpb ===0) booster = "<br>🚀 "+numberWithCommas(topTen[i].tpb)+"";
+		
 		var cell1;
 		var needed = "-";
 		if (i > 0) needed = (topTen[i-1].s - topTen[i].s)+1;
