@@ -49,7 +49,7 @@ window.addEventListener('popstate', function (event) {
         // Render new content for the hompage
     }
 }, false);
-
+	
 function startPopcornQuiz(locale, limit, device) {
 	amazonTimer();
 	getStats();
@@ -303,7 +303,7 @@ function getMyRank() {
 	httpGetStats(aws + "?getmyrank=true&prefix=pc&limit=" + _limit + "&locale=" + _locale, 'pc',  function (err, data) {
 		if (!data) return;
 		// console.log(data)
-		
+		fadeyStuff("approxPlayers", numberWithCommas(data.myRank.total));
 		fadeyStuff('pc_total_players', numberWithCommas(data.myRank.total));
 		fadeyStuff('pc_total_avg', numberWithCommas( Math.round(data.myRank.total/_diff)) );
 		document.getElementById('pc_total_players').setAttribute('total', data.myRank.total);
@@ -360,6 +360,7 @@ function buildDailyGames(err, content) {
 	fadeyStuff('pc_games_avg', numberWithCommas(avg));
 
 	fadeyStuff('pc_total_games', numberWithCommas(total));
+	fadeyStuff("approxGames", numberWithCommas(total));		
 	document.getElementById('pc_total_games').setAttribute('total', total);
 	fadeyStuff('pc_total_today', numberWithCommas(content.g[content.g.length-1][formattedDate].total));
 }
@@ -468,9 +469,7 @@ function updateBoosterPanel(obj) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	// console.log(data)
-	fadeyStuff("approxPlayers", numberWithCommas(data.totalUsers));
-	fadeyStuff("approxGames", numberWithCommas(data.totalGames));
+	// console.log(data);
 
 	var container = document.getElementById(prefix + '_lastgames');
 	var games = data.lastGame;
