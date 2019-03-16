@@ -147,6 +147,7 @@ function buildLastGames(callback) {
 }
 
 function getDailyGames(callback) {
+	// console.log(_deviceFilter)
 	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _locale + "&timefrom=" + _timeFrom + _deviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
