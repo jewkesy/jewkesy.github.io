@@ -493,6 +493,7 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.i == 'hash') {sym = " 🌭";}
 		else if (g.i == 'phone') {sym = " 📱";}
 		else if (g.i == 'en-us') {sym = " 🍔";}
+		else if (g.i == 'llama') {sym = " 🦙";}
 
 		if (g.tpb && g.tpb >= 0) {booster = " 🚀";}
 		else if (g.tpb === 0) booster = " 👍";
