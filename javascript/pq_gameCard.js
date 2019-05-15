@@ -37,27 +37,31 @@ function getQuestions(count, genre) {
 			c = c.replace('</emphasis>', '');
 		}
 
-		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c);};
-		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c);};
+		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c, q.t);};
+		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c, q.t);};
 
 		startProgressBar(30, q.answer, c);
 	});
 }
 
 var pg;
-function showAnswer(chosen, answer, correct){
-	// console.log(chosen, answer, correct);
-
+function showAnswer(chosen, answer, correct, type){
+	// console.log(chosen, answer, correct, type);
+	if (!type) type = "";
 	clearInterval(pg);
 	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 
 	var a = _answerPhrases[randomInt(0, _answerPhrases.length-1)];
-	// console.log(_answerPhrases)
+	// console.log(_answerPhrases);
+	// console.log(a)
 	var text = "";
 	if (chosen === null) {
 		text = "The correct answer was " + answer + ". ";
-		if (correct) text += a.replace('&&', correct); // + correct;
+		if (correct) {
+			if (type != "Quote" && type != "Taglines")
+				text += a.replace('&&', correct); // + correct;
+		}
 	} else {
 		if (chosen == answer) {
 			var i = randomInt(0, _correctPhrases.length-1);
@@ -67,8 +71,11 @@ function showAnswer(chosen, answer, correct){
 			text = _incorrectPhrases[randomInt(0, i)];
 		}
 
-		if (correct) text += " - " + a.replace('&&', correct);// + correct;
+		if (correct)
+			if (type != "Quote" && type != "Taglines") 
+				text += " - " + a.replace('&&', correct);// + correct;
 	}
+
 	fadeyStuff("pc_answer", text);
 
 	setTimeout(function(){
