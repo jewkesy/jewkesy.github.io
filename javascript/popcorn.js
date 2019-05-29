@@ -72,6 +72,8 @@ function amazonTimer() {
 	checkNewDay();
 	getMyRank();
 	aInt = setInterval(function () {
+		console.log("timer");
+		ga('send', 'pageview', {'page': '/', 'title': ''});
 		getPhrases();
 		getIntro();
 		getEvent();
