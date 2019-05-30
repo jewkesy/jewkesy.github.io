@@ -90,7 +90,7 @@ function buildAmazonReview(data) {
 	fadeyStuff('pc_it_reviews', numberWithCommas(data.it.reviews));
 	fadeyStuff('pc_mx_reviews', numberWithCommas(data.mx.reviews));
 	fadeyStuff('pc_br_reviews', numberWithCommas(data.br.reviews));
-	fadeyStuff('pc_es_us_reviews', numberWithCommas(data.br.reviews));
+	fadeyStuff('pc_es_us_reviews', numberWithCommas(data.es_us.reviews));
 	fadeyStuff('pc_ga_reviews', numberWithCommas(data.ga.reviews));
 }
 
