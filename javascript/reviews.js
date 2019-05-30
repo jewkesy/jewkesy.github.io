@@ -13,7 +13,6 @@ function getAmazonReviews() {
 		httpGetAmazon(_amazonUrl, function (err, data) {
 			console.log(data)
 			buildAmazonReview(data);
-			getAmazonReviews();
 		});
 	}, _interval);
 }
