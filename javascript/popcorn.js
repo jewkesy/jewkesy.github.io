@@ -71,6 +71,7 @@ function amazonTimer() {
 	getEvent();
 	checkNewDay();
 	getMyRank();
+	getGameCalendar();
 	aInt = setInterval(function () {
 		ga('send', 'pageview', {'page': '/', 'title': ''});
 		getPhrases();
@@ -78,6 +79,7 @@ function amazonTimer() {
 		getEvent();
 		checkNewDay();
 		getMyRank();
+		getGameCalendar();
 	}, 60000);
 }
 
@@ -104,6 +106,63 @@ function getStats() {
 		}
 	});
 }
+
+function getGameCalendar() {
+
+	var events = new Array(10);
+// console.log(events)
+	
+	var d = new Date();
+
+	var ts = d.getTime();
+
+	async.eachOfSeries(events, function(ev, idx, callback){
+		
+		var url = aws + "?action=getevents&locale="+_locale;
+		if (ts) url += "&timestamp="+ts;
+		// console.log(url);
+		httpGetByUrl(url, function (err, data) {
+			events[idx] = data;
+			ts += 86400000;
+			return callback();
+		});	
+		
+	}, function(err) {
+		// console.log(err);
+		console.log(events);
+
+		var container = document.getElementById('pc_event_cal');
+
+		for (var i = 0; i < events.length; i++) {
+			if (events[i].msg.name == 'default') continue;
+			var x = i + 1;
+			if (!document.getElementById('pc_event_cal_' + x)) {
+				var row = container.insertRow(-1);
+				row.id = 'pc_event_cal_' + x;
+
+				var cell0 =  row.insertCell(0);
+				cell0.id = "pc_event_cal_date_" + x;
+				cell1 = row.insertCell(1);
+				cell1.id = "pc_event_cal_desc_" + x;
+			} else {
+				// document.getElementById('pc_event_cal_desc_' + x)
+			}
+			fadeyStuff("pc_event_cal_date_" + x, new Date(events[i].msg.dateNow).toLocaleString('en-En',{weekday: "short", month: "short", day: "numeric"}));
+			fadeyStuff("pc_event_cal_desc_" + x, (function() {
+
+				return events[i].msg.msg;
+
+				// if (events[i].msg.multiplier == 3) return 'Triple Points!';
+
+				// if (events[i].msg.multiplier == 2) return 'Double Points!';
+
+				// return events[i].msg.multiplier;
+			})() );
+		}
+	});
+}
+
+
 
 function getGamePlay(callback) {
 	async.parallel([
@@ -957,8 +1016,11 @@ function getIntro() {
 	});	
 }
 
-function getEvent() {
-	httpGetByUrl(aws + "?action=getevents&locale="+_locale, function (err, data) {
+function getEvent(ts) {
+	var url = aws + "?action=getevents&locale="+_locale;
+	if (ts) url += "&timestamp="+ts;
+	// console.log(url);
+	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
