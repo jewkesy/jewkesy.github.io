@@ -133,6 +133,10 @@ function getGameCalendar() {
 
 		var container = document.getElementById('pc_event_cal');
 
+		while (container.hasChildNodes()) {
+		    container.removeChild(container.lastChild);
+		}
+
 		for (var i = 0; i < events.length; i++) {
 			if (events[i].msg.name == 'default') continue;
 			var x = i + 1;
