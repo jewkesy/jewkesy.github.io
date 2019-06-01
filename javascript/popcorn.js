@@ -22,7 +22,7 @@ var _newUsers = {};
 var _newUsersLabels = [];
 
 var _gameinfo = { dailygames: [] };
-var _chtHeight = 3000;
+var _chtHeight = 1000;
 var _dailyPlayers = [];
 var _chartSummary = getParameterByName('chtsum') || 95;
 var _chtData = {};
