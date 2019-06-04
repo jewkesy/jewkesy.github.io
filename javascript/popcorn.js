@@ -129,7 +129,7 @@ function getGameCalendar() {
 		
 	}, function(err) {
 		// console.log(err);
-		console.log(events);
+		// console.log(events);
 
 		var container = document.getElementById('pc_event_cal');
 

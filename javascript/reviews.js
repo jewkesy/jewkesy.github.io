@@ -8,10 +8,10 @@ var _interval = 60000;
 
 function getAmazonReviews() {
 	_intervalid = setInterval(function () {
-		console.log('reviews timer');
+		// console.log('reviews timer');
 		// clearTimeout(_intervalid);
 		httpGetAmazon(_amazonUrl, function (err, data) {
-			console.log(data)
+			// console.log(data)
 			buildAmazonReview(data);
 		});
 	}, _interval);
