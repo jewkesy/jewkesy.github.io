@@ -138,7 +138,7 @@ function getGameCalendar() {
 		}
 
 		for (var i = 0; i < events.length; i++) {
-			if (events[i].msg.name == 'default') continue;
+			if (!events[i].msg || events[i].msg.name == 'default') continue;
 			var x = i + 1;
 			if (!document.getElementById('pc_event_cal_' + x)) {
 				var row = container.insertRow(-1);
