@@ -144,14 +144,22 @@ function getGameCalendar() {
 				var row = container.insertRow(-1);
 				row.id = 'pc_event_cal_' + x;
 
-				var cell0 =  row.insertCell(0);
+				var cell0 = row.insertCell(0);
 				cell0.id = "pc_event_cal_date_" + x;
-				cell1 = row.insertCell(1);
-				cell1.id = "pc_event_cal_desc_" + x;
-			} else {
-				// document.getElementById('pc_event_cal_desc_' + x)
+
+				var cell1 = row.insertCell(1);
+				cell1.id = "pc_event_cal_multiplier_" + x;
+
+				var cell2 = row.insertCell(2);
+				cell2.id = "pc_event_cal_desc_" + x;
 			}
 			fadeyStuff("pc_event_cal_date_" + x, new Date(events[i].msg.dateNow).toLocaleString('en-En',{weekday: "short", month: "short", day: "numeric"}));
+			fadeyStuff("pc_event_cal_multiplier_" + x, (function(){
+				if (events[i].msg.multiplier == 3) return "<strong>x"+events[i].msg.multiplier+"</strong>";
+				return "x"+events[i].msg.multiplier;
+
+					
+			})() );
 			fadeyStuff("pc_event_cal_desc_" + x, (function() {
 
 				return events[i].msg.msg;
@@ -1026,6 +1034,7 @@ function getEvent(ts) {
 	// console.log(url);
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
+		// console.log(data)
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
 }

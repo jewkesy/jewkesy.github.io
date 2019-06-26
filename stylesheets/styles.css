@@ -540,6 +540,10 @@ tr.hover > th:hover {
   text-decoration: none;
 }
 
+table > tbody > strong {
+  font-size: 20pt;
+}
+
 .stacked-bar-graph {
   width: 100%;
   height: 18px;
