@@ -420,16 +420,15 @@ img.locale {
 
 .locale_flag {
   background-size: cover;
-  color: black !important;
-  text-shadow:
-    -1px -1px 0 #fff,
-    1px -1px 0 #fff,
-    -1px 1px 0 #fff,
-    1px 1px 0 #fff;
+  /*color: white !important;
+  text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000;
+*/
+  color: #4074b5 !important;
+  text-shadow: 1px 1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, -1px -1px 0 #FFFFFF, 1px 0px 0 #FFFFFF, 0px 1px 0 #FFFFFF, -1px 0px 0 #FFFFFF, 0px -1px 0 #FFFFFF;
+
+
+
 }
-/*.locale_flag::after {
-  opacity: 1 !important;
-}*/
 
 img.rounded {
   border-radius: 10px;
