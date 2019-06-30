@@ -373,49 +373,49 @@ img.locale {
 }
 
 .locale_enGB {
-  background: radial-gradient(transparent, white 95%), url(./../flags/en-GB.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/en-GB.png) center center no-repeat;
 }
 .locale_enUS {
-  background: radial-gradient(transparent, white 95%), url(./../flags/en-US.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/en-US.png) center center no-repeat;
 }
 .locale_deDE {
-  background: radial-gradient(transparent, white 95%), url(./../flags/de-DE.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/de-DE.png) center center no-repeat;
 }
 .locale_enIN {
-  background: radial-gradient(transparent, white 95%), url(./../flags/en-IN.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/en-IN.png) center center no-repeat;
 }
 .locale_enCA {
-  background: radial-gradient(transparent, white 95%), url(./../flags/en-CA.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/en-CA.png) center center no-repeat;
 }
 .locale_jaJP {
-  background: radial-gradient(transparent, white 95%), url(./../flags/ja-JP.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/ja-JP.png) center center no-repeat;
 }
 .locale_enAU {
-  background: radial-gradient(transparent, white 95%), url(./../flags/en-AU.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/en-AU.png) center center no-repeat;
 }
 .locale_frFR {
-  background: radial-gradient(transparent, white 95%), url(./../flags/fr-FR.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/fr-FR.png) center center no-repeat;
 }
 .locale_frCA {
-  background: radial-gradient(transparent, white 95%), url(./../flags/fr-CA.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/fr-CA.png) center center no-repeat;
 }
 .locale_esES {
-  background: radial-gradient(transparent, white 95%), url(./../flags/es-ES.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/es-ES.png) center center no-repeat;
 }
 .locale_itIT {
-  background: radial-gradient(transparent, white 95%), url(./../flags/it-IT.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/it-IT.png) center center no-repeat;
 }
 .locale_esMX {
-  background: radial-gradient(transparent, white 95%), url(./../flags/es-MX.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/es-MX.png) center center no-repeat;
 }
 .locale_ptBR {
-  background: radial-gradient(transparent, white 95%), url(./../flags/pt-BR.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/pt-BR.png) center center no-repeat;
 }
 .locale_esUS {
-  background: radial-gradient(transparent, white 95%), url(./../flags/es-US.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../flags/es-US.png) center center no-repeat;
 }
 .locale_google {
-  background: radial-gradient(transparent, white 95%), url(./../images/google.png) center center no-repeat;
+  background: radial-gradient(transparent, white 65%), url(./../images/google.png) center center no-repeat;
 }
 
 .locale_flag {
@@ -423,11 +423,8 @@ img.locale {
   /*color: white !important;
   text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000;
 */
-  color: #4074b5 !important;
+  color: black !important;  
   text-shadow: 1px 1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, -1px -1px 0 #FFFFFF, 1px 0px 0 #FFFFFF, 0px 1px 0 #FFFFFF, -1px 0px 0 #FFFFFF, 0px -1px 0 #FFFFFF;
-
-
-
 }
 
 img.rounded {
