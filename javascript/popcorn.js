@@ -1066,7 +1066,7 @@ slider.onchange = function() {
 	changeUrl('', newUrl);
 	// console.log('calling chtNewUsers');
 	// console.log(_chtData)
-	_chtHeight = 3000;
+	_chtHeight = 1000;
 	var chtData = prepDataForChart(_chtData, calculateHistory(_chtData.length));
 	chtNewUsers(_newUsersChart, chtData);
 }
