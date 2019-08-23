@@ -20,6 +20,12 @@ function getQuestions(count, genre) {
 
 		var idx = randomInt(0, data.msg.questions.length-1);
 		var q = data.msg.questions[idx];
+		for (var i = 0; i < data.msg.questions.length; i++) {
+			if (data.msg.questions[i].t == "Quote") {
+				q = data.msg.questions[i];
+				break;
+			}
+		}
 		var t = cleanseText(q.echoShowText);
 		fadeyStuff("pc_question", t);
 
@@ -28,15 +34,16 @@ function getQuestions(count, genre) {
 		}).fail(function (e) {
 		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 		});
-
+		// console.log(q);
 		var c;
 
 		if (q.correct) {
+			// console.log(q.correct)
 			c = q.correct+"";
 			c = c.replace('<emphasis level="reduced">', '');
 			c = c.replace('</emphasis>', '');
 		}
-
+		// console.log(c);
 		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c, q.t);};
 		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c, q.t);};
 
@@ -61,6 +68,7 @@ function showAnswer(chosen, answer, correct, type){
 		if (correct) {
 			if (type != "Quote" && type != "Taglines")
 				text += a.replace('&&', correct); // + correct;
+			else if (type == "Quote") text = correct;
 		}
 	} else {
 		if (chosen == answer) {
@@ -71,9 +79,11 @@ function showAnswer(chosen, answer, correct, type){
 			text = _incorrectPhrases[randomInt(0, i)];
 		}
 
-		if (correct)
+		if (correct) {
 			if (type != "Quote" && type != "Taglines") 
 				text += " - " + a.replace('&&', correct);// + correct;
+			else if (type == "Quote") text += " - " + correct;
+		}
 	}
 
 	fadeyStuff("pc_answer", text);
