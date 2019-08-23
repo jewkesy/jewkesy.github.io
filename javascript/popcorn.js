@@ -45,12 +45,14 @@ window.addEventListener('popstate', function (event) {
     	_device = history.state.device;
     	_limit = history.state.limit;
     	_chartSummary = history.state.chartSummary;
-    	startPopcornQuiz();
+    	startPopcornQuiz(_locale);
         // Render new content for the hompage
     }
 }, false);
 	
 function startPopcornQuiz(locale, limit, device) {
+	console.log('Starting', locale);
+	if (locale && locale.length > 0) _locale = locale;
 	amazonTimer();
 	getStats();
 	// console.log(_limit, getParameterByName('limit'))
