@@ -1,737 +1,854 @@
 <!doctype html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="keywords" content="Daryl Jewkes Popcorn Quiz Alexa Actions Twenty Questions Flappy Bird Formula One Development Software Applications" />
-  <meta name="description" content="The homepage of Daryl Jewkes" />
-  <meta name="robots" content="index, follow" />
-  <meta name="googlebot" content="index, follow" />
-  <meta name="author" content="Daryl Jewkes, contact.github.io@daryljewkes.com" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="keywords" content="Daryl Jewkes Popcorn Quiz Alexa Actions Twenty Questions Flappy Bird Formula One Development Software Applications" />
+    <meta name="description" content="The homepage of Daryl Jewkes" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="author" content="Daryl Jewkes, contact.github.io@daryljewkes.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <meta property="og:title" content="jewkesy.github.io by Daryl Jewkes"/>
-	<meta property="og:description" content="Daryl Jewkes - Welcome to my homepage"/>
-	<meta property="og:image" content="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188&s=140"/>
-	<meta property="og:url" content="http://jewkesy.github.io/"/>
-	<meta property="og:type" content="website"/>
+    <meta property="og:title" content="jewkesy.github.io by Daryl Jewkes" />
+    <meta property="og:description" content="Daryl Jewkes - Welcome to my homepage" />
+    <meta property="og:image" content="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188&s=140" />
+    <meta property="og:url" content="http://jewkesy.github.io/" />
+    <meta property="og:type" content="website" />
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:url" content="http://jewkesy.github.io/">
-  <meta name="twitter:title" content="jewkesy.github.io by Daryl Jewkes">
-  <meta name="twitter:description" content="Daryl Jewkes - Welcome to my homepage">
-  <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188&s=140">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="http://jewkesy.github.io/">
+    <meta name="twitter:title" content="jewkesy.github.io by Daryl Jewkes">
+    <meta name="twitter:description" content="Daryl Jewkes - Welcome to my homepage">
+    <meta name="twitter:image" content="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188&s=140">
 
-  <meta name="p:domain_verify" content="c2b3fd0f0cf91014684cb6c6294022b6"/>
+    <meta name="p:domain_verify" content="c2b3fd0f0cf91014684cb6c6294022b6" />
 
-  <title>jewkesy.github.io by Daryl Jewkes</title>
-  <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-  <link rel="stylesheet" href="stylesheets/styles.css">
-  <link rel="stylesheet" href="stylesheets/gamecard.css">
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-  <link rel="stylesheet" href="stylesheets/hover-partial.css">
-  
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
-  <script src="./lib/typed.min.js"></script>
-  <script src="./lib/moment-with-locales.min.js"></script>
-  <script src="./lib/async.js"></script>
+    <title>jewkesy.github.io by Daryl Jewkes</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/gamecard.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/hover-partial.css">
 
-  <!--[if lt IE 9]>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+    <script src="./lib/typed.min.js"></script>
+    <script src="./lib/moment-with-locales.min.js"></script>
+    <script src="./lib/async.js"></script>
+
+    <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  <script>
-    (function(i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r;
-      i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-      a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-      a.async = 1;
-      a.src = g;
-      m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  <![endif]-->
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-53431940-1', 'auto');
-    ga('send', 'pageview');
-  </script>
+        ga('create', 'UA-53431940-1', 'auto');
+        ga('send', 'pageview');
+    </script>
 </head>
 
 <body>
-  <div class="wrapper">
-    <header>
-      <h1 class="centerMe">&lt;h1&gt;<span class="typeMeTitle"></span>&lt;/h1&gt;</h1>
-      <script>
-        var typed = new Typed('.typeMeTitle', {
-              strings: ["jewkesy.github.io"],
-              typeSpeed: 75
-            });
-      </script>
-      <p class="centerMe" style="height:270px"><img style="border-radius: 8px;" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188" /></p>
-      <p class="centerMe">the daryljewkes.com homepage</p>
-      <p class="view"><a href="#welcome">Welcome</a></p>
-      <p class="view"><a href="#bio">About Me</a></p>
-      <p class="view"><a href="#projects">My Projects</a></p>
-<!--       <p class="view"><a href="#bake">Ready, Steady, Bake!</a></p> -->
-      <p class="view"><a href="#support-or-contact">Get in Touch</a></p>
-      <p class="view"><a href="https://github.com/jewkesy" target="_blank">View my GitHub Profile</a></p>
-      
-    </header>
-    <section>
-      <h3><a name="welcome" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to my Homepage</h3>
+    <div class="wrapper">
+        <header>
+            <h1 class="centerMe">&lt;h1&gt;<span class="typeMeTitle"></span>&lt;/h1&gt;</h1>
+            <script>
+                var typed = new Typed('.typeMeTitle', {
+                    strings: ["jewkesy.github.io"],
+                    typeSpeed: 75
+                });
+            </script>
+            <p class="centerMe" style="height:270px"><img style="border-radius: 8px;" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188" /></p>
+            <p class="centerMe">the daryljewkes.com homepage</p>
+            <p class="view"><a href="#welcome">Welcome</a></p>
+            <p class="view"><a href="#bio">About Me</a></p>
+            <p class="view"><a href="#projects">My Projects</a></p>
+            <!--       <p class="view"><a href="#bake">Ready, Steady, Bake!</a></p> -->
+            <p class="view"><a href="#support-or-contact">Get in Touch</a></p>
+            <p class="view"><a href="https://github.com/jewkesy" target="_blank">View my GitHub Profile</a></p>
 
-      <p>Well, I'm planning on taking over the world one day from my secret island hideout. Own a rocket/tank/super car and employ endless henchmen. (<i>No agencies please</i>).</p>
-      <p>And if you hadn't noticed already, this page is hosted on GitHub.Pages - so expect a certain level of geekism...</p>
+        </header>
+        <section>
+            <h3><a name="welcome" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to my Homepage</h3>
 
-      <h3><a name="bio" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>About Me</h3>
-      <p>I have an extensive background in software development, creating content-rich web applications and background services using established technologies and design patterns.</p>
-      
-      <p>Amazon Alexa development has become an obsession over the last 2 years. My most popular Skill <a href='#pq' class="boldme">Popcorn Quiz</a>, released in May 2017, stormed into the Top 10 <strong>Featured</strong>, <strong>Recommend</strong>, <strong>Staff Picks</strong> and <strong>Most Popular</strong> categories on the Amazon homepage and has stayed there for over a year now.  With <strong><span id="approxGames">875,000</span></strong> games played to date, there is no better way to build new features, improve my UX skills, and manage cloud-based deployments when you have <strong><span id="approxPlayers">190,000</span></strong> world-wide players playing your game 24/7.  My first venture on <strong>Google Assistant</strong> development has now brought <strong>Popcorn Quiz</strong> running on the same game engine.  This has opened up a whole new dynamic now that the <strong>Alexa</strong> players have some fierce competition!</p>
+            <p>Well, I'm planning on taking over the world one day from my secret island hideout. Own a rocket/tank/super car and employ endless henchmen. (<i>No agencies please</i>).</p>
+            <p>And if you hadn't noticed already, this page is hosted on GitHub.Pages - so expect a certain level of geekism...</p>
 
-      <p>Employed as an <strong>Innovation Developer</strong> working with new and up-and-coming technologies to create innovative concepts and prototypes for future markets and opportunities.</p>
+            <h3><a name="bio" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>About Me</h3>
+            <p>I have an extensive background in software development, creating content-rich web applications and background services using established technologies and design patterns.</p>
 
-      <p>I'm working with <strong>Node.JS</strong> and <strong>MongoDB</strong>, this is evident if you take a look at my repos. I'm loving the performance and scalability of the <strong>MEAN</strong> stack and the friendly, pro-active community support that comes with it - a refreshing change from my days working on <strong>.NET</strong> solutions.</p>
+            <p>Amazon Alexa development has become an obsession over the last 2 years. My most popular Skill <a href='#pq' class="boldme">Popcorn Quiz</a>, released in May 2017, stormed into the Top 10 <strong>Featured</strong>, <strong>Recommend</strong>, <strong>Staff Picks</strong> and <strong>Most Popular</strong> categories on the Amazon homepage and has stayed there for over a year now. With <strong><span id="approxGames">875,000</span></strong> games played to date, there is no better way to build new features, improve my UX skills, and manage cloud-based deployments when you have <strong><span id="approxPlayers">190,000</span></strong> world-wide players playing your game 24/7. My first venture on <strong>Google Assistant</strong> development has now brought <strong>Popcorn Quiz</strong> running on the same game engine. This has opened up a whole new dynamic now that the <strong>Alexa</strong> players have some fierce competition!</p>
 
-      <p>You can also find me on the education discussion boards at <strong>MongoDB</strong>, which I'm a heavy contributor to since starting a series of online training certifications.</p>
+            <p>Employed as an <strong>Innovation Developer</strong> working with new and up-and-coming technologies to create innovative concepts and prototypes for future markets and opportunities.</p>
 
-      <p>When not attached to a keyboard, you'll find me on a mountain bike trying to get as muddy as possible on a woodland trail or carving up the white stuff on a snowboard trying not to break myself. Did I mention that I bake...?!</p>
+            <p>I'm working with <strong>Node.JS</strong> and <strong>MongoDB</strong>, this is evident if you take a look at my repos. I'm loving the performance and scalability of the <strong>MEAN</strong> stack and the friendly, pro-active community support that comes with it - a refreshing change from my days working on <strong>.NET</strong> solutions.</p>
 
-      <h3><a name="projects" class="anchor" href="#"><span class="octicon octicon-link"></span></a>My Projects</h3>
-      <p>A brief overview of some of my projects: -</p>
+            <p>You can also find me on the education discussion boards at <strong>MongoDB</strong>, which I'm a heavy contributor to since starting a series of online training certifications.</p>
 
-      <a name="pq" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
-      <h4 style="margin-bottom: 0;"><img id="deviceLogo" width="22px" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="/images/alexa.png"/>  <a name="popcorn" id="linkToPQ" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank"><img class="rounded" style="float:left; margin-right: 5px;" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_s.png" width="80px" />"<span id="pc_wake_start">Alexa, play</span> <i id="pc_pq_name">Popcorn Quiz</i>"</a></h4>
-      <h4 style="text-align: right; margin-top: 0;"> "<span id='pc_intro'>Let's do this!</span>"</h4>
+            <p>When not attached to a keyboard, you'll find me on a mountain bike trying to get as muddy as possible on a woodland trail or carving up the white stuff on a snowboard trying not to break myself. Did I mention that I bake...?!</p>
 
-  <div style="clear: both;"></div>
+            <h3><a name="projects" class="anchor" href="#"><span class="octicon octicon-link"></span></a>My Projects</h3>
+            <p>A brief overview of some of my projects: -</p>
 
+            <a name="pq" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
+            <h4 style="margin-bottom: 0;"><img id="deviceLogo" width="22px" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="/images/alexa.png"/>  <a name="popcorn" id="linkToPQ" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank"><img class="rounded" style="float:left; margin-right: 5px;" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_s.png" width="80px" />"<span id="pc_wake_start">Alexa, play</span> <i id="pc_pq_name">Popcorn Quiz</i>"</a></h4>
+            <h4 style="text-align: right; margin-top: 0;"> "<span id='pc_intro'>Let's do this!</span>"</h4>
 
-  <!-- the game card -->
-  <div class="material-contact animate-in-card">
+            <div style="clear: both;"></div>
 
-        <!-- image -->
-        <img class="animate-in-image" id='pc_question_poster' src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_l.png">
-        <!-- name -->
-        <h1 class="animate-in-01" id="pc_h1_name">Popcorn Quiz</h1>
-        <!-- title -->
-        <h2 class="animate-in-02" id="pc_question_genre"></h2>
+            <!-- the game card -->
+            <div class="material-contact animate-in-card">
 
-        <hr class="animate-in-03">
+                <!-- image -->
+                <img class="animate-in-image" id='pc_question_poster' src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_l.png">
+                <!-- name -->
+                <h1 class="animate-in-01" id="pc_h1_name">Popcorn Quiz</h1>
+                <!-- title -->
+                <h2 class="animate-in-02" id="pc_question_genre"></h2>
 
-        <!-- bio -->
-        <p class="animate-in-04"><span class="question"id="pc_question"></span></p>
+                <hr class="animate-in-03">
 
-        <div class="progress animate-in-05">
-          <div id="pc_progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
+                <!-- bio -->
+                <p class="animate-in-04"><span class="question" id="pc_question"></span></p>
 
-        <!-- contact links -->
-        <span id='pc_truefalse' class="actions animate-in-06">
-            <button id='pc_true' type="button" class="btn btn-info hvr-grow">True</button>
-            <button id='pc_false' type="button" class="btn btn-info hvr-grow">False</button>
+                <div class="progress animate-in-05">
+                    <div id="pc_progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <!-- contact links -->
+                <span id='pc_truefalse' class="actions animate-in-06">
+          <button id='pc_true' type="button" class="btn btn-info hvr-grow">True</button>
+          <button id='pc_false' type="button" class="btn btn-info hvr-grow">False</button>
         </span>
-        <div class="centerMe"><p class="centerMe"><span class="answer"id="pc_answer"></span></p></div>
-  </div>
-
-  <p><strong>Think you know movies? Test your skills against the world!</strong></p>
-  <div class="centerMe">
-   <a class="reviewTile hvr-bob locale_flag locale_enGB" name="popcorn" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_uk_stars">Amazon<br>UK<br><br>(<span id="pc_uk_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_enUS" name="popcorn" href="https://www.amazon.com/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_us_stars">Amazon<br>US<br><br>(<span id="pc_us_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_deDE" name="popcorn" href="https://www.amazon.de/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_de_stars">Amazon<br>Germany<br><br>(<span id="pc_de_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_enIN" name="popcorn" href="https://www.amazon.in/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_in_stars">Amazon<br>India<br><br>(<span id="pc_in_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_enCA" name="popcorn" href="https://www.amazon.ca/dp/B0719TQV6W?language=en_CA" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_ca_stars">Amazon<br>Canada<br><br>(<span id="pc_ca_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_jaJP" name="popcorn" href="https://www.amazon.jp/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_ja_stars">Amazon<br>Japan<br><br>(<span id="pc_ja_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_enAU" name="popcorn" href="https://www.amazon.com.au/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_au_stars">Amazon<br>Australia<br><br>(<span id="pc_au_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_frFR" name="popcorn" href="https://www.amazon.fr/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_fr_stars">Amazon<br>France<br><br>(<span id="pc_fr_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_frCA" name="popcorn" href="https://www.amazon.ca/dp/B0719TQV6W?language=fr_CA" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_fr_ca_stars">Amazon<br>Canada (FR)<br><br>(<span id="pc_fr_ca_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_esES" name="popcorn" href="https://www.amazon.es/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_es_stars">Amazon<br>Spain<br><br>(<span id="pc_es_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_itIT" name="popcorn" href="https://www.amazon.it/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_it_stars">Amazon<br>Italy<br><br>(<span id="pc_it_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_esMX" name="popcorn" href="https://www.amazon.com.mx/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_mx_stars">Amazon<br>Mexico<br><br>(<span id="pc_mx_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_ptBR" name="popcorn" href="https://www.amazon.com.br/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_br_stars">Amazon<br>Brazil<br><br>(<span id="pc_br_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_esUS" name="popcorn" href="https://www.amazon.com.es/dp/B0719TQV6W" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_es_us_stars">Amazon<br>US (ES)<br><br>(<span id="pc_es_us_reviews">0</span>)</div>
-   </a>
-   <a class="reviewTile hvr-bob locale_flag locale_google" name="popcorn" href="https://assistant.google.com/services/a/uid/000000b88782db03" target="_blank">
-    <div class="stars a-star a-star-0" id="pc_ga_stars">Google<br>Assistant<br><br>(<span id="pc_ga_reviews">0</span>)</div>
-   </a>
-  </div>
-  <div style="clear: both;"></div>
-  <br>
-  <p><strong>Popcorn Quiz</strong> will ask five <strong>true</strong> or <strong>false</strong> questions from a vast range of movies and actor biographies.</p>
-  <p>For a given movie, <strong>Popcorn Quiz</strong> will quiz you on <strong>opening lines</strong>, the <strong>release years</strong>, <strong>actors</strong>, <strong>slogans</strong>, <strong>directors</strong> or <strong>characters</strong>. For actors, <strong>Popcorn Quiz</strong> will quiz you for their <strong>birth year</strong> or <strong>place of birth</strong>.</p>
-  <p><strong>Popcorn Quiz</strong> will keep your score and tell you your world ranking position compared against other <strong>Alexa and Google</strong> players.</p>
-  <p>The more games you play and the more questions you answer correctly, the greater chance to increase your world rank. To reward your dedication, every 5th consecutive game will be a double-point round. Every 10th will be a triple-point round!</p>
-  <p>Double-point events happen every three days, so every player gets a  fair chance to storm the ranks.</p>
-  <hr>
-  <h4 style="text-align: center;">Latest Popcorn Quiz News</h4>
-  <p><strong>14 Jul</strong> - New question type coming - movie qoutes! To compliment the recent opening lines, the best movie quotes are now being farmed and will be available soon!</p>
-
-  <p><strong>26 Jun</strong> - The Norwegian <img class="locale" src="./flags/no-NO.png" width="32"/> version is now LIVE for Google! Swedish <img class="locale" src="./flags/sv-SE.png" width="32"/> version is still in progress.</p>
-
-  <p><strong>14 Jun</strong> - The Norwegian <img class="locale" src="./flags/no-NO.png" width="32"/> and Swedish <img class="locale" src="./flags/sv-SE.png" width="32"/> versions of PQ for Google Assistant are now in development!</p>
-
-  <p><strong>8 Jun</strong> - The Dutch <img class="locale" src="./flags/nl-NL.png" width="32"/> version of PQ for Google Assistant is now in development!</p>
-
-  <p><strong>3 Jun</strong> - Olá! The Brazilian <img class="locale" src="./flags/pt-BR.png" width="32"/> version of PQ for Alexa has been published!</p>
-
-  <div style="display:none;">
-
-  <p><strong>29 May</strong> - Olá! The Brazilian <img class="locale" src="./flags/pt-BR.png" width="32"/> version of PQ for Alexa has been submitted for certification.</p>
-
-  <p><strong>26 May</strong> - Because it's the Bank Holiday the day before the official date, the PQ birthday Party will be the same day so everyone gets the chance to enjoy!</p>
-
-  <p><strong>18 May</strong> - On May 28, Popcorn Quiz will be 2 years old 🎂 and is more popular than ever! In typical PQ style, all day will be triple-points.</p>
-
-
-
-  <p><strong>8 May</strong> - We're about to hit 1,000,000 games (997,744 to be precise)! To celebrate, this weekend will be full of triple points games!</p>
-
-  <p><strong>8 Apr</strong> - Want some triple-points? Leave a review for Popcorn Quiz (good or bad!), and I'll reward EVERYONE with a day of triple points!</p>
-
-  <p><strong>18 Mar</strong> - Popcorn Quiz now uses additional voices! Polly will be used to speak the quotes, using a male or female voice to match the movie quote, giving you an audible clue to the question.</p>
-
-
-
-  <p><strong>26 Feb</strong> - <strong>**** NEW FEATURE ** 🚀 BOOSTERS 🚀 ** COMING SOON ****</strong><br/>I'm now beta testing Boosters and periodically adding them to my most active players.</p><p>Details coming soon...</p>
-
-  <p><strong>31 Jan</strong> - <strong>**** NEW QUESTION TYPE RELEASED! ****</strong><br/>Movie first lines have now been added to the game.  Hope you were paying attention...</p>
-  <hr class="short">
-
-  <p><strong>20 Jan</strong> - 2019 movies are now available.  Each new movie will be added to the game once they have received a public rating.  This is to ensure that the movie has been released and the questions are as accurate as possible.</p>
-  <hr class="short">
-
-  <p><strong>5 Jan</strong> - To celebrate National Popcorn Day 🍿 on the 19th Jan, Popcorn Quiz will be serving triple points!</p>
-  <hr class="short">
-
-  <p><strong>28 Dec</strong> - <strong>The Popcorn Quiz New Year gift 🎁 to everyone is 2 days of triple points!  Starting New Years Eve 🎆, every round will bag you bonus points!</strong></p>
-  <hr class="short">
+                <div class="centerMe">
+                    <p class="centerMe"><span class="answer" id="pc_answer"></span></p>
+                </div>
+            </div>
+
+            <p><strong>Think you know movies? Test your skills against the world!</strong></p>
+            <div class="centerMe">
+                <a class="reviewTile hvr-bob locale_flag locale_enGB" name="popcorn" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_uk_stars">Amazon
+                        <br>UK
+                        <br>
+                        <br>(<span id="pc_uk_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_enUS" name="popcorn" href="https://www.amazon.com/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_us_stars">Amazon
+                        <br>US
+                        <br>
+                        <br>(<span id="pc_us_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_deDE" name="popcorn" href="https://www.amazon.de/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_de_stars">Amazon
+                        <br>Germany
+                        <br>
+                        <br>(<span id="pc_de_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_enIN" name="popcorn" href="https://www.amazon.in/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_in_stars">Amazon
+                        <br>India
+                        <br>
+                        <br>(<span id="pc_in_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_enCA" name="popcorn" href="https://www.amazon.ca/dp/B0719TQV6W?language=en_CA" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_ca_stars">Amazon
+                        <br>Canada
+                        <br>
+                        <br>(<span id="pc_ca_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_jaJP" name="popcorn" href="https://www.amazon.jp/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_ja_stars">Amazon
+                        <br>Japan
+                        <br>
+                        <br>(<span id="pc_ja_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_enAU" name="popcorn" href="https://www.amazon.com.au/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_au_stars">Amazon
+                        <br>Australia
+                        <br>
+                        <br>(<span id="pc_au_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_frFR" name="popcorn" href="https://www.amazon.fr/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_fr_stars">Amazon
+                        <br>France
+                        <br>
+                        <br>(<span id="pc_fr_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_frCA" name="popcorn" href="https://www.amazon.ca/dp/B0719TQV6W?language=fr_CA" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_fr_ca_stars">Amazon
+                        <br>Canada (FR)
+                        <br>
+                        <br>(<span id="pc_fr_ca_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_esES" name="popcorn" href="https://www.amazon.es/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_es_stars">Amazon
+                        <br>Spain
+                        <br>
+                        <br>(<span id="pc_es_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_itIT" name="popcorn" href="https://www.amazon.it/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_it_stars">Amazon
+                        <br>Italy
+                        <br>
+                        <br>(<span id="pc_it_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_esMX" name="popcorn" href="https://www.amazon.com.mx/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_mx_stars">Amazon
+                        <br>Mexico
+                        <br>
+                        <br>(<span id="pc_mx_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_ptBR" name="popcorn" href="https://www.amazon.com.br/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_br_stars">Amazon
+                        <br>Brazil
+                        <br>
+                        <br>(<span id="pc_br_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_esUS" name="popcorn" href="https://www.amazon.com.es/dp/B0719TQV6W" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_es_us_stars">Amazon
+                        <br>US (ES)
+                        <br>
+                        <br>(<span id="pc_es_us_reviews">0</span>)</div>
+                </a>
+                <a class="reviewTile hvr-bob locale_flag locale_google" name="popcorn" href="https://assistant.google.com/services/a/uid/000000b88782db03" target="_blank">
+                    <div class="stars a-star a-star-0" id="pc_ga_stars">Google
+                        <br>Assistant
+                        <br>
+                        <br>(<span id="pc_ga_reviews">0</span>)</div>
+                </a>
+            </div>
+            <div style="clear: both;"></div>
+            <br>
+            <p><strong>Popcorn Quiz</strong> will ask five <strong>true</strong> or <strong>false</strong> questions from a vast range of movies and actor biographies.</p>
+            <p>For a given movie, <strong>Popcorn Quiz</strong> will quiz you on <strong>opening lines</strong>, the <strong>release years</strong>, <strong>actors</strong>, <strong>slogans</strong>, <strong>directors</strong> or <strong>characters</strong>. For actors, <strong>Popcorn Quiz</strong> will quiz you for their <strong>birth year</strong> or <strong>place of birth</strong>.</p>
+            <p><strong>Popcorn Quiz</strong> will keep your score and tell you your world ranking position compared against other <strong>Alexa and Google</strong> players.</p>
+            <p>The more games you play and the more questions you answer correctly, the greater chance to increase your world rank. To reward your dedication, every 5th consecutive game will be a double-point round. Every 10th will be a triple-point round!</p>
+            <p>Double-point events happen every three days, so every player gets a fair chance to storm the ranks.</p>
+            <hr>
+            <h4 style="text-align: center;">Latest Popcorn Quiz News</h4>
+            <p><strong>14 Jul</strong> - New question type coming - movie qoutes! To compliment the recent opening lines, the best movie quotes are now being farmed and will be available soon!</p>
 
-  <p><strong>15 Dec</strong> - <strong>The Popcorn Quiz Christmas gift 🎁 to everyone is 3 days of triple points!  Starting Christmas Eve 🎄, every round will bag you bonus points!</strong></p>
-  <hr class="short">
+            <p><strong>26 Jun</strong> - The Norwegian <img class="locale" src="./flags/no-NO.png" width="32" /> version is now LIVE for Google! Swedish <img class="locale" src="./flags/sv-SE.png" width="32" /> version is still in progress.</p>
 
-  <p><strong>26 Nov</strong> <strong>**** NEW FEATURE NOW LIVE!!! ****</strong></p>
-  <p>Did you get max points? Do you want to gamble on a single question to double your score? Do you feel lucky? Well, do ya??</p>
-  <hr class="short">
+            <p><strong>14 Jun</strong> - The Norwegian <img class="locale" src="./flags/no-NO.png" width="32" /> and Swedish <img class="locale" src="./flags/sv-SE.png" width="32" /> versions of PQ for Google Assistant are now in development!</p>
 
-  <p><strong>12 Nov</strong> - Popcorn Quiz has now launched in French-Canadian <img class="locale" src="./flags/fr-CA.png" /> territories for <img height="18" class="device" src="./images/alexa.png"> Alexa devices!</p>
-  <hr class="short">
+            <p><strong>8 Jun</strong> - The Dutch <img class="locale" src="./flags/nl-NL.png" width="32" /> version of PQ for Google Assistant is now in development!</p>
 
-  <p><strong>8 Nov</strong> - To celebrate my birthday 🎁 on the 14th Nov, Popcorn Quiz has something special planned... </p>
-  <hr class="short">
+            <p><strong>3 Jun</strong> - Olá! The Brazilian <img class="locale" src="./flags/pt-BR.png" width="32" /> version of PQ for Alexa has been published!</p>
 
-  <p><strong>4 Nov</strong> - New game feature now released!  Your first game of the day will be worth triple points!</p>
-  <hr class="short">
+            <div style="display:none;">
 
-  <p><strong>22 Oct</strong> - 🎃 Halloween is soon upon us and Popcorn Quiz will be dishing out the tricks and treats again this year with Horror movie rounds and double point days.</p>
-  <p>Halloween mode plays every night when the sun goes down from 6pm to 6am GMT.</p>
-  <hr class="short">
+                <p><strong>29 May</strong> - Olá! The Brazilian <img class="locale" src="./flags/pt-BR.png" width="32" /> version of PQ for Alexa has been submitted for certification.</p>
 
-  <p><strong>13 Oct</strong> - Hej! The Danish <img class="locale" src="./flags/da-DK.png" width="32"/> version for Actions for Google is now live!</p>
-  <hr class="short">
+                <p><strong>26 May</strong> - Because it's the Bank Holiday the day before the official date, the PQ birthday Party will be the same day so everyone gets the chance to enjoy!</p>
 
-  <p><strong>25 Sep</strong> - Olá! The Brazilian <img class="locale" src="./flags/pt-BR.png" width="32"/> version for Actions for Google has now been released!</p>
-  <hr class="short">
+                <p><strong>18 May</strong> - On May 28, Popcorn Quiz will be 2 years old 🎂 and is more popular than ever! In typical PQ style, all day will be triple-points.</p>
 
-  <p><strong>14 Sep</strong> - Actor questions have now been opened up to all non-English languages!</p>
-  <hr class="short">
+                <p><strong>8 May</strong> - We're about to hit 1,000,000 games (997,744 to be precise)! To celebrate, this weekend will be full of triple points games!</p>
 
-  <p><strong>7 Sep</strong> - こんにちは <i>(Kon'nichiwa)</i> Popcorn Quiz now welcomes <img class="locale" src="./flags/ja-JP.png" /> Japanese and <img class="locale" src="./flags/es-MX.png" /> Mexican players on Alexa!! </p>
-  <hr class="short">
+                <p><strong>8 Apr</strong> - Want some triple-points? Leave a review for Popcorn Quiz (good or bad!), and I'll reward EVERYONE with a day of triple points!</p>
 
-  <p><strong>3rd Sep</strong> - <a href="https://assistant.google.com/services/a/uid/000000b88782db03?hl=en-GB" target="_blank">Actions for Google version is now LIVE!</a> To play, just say '<i>Ok Google, Talk to Popcorn Quiz</i>' via your Google device to compete against other Google and Alexa players. Look out for <img class="locale" src="./images/google.png" width="32"/> games in the league.</p>
-  <hr class="short">
+                <p><strong>18 Mar</strong> - Popcorn Quiz now uses additional voices! Polly will be used to speak the quotes, using a male or female voice to match the movie quote, giving you an audible clue to the question.</p>
 
-  <p><strong>2 Aug</strong> - <strong>Hola / Ciao!</strong> Popcorn Quiz welcomes <img class="locale" src="./flags/it-IT.png" /> Italian and <img class="locale" src="./flags/es-ES.png" /> Spanish players!</p>
-  <hr class="short">
+                <p><strong>26 Feb</strong> - <strong>**** NEW FEATURE ** 🚀 BOOSTERS 🚀 ** COMING SOON ****</strong>
+                    <br/>I'm now beta testing Boosters and periodically adding them to my most active players.</p>
+                <p>Details coming soon...</p>
 
-  <p><strong>11 Aug</strong> - <strong>Bueno!</strong> Development has now started on the <img class="locale" src="./flags/es-MX.png" /> Mexican version! The Echo is due for release later this year and PQ will be there to welcome our new friends.</p>
-  <hr class="short">
+                <p><strong>31 Jan</strong> - <strong>**** NEW QUESTION TYPE RELEASED! ****</strong>
+                    <br/>Movie first lines have now been added to the game. Hope you were paying attention...</p>
+                <hr class="short">
 
-  <p><strong>29 July</strong> - こんにちは <i>(Kon'nichiwa)</i> Development is well under way on the Japanese <img class="locale" src="./flags/ja-JP.png" />  version.</p>
-  <hr class="short"> <p><strong>***Update 8 Aug ***</strong><br/>Added a few tweaks based upon feedback from the Alexa team and resubmitted for certification</p>
-  <hr class="short">
+                <p><strong>20 Jan</strong> - 2019 movies are now available. Each new movie will be added to the game once they have received a public rating. This is to ensure that the movie has been released and the questions are as accurate as possible.</p>
+                <hr class="short">
 
-  <p><strong>9th July</strong> - Teasing an upcoming event on Wednesday and added a few more phrases to the game.</p>
-  <hr class="short">
+                <p><strong>5 Jan</strong> - To celebrate National Popcorn Day 🍿 on the 19th Jan, Popcorn Quiz will be serving triple points!</p>
+                <hr class="short">
 
-  <p><strong>2nd July</strong> - <strong>Hola / Ciao!</strong> The Italian and Spanish language options have now been submitted for certification.</p>
-  <p> ** Update 1st Aug -- Amazon have announced a delay in certification.  Fingers crossed it's not much longer **</p>
-  <hr class="short">
-  <p><strong>15th June</strong> - <strong>Bonjour!</strong> Popcorn Quiz François is released today!</p>
-  <hr class="short">
-  <p><strong>14th June</strong> - <strong>NEW GAMEPLAY FEATURE NOW LIVE!</strong> Reward your dedication - every 5th consecutive game is a double-point round, every 10th is triple points.</p>
-  <hr class="short">
-  <p><strong>9th June</strong> -  Website now has example gameplay questions that you can practice on</p>
-  <hr class="short">
-  <p><strong>5th June</strong> - Released some minor optimisations and few more phrases to the game.</p>
-  <hr class="short">
-  <p><strong>29th May</strong> - The Popcorn Quiz Birthday Event was a great success, treating players to triple point rounds.</p>     
-  <hr class="short">
+                <p><strong>28 Dec</strong> - <strong>The Popcorn Quiz New Year gift 🎁 to everyone is 2 days of triple points!  Starting New Years Eve 🎆, every round will bag you bonus points!</strong></p>
+                <hr class="short">
 
-  <p><strong>19th May</strong> - Released some minor optimisations and few more phrases to the game.</p>
-  <hr class="short">
-     
-  <p><strong>2nd May</strong> - On May 4th, Popcorn Quiz with be celebrating Star Wars Day by giving you Sci-Fi rounds.</p>     
-  <hr class="short">
+                <p><strong>15 Dec</strong> - <strong>The Popcorn Quiz Christmas gift 🎁 to everyone is 3 days of triple points!  Starting Christmas Eve 🎄, every round will bag you bonus points!</strong></p>
+                <hr class="short">
 
-  <p><strong>20th Apr</strong> - Popcorn Quiz François has been entered for Amazon Certification.</p>  
+                <p><strong>26 Nov</strong> <strong>**** NEW FEATURE NOW LIVE!!! ****</strong></p>
+                <p>Did you get max points? Do you want to gamble on a single question to double your score? Do you feel lucky? Well, do ya??</p>
+                <hr class="short">
 
-  <p>** UPDATE 14th JUNE ** Still awaiting feedback.  Was resubmitted to apply a minor change, but Certification times are horrendous at the moment...</p> 
-  <hr class="short">
+                <p><strong>12 Nov</strong> - Popcorn Quiz has now launched in French-Canadian <img class="locale" src="./flags/fr-CA.png" /> territories for <img height="18" class="device" src="./images/alexa.png"> Alexa devices!</p>
+                <hr class="short">
 
-  <p><strong>8th Apr</strong> - Popcorn Quiz François is almost complete and will be entering Amazon Certification this week.</p>   
-  <hr class="short">
+                <p><strong>8 Nov</strong> - To celebrate my birthday 🎁 on the 14th Nov, Popcorn Quiz has something special planned... </p>
+                <hr class="short">
 
-  <p><strong>29th Mar</strong> - Popcorn Quiz will be getting ready to say Bonjour to our French speaking friends when they come online mid-April</p>
-  <hr class="short">
+                <p><strong>4 Nov</strong> - New game feature now released! Your first game of the day will be worth triple points!</p>
+                <hr class="short">
 
-  <p><strong>27th Mar</strong> - Getting ready for a day of comedy movies on April Fools Day</p>
-  <hr class="short">
-  <p><strong>24th Mar</strong> - Improving the card information and optimising the use of the space on Echo Display devices</p>
-  <hr class="short">
-  <p><strong>20th Mar</strong> - <strong>250,000 GAMES PLAYED &amp; OVER 65,000 PLAYERS!</strong> To celebrate a new movie category has been added - Top Rated Movies!</p> 
-  <hr class="short"> 
-  <p><strong>13th Mar</strong> - <strong>NEW GAMEPLAY FEATURE NOW LIVE!</strong> Reward your dedication with a bonus-point round for every 5th consecutive game you play.</p>  
-  <hr class="short">
+                <p><strong>22 Oct</strong> - 🎃 Halloween is soon upon us and Popcorn Quiz will be dishing out the tricks and treats again this year with Horror movie rounds and double point days.</p>
+                <p>Halloween mode plays every night when the sun goes down from 6pm to 6am GMT.</p>
+                <hr class="short">
 
-  <p><strong>11th Mar</strong> - New gameplay feature coming soon - reward your dedication with bonus-point rounds.</p>
-  <hr class="short">
+                <p><strong>13 Oct</strong> - Hej! The Danish <img class="locale" src="./flags/da-DK.png" width="32" /> version for Actions for Google is now live!</p>
+                <hr class="short">
 
-  <p><strong>4th Mar</strong> - Better feedback when asking for your rank. Alexa will now tell you how many postions you've lost in between plays if you've been overtaken.</p>
-  <hr class="short">
+                <p><strong>25 Sep</strong> - Olá! The Brazilian <img class="locale" src="./flags/pt-BR.png" width="32" /> version for Actions for Google has now been released!</p>
+                <hr class="short">
 
-  <p><strong>4th Mar</strong> - Better feedback when asking for your rank. Alexa will now tell you how many positions you've lost in between plays if you've been overtaken.</p>
-  <hr class="short">
+                <p><strong>14 Sep</strong> - Actor questions have now been opened up to all non-English languages!</p>
+                <hr class="short">
 
+                <p><strong>7 Sep</strong> - こんにちは <i>(Kon'nichiwa)</i> Popcorn Quiz now welcomes <img class="locale" src="./flags/ja-JP.png" /> Japanese and <img class="locale" src="./flags/es-MX.png" /> Mexican players on Alexa!! </p>
+                <hr class="short">
 
-  <p><strong>4th Mar</strong> - Better feedback when asking for your rank. Alexa will now tell you how many positions you've lost in between plays if you've been overtaken.</p>  
-  <hr class="short">
+                <p><strong>3rd Sep</strong> - <a href="https://assistant.google.com/services/a/uid/000000b88782db03?hl=en-GB" target="_blank">Actions for Google version is now LIVE!</a> To play, just say '<i>Ok Google, Talk to Popcorn Quiz</i>' via your Google device to compete against other Google and Alexa players. Look out for <img class="locale" src="./images/google.png" width="32" /> games in the league.</p>
+                <hr class="short">
 
-  <p><strong>27 Feb</strong> - As the game grows in popularity, the rank calculation logic has been refactored for faster performance.  Those players who are further down the rankings will benefit from the performance gain.</p>  
-  <hr class="short">
+                <p><strong>2 Aug</strong> - <strong>Hola / Ciao!</strong> Popcorn Quiz welcomes <img class="locale" src="./flags/it-IT.png" /> Italian and <img class="locale" src="./flags/es-ES.png" /> Spanish players!</p>
+                <hr class="short">
 
-  <p><strong>17 Feb</strong> - <strong>NEW QUESTION TYPE NOW LIVE!</strong> Movie slogans are now a question type within the game.</p>  
-  <hr class="short">
+                <p><strong>11 Aug</strong> - <strong>Bueno!</strong> Development has now started on the <img class="locale" src="./flags/es-MX.png" /> Mexican version! The Echo is due for release later this year and PQ will be there to welcome our new friends.</p>
+                <hr class="short">
 
-  <p><strong>2 Feb</strong> - Popcorn Quiz gets featured in the official Amazon Echo email! This introduced nearly 3300 players who played over 6200 games and helped propel PQ to almost 52,000 players and 155,000 games, making this the best day ever for PQ!</p>
-  <hr class="short">
-
-  <p><strong>20 Jan</strong> - Popcorn Quiz will now be hosting many more Double Point Days.  Every point earned will be doubled - use this to your advantage and storm your way passed your oppenents :)</p> 
-  <hr class="short">
-
-  <p><strong>14 Jan</strong> - Double Point Event Today!!! Sunday is the new Funday.  Every point earned will be doubled - use this to your advantage and storm your way passed your oppenents :)</p>    
-  <hr class="short">
-
-  <p><strong>12 Jan</strong> - Reddit user <a href="https://www.reddit.com/user/alexainteractions">alexainteractions</a> has made a video review of Popcorn Quiz!  Check it out further down!</p> 
-  <hr class="short">
-
-  <p><strong>3 Jan</strong> - Happy New Year! Popcorn Quiz is now LIVE on the Echo Show! Those lucky peeps now get a richer visual experience.</p>  
-  <hr class="short">
-
-  <p><strong>23 Dec</strong> - Popcorn Quiz is about to be released on the Echo Show! Those lucky peeps now get a richer visual experience.</p>
-  <hr class="short">
-
-  <p><strong>17 Dec</strong> - Popcorn Quiz is now festive! Alexa will occassionaly give you rounds based on Christmas films.</p>  
-  <hr class="short">
-
-  <p><strong>3 Dec</strong> - Alexa will now give you rounds based upon genre.  Look out for <i>Action</i>, <i>Comedy</i>, <i>Horror</i>, <i>Romance</i>, <i>Thriller</i> and many more!</p> 
-  <hr class="short"> 
-
-  <p><strong>30 Nov</strong> - Popcorn Quiz is now getting ready to welcome Australia, who'll be joining us in Jan</p>  
-  <hr class="short">
-
-  <p><strong>16 Nov</strong> - Popcorn Quiz is now getting ready to welcome Canada coming online in the next few days! :D</p>
-  <hr class="short"> 
-
-  <p><strong>12 Nov </strong> - Due to the rapidly-growing player count causing some server issues and timeouts over the last few days, I've rebuilt the Popcorn Quiz Skill. So...<br/><br/><span style="font-weight:bold;">NEW VERSION IS NOW LIVE!!</span><br/><br/>The new version is now faster at generating your questions and is ready to support even more users.  It now has access to over 60,000 movies and actors and growing daily.</p> 
-  <hr class="short"> 
-
-  <p><strong>10 Nov</strong> - I'm aware of some performance issues with the skill, I've logged this with both Amazon and through the hosting providers.  Sorry if this is affecting you, hopefully it will be resolved soon.</p>
-  <hr class="short">
-
-  <p><strong>3 Nov</strong> - New users now get an easier time. Alexa will ease you into the game by asking you recent movie and actor questions, but not for long - she'll up her game before you know it!</p>
-  <hr class="short"> 
-
-  <p><strong>28 Oct</strong> - One step closer to a century of movies! 1940's movies are now live for <strong>Alexa</strong> to use, bringing the total movie count to 50,000 and growing every day.</p>
-  <hr class="short">
-
-  <p><strong>26 Oct</strong> - Added movies from 1950-1955 for a total of 16,000 movies that <strong>Alexa</strong> can use.</p>
-  <hr class="short">
-
-  <p><strong>24 Oct</strong> - Actor questions now have birth place, birth year and if so, years of actors who have died are now ready for <strong>Alexa</strong> to use.</p> 
-  <hr class="short">
-
-  <p><strong>22 Oct</strong> - Hallowe'en is coming and <strong>Alexa</strong> is ready! From 6pm each evening in October, <strong>Alexa</strong> may throw you a round on horror films.</p>
-  <hr class="short">
-
-  <p><strong>20 Oct</strong> - Actor birth places are now ready for <strong>Alexa</strong> to use.</p>
-  <hr class="short">
-
-  <p><strong>14 Oct</strong> - Namaste! Popcorn Quiz India is ready to go and will be released on the official <strong>Alexa</strong> release day in all Indian-English territories. Alexa now has access to all our Bollywood movie database for our new friends. Happy playing!</p>
-  <hr class="short">
-
-  <p><strong>6 Oct</strong> - Dot to Dot plays Popcorn Quiz live in a podcast!!! <a href="https://usa2day.podbean.com/e/dtd249-popcorn-quiz-and-movie-tagline-quiz/">linky here</a></p>  
-  <hr class="short">
-</div>
-
-
-
-  <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
-  <h4 style="text-align: right; margin-top: 0;" id="myrank">"Ok! Your rank is..."</h4>
-  <a name="pc_league" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
-    <table class="centerMe borderMe borderNoBottom scaleme">
-      <tr>
-        <th colspan="20">Top <span id="pc_count">10</span></th>
-      </tr>
-      <tr class="hover">
-        <th id="th_ga_aa" class="selected devicelist" onclick="switchDevice();" colspan="8"><span><img width="22" class="device" style="padding-right:5px;" src="./images/alexa.png"><img width="22" class="device" style="padding-left:5px;" src="./images/google.png"></span></th>
-        <th id="th_aa" class="devicelist" onclick="switchDevice('Echo');" colspan="6"><span><img width="22" class="device" src="./images/alexa.png"></span></th>
-        <th id="th_ga" class="devicelist" onclick="switchDevice('Google');" colspan="6"><span><img width="22" class="device" src="./images/google.png"></span></th>
-      </tr>
-      <tr class="hover">
-        <th id="th_" class="selected" onclick="switchLocale('');"><span>Global<br/><img class="locale" width="29" src="./images/global.png"></span></th>
-        <th id="th_en-GB" onclick="switchLocale('en-GB');"><span>UK<br/><img class="locale" src="./flags/en-GB.png"></span></th>
-        <th id="th_en-US" onclick="switchLocale('en-US');"><span>US<br/><img class="locale" src="./flags/en-US.png"></span></th>
-        <th id="th_de-DE" onclick="switchLocale('de-DE');"><span>DE<br/><img class="locale" src="./flags/de-DE.png"></span></th>
-        <th id="th_en-IN" onclick="switchLocale('en-IN');"><span>IN<br/><img class="locale" src="./flags/en-IN.png"></span></th>
-        <th id="th_en-CA" onclick="switchLocale('en-CA');"><span>CA<br/><img class="locale" src="./flags/en-CA.png"></span></th>
-        <th id="th_ja-JP" onclick="switchLocale('ja-JP');"><span>JP<br/><img class="locale" src="./flags/ja-JP.png"></span></th>
-        <th id="th_en-AU" onclick="switchLocale('en-AU');"><span>AU<br/><img class="locale" src="./flags/en-AU.png"></span></th>
-        <th id="th_fr-FR" onclick="switchLocale('fr-FR');"><span>FR<br/><img class="locale" src="./flags/fr-FR.png"></span></th>
-        <th id="th_es-ES" onclick="switchLocale('es-ES');"><span>ES<br/><img class="locale" src="./flags/es-ES.png"></span></th>
-        <th id="th_it-IT" onclick="switchLocale('it-IT');"><span>IT<br/><img class="locale" src="./flags/it-IT.png"></span></th>
-        <th id="th_es-MX" onclick="switchLocale('es-MX');"><span>MX<br/><img class="locale" src="./flags/es-MX.png"></span></th>
-        <th id="th_pt-BR" onclick="switchLocale('pt-BR');"><span>BR<br/><img class="locale" src="./flags/pt-BR.png"></span></th>
-        <th id="th_da-DK" onclick="switchLocale('da-DK');"><span>DK<br/><img class="locale" src="./flags/da-DK.png"></span></th>
-        <th id="th_fr-CA" onclick="switchLocale('fr-CA');"><span>frCA<br/><img class="locale" src="./flags/fr-CA.png"></span></th>
-        <th id="th_es-US" onclick="switchLocale('es-US');"><span>esUS<br/><img class="locale" src="./flags/es-US.png"></span></th>
-        <th id="th_nl-NL" onclick="switchLocale('nl-NL');"><span>NL<br/><img class="locale" src="./flags/nl-NL.png"></span></th>
-        <th id="th_no-NO" onclick="switchLocale('no-NO');"><span>NO<br/><img class="locale" src="./flags/no-NO.png"></span></th>
-        <th id="th_sv-SE" onclick="switchLocale('sv-SE');"><span>SV<br/><img class="locale" src="./flags/sv-SE.png"></span></th>
-        <th id="th_hi-IN" onclick="switchLocale('hi-IN');"><span>HI<br/><img class="locale" src="./flags/hi-IN.png"></span></th>
-      </tr>
-    </table>
-  <div class="borderMe scaleme font12" style="height:455px;overflow:auto;">
-    <table class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
-      <thead>
-        <tr>
-          <th>Device</th>
-          <th>Rank</th>
-          <th>Score</th>
-          <th>Points<br/>Needed</th>
-          <th></th>
-          <th>Bonus<br/>W / L / S</th>
-          <th>Last Played</th>
-          <th>Joined</th>
-        </tr>
-      </thead>
-      <tbody id='pc_scores'></tbody>
-    </table>
-  </div>
-  <div class="fadedScroller_fade"></div>
-  <br/>
-  <div class="centerMe scaleme">
-    <button type="button" class="btn btn-success hvr-grow" onclick="increaseLimit();">Load <span id="pc_more_count">10</span> more</button>
-    <button type="button" class="btn btn-info hvr-grow" onclick="resetLimit();">Reset <img src="./images/reset_icon.png" /></button>
-  </div>
-  <br/>
-  <div class="borderMe scaleme" style="height:455px;overflow:auto;">
-    <table class="centerMe borderMe scaleme">
-      <thead>
-        <tr><th colspan=8>Last <span id="pc_lg_count">10</span> Games Played</th></tr>
-        <tr class="font12">
-          <th>Device</th>
-          <th>Rank</th>
-          <th>Total<br/>Score</th>
-          <th>Game<br/>Score</th>
-          <th>Last<br/>Game</th>
-          <th>Game<br/>Streak</th>
-          <th>Last<br/>Played</th>
-          <th>Joined</th>
-        </tr>
-      </thead>
-      <tbody id="pc_lastgames" class="font12"></tbody>
-    </table>
-  </div>
-  <div class="fadedScroller_fade scaleme"></div>
-  <br/>
-
-  <table class="centerMe borderMe scaleme">
-    <tr><th>Total Players:</th><td id='pc_total_players'>0</td><th>Daily Avg:</th><td id='pc_total_avg'>0</td><th>Today:</th><td id='pc_total_today'>0</td></tr>
-    <tr><th>Total Games:</th><td id='pc_total_games'>0</td><th>Daily Avg:</th><td id='pc_games_avg'>0</td><th>Today:</th><td id='pc_games_today'>0</td></tr>
-    <tr><td colspan="6" id='pc_event'>&nbsp;</td></tr>
-  </table>
-  <table class="centerMe borderMe scaleme">
-    <thead>
-      <tr><th colspan="3">Events Calendar</th></tr>
-    </thead>
-    <tbody id="pc_event_cal"></tbody>
-  </table>
-  <table class="centerMe borderMe scaleme">
-    <tr><th colspan="6">Bonus Round Intermission</th></tr>
-    <tr><td colspan="6">
-      <div class="stacked-bar-graph">
-          <span id="barWins" style="width:0%" class="bar-g"></span>
-          <span id="barLoses"style="width:0%" class="bar-a"></span>
-          <span id="barSkips"style="width:0%" class="bar-r"></span>
-        </div></td></tr>
-    <tr><th>Wins:</th><td id='pc_bonus_wins'>0</td><th>Loses:</th><td id='pc_bonus_loses'>0</td><th>Skips:</th><td id='pc_bonus_skips'>0</td></tr>
-  </table>
-  <table class="centerMe borderMe scaleme">
-    <tr><th colspan="6">🚀 Boosters 🚀</th></tr>
-    <tr><td colspan="6">
-      <div class="stacked-bar-graph">
-          <span id="bar30" style="width:0%" class="bar-30"></span>
-          <span id="bar50" style="width:0%" class="bar-50"></span>
-          <span id="bar100"style="width:0%" class="bar-100"></span>
-        </div></td></tr>
-    <tr><th>Booster 30:</th><td id='pc_booster_30'>0</td><th>Booster 50:</th><td id='pc_booster_50'>0</td><th>Booster 100:</th><td id='pc_booster_100'>0</td></tr>
-  </table>
-  <table class="centerMe borderMe scaleme">
-    <tr><td><img height="18" class="device" style="padding-right:5px;" src="./images/alexa.png">Alexa</td><td id='pc_device_alexa'>0</td>
-      <td colspan="2">
-        <div class="stacked-bar-graph">
-          <span id="barAlexa" style="width:0%" class="bar-1"></span>
-          <span id="barGoogle"style="width:0%" class="bar-2"></span>
-        </div>
-      </td>
-    <td id='pc_device_google'>0</td><td>Google<img height="18" class="device" style="padding-left:5px;" src="./images/google.png"></td></tr>
-    <tr><td colspan="3"><i>This Skill was launched on Alexa on 28th May 2017</i></td><td colspan="3"><i>This Action was launched on Google on 3rd Sep 2018</i></td></tr>
-  </table>
-
-
-
-  <div style="position: relative;">
-    <canvas class="chartjs-render-monitor" id="pc_cht_new_users"></canvas>
-  </div>
-
-  <div class="slidecontainer">
-    <input type="range" min="0" max="10" value="10" class="slider" id="truncatePercentage">
-  </div>
-
-  <p>The Skill provides an addictive, engaging and challenging game that keeps you coming back to increase your score.</p>
-
-  <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
-
-  <p><a href="popcorn_privacy" target="_blank">Privacy Policy</a></p>
-
-  <hr>
-  <h4 style="text-align: center;">Popcorn Quiz gets a mention...</h4>
-
-  <section>
-    <p><strong>16 July 2019</strong> - Popcorn Quiz gets a review on <a href="https://www.smarthomeweb.nl/google-home-apps/#spelletjes">SmartHomeWeb.nl</a> and is listed as a Top Google Home App!</p>
-
-    <p><strong>9 Jun 2019</strong> - Multiple shout outs from a few media sources following a huge marketing push from Amazon :)
-      <ul>
-        <li><a href="https://www.express.co.uk/life-style/science-technology/1138182/Amazon-Echo-free-deal-new-things-ask-Alexa-revealed">Empress.co.uk</a></li>
-        <li><a href="https://newsflash.one/2019/06/09/amazon-echo-is-free-is-this-new-deal-as-15-new-things-to-ask-alexa-revealed/">NewsFlash</a></li>
-        <li><a href="http://iknowallnews.com/technology/amazon-echo-is-free-is-this-new-deal-as-15-new-things-to-ask-alexa-revealed/">IKnowAllNews</a></li>
-      </ul>
-    </p>
-
-    <p><strong>7 Jun 2019</strong> - Popcorn Quiz gets its 4th mention in the official Amazon Alexa UK email!</p>
-    <hr class="short">
-
-    <p><strong>20 Apr 2019</strong> - Popcorn Quiz gets its first mention in the official Amazon UK email!  As part of their Easter promotion, PQ was recommendated to help players win a gift voucher.</p>
-    <hr class="short">
-
-    <p><strong>17 Apr 2019</strong> - Popcorn Quiz gets a mention over on <a href="http://mummyconstant.com/an-easter-skills-hunt-with-alexa/">mummyconstant.com</a></p>
-    <hr class="short">
-
-    <p><strong>30 Mar 2019</strong> - Popcorn Quiz gets another mentioned over on <a href="https://assistentevocaleitalia.it/giochi-google-home/">Vocal Assistant Italy</a> in an article on gaming using voice assistants.</p>
-    <hr class="short">
-
-    <p><strong>20 Feb 2019</strong> - Popcorn Quiz gets mentioned over on <a href="https://assistentevocaleitalia.it/giochi-google-home/">Vocal Assistant Italy</a> in an article on gaming on Google Home.</p>
-    <hr class="short">
-
-      <p><strong>20 Dec 2018</strong> - Popcorn Quiz gets the first review spot on brand new podcast from <a href="https://www.voiciety.io/apps/popcorn-quiz-BlZ4LA8rkw">Voiciety.io</a>!</p>
-  <hr class="short">
-
-  <p><strong>19 Oct 2018</strong> - Popcorn Quiz gets its 3rd mention in the official Amazon Alexa UK email! Go #TeamPQ!  This introduced over 1,000 players who played 4,100 games and helped push PQ to 119,000 players and 705,000 games!</p>
-  <hr class="short">
-
-  <p><strong>2 Oct 2018</strong> - <a href="https://smarthacks.jp/db/17809/" target="_blank">SmartHacks DataBank</a> has made a video review of Popcorn Quiz!  Check it out: - </p>
-  <p class="centerMe"><iframe width="355" height="" src="https://www.youtube.com/embed/YNq1AaXpbRY?rel=0&autoplay=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe></p>
-  <hr class="short">
-
-  <p><strong>14 Sep 2018</strong> - <a href="https://youtu.be/s55WRxiQgyQ?list=UUVHeb0aSwL7p_Njrx10z0yQ&t=85" target="_blank">vision High-Tech</a> has made a video review of Popcorn Quiz!  Check it out: - </p>
-
-  <p class="centerMe"><iframe width="355" height="" src="https://www.youtube.com/embed/s55WRxiQgyQ?rel=0&autoplay=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe></p>
-  <hr class="short">
-
-  <p><strong>13 July 2018</strong> - Unlucky for some, but not me! Popcorn Quiz gets featured in the official Amazon Echo email for the second time! This introduced 900 players who played 3,000 games and helped push PQ to 90,000 players and 469,000 games!</p>
-  <hr class="short">
-
-  <p><strong>2 Feb 2018</strong> - Popcorn Quiz gets featured in the official Amazon Echo email! This introduced nearly 3300 players who played over 6200 games and helped propel PQ to almost 52,000 players and 155,000 games, making this the best day ever for PQ!</p>
-  <hr class="short">
-
-  <p><strong>12 Jan 2018</strong> - Reddit user <a href="https://www.reddit.com/user/alexainteractions" target="_blank">alexainteractions</a> has made a video review of Popcorn Quiz!  Check it out: - </p>
-  <p class="centerMe"><iframe width="355" height="" src="https://www.youtube.com/embed/Eu1xGLrHyqo?rel=0&autoplay=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe></p>
-  <hr class="short">
-  <p><strong>6 Oct 2017</strong> - Dot to Dot plays Popcorn Quiz live in a podcast!!! <a href="https://usa2day.podbean.com/e/dtd249-popcorn-quiz-and-movie-tagline-quiz/">linky here</a></p>
-  <hr class="short">
-
-  <div class="centerMe">
-    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:6413314319731224576" height="350" width="504" frameborder="0" allowfullscreen=""></iframe>
-  </div>
-
-
-  </section>
-
-  <section>
-          <h4><a name="flappy" href="http://jewkesy.github.io/Flappy/" target="_blank">FlappyJS</a></h4>
-      <p>Jumping on the Flappy Bird bandwagon, a complete browser-based game written in <strong>HTML5</strong> and <strong>JavaScript</strong>. Based upon the classic original and with graphical help from a few versions that exist already.</p>
-      <p class="centerMe"><a name="flappy" href="http://jewkesy.github.io/Flappy/" target="_blank"><strong> === Click to Play Now! ===</strong></a></p>
-      <p class="centerMe">
-        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/main.png" height="163px" width="110px" />
-        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/flight.png" height="163px" width="110px" />
-        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/night.png" height="163px" width="110px" />
-        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/score.png" height="163px" width="110px" />
-      </p>
-      <p>More of a playground for learning about the <strong>HTML5</strong> canvas object in modern browsers.
-        My focus is understanding features like touch/event-driven behaviour across multiple devices and browsers, and game-specific design patterns for collision detection and sprite animations.</p>
-
-      <p class="centerMe">
-        <div class="phone-container">
-          <div class="phone">
-            <iframe class="phone" src="http://jewkesy.github.io/Flappy/" height=480 width=320></iframe>
-          </div>
-        </div>
-      </p>
-      <p>It is great fun to play so I'm updating this game often with new features and fixing any bugs found.  The wife is addicted to it and puts in the change requests...</p>
-      <p><i>There is a Halloween version available.  It activates in October after 6pm.  <a name="flappy" href="http://jewkesy.github.io/Flappy/#Halloween" target="_blank">Or by clicking this link...</a></i></p>
-
-
-
-  </section>
-
-  <section>
-    
-      <h4><a name="formulaOne" class="anchor" href="http://jewkesy.github.io/FormulaOne/" target="_blank">Formula One Stats</a></h4>
-      <p>An <strong>AngularJS</strong> application which focuses on the <strong>MVW</strong> design pattern to consume a public Formula One <strong>REST</strong> API.</p>
-
-      <p>Using the great <strong>UI Router</strong> and <strong>Bootstrap</strong> for fluid, cross-device responsiveness while learning the core features of <strong>AngularJS</strong>.</p>
-      <p>I've used some great libraries: <strong>Chart.JS</strong> and <strong>Isotope</strong> to help show data in different ways.  Where possible all data is cached in a <strong>MongoDB</strong> instance for the fastest possible retrieval.</p>
-      <p class="centerMe">
-        <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_1.png" height="330px" width="200px" />
-        <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_4.png" height="330px" width="200px" />
-        <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_5.png" height="330px" width="200px" />
-        <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_2.png" height="330px" width="200px" />
-      </p>
-  </section>
-      <section>
-        
-         <h3><a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Get in Touch</h3>
-      <p>You can get hold of me in a variety of ways, this being the future an' all.</p>
-        <p><a href="https://twitter.com/JewkesD" target="_blank" class="user-mention">Twitter</a>, <a href="https://www.linkedin.com/pub/daryl-jewkes/1a/7ba/918" target="_blank" class="user-mention">LinkedIn</a> or the old, classic way <a href="mailto:contact.github.io@daryljewkes.com?Subject=Jewkesy.github.io">contact.github.io@daryljewkes.com</a>
-      </p>
-      <!-- Place this code where you want the badge to render. -->
-      <div class="centerMe">
-        <a href="https://uk.pinterest.com/daryljewkes/"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/pinterest-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">Pin me</span><br /><span>on Pinterest</span>
-        </a>
-        <a href="http://plus.google.com/u/0/110043835002066595286?prsrc=3"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/gplus-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">Plus me</span><br /><span>on Google+</span>
-        </a>
-
-        <a href="http://uk.linkedin.com/pub/daryl-jewkes/1a/7ba/918"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/li-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">Link me</span><br /><span>on LinkedIn</span>
-        </a>
-
-        <a href="http://twitter.com/jewkesd"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/twitter-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">Tweet me</span><br /><span>on Twitter</span>
-        </a>
-
-        <a href="https://github.com/jewkesy"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/github-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">Clone me</span><br /><span>on GitHub</span>
-        </a>
-
-        <a href="http://instagram.com/jewkesy/"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/instagram-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">&#10084; me</span><br /><span>on Instagram</span>
-        </a>
-
-        <a href="https://www.youtube.com/channel/UCzrbKUMEq7jHfiJLOw9gOLg"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/youtube-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">View me</span><br /><span>on YouTube</span>
-        </a>
-        <a href="https://flipboard.com/@jewkesy/"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/flipboard-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">Flip me</span><br /><span>on Flipboard</span>
-        </a>
-        <a href="https://www.strava.com/athletes/jewkesy"
-           rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
-          <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/strava-64.png" alt="" style="border:0;width:64px;height:64px;"/><br />
-          <span style="font-weight:bold;">Chase me</span><br /><span>on Strava</span>
-        </a>
-
-      </div>
-
-      </section>
-
-
-
-     
-    </section>
-  </div>
-  <script src="./javascript/colors.js" async></script>
-  <script src="./javascript/app.js"></script>
-  <script src="./javascript/reviews.js" async></script>
-  <script src="./javascript/popcorn.js"></script>
-  <script src="./javascript/pq_gameCard.js"></script>
-  <script>
-    $(document).ready(function() {
-      startPopcornQuiz();
-    });
-    function init() {
-    var imgDefer = document.getElementsByTagName('img');
-    for (var i=0; i<imgDefer.length; i++) {
-    if(imgDefer[i].getAttribute('data-src')) {
-    imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
-    } } }
-    window.onload = init;
-  </script>
-  <script src="./lib/scale.fix.js" async></script>
- </body>
+                <p><strong>29 July</strong> - こんにちは <i>(Kon'nichiwa)</i> Development is well under way on the Japanese <img class="locale" src="./flags/ja-JP.png" /> version.</p>
+                <hr class="short">
+                <p><strong>***Update 8 Aug ***</strong>
+                    <br/>Added a few tweaks based upon feedback from the Alexa team and resubmitted for certification</p>
+                <hr class="short">
+
+                <p><strong>9th July</strong> - Teasing an upcoming event on Wednesday and added a few more phrases to the game.</p>
+                <hr class="short">
+
+                <p><strong>2nd July</strong> - <strong>Hola / Ciao!</strong> The Italian and Spanish language options have now been submitted for certification.</p>
+                <p> ** Update 1st Aug -- Amazon have announced a delay in certification. Fingers crossed it's not much longer **</p>
+                <hr class="short">
+                <p><strong>15th June</strong> - <strong>Bonjour!</strong> Popcorn Quiz François is released today!</p>
+                <hr class="short">
+                <p><strong>14th June</strong> - <strong>NEW GAMEPLAY FEATURE NOW LIVE!</strong> Reward your dedication - every 5th consecutive game is a double-point round, every 10th is triple points.</p>
+                <hr class="short">
+                <p><strong>9th June</strong> - Website now has example gameplay questions that you can practice on</p>
+                <hr class="short">
+                <p><strong>5th June</strong> - Released some minor optimisations and few more phrases to the game.</p>
+                <hr class="short">
+                <p><strong>29th May</strong> - The Popcorn Quiz Birthday Event was a great success, treating players to triple point rounds.</p>
+                <hr class="short">
+
+                <p><strong>19th May</strong> - Released some minor optimisations and few more phrases to the game.</p>
+                <hr class="short">
+
+                <p><strong>2nd May</strong> - On May 4th, Popcorn Quiz with be celebrating Star Wars Day by giving you Sci-Fi rounds.</p>
+                <hr class="short">
+
+                <p><strong>20th Apr</strong> - Popcorn Quiz François has been entered for Amazon Certification.</p>
+
+                <p>** UPDATE 14th JUNE ** Still awaiting feedback. Was resubmitted to apply a minor change, but Certification times are horrendous at the moment...</p>
+                <hr class="short">
+
+                <p><strong>8th Apr</strong> - Popcorn Quiz François is almost complete and will be entering Amazon Certification this week.</p>
+                <hr class="short">
+
+                <p><strong>29th Mar</strong> - Popcorn Quiz will be getting ready to say Bonjour to our French speaking friends when they come online mid-April</p>
+                <hr class="short">
+
+                <p><strong>27th Mar</strong> - Getting ready for a day of comedy movies on April Fools Day</p>
+                <hr class="short">
+                <p><strong>24th Mar</strong> - Improving the card information and optimising the use of the space on Echo Display devices</p>
+                <hr class="short">
+                <p><strong>20th Mar</strong> - <strong>250,000 GAMES PLAYED &amp; OVER 65,000 PLAYERS!</strong> To celebrate a new movie category has been added - Top Rated Movies!</p>
+                <hr class="short">
+                <p><strong>13th Mar</strong> - <strong>NEW GAMEPLAY FEATURE NOW LIVE!</strong> Reward your dedication with a bonus-point round for every 5th consecutive game you play.</p>
+                <hr class="short">
+
+                <p><strong>11th Mar</strong> - New gameplay feature coming soon - reward your dedication with bonus-point rounds.</p>
+                <hr class="short">
+
+                <p><strong>4th Mar</strong> - Better feedback when asking for your rank. Alexa will now tell you how many postions you've lost in between plays if you've been overtaken.</p>
+                <hr class="short">
+
+                <p><strong>4th Mar</strong> - Better feedback when asking for your rank. Alexa will now tell you how many positions you've lost in between plays if you've been overtaken.</p>
+                <hr class="short">
+
+                <p><strong>4th Mar</strong> - Better feedback when asking for your rank. Alexa will now tell you how many positions you've lost in between plays if you've been overtaken.</p>
+                <hr class="short">
+
+                <p><strong>27 Feb</strong> - As the game grows in popularity, the rank calculation logic has been refactored for faster performance. Those players who are further down the rankings will benefit from the performance gain.</p>
+                <hr class="short">
+
+                <p><strong>17 Feb</strong> - <strong>NEW QUESTION TYPE NOW LIVE!</strong> Movie slogans are now a question type within the game.</p>
+                <hr class="short">
+
+                <p><strong>2 Feb</strong> - Popcorn Quiz gets featured in the official Amazon Echo email! This introduced nearly 3300 players who played over 6200 games and helped propel PQ to almost 52,000 players and 155,000 games, making this the best day ever for PQ!</p>
+                <hr class="short">
+
+                <p><strong>20 Jan</strong> - Popcorn Quiz will now be hosting many more Double Point Days. Every point earned will be doubled - use this to your advantage and storm your way passed your oppenents :)</p>
+                <hr class="short">
+
+                <p><strong>14 Jan</strong> - Double Point Event Today!!! Sunday is the new Funday. Every point earned will be doubled - use this to your advantage and storm your way passed your oppenents :)</p>
+                <hr class="short">
+
+                <p><strong>12 Jan</strong> - Reddit user <a href="https://www.reddit.com/user/alexainteractions">alexainteractions</a> has made a video review of Popcorn Quiz! Check it out further down!</p>
+                <hr class="short">
+
+                <p><strong>3 Jan</strong> - Happy New Year! Popcorn Quiz is now LIVE on the Echo Show! Those lucky peeps now get a richer visual experience.</p>
+                <hr class="short">
+
+                <p><strong>23 Dec</strong> - Popcorn Quiz is about to be released on the Echo Show! Those lucky peeps now get a richer visual experience.</p>
+                <hr class="short">
+
+                <p><strong>17 Dec</strong> - Popcorn Quiz is now festive! Alexa will occassionaly give you rounds based on Christmas films.</p>
+                <hr class="short">
+
+                <p><strong>3 Dec</strong> - Alexa will now give you rounds based upon genre. Look out for <i>Action</i>, <i>Comedy</i>, <i>Horror</i>, <i>Romance</i>, <i>Thriller</i> and many more!</p>
+                <hr class="short">
+
+                <p><strong>30 Nov</strong> - Popcorn Quiz is now getting ready to welcome Australia, who'll be joining us in Jan</p>
+                <hr class="short">
+
+                <p><strong>16 Nov</strong> - Popcorn Quiz is now getting ready to welcome Canada coming online in the next few days! :D</p>
+                <hr class="short">
+
+                <p><strong>12 Nov </strong> - Due to the rapidly-growing player count causing some server issues and timeouts over the last few days, I've rebuilt the Popcorn Quiz Skill. So...
+                    <br/>
+                    <br/><span style="font-weight:bold;">NEW VERSION IS NOW LIVE!!</span>
+                    <br/>
+                    <br/>The new version is now faster at generating your questions and is ready to support even more users. It now has access to over 60,000 movies and actors and growing daily.</p>
+                <hr class="short">
+
+                <p><strong>10 Nov</strong> - I'm aware of some performance issues with the skill, I've logged this with both Amazon and through the hosting providers. Sorry if this is affecting you, hopefully it will be resolved soon.</p>
+                <hr class="short">
+
+                <p><strong>3 Nov</strong> - New users now get an easier time. Alexa will ease you into the game by asking you recent movie and actor questions, but not for long - she'll up her game before you know it!</p>
+                <hr class="short">
+
+                <p><strong>28 Oct</strong> - One step closer to a century of movies! 1940's movies are now live for <strong>Alexa</strong> to use, bringing the total movie count to 50,000 and growing every day.</p>
+                <hr class="short">
+
+                <p><strong>26 Oct</strong> - Added movies from 1950-1955 for a total of 16,000 movies that <strong>Alexa</strong> can use.</p>
+                <hr class="short">
+
+                <p><strong>24 Oct</strong> - Actor questions now have birth place, birth year and if so, years of actors who have died are now ready for <strong>Alexa</strong> to use.</p>
+                <hr class="short">
+
+                <p><strong>22 Oct</strong> - Hallowe'en is coming and <strong>Alexa</strong> is ready! From 6pm each evening in October, <strong>Alexa</strong> may throw you a round on horror films.</p>
+                <hr class="short">
+
+                <p><strong>20 Oct</strong> - Actor birth places are now ready for <strong>Alexa</strong> to use.</p>
+                <hr class="short">
+
+                <p><strong>14 Oct</strong> - Namaste! Popcorn Quiz India is ready to go and will be released on the official <strong>Alexa</strong> release day in all Indian-English territories. Alexa now has access to all our Bollywood movie database for our new friends. Happy playing!</p>
+                <hr class="short">
+
+                <p><strong>6 Oct</strong> - Dot to Dot plays Popcorn Quiz live in a podcast!!! <a href="https://usa2day.podbean.com/e/dtd249-popcorn-quiz-and-movie-tagline-quiz/">linky here</a></p>
+                <hr class="short">
+            </div>
+
+            <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
+            <h4 style="text-align: right; margin-top: 0;" id="myrank">"Ok! Your rank is..."</h4>
+            <a name="pc_league" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
+            <table class="centerMe borderMe borderNoBottom scaleme">
+                <tr>
+                    <th colspan="20">Top <span id="pc_count">10</span></th>
+                </tr>
+                <tr class="hover">
+                    <th id="th_ga_aa" class="selected devicelist" onclick="switchDevice();" colspan="8"><span><img width="22" class="device" style="padding-right:5px;" src="./images/alexa.png"><img width="22" class="device" style="padding-left:5px;" src="./images/google.png"></span></th>
+                    <th id="th_aa" class="devicelist" onclick="switchDevice('Echo');" colspan="6"><span><img width="22" class="device" src="./images/alexa.png"></span></th>
+                    <th id="th_ga" class="devicelist" onclick="switchDevice('Google');" colspan="6"><span><img width="22" class="device" src="./images/google.png"></span></th>
+                </tr>
+                <tr class="hover">
+                    <th id="th_" class="selected" onclick="switchLocale('');"><span>Global<br/><img class="locale" width="29" src="./images/global.png"></span></th>
+                    <th id="th_en-GB" onclick="switchLocale('en-GB');"><span>UK<br/><img class="locale" src="./flags/en-GB.png"></span></th>
+                    <th id="th_en-US" onclick="switchLocale('en-US');"><span>US<br/><img class="locale" src="./flags/en-US.png"></span></th>
+                    <th id="th_de-DE" onclick="switchLocale('de-DE');"><span>DE<br/><img class="locale" src="./flags/de-DE.png"></span></th>
+                    <th id="th_en-IN" onclick="switchLocale('en-IN');"><span>IN<br/><img class="locale" src="./flags/en-IN.png"></span></th>
+                    <th id="th_en-CA" onclick="switchLocale('en-CA');"><span>CA<br/><img class="locale" src="./flags/en-CA.png"></span></th>
+                    <th id="th_ja-JP" onclick="switchLocale('ja-JP');"><span>JP<br/><img class="locale" src="./flags/ja-JP.png"></span></th>
+                    <th id="th_en-AU" onclick="switchLocale('en-AU');"><span>AU<br/><img class="locale" src="./flags/en-AU.png"></span></th>
+                    <th id="th_fr-FR" onclick="switchLocale('fr-FR');"><span>FR<br/><img class="locale" src="./flags/fr-FR.png"></span></th>
+                    <th id="th_es-ES" onclick="switchLocale('es-ES');"><span>ES<br/><img class="locale" src="./flags/es-ES.png"></span></th>
+                    <th id="th_it-IT" onclick="switchLocale('it-IT');"><span>IT<br/><img class="locale" src="./flags/it-IT.png"></span></th>
+                    <th id="th_es-MX" onclick="switchLocale('es-MX');"><span>MX<br/><img class="locale" src="./flags/es-MX.png"></span></th>
+                    <th id="th_pt-BR" onclick="switchLocale('pt-BR');"><span>BR<br/><img class="locale" src="./flags/pt-BR.png"></span></th>
+                    <th id="th_da-DK" onclick="switchLocale('da-DK');"><span>DK<br/><img class="locale" src="./flags/da-DK.png"></span></th>
+                    <th id="th_fr-CA" onclick="switchLocale('fr-CA');"><span>frCA<br/><img class="locale" src="./flags/fr-CA.png"></span></th>
+                    <th id="th_es-US" onclick="switchLocale('es-US');"><span>esUS<br/><img class="locale" src="./flags/es-US.png"></span></th>
+                    <th id="th_nl-NL" onclick="switchLocale('nl-NL');"><span>NL<br/><img class="locale" src="./flags/nl-NL.png"></span></th>
+                    <th id="th_no-NO" onclick="switchLocale('no-NO');"><span>NO<br/><img class="locale" src="./flags/no-NO.png"></span></th>
+                    <th id="th_sv-SE" onclick="switchLocale('sv-SE');"><span>SV<br/><img class="locale" src="./flags/sv-SE.png"></span></th>
+                    <th id="th_hi-IN" onclick="switchLocale('hi-IN');"><span>HI<br/><img class="locale" src="./flags/hi-IN.png"></span></th>
+                </tr>
+            </table>
+            <div class="borderMe scaleme font12" style="height:455px;overflow:auto;">
+                <table class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>Rank</th>
+                            <th>Score</th>
+                            <th>Points
+                                <br/>Needed</th>
+                            <th></th>
+                            <th>Bonus
+                                <br/>W / L / S</th>
+                            <th>Last Played</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody id='pc_scores'></tbody>
+                </table>
+            </div>
+            <div class="fadedScroller_fade"></div>
+            <br/>
+            <div class="centerMe scaleme">
+                <button type="button" class="btn btn-success hvr-grow" onclick="increaseLimit();">Load <span id="pc_more_count">10</span> more</button>
+                <button type="button" class="btn btn-info hvr-grow" onclick="resetLimit();">Reset <img src="./images/reset_icon.png" /></button>
+            </div>
+            <br/>
+            <div class="borderMe scaleme" style="height:455px;overflow:auto;">
+                <table class="centerMe borderMe scaleme">
+                    <thead>
+                        <tr>
+                            <th colspan=8>Last <span id="pc_lg_count">10</span> Games Played</th>
+                        </tr>
+                        <tr class="font12">
+                            <th>Device</th>
+                            <th>Rank</th>
+                            <th>Total
+                                <br/>Score</th>
+                            <th>Game
+                                <br/>Score</th>
+                            <th>Last
+                                <br/>Game</th>
+                            <th>Game
+                                <br/>Streak</th>
+                            <th>Last
+                                <br/>Played</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pc_lastgames" class="font12"></tbody>
+                </table>
+            </div>
+            <div class="fadedScroller_fade scaleme"></div>
+            <br/>
+
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <th>Total Players:</th>
+                    <td id='pc_total_players'>0</td>
+                    <th>Daily Avg:</th>
+                    <td id='pc_total_avg'>0</td>
+                    <th>Today:</th>
+                    <td id='pc_total_today'>0</td>
+                </tr>
+                <tr>
+                    <th>Total Games:</th>
+                    <td id='pc_total_games'>0</td>
+                    <th>Daily Avg:</th>
+                    <td id='pc_games_avg'>0</td>
+                    <th>Today:</th>
+                    <td id='pc_games_today'>0</td>
+                </tr>
+                <tr>
+                    <td colspan="6" id='pc_event'>&nbsp;</td>
+                </tr>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <thead>
+                    <tr>
+                        <th colspan="3">Events Calendar</th>
+                    </tr>
+                </thead>
+                <tbody id="pc_event_cal"></tbody>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <th colspan="6">Bonus Round Intermission</th>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="stacked-bar-graph">
+                            <span id="barWins" style="width:0%" class="bar-g"></span>
+                            <span id="barLoses" style="width:0%" class="bar-a"></span>
+                            <span id="barSkips" style="width:0%" class="bar-r"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Wins:</th>
+                    <td id='pc_bonus_wins'>0</td>
+                    <th>Loses:</th>
+                    <td id='pc_bonus_loses'>0</td>
+                    <th>Skips:</th>
+                    <td id='pc_bonus_skips'>0</td>
+                </tr>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <th colspan="6">🚀 Boosters 🚀</th>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="stacked-bar-graph">
+                            <span id="bar30" style="width:0%" class="bar-30"></span>
+                            <span id="bar50" style="width:0%" class="bar-50"></span>
+                            <span id="bar100" style="width:0%" class="bar-100"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Booster 30:</th>
+                    <td id='pc_booster_30'>0</td>
+                    <th>Booster 50:</th>
+                    <td id='pc_booster_50'>0</td>
+                    <th>Booster 100:</th>
+                    <td id='pc_booster_100'>0</td>
+                </tr>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <td><img height="18" class="device" style="padding-right:5px;" src="./images/alexa.png">Alexa</td>
+                    <td id='pc_device_alexa'>0</td>
+                    <td colspan="2">
+                        <div class="stacked-bar-graph">
+                            <span id="barAlexa" style="width:0%" class="bar-1"></span>
+                            <span id="barGoogle" style="width:0%" class="bar-2"></span>
+                        </div>
+                    </td>
+                    <td id='pc_device_google'>0</td>
+                    <td>Google<img height="18" class="device" style="padding-left:5px;" src="./images/google.png"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><i>This Skill was launched on Alexa on 28th May 2017</i></td>
+                    <td colspan="3"><i>This Action was launched on Google on 3rd Sep 2018</i></td>
+                </tr>
+            </table>
+
+            <div style="position: relative;">
+                <canvas class="chartjs-render-monitor" id="pc_cht_new_users"></canvas>
+            </div>
+
+            <div class="slidecontainer">
+                <input type="range" min="0" max="10" value="10" class="slider" id="truncatePercentage">
+            </div>
+
+            <p>The Skill provides an addictive, engaging and challenging game that keeps you coming back to increase your score.</p>
+
+            <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
+
+            <p><a href="popcorn_privacy" target="_blank">Privacy Policy</a></p>
+
+            <hr>
+            <h4 style="text-align: center;">Popcorn Quiz gets a mention...</h4>
+
+            <section>
+                <p><strong>16 July 2019</strong> - Popcorn Quiz gets a review on <a href="https://www.smarthomeweb.nl/google-home-apps/#spelletjes">SmartHomeWeb.nl</a> and is listed as a Top Google Home App!</p>
+
+                <p><strong>9 Jun 2019</strong> - Multiple shout outs from a few media sources following a huge marketing push from Amazon :)
+                    <ul>
+                        <li><a href="https://www.express.co.uk/life-style/science-technology/1138182/Amazon-Echo-free-deal-new-things-ask-Alexa-revealed">Empress.co.uk</a></li>
+                        <li><a href="https://newsflash.one/2019/06/09/amazon-echo-is-free-is-this-new-deal-as-15-new-things-to-ask-alexa-revealed/">NewsFlash</a></li>
+                        <li><a href="http://iknowallnews.com/technology/amazon-echo-is-free-is-this-new-deal-as-15-new-things-to-ask-alexa-revealed/">IKnowAllNews</a></li>
+                    </ul>
+                </p>
+
+                <p><strong>7 Jun 2019</strong> - Popcorn Quiz gets its 4th mention in the official Amazon Alexa UK email!</p>
+                <hr class="short">
+
+                <p><strong>20 Apr 2019</strong> - Popcorn Quiz gets its first mention in the official Amazon UK email! As part of their Easter promotion, PQ was recommendated to help players win a gift voucher.</p>
+                <hr class="short">
+
+                <p><strong>17 Apr 2019</strong> - Popcorn Quiz gets a mention over on <a href="http://mummyconstant.com/an-easter-skills-hunt-with-alexa/">mummyconstant.com</a></p>
+                <hr class="short">
+
+                <p><strong>30 Mar 2019</strong> - Popcorn Quiz gets another mentioned over on <a href="https://assistentevocaleitalia.it/giochi-google-home/">Vocal Assistant Italy</a> in an article on gaming using voice assistants.</p>
+                <hr class="short">
+
+                <p><strong>20 Feb 2019</strong> - Popcorn Quiz gets mentioned over on <a href="https://assistentevocaleitalia.it/giochi-google-home/">Vocal Assistant Italy</a> in an article on gaming on Google Home.</p>
+                <hr class="short">
+
+                <p><strong>20 Dec 2018</strong> - Popcorn Quiz gets the first review spot on brand new podcast from <a href="https://www.voiciety.io/apps/popcorn-quiz-BlZ4LA8rkw">Voiciety.io</a>!</p>
+                <hr class="short">
+
+                <p><strong>19 Oct 2018</strong> - Popcorn Quiz gets its 3rd mention in the official Amazon Alexa UK email! Go #TeamPQ! This introduced over 1,000 players who played 4,100 games and helped push PQ to 119,000 players and 705,000 games!</p>
+                <hr class="short">
+
+                <p><strong>2 Oct 2018</strong> - <a href="https://smarthacks.jp/db/17809/" target="_blank">SmartHacks DataBank</a> has made a video review of Popcorn Quiz! Check it out: - </p>
+                <p class="centerMe">
+                    <iframe width="355" height="" src="https://www.youtube.com/embed/YNq1AaXpbRY?rel=0&autoplay=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                </p>
+                <hr class="short">
+
+                <p><strong>14 Sep 2018</strong> - <a href="https://youtu.be/s55WRxiQgyQ?list=UUVHeb0aSwL7p_Njrx10z0yQ&t=85" target="_blank">vision High-Tech</a> has made a video review of Popcorn Quiz! Check it out: - </p>
+
+                <p class="centerMe">
+                    <iframe width="355" height="" src="https://www.youtube.com/embed/s55WRxiQgyQ?rel=0&autoplay=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                </p>
+                <hr class="short">
+
+                <p><strong>13 July 2018</strong> - Unlucky for some, but not me! Popcorn Quiz gets featured in the official Amazon Echo email for the second time! This introduced 900 players who played 3,000 games and helped push PQ to 90,000 players and 469,000 games!</p>
+                <hr class="short">
+
+                <p><strong>2 Feb 2018</strong> - Popcorn Quiz gets featured in the official Amazon Echo email! This introduced nearly 3300 players who played over 6200 games and helped propel PQ to almost 52,000 players and 155,000 games, making this the best day ever for PQ!</p>
+                <hr class="short">
+
+                <p><strong>12 Jan 2018</strong> - Reddit user <a href="https://www.reddit.com/user/alexainteractions" target="_blank">alexainteractions</a> has made a video review of Popcorn Quiz! Check it out: - </p>
+                <p class="centerMe">
+                    <iframe width="355" height="" src="https://www.youtube.com/embed/Eu1xGLrHyqo?rel=0&autoplay=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                </p>
+                <hr class="short">
+                <p><strong>6 Oct 2017</strong> - Dot to Dot plays Popcorn Quiz live in a podcast!!! <a href="https://usa2day.podbean.com/e/dtd249-popcorn-quiz-and-movie-tagline-quiz/">linky here</a></p>
+                <hr class="short">
+
+                <div class="centerMe">
+                    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:6413314319731224576" height="350" width="504" frameborder="0" allowfullscreen=""></iframe>
+                </div>
+
+            </section>
+
+            <section>
+                <h4><a name="flappy" href="http://jewkesy.github.io/Flappy/" target="_blank">FlappyJS</a></h4>
+                <p>Jumping on the Flappy Bird bandwagon, a complete browser-based game written in <strong>HTML5</strong> and <strong>JavaScript</strong>. Based upon the classic original and with graphical help from a few versions that exist already.</p>
+                <p class="centerMe"><a name="flappy" href="http://jewkesy.github.io/Flappy/" target="_blank"><strong> === Click to Play Now! ===</strong></a></p>
+                <p class="centerMe">
+                    <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/main.png" height="163px" width="110px" />
+                    <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/flight.png" height="163px" width="110px" />
+                    <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/night.png" height="163px" width="110px" />
+                    <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/score.png" height="163px" width="110px" />
+                </p>
+                <p>More of a playground for learning about the <strong>HTML5</strong> canvas object in modern browsers. My focus is understanding features like touch/event-driven behaviour across multiple devices and browsers, and game-specific design patterns for collision detection and sprite animations.</p>
+
+                <p class="centerMe">
+                    <div class="phone-container">
+                        <div class="phone">
+                            <iframe class="phone" src="http://jewkesy.github.io/Flappy/" height=480 width=320></iframe>
+                        </div>
+                    </div>
+                </p>
+                <p>It is great fun to play so I'm updating this game often with new features and fixing any bugs found. The wife is addicted to it and puts in the change requests...</p>
+                <p><i>There is a Halloween version available.  It activates in October after 6pm.  <a name="flappy" href="http://jewkesy.github.io/Flappy/#Halloween" target="_blank">Or by clicking this link...</a></i></p>
+
+            </section>
+
+            <section>
+
+                <h4><a name="formulaOne" class="anchor" href="http://jewkesy.github.io/FormulaOne/" target="_blank">Formula One Stats</a></h4>
+                <p>An <strong>AngularJS</strong> application which focuses on the <strong>MVW</strong> design pattern to consume a public Formula One <strong>REST</strong> API.</p>
+
+                <p>Using the great <strong>UI Router</strong> and <strong>Bootstrap</strong> for fluid, cross-device responsiveness while learning the core features of <strong>AngularJS</strong>.</p>
+                <p>I've used some great libraries: <strong>Chart.JS</strong> and <strong>Isotope</strong> to help show data in different ways. Where possible all data is cached in a <strong>MongoDB</strong> instance for the fastest possible retrieval.</p>
+                <p class="centerMe">
+                    <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_1.png" height="330px" width="200px" />
+                    <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_4.png" height="330px" width="200px" />
+                    <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_5.png" height="330px" width="200px" />
+                    <img class="border" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/f1_2.png" height="330px" width="200px" />
+                </p>
+            </section>
+            <section>
+
+                <h3><a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Get in Touch</h3>
+                <p>You can get hold of me in a variety of ways, this being the future an' all.</p>
+                <p><a href="https://twitter.com/JewkesD" target="_blank" class="user-mention">Twitter</a>, <a href="https://www.linkedin.com/pub/daryl-jewkes/1a/7ba/918" target="_blank" class="user-mention">LinkedIn</a> or the old, classic way <a href="mailto:contact.github.io@daryljewkes.com?Subject=Jewkesy.github.io">contact.github.io@daryljewkes.com</a>
+                </p>
+                <!-- Place this code where you want the badge to render. -->
+                <div class="centerMe">
+                    <a href="https://uk.pinterest.com/daryljewkes/" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/pinterest-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">Pin me</span>
+                        <br /><span>on Pinterest</span>
+                    </a>
+                    <a href="http://plus.google.com/u/0/110043835002066595286?prsrc=3" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/gplus-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">Plus me</span>
+                        <br /><span>on Google+</span>
+                    </a>
+
+                    <a href="http://uk.linkedin.com/pub/daryl-jewkes/1a/7ba/918" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/li-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">Link me</span>
+                        <br /><span>on LinkedIn</span>
+                    </a>
+
+                    <a href="http://twitter.com/jewkesd" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/twitter-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">Tweet me</span>
+                        <br /><span>on Twitter</span>
+                    </a>
+
+                    <a href="https://github.com/jewkesy" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/github-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">Clone me</span>
+                        <br /><span>on GitHub</span>
+                    </a>
+
+                    <a href="http://instagram.com/jewkesy/" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/instagram-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">&#10084; me</span>
+                        <br /><span>on Instagram</span>
+                    </a>
+
+                    <a href="https://www.youtube.com/channel/UCzrbKUMEq7jHfiJLOw9gOLg" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/youtube-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">View me</span>
+                        <br /><span>on YouTube</span>
+                    </a>
+                    <a href="https://flipboard.com/@jewkesy/" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/flipboard-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">Flip me</span>
+                        <br /><span>on Flipboard</span>
+                    </a>
+                    <a href="https://www.strava.com/athletes/jewkesy" rel="publisher" target="_blank" style="text-decoration:none;display:inline-block;color:#333;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;margin:10px;">
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./icons/strava-64.png" alt="" style="border:0;width:64px;height:64px;" />
+                        <br />
+                        <span style="font-weight:bold;">Chase me</span>
+                        <br /><span>on Strava</span>
+                    </a>
+
+                </div>
+
+            </section>
+
+        </section>
+    </div>
+    <script src="./javascript/colors.js" async></script>
+    <script src="./javascript/app.js"></script>
+    <script src="./javascript/reviews.js" async></script>
+    <script src="./javascript/popcorn.js"></script>
+    <script src="./javascript/pq_gameCard.js"></script>
+    <script>
+        $(document).ready(function() {
+            startPopcornQuiz();
+        });
+
+        function init() {
+            var imgDefer = document.getElementsByTagName('img');
+            for (var i = 0; i < imgDefer.length; i++) {
+                if (imgDefer[i].getAttribute('data-src')) {
+                    imgDefer[i].setAttribute('src', imgDefer[i].getAttribute('data-src'));
+                }
+            }
+        }
+        window.onload = init;
+    </script>
+    <script src="./lib/scale.fix.js" async></script>
+</body>
+
 </html>
