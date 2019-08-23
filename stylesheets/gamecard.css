@@ -20,6 +20,7 @@ span.question > i {
 
 span.question, span.answer {
     font-size: 1.4em;
+    line-height: 1;
 }
 
 /*basic layout*/

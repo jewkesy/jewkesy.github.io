@@ -395,12 +395,18 @@ function fadeyPic(id, val) {
 }
 
 function cleanseText(txt) {
+	txt = txt.replaceAll('\n', '<br>');
 	txt = txt.replaceAll(".?", "?");
 	txt = txt.replaceAll('<emphasis level="reduced">', '<span class="standout">');
 	txt = txt.replaceAll('</emphasis>', '</span>');
 
 	txt = txt.replaceAll('<i>', '<i>"');
 	txt = txt.replaceAll('</i>', '"</i>');
+
+	txt = txt.replaceAll('<i>""', '<i>"');
+	txt = txt.replaceAll('""</i>', '"</i>');
+	
+	console.log(txt)
 	return txt;
 }
 

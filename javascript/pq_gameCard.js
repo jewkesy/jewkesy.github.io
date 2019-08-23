@@ -20,7 +20,16 @@ function getQuestions(count, genre) {
 
 		var idx = randomInt(0, data.msg.questions.length-1);
 		var q = data.msg.questions[idx];
+		for (var i = 0; i < data.msg.questions.length; i++) {
+			if (data.msg.questions[i].t == "Quote") {
+				q = data.msg.questions[i];
+				break;
+			}
+		}
+		console.log(q);
+		console.log(q.echoShowText);
 		var t = cleanseText(q.echoShowText);
+
 		fadeyStuff("pc_question", t);
 
 		$.get(q.Poster).done(function () {
@@ -62,7 +71,7 @@ function showAnswer(chosen, answer, correct, type){
 		if (correct) {
 			if (type != "Quote" && type != "Taglines")
 				text += a.replace('&&', correct); // + correct;
-			else if (type == "Quote") text = correct;
+			else if (type == "Quote") text = cleanseText(correct);
 		}
 	} else {
 		if (chosen == answer) {
@@ -76,7 +85,7 @@ function showAnswer(chosen, answer, correct, type){
 		if (correct) {
 			if (type != "Quote" && type != "Taglines") 
 				text += " - " + a.replace('&&', correct);// + correct;
-			else if (type == "Quote") text += " - " + correct;
+			else if (type == "Quote") text += "<br>" + cleanseText(correct);
 		}
 	}
 
