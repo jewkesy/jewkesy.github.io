@@ -23,6 +23,12 @@ span.question, span.answer {
     line-height: 1;
 }
 
+.standout {
+    font-style: italic;
+    font-size: 1.4em;
+    color: #39c;
+}
+
 /*basic layout*/
 .material-contact {
     width:400px;

@@ -26,8 +26,8 @@ function getQuestions(count, genre) {
 		// 		break;
 		// 	}
 		// }
-		console.log(q);
-		console.log(q.echoShowText);
+		// console.log(q);
+		// console.log(q.echoShowText);
 		var t = cleanseText(q.echoShowText);
 
 		fadeyStuff("pc_question", t);
@@ -35,14 +35,15 @@ function getQuestions(count, genre) {
 		$.get(q.Poster).done(function () {
 		  fadeyPic("pc_question_poster", q.Poster);
 		}).fail(function (e) {
+			console.log(e)
 		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 		});
 		// console.log(q);
 		var c;
 
 		if (q.correct) {
-			// console.log(q.correct)
-			c = q.correct+"";
+			//console.log(q.correct)
+			c = cleanseText(q.correct+"");
 			c = c.replace('<emphasis level="reduced">', '');
 			c = c.replace('</emphasis>', '');
 		}
@@ -85,7 +86,7 @@ function showAnswer(chosen, answer, correct, type){
 		if (correct) {
 			if (type != "Quote" && type != "Taglines") 
 				text += " - " + a.replace('&&', correct);// + correct;
-			else if (type == "Quote") text += "<br>" + cleanseText(correct);
+			else if (type == "Quote") text += "<hr>" + cleanseText(correct);
 		}
 	}
 

@@ -411,7 +411,7 @@ function cleanseText(txt) {
 
 	txt = txt.replaceAll('<i>"<hr>', '<i>"');
 	
-	console.log(txt)
+	//console.log(txt)
 	return txt;
 }
 
