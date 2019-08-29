@@ -82,7 +82,21 @@
 
         </header>
         <section>
+            <span class="locales">
+                <a href="/"><img width="40px" src="/flags/en-GB.png"/></a>
+                <a href="/?locale=de-DE#pc_league"><img width="40px" src="/flags/de-DE.png"/></a>
+                <a href="/?locale=ja-JP#pc_league"><img width="40px" src="/flags/ja-JP.png"/></a>
+                <a href="/?locale=fr-FR#pc_league"><img width="40px" src="/flags/fr-FR.png"/></a>
+                <a href="/?locale=es-ES#pc_league"><img width="40px" src="/flags/es-ES.png"/></a>
+                <a href="/?locale=it-IT#pc_league"><img width="40px" src="/flags/it-IT.png"/></a>
+                <a href="/?locale=pt-BR#pc_league"><img width="40px" src="/flags/pt-BR.png"/></a>
+                <a href="/?locale=hi-IN#pc_league"><img width="40px" src="/flags/hi-IN.png"/></a>
+            </span>
+            <hr class="short"/>
+
             <h3><a name="welcome" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to my Homepage</h3>
+
+
 
             <p>Well, I'm planning on taking over the world one day from my secret island hideout. Own a rocket/tank/super car and employ endless henchmen. (<i>No agencies please</i>).</p>
             <p>And if you hadn't noticed already, this page is hosted on GitHub.Pages - so expect a certain level of geekism...</p>
@@ -108,7 +122,7 @@
             <h4 style="text-align: right; margin-top: 0;"> "<span id='pc_intro'>Let's do this!</span>"</h4>
 
             <div style="clear: both;"></div>
-
+            <p><strong>Think you know movies? Test your skills against the world!</strong></p>
             <!-- the game card -->
             <div class="material-contact animate-in-card">
 
@@ -133,12 +147,13 @@
           <button id='pc_true' type="button" class="btn btn-info hvr-grow">True</button>
           <button id='pc_false' type="button" class="btn btn-info hvr-grow">False</button>
         </span>
+
                 <div class="centerMe">
                     <p class="centerMe"><span class="answer" id="pc_answer"></span></p>
                 </div>
             </div>
 
-            <p><strong>Think you know movies? Test your skills against the world!</strong></p>
+            
             <div class="centerMe">
                 <a class="reviewTile hvr-bob locale_flag locale_enGB" name="popcorn" href="https://www.amazon.co.uk/dp/B0719TQV6W" target="_blank">
                     <div class="stars a-star a-star-0" id="pc_uk_stars">Amazon
@@ -239,6 +254,202 @@
             <p>The more games you play and the more questions you answer correctly, the greater chance to increase your world rank. To reward your dedication, every 5th consecutive game will be a double-point round. Every 10th will be a triple-point round!</p>
             <p>Double-point events happen every three days, so every player gets a fair chance to storm the ranks.</p>
             <hr>
+
+
+            <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
+            <h4 style="text-align: right; margin-top: 0;" id="myrank">"Ok! Your rank is..."</h4>
+            <a name="pc_league" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
+            <table class="centerMe borderMe borderNoBottom scaleme">
+                <tr>
+                    <th colspan="20">Top <span id="pc_count">10</span></th>
+                </tr>
+                <tr class="hover">
+                    <th id="th_ga_aa" class="selected devicelist" onclick="switchDevice();" colspan="8"><span><img width="22" class="device" style="padding-right:5px;" src="./images/alexa.png"><img width="22" class="device" style="padding-left:5px;" src="./images/google.png"></span></th>
+                    <th id="th_aa" class="devicelist" onclick="switchDevice('Echo');" colspan="6"><span><img width="22" class="device" src="./images/alexa.png"></span></th>
+                    <th id="th_ga" class="devicelist" onclick="switchDevice('Google');" colspan="6"><span><img width="22" class="device" src="./images/google.png"></span></th>
+                </tr>
+                <tr class="hover">
+                    <th id="th_" class="selected" onclick="switchLocale('');"><span>Global<br/><img class="locale" width="29" src="./images/global.png"></span></th>
+                    <th id="th_en-GB" onclick="switchLocale('en-GB');"><span>UK<br/><img class="locale" src="./flags/en-GB.png"></span></th>
+                    <th id="th_en-US" onclick="switchLocale('en-US');"><span>US<br/><img class="locale" src="./flags/en-US.png"></span></th>
+                    <th id="th_de-DE" onclick="switchLocale('de-DE');"><span>DE<br/><img class="locale" src="./flags/de-DE.png"></span></th>
+                    <th id="th_en-IN" onclick="switchLocale('en-IN');"><span>IN<br/><img class="locale" src="./flags/en-IN.png"></span></th>
+                    <th id="th_en-CA" onclick="switchLocale('en-CA');"><span>CA<br/><img class="locale" src="./flags/en-CA.png"></span></th>
+                    <th id="th_ja-JP" onclick="switchLocale('ja-JP');"><span>JP<br/><img class="locale" src="./flags/ja-JP.png"></span></th>
+                    <th id="th_en-AU" onclick="switchLocale('en-AU');"><span>AU<br/><img class="locale" src="./flags/en-AU.png"></span></th>
+                    <th id="th_fr-FR" onclick="switchLocale('fr-FR');"><span>FR<br/><img class="locale" src="./flags/fr-FR.png"></span></th>
+                    <th id="th_es-ES" onclick="switchLocale('es-ES');"><span>ES<br/><img class="locale" src="./flags/es-ES.png"></span></th>
+                    <th id="th_it-IT" onclick="switchLocale('it-IT');"><span>IT<br/><img class="locale" src="./flags/it-IT.png"></span></th>
+                    <th id="th_es-MX" onclick="switchLocale('es-MX');"><span>MX<br/><img class="locale" src="./flags/es-MX.png"></span></th>
+                    <th id="th_pt-BR" onclick="switchLocale('pt-BR');"><span>BR<br/><img class="locale" src="./flags/pt-BR.png"></span></th>
+                    <th id="th_da-DK" onclick="switchLocale('da-DK');"><span>DK<br/><img class="locale" src="./flags/da-DK.png"></span></th>
+                    <th id="th_fr-CA" onclick="switchLocale('fr-CA');"><span>frCA<br/><img class="locale" src="./flags/fr-CA.png"></span></th>
+                    <th id="th_es-US" onclick="switchLocale('es-US');"><span>esUS<br/><img class="locale" src="./flags/es-US.png"></span></th>
+                    <th id="th_nl-NL" onclick="switchLocale('nl-NL');"><span>NL<br/><img class="locale" src="./flags/nl-NL.png"></span></th>
+                    <th id="th_no-NO" onclick="switchLocale('no-NO');"><span>NO<br/><img class="locale" src="./flags/no-NO.png"></span></th>
+                    <th id="th_sv-SE" onclick="switchLocale('sv-SE');"><span>SV<br/><img class="locale" src="./flags/sv-SE.png"></span></th>
+                    <th id="th_hi-IN" onclick="switchLocale('hi-IN');"><span>HI<br/><img class="locale" src="./flags/hi-IN.png"></span></th>
+                </tr>
+            </table>
+            <div class="borderMe scaleme font12" style="height:455px;overflow:auto;">
+                <table class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>Rank</th>
+                            <th>Score</th>
+                            <th>Points
+                                <br/>Needed</th>
+                            <th></th>
+                            <th>Bonus
+                                <br/>W / L / S</th>
+                            <th>Last Played</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody id='pc_scores'></tbody>
+                </table>
+            </div>
+            <div class="fadedScroller_fade"></div>
+            <br/>
+            <div class="centerMe scaleme">
+                <button type="button" class="btn btn-success hvr-grow" onclick="increaseLimit();">Load <span id="pc_more_count">10</span> more</button>
+                <button type="button" class="btn btn-info hvr-grow" onclick="resetLimit();">Reset <img src="./images/reset_icon.png" /></button>
+            </div>
+            <br/>
+            <div class="borderMe scaleme" style="height:455px;overflow:auto;">
+                <table class="centerMe borderMe scaleme">
+                    <thead>
+                        <tr>
+                            <th colspan=8>Last <span id="pc_lg_count">10</span> Games Played</th>
+                        </tr>
+                        <tr class="font12">
+                            <th>Device</th>
+                            <th>Rank</th>
+                            <th>Total
+                                <br/>Score</th>
+                            <th>Game
+                                <br/>Score</th>
+                            <th>Last
+                                <br/>Game</th>
+                            <th>Game
+                                <br/>Streak</th>
+                            <th>Last
+                                <br/>Played</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pc_lastgames" class="font12"></tbody>
+                </table>
+            </div>
+            <div class="fadedScroller_fade scaleme"></div>
+            <br/>
+
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <th>Total Players:</th>
+                    <td id='pc_total_players'>0</td>
+                    <th>Daily Avg:</th>
+                    <td id='pc_total_avg'>0</td>
+                    <th>Today:</th>
+                    <td id='pc_total_today'>0</td>
+                </tr>
+                <tr>
+                    <th>Total Games:</th>
+                    <td id='pc_total_games'>0</td>
+                    <th>Daily Avg:</th>
+                    <td id='pc_games_avg'>0</td>
+                    <th>Today:</th>
+                    <td id='pc_games_today'>0</td>
+                </tr>
+                <tr>
+                    <td colspan="6" id='pc_event'>&nbsp;</td>
+                </tr>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <thead>
+                    <tr>
+                        <th colspan="3">Events Calendar</th>
+                    </tr>
+                </thead>
+                <tbody id="pc_event_cal"></tbody>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <th colspan="6">Bonus Round Intermission</th>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="stacked-bar-graph">
+                            <span id="barWins" style="width:0%" class="bar-g"></span>
+                            <span id="barLoses" style="width:0%" class="bar-a"></span>
+                            <span id="barSkips" style="width:0%" class="bar-r"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Wins:</th>
+                    <td id='pc_bonus_wins'>0</td>
+                    <th>Loses:</th>
+                    <td id='pc_bonus_loses'>0</td>
+                    <th>Skips:</th>
+                    <td id='pc_bonus_skips'>0</td>
+                </tr>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <th colspan="6">🚀 Boosters 🚀</th>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="stacked-bar-graph">
+                            <span id="bar30" style="width:0%" class="bar-30"></span>
+                            <span id="bar50" style="width:0%" class="bar-50"></span>
+                            <span id="bar100" style="width:0%" class="bar-100"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Booster 30:</th>
+                    <td id='pc_booster_30'>0</td>
+                    <th>Booster 50:</th>
+                    <td id='pc_booster_50'>0</td>
+                    <th>Booster 100:</th>
+                    <td id='pc_booster_100'>0</td>
+                </tr>
+            </table>
+            <table class="centerMe borderMe scaleme">
+                <tr>
+                    <td><img height="18" class="device" style="padding-right:5px;" src="./images/alexa.png">Alexa</td>
+                    <td id='pc_device_alexa'>0</td>
+                    <td colspan="2">
+                        <div class="stacked-bar-graph">
+                            <span id="barAlexa" style="width:0%" class="bar-1"></span>
+                            <span id="barGoogle" style="width:0%" class="bar-2"></span>
+                        </div>
+                    </td>
+                    <td id='pc_device_google'>0</td>
+                    <td>Google<img height="18" class="device" style="padding-left:5px;" src="./images/google.png"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><i>This Skill was launched on Alexa on 28th May 2017</i></td>
+                    <td colspan="3"><i>This Action was launched on Google on 3rd Sep 2018</i></td>
+                </tr>
+            </table>
+
+            <div style="position: relative;">
+                <canvas class="chartjs-render-monitor" id="pc_cht_new_users"></canvas>
+            </div>
+
+            <div class="slidecontainer">
+                <input type="range" min="0" max="10" value="10" class="slider" id="truncatePercentage">
+            </div>
+
+            <p>The Skill provides an addictive, engaging and challenging game that keeps you coming back to increase your score.</p>
+
+            <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
+
+            <p><a href="popcorn_privacy" target="_blank">Privacy Policy</a></p>
             <h4 style="text-align: center;">Latest Popcorn Quiz News</h4>
             <p><strong>14 Jul</strong> - New question type coming - movie qoutes! To compliment the recent opening lines, the best movie quotes are now being farmed and will be available soon!</p>
 
@@ -453,209 +664,15 @@
                 <p><strong>6 Oct</strong> - Dot to Dot plays Popcorn Quiz live in a podcast!!! <a href="https://usa2day.podbean.com/e/dtd249-popcorn-quiz-and-movie-tagline-quiz/">linky here</a></p>
                 <hr class="short">
             </div>
-
-            <h4 style="margin-bottom: 0;"><a name="popcorn" href="#" target="_blank">"Alexa, ask <i>Popcorn Quiz</i> what my rank is"</a></h4>
-            <h4 style="text-align: right; margin-top: 0;" id="myrank">"Ok! Your rank is..."</h4>
-            <a name="pc_league" class="anchor" href="#"><span class="octicon octicon-link"></span></a>
-            <table class="centerMe borderMe borderNoBottom scaleme">
-                <tr>
-                    <th colspan="20">Top <span id="pc_count">10</span></th>
-                </tr>
-                <tr class="hover">
-                    <th id="th_ga_aa" class="selected devicelist" onclick="switchDevice();" colspan="8"><span><img width="22" class="device" style="padding-right:5px;" src="./images/alexa.png"><img width="22" class="device" style="padding-left:5px;" src="./images/google.png"></span></th>
-                    <th id="th_aa" class="devicelist" onclick="switchDevice('Echo');" colspan="6"><span><img width="22" class="device" src="./images/alexa.png"></span></th>
-                    <th id="th_ga" class="devicelist" onclick="switchDevice('Google');" colspan="6"><span><img width="22" class="device" src="./images/google.png"></span></th>
-                </tr>
-                <tr class="hover">
-                    <th id="th_" class="selected" onclick="switchLocale('');"><span>Global<br/><img class="locale" width="29" src="./images/global.png"></span></th>
-                    <th id="th_en-GB" onclick="switchLocale('en-GB');"><span>UK<br/><img class="locale" src="./flags/en-GB.png"></span></th>
-                    <th id="th_en-US" onclick="switchLocale('en-US');"><span>US<br/><img class="locale" src="./flags/en-US.png"></span></th>
-                    <th id="th_de-DE" onclick="switchLocale('de-DE');"><span>DE<br/><img class="locale" src="./flags/de-DE.png"></span></th>
-                    <th id="th_en-IN" onclick="switchLocale('en-IN');"><span>IN<br/><img class="locale" src="./flags/en-IN.png"></span></th>
-                    <th id="th_en-CA" onclick="switchLocale('en-CA');"><span>CA<br/><img class="locale" src="./flags/en-CA.png"></span></th>
-                    <th id="th_ja-JP" onclick="switchLocale('ja-JP');"><span>JP<br/><img class="locale" src="./flags/ja-JP.png"></span></th>
-                    <th id="th_en-AU" onclick="switchLocale('en-AU');"><span>AU<br/><img class="locale" src="./flags/en-AU.png"></span></th>
-                    <th id="th_fr-FR" onclick="switchLocale('fr-FR');"><span>FR<br/><img class="locale" src="./flags/fr-FR.png"></span></th>
-                    <th id="th_es-ES" onclick="switchLocale('es-ES');"><span>ES<br/><img class="locale" src="./flags/es-ES.png"></span></th>
-                    <th id="th_it-IT" onclick="switchLocale('it-IT');"><span>IT<br/><img class="locale" src="./flags/it-IT.png"></span></th>
-                    <th id="th_es-MX" onclick="switchLocale('es-MX');"><span>MX<br/><img class="locale" src="./flags/es-MX.png"></span></th>
-                    <th id="th_pt-BR" onclick="switchLocale('pt-BR');"><span>BR<br/><img class="locale" src="./flags/pt-BR.png"></span></th>
-                    <th id="th_da-DK" onclick="switchLocale('da-DK');"><span>DK<br/><img class="locale" src="./flags/da-DK.png"></span></th>
-                    <th id="th_fr-CA" onclick="switchLocale('fr-CA');"><span>frCA<br/><img class="locale" src="./flags/fr-CA.png"></span></th>
-                    <th id="th_es-US" onclick="switchLocale('es-US');"><span>esUS<br/><img class="locale" src="./flags/es-US.png"></span></th>
-                    <th id="th_nl-NL" onclick="switchLocale('nl-NL');"><span>NL<br/><img class="locale" src="./flags/nl-NL.png"></span></th>
-                    <th id="th_no-NO" onclick="switchLocale('no-NO');"><span>NO<br/><img class="locale" src="./flags/no-NO.png"></span></th>
-                    <th id="th_sv-SE" onclick="switchLocale('sv-SE');"><span>SV<br/><img class="locale" src="./flags/sv-SE.png"></span></th>
-                    <th id="th_hi-IN" onclick="switchLocale('hi-IN');"><span>HI<br/><img class="locale" src="./flags/hi-IN.png"></span></th>
-                </tr>
-            </table>
-            <div class="borderMe scaleme font12" style="height:455px;overflow:auto;">
-                <table class="centerMe scaleme" style="border: 0px solid #e5e5e5; margin-bottom: 20px;">
-                    <thead>
-                        <tr>
-                            <th>Device</th>
-                            <th>Rank</th>
-                            <th>Score</th>
-                            <th>Points
-                                <br/>Needed</th>
-                            <th></th>
-                            <th>Bonus
-                                <br/>W / L / S</th>
-                            <th>Last Played</th>
-                            <th>Joined</th>
-                        </tr>
-                    </thead>
-                    <tbody id='pc_scores'></tbody>
-                </table>
-            </div>
-            <div class="fadedScroller_fade"></div>
-            <br/>
-            <div class="centerMe scaleme">
-                <button type="button" class="btn btn-success hvr-grow" onclick="increaseLimit();">Load <span id="pc_more_count">10</span> more</button>
-                <button type="button" class="btn btn-info hvr-grow" onclick="resetLimit();">Reset <img src="./images/reset_icon.png" /></button>
-            </div>
-            <br/>
-            <div class="borderMe scaleme" style="height:455px;overflow:auto;">
-                <table class="centerMe borderMe scaleme">
-                    <thead>
-                        <tr>
-                            <th colspan=8>Last <span id="pc_lg_count">10</span> Games Played</th>
-                        </tr>
-                        <tr class="font12">
-                            <th>Device</th>
-                            <th>Rank</th>
-                            <th>Total
-                                <br/>Score</th>
-                            <th>Game
-                                <br/>Score</th>
-                            <th>Last
-                                <br/>Game</th>
-                            <th>Game
-                                <br/>Streak</th>
-                            <th>Last
-                                <br/>Played</th>
-                            <th>Joined</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pc_lastgames" class="font12"></tbody>
-                </table>
-            </div>
-            <div class="fadedScroller_fade scaleme"></div>
-            <br/>
-
-            <table class="centerMe borderMe scaleme">
-                <tr>
-                    <th>Total Players:</th>
-                    <td id='pc_total_players'>0</td>
-                    <th>Daily Avg:</th>
-                    <td id='pc_total_avg'>0</td>
-                    <th>Today:</th>
-                    <td id='pc_total_today'>0</td>
-                </tr>
-                <tr>
-                    <th>Total Games:</th>
-                    <td id='pc_total_games'>0</td>
-                    <th>Daily Avg:</th>
-                    <td id='pc_games_avg'>0</td>
-                    <th>Today:</th>
-                    <td id='pc_games_today'>0</td>
-                </tr>
-                <tr>
-                    <td colspan="6" id='pc_event'>&nbsp;</td>
-                </tr>
-            </table>
-            <table class="centerMe borderMe scaleme">
-                <thead>
-                    <tr>
-                        <th colspan="3">Events Calendar</th>
-                    </tr>
-                </thead>
-                <tbody id="pc_event_cal"></tbody>
-            </table>
-            <table class="centerMe borderMe scaleme">
-                <tr>
-                    <th colspan="6">Bonus Round Intermission</th>
-                </tr>
-                <tr>
-                    <td colspan="6">
-                        <div class="stacked-bar-graph">
-                            <span id="barWins" style="width:0%" class="bar-g"></span>
-                            <span id="barLoses" style="width:0%" class="bar-a"></span>
-                            <span id="barSkips" style="width:0%" class="bar-r"></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Wins:</th>
-                    <td id='pc_bonus_wins'>0</td>
-                    <th>Loses:</th>
-                    <td id='pc_bonus_loses'>0</td>
-                    <th>Skips:</th>
-                    <td id='pc_bonus_skips'>0</td>
-                </tr>
-            </table>
-            <table class="centerMe borderMe scaleme">
-                <tr>
-                    <th colspan="6">🚀 Boosters 🚀</th>
-                </tr>
-                <tr>
-                    <td colspan="6">
-                        <div class="stacked-bar-graph">
-                            <span id="bar30" style="width:0%" class="bar-30"></span>
-                            <span id="bar50" style="width:0%" class="bar-50"></span>
-                            <span id="bar100" style="width:0%" class="bar-100"></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Booster 30:</th>
-                    <td id='pc_booster_30'>0</td>
-                    <th>Booster 50:</th>
-                    <td id='pc_booster_50'>0</td>
-                    <th>Booster 100:</th>
-                    <td id='pc_booster_100'>0</td>
-                </tr>
-            </table>
-            <table class="centerMe borderMe scaleme">
-                <tr>
-                    <td><img height="18" class="device" style="padding-right:5px;" src="./images/alexa.png">Alexa</td>
-                    <td id='pc_device_alexa'>0</td>
-                    <td colspan="2">
-                        <div class="stacked-bar-graph">
-                            <span id="barAlexa" style="width:0%" class="bar-1"></span>
-                            <span id="barGoogle" style="width:0%" class="bar-2"></span>
-                        </div>
-                    </td>
-                    <td id='pc_device_google'>0</td>
-                    <td>Google<img height="18" class="device" style="padding-left:5px;" src="./images/google.png"></td>
-                </tr>
-                <tr>
-                    <td colspan="3"><i>This Skill was launched on Alexa on 28th May 2017</i></td>
-                    <td colspan="3"><i>This Action was launched on Google on 3rd Sep 2018</i></td>
-                </tr>
-            </table>
-
-            <div style="position: relative;">
-                <canvas class="chartjs-render-monitor" id="pc_cht_new_users"></canvas>
-            </div>
-
-            <div class="slidecontainer">
-                <input type="range" min="0" max="10" value="10" class="slider" id="truncatePercentage">
-            </div>
-
-            <p>The Skill provides an addictive, engaging and challenging game that keeps you coming back to increase your score.</p>
-
-            <p>Based upon previous experiences, I've been building a dynamic personality engine for Alexa that will tease, encourage and taunt your gameplay, so expect her to get more integrated into the Skills I create.</p>
-
-            <p><a href="popcorn_privacy" target="_blank">Privacy Policy</a></p>
-
             <hr>
             <h4 style="text-align: center;">Popcorn Quiz gets a mention...</h4>
 
             <section>
                 <p><strong>12 Aug 2019</strong> - <a href="https://www.androidplanet.nl/nieuws/google-assistent-games/">androidplanet.nl</a> ranks Popcorn Quiz in at #4 as one of the best games on Google Assistant!</p>
-
+                <hr class="short">
+                
                 <p><strong>16 July 2019</strong> - Popcorn Quiz gets a review on <a href="https://www.smarthomeweb.nl/google-home-apps/#spelletjes">SmartHomeWeb.nl</a> and is listed as a Top Google Home App!</p>
+                <hr class="short">
 
                 <p><strong>9 Jun 2019</strong> - Multiple shout outs from a few media sources following a huge marketing push from Amazon :)
                     <ul>
