@@ -1031,8 +1031,12 @@ function increaseLimit() {
 }
 
 function getIntro() {
+	console.log(aws + "?action=getintro&locale="+_lang)
 	httpGetByUrl(aws + "?action=getintro&locale="+_lang, function (err, data) {
+		console.log(err)
 		if (!data) return;
+		console.log(data)
+		if (data.msg.text == ". ") data.msg.text = "Ok!";
 		getQuestions(5, data.msg.genre);
 		fadeyStuff("pc_intro", data.msg.text);
 	});	
