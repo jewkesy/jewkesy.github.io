@@ -2,16 +2,19 @@
 var _keywords;
 
 function getKeywords() {
-	httpGetByUrl(aws + "?action=getkeywords&locale="+_locale, function (err, data) {
+	httpGetByUrl(aws + "?action=getkeywords&locale="+_lang, function (err, data) {
 		if (!data) return;
 		_keywords = data.msg;
 		fadeyStuff("pc_true", _keywords.true);
 		fadeyStuff("pc_false", _keywords.false);
+		fadeyStuff("pc_short_desc", _keywords.shortDesc);
+		setGameElements(_lang);
+		console.log(_keywords)
 	});
 }
 
 function getQuestions(count, genre) {
-	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_locale;
+	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_lang;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
 		// console.log(data);
@@ -20,14 +23,6 @@ function getQuestions(count, genre) {
 
 		var idx = randomInt(0, data.msg.questions.length-1);
 		var q = data.msg.questions[idx];
-		// for (var i = 0; i < data.msg.questions.length; i++) {
-		// 	if (data.msg.questions[i].t == "Quote") {
-		// 		q = data.msg.questions[i];
-		// 		break;
-		// 	}
-		// }
-		// console.log(q);
-		// console.log(q.echoShowText);
 		var t = cleanseText(q.echoShowText);
 
 		fadeyStuff("pc_question", t);

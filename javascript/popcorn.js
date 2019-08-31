@@ -2,6 +2,8 @@
     "use strict";
 })();
 
+var _lang = getParameterByName('lang') || '';
+
 var _locale = getParameterByName('locale') || '';
 var _limit = getParameterByName('limit') || 10;
 
@@ -41,11 +43,13 @@ var sInt;
 window.addEventListener('popstate', function (event) {
 	// console.log(history.state);
     if (history.state && history.state.id === 'homepage') {
+    	_lang = history.state.lang;
     	_locale = history.state.locale;
     	_device = history.state.device;
     	_limit = history.state.limit;
     	_chartSummary = history.state.chartSummary;
     	startPopcornQuiz(_locale);
+
         // Render new content for the hompage
     }
 }, false);
@@ -53,8 +57,10 @@ window.addEventListener('popstate', function (event) {
 function startPopcornQuiz(locale, limit, device) {
 	console.log('Starting', locale);
 	if (locale && locale.length > 0) _locale = locale;
+	getKeywords();
 	amazonTimer();
 	getStats();
+	setGameElements(_lang);
 	// console.log(_limit, getParameterByName('limit'))
 	document.getElementById('truncatePercentage').value = _chartSummary;
 	document.getElementById('pc_more_count').innerHTML = _limit;
@@ -64,7 +70,7 @@ function startPopcornQuiz(locale, limit, device) {
 		_popcornUrl += "&locale=" + _locale;
 	}
 
-	getKeywords();
+	
 }
 
 function amazonTimer() {
@@ -120,7 +126,7 @@ function getGameCalendar() {
 
 	async.eachOfSeries(events, function(ev, idx, callback){
 		
-		var url = aws + "?action=getevents&locale="+_locale;
+		var url = aws + "?action=getevents&locale="+_lang;
 		if (ts) url += "&timestamp="+ts;
 		// console.log(url);
 		httpGetByUrl(url, function (err, data) {
@@ -275,18 +281,20 @@ function switchDevice(device) {
 	clearLeague('pc_scores', null);
 	clearLeague('pc_lastgames', null);
 	getGamePlay();
-	setGameElements(_locale);
+	setGameElements(_lang);
 }
 
 function setGameElements(locale) {
-
+	console.log(locale)
 	var l = locale.split('-')[0];
 	
 	fadeyStuff("pc_pq_name", "Popcorn Quiz");
 	fadeyStuff("pc_h1_name", "Popcorn Quiz");
 
 	var wakeWord = "Alexa";
-	var playWord = ", play"
+	var playWord = ", ";
+	if (_keywords) playWord += _keywords.play;
+	else playWord += "play";
 
 	if (_device == 'ga') {
 		document.getElementById("linkToPQ").href="https://assistant.google.com/services/a/uid/000000b88782db03?hl=en-GB";
@@ -304,7 +312,7 @@ function setGameElements(locale) {
 		document.getElementById("linkToPQ").href="https://www.amazon.co.uk/dp/B0719TQV6W";
 		document.getElementById("deviceLogo").src="/images/alexa.png";
 	}
-
+// pc_short_desc
 	if (l == "de") {
 	 	fadeyStuff("pc_wake_start", wakeWord + ", spiel"); 
 	} else if (l == "fr") { 
@@ -1023,7 +1031,7 @@ function increaseLimit() {
 }
 
 function getIntro() {
-	httpGetByUrl(aws + "?action=getintro&locale="+_locale, function (err, data) {
+	httpGetByUrl(aws + "?action=getintro&locale="+_lang, function (err, data) {
 		if (!data) return;
 		getQuestions(5, data.msg.genre);
 		fadeyStuff("pc_intro", data.msg.text);
@@ -1031,7 +1039,7 @@ function getIntro() {
 }
 
 function getEvent(ts) {
-	var url = aws + "?action=getevents&locale="+_locale;
+	var url = aws + "?action=getevents&locale="+_lang;
 	if (ts) url += "&timestamp="+ts;
 	// console.log(url);
 	httpGetByUrl(url, function (err, data) {
