@@ -312,7 +312,7 @@ function setGameElements(locale) {
 		document.getElementById("linkToPQ").href="https://www.amazon.co.uk/dp/B0719TQV6W";
 		document.getElementById("deviceLogo").src="/images/alexa.png";
 	}
-// pc_short_desc
+
 	if (l == "de") {
 	 	fadeyStuff("pc_wake_start", wakeWord + ", spiel"); 
 	} else if (l == "fr") { 
@@ -1038,7 +1038,7 @@ function getIntro() {
 		console.log(data)
 		if (data.msg.text == ". ") data.msg.text = "Ok!";
 		getQuestions(5, data.msg.genre);
-		fadeyStuff("pc_intro", data.msg.text);
+ 		fadeyStuff("pc_intro", data.msg.text);
 	});	
 }
 
