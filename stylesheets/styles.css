@@ -276,6 +276,14 @@ footer {
   }
 }
 
+table.allowWrap {
+  display: block;
+}
+
+table.allowWrap th {
+  display: inline-block;
+}
+
 @media print, screen and (max-width: 720px) {
   body {
     word-wrap:break-word;

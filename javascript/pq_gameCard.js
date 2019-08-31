@@ -7,7 +7,7 @@ function getKeywords() {
 		_keywords = data.msg;
 		fadeyStuff("pc_true", _keywords.true);
 		fadeyStuff("pc_false", _keywords.false);
-		fadeyStuff("pc_short_desc", _keywords.shortDesc || "Think you know movies? Test your skills against the world!");
+		if (_keywords.shortDesc) fadeyStuff("pc_short_desc", _keywords.shortDesc);
 		setGameElements(_lang);
 		console.log(_keywords)
 	});
