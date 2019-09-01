@@ -639,10 +639,13 @@ function buildPopcornLastGames(data, prefix) {
 
 		// fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
 		var needed = "";
-
+		var boostersLeft = "";
+		if (g.tpb || g.tpb ===0) boostersLeft = "<br>🚀 "+numberWithCommas(g.tpb)+"";
 		if (g.n && +g.n > -1) needed = "<br/>(<i>"+numberWithCommas(g.n)+"</i>)";
-		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s)+needed);
-		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.ls));
+		// console.log(booster)
+		
+		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s)+boostersLeft);
+		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.ls)+needed);
 		
 		if (!g.lg) g.lg = "";
 		var bonusInfo = "";
