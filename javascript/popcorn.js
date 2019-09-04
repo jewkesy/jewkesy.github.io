@@ -69,6 +69,8 @@ function startPopcornQuiz(locale, limit, device) {
 		applyLocaleHeader(_locale, _device);
 		_popcornUrl += "&locale=" + _locale;
 	}
+
+	
 }
 
 function amazonTimer() {
@@ -142,10 +144,10 @@ function getGameCalendar() {
 		while (container.hasChildNodes()) {
 		    container.removeChild(container.lastChild);
 		}
-		let x;
+
 		for (var i = 0; i < events.length; i++) {
 			if (!events[i].msg || events[i].msg.name == 'default') continue;
-			x = i + 1;
+			var x = i + 1;
 			if (!document.getElementById('pc_event_cal_' + x)) {
 				var row = container.insertRow(-1);
 				row.id = 'pc_event_cal_' + x;
@@ -177,7 +179,6 @@ function getGameCalendar() {
 				// return events[i].msg.multiplier;
 			})() );
 		}
-		//console.log('%o', window.performance.memory);
 	});
 }
 
@@ -555,34 +556,13 @@ function buildPopcornLastGames(data, prefix) {
 
 	var container = document.getElementById(prefix + '_lastgames');
 	var games = data.lastGame;
-	let x;		
-	let sym;
-	let booster;
-	let device;
-	let deviceIcon;
-	let g;
-	let needed;
-	let boostersLeft;
-	let bonusInfo;
-
-	let row;
-	let cell0;
-	let cell1;
-	let cell2;
-	let cell3;
-	let cell5;
-	let cell6;
-	let cell7;
-	let cell8;
-	let cell9;
-
 	for (var i = 0; i < games.length; i++) {
-		x = i + 1;		
-		sym = "";
-		booster = "";
-		device = ".";
-		deviceIcon = "alexa";
-		g = games[i];
+		var x = i + 1;		
+		var sym = "";
+		var booster = "";
+		var device = ".";
+		var deviceIcon = "alexa";
+		var g = games[i];
 		if (g.d == "Echo Show")    device = ":";
 		else if (g.d == "Google"){ device = ""; deviceIcon = "google"; }
 		else if (g.d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
@@ -600,40 +580,41 @@ function buildPopcornLastGames(data, prefix) {
 		if (g.tpb && g.tpb >= 0) {booster = " 🚀";}
 		else if (g.tpb === 0) booster = " 👍";
 
+		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
-			row = container.insertRow(-1);
+			var row = container.insertRow(-1);
 			row.id = prefix + '_lastgames_' + x;
 
-			cell0 = row.insertCell(0);
+			var cell0 =  row.insertCell(0);
 			cell0.id = prefix + "_lastgames_device_" + x;
 			cell1 = row.insertCell(1);
 			cell1.id = prefix + "_lastgames_rank_" + x;
 			//cell1.className = "";
-			cell2 = row.insertCell(2);
+			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_lastgames_score_" + x;
-			cell3 = row.insertCell(3);
+			var cell3 = row.insertCell(3);
 			cell3.id = prefix + "_lastgames_games_" + x;
 			// var cell4 = row.insertCell(3);
 			// cell4.id = prefix + "_lastgames_avg_" + x;
 
-			cell5 = row.insertCell(4);
+			var cell5 = row.insertCell(4);
 			cell5.id = prefix + "_lastgames_lg_" + x;
 			cell5.className = "nowrap";
 
-			cell6 = row.insertCell(5);
+			var cell6 = row.insertCell(5);
 			cell6.id = prefix + "_lastgames_gs_" + x;
 
-			cell7 = row.insertCell(6);
+			var cell7 = row.insertCell(6);
 			cell7.id = prefix + "_lastgames_ts_" + x;
 			cell7.className = "timeago";
 			cell7.title = g.t/1000;
 
-			cell8 = row.insertCell(7);
+			var cell8 = row.insertCell(7);
 			cell8.id = prefix + "_lastgames_st_" + x;
 			cell8.className = "timeago";
 			cell8.title = games[i].st/1000;
 
-			cell9 = row.insertCell(8);
+			var cell9 = row.insertCell(8);
 			cell9.id = prefix + "_lastgames_locale_" + x;
 		} else {	
 			document.getElementById(prefix + '_lastgames_ts_' + x).title = g.t/1000;
@@ -657,8 +638,8 @@ function buildPopcornLastGames(data, prefix) {
 		}
 
 		// fadeyStuff(prefix + "_lastgames_rank_" + x, numberWithCommas(g.r) + sym);
-		needed = "";
-		boostersLeft = "";
+		var needed = "";
+		var boostersLeft = "";
 		if (g.tpb || g.tpb ===0) boostersLeft = "<br>🚀 "+numberWithCommas(g.tpb)+"";
 		if (g.n && +g.n > -1) needed = "<br/>(<i>"+numberWithCommas(g.n)+"</i>)";
 		// console.log(booster)
@@ -667,7 +648,7 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.ls)+needed);
 		
 		if (!g.lg) g.lg = "";
-		bonusInfo = "";
+		var bonusInfo = "";
 		if (g.b) bonusInfo = "<br/>"+g.b.wins+" / "+g.b.loses+" / "+g.b.skips;
 
 		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+booster+getGenreEventTitle(g.ge)+bonusInfo);
@@ -676,7 +657,6 @@ function buildPopcornLastGames(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((g.t/1000)+""));
 		fadeyStuff(prefix + "_lastgames_st_" + x, humanTime((g.st/1000)+""));
 	}
-	// console.log('%o', window.performance.memory);
 	fadeyStuff(prefix + '_lg_count', numberWithCommas(i));
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
 }
@@ -686,30 +666,12 @@ function buildPopcornLeague(data, prefix, total) {
 	// console.log(data)
 	var topTen = data.league;
 	var container = document.getElementById(prefix + '_scores');
-
-	let x;		
-	let sym;
-	let booster;
-	let device;
-	let deviceIcon;
-
-	let needed;
-	let row;
-	let cell0;
-	let cell1;
-	let cell2;
-	let cell3;
-	let cell4;
-	let cell5;
-	let cell6;
-	let cell7;
-
 	for (var i = 0; i < topTen.length; i++) {
-		x = i + 1;		
-		sym = "";
-		booster = "";
-		device = ".";
-		deviceIcon = "alexa";
+		var x = i + 1;		
+		var sym = "";
+		var booster = "";
+		var device = ".";
+		var deviceIcon = "alexa";
 		if (topTen[i].d == "Echo Show")    device = ":";
 		else if (topTen[i].d == "Google"){ device = ""; deviceIcon = "google"; }
 		else if (topTen[i].d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
@@ -725,30 +687,31 @@ function buildPopcornLeague(data, prefix, total) {
 
 		if (topTen[i].tpb || topTen[i].tpb ===0) booster = "<br>🚀 "+numberWithCommas(topTen[i].tpb)+"";
 		
-		needed = "-";
+		var cell1;
+		var needed = "-";
 		if (i > 0) needed = (topTen[i-1].s - topTen[i].s)+1;
 
 		if (!document.getElementById(prefix + '_league_' + x)) {
-			row = container.insertRow(-1);
+			var row = container.insertRow(-1);
 			row.id = prefix + '_league_' + x;
-			cell0 = row.insertCell(0);
+			var cell0 = row.insertCell(0);
 			cell0.id = prefix + "_league_device_" + x;
 			cell1 = row.insertCell(1);
 			cell1.id = prefix + "_league_rank_" + x;
 			cell1.className = "font20";
-			cell2 = row.insertCell(2);
+			var cell2 = row.insertCell(2);
 			cell2.id = prefix + "_league_score_" + x;
-			cell3 = row.insertCell(3);
+			var cell3 = row.insertCell(3);
 			cell3.id = prefix + "_league_games_" + x;
-			cell4 = row.insertCell(4);
+			var cell4 = row.insertCell(4);
 			cell4.id = prefix + "_league_avg_" + x;
-			cell5 = row.insertCell(5);
+			var cell5 = row.insertCell(5);
 			cell5.id = prefix + "_league_bonus_" + x;
-			cell6 = row.insertCell(6);
+			var cell6 = row.insertCell(6);
 			cell6.id = prefix + "_league_ts_" + x;
 			cell6.className = "timeago";
 			cell6.title = topTen[i].t/1000;
-			cell7 = row.insertCell(7);
+			var cell7 = row.insertCell(7);
 			cell7.id = prefix + "_league_st_" + x;
 			cell7.className = "timeago";
 			cell7.title = topTen[i].st/1000;
@@ -783,7 +746,6 @@ function buildPopcornLeague(data, prefix, total) {
 		fadeyStuff(prefix + "_league_st_" + x, humanTime((topTen[i].st/1000)+""));
 		//if (topTen[i].l) fadeyStuff(prefix + "_league_locale_" + x, "<span>"+device+"</span><img class='locale' title='"+topTen[i].l+"' alt='"+topTen[i].l+"' src='./flags/" + topTen[i].l + ".png' />");
 	}
-	// console.log('%o', window.performance.memory);
 	fadeyStuff(prefix + '_count', numberWithCommas(i));
 	document.getElementById(prefix + '_scores').setAttribute('total', total);
 }
@@ -896,21 +858,17 @@ function prepDataForChart(data, history) {
 
 	dailyLabels = new Array(_diff).fill("");
 	// console.log(diff)
-	let someDate;
-	let q;
-	let day;
-	let dt;
 	for (var i = 0; i < _diff; i++) {
-		someDate = addDays(_startDate, i);
+		var someDate = addDays(_startDate, i);
 		// console.log(someDate)
-		q = someDate.toLocaleDateString().split("/");
+		var q = someDate.toLocaleDateString().split("/");
 		dailyLabels[i] = q[0] + getMonthName(q[1]-1);
 
-		day = someDate.getDay();
+		var day = someDate.getDay();
 		if (day == 0 || day > 5) weekends.push(_chtHeight);
 		else weekends.push(null);
 
-        dt = someDate.getDate();
+        var dt = someDate.getDate();
         if (dt == 1) months.push(_chtHeight);
         else months.push(null);
 	}
@@ -932,22 +890,16 @@ function prepDataForChart(data, history) {
 	var br = new Array(_diff).fill(null);
 	var dk = new Array(_diff).fill(null);
 
-	let counter = 0;
-	let month;
-	let monthGames;
-	let s;
-
-	var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
-
+	var counter = 0;
 	for (var i = 0; i < data.length; i++) {
-		month = data[i];
-		monthGames = month.games;
+		var month = data[i];
+		var monthGames = month.games;
 		// console.log(month)
 		
 		for (var x in month) {
 	        if (month.hasOwnProperty(x)) {
 	        	if (x.indexOf("d_") != 0) continue;
-	        	day = month[x];
+	        	var day = month[x];
 
 	        	if (day.games) {
 	        		dailyGames.push(day.games);
@@ -960,7 +912,8 @@ function prepDataForChart(data, history) {
             	for (var y in day) {
             		if (day.hasOwnProperty(y)) {
             			if (y.indexOf("-") == 2) {
-            				sumObjCounts(day[y]);
+            				var s = sumObjCounts(day[y]);
+            				var locales = ["uk", "us", "de", "in", "ca", "jp", "au", "fr", "es", "it", "mx", "esla", "br", "dk"];
             				switch (y){
 		    					case "en-GB":
 		    						uk[counter] = s;

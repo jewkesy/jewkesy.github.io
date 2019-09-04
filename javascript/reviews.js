@@ -55,9 +55,8 @@ function buildAmazonReview(data) {
 	var arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_fr_ca_stars', 'pc_es_stars', 'pc_it_stars', 'pc_mx_stars', 'pc_br_stars', 'pc_es_us_stars', 'pc_ga_stars'];
 	var arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
 
-	let e;
 	for (var i = 0; i < arIds.length; i++) {
-		e = document.getElementById(arIds[i]);
+		var e = document.getElementById(arIds[i]);
 		if (!e) continue;
 		for (var j = 0; j < arClasses.length; j++) {
 			e.classList.remove(arClasses[j]);
