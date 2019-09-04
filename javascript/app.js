@@ -126,7 +126,7 @@ function httpGetGameCount(theUrl, prefix){
 				var doc = JSON.parse(xmlHttp.responseText);
 				document.getElementById(prefix + '_total_players').innerHTML = numberWithCommas(doc.length);
 
-				var count = 0;
+				let count = 0;
 				for (var i = 0; i < doc.length; i++) {
 					count += doc[i].g;
 				}
@@ -261,9 +261,9 @@ function humanTime(time) {
 (function timeAgo(selector) {
 	setTimeout(function(){
 	    var elements = document.getElementsByClassName('timeago');
-
+	    let $this;
 	    for (var i in elements) {
-	        var $this = elements[i];
+	        $this = elements[i];
 	        if (typeof $this === 'object') {
 	            $this.innerHTML = humanTime($this.getAttribute('title') || $this.getAttribute('datetime'));
 	        }
@@ -306,8 +306,8 @@ function addDays(startDate,numberOfDays) {
 	return returnDate;
 }
 
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 function getMonthName(mon) {
-	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	return " " + monthNames[+mon];
 }
 
@@ -317,8 +317,9 @@ function reduceArr(arr, count) {
 	var chk = chunkArray(arr, slots);
 	var retVal = [];
 
+	let x;
 	for (var i = 0; i < chk.length; i++) {
-		var x = chk[i].reduce(function(acc, val) { return acc + val; });
+		x = chk[i].reduce(function(acc, val) { return acc + val; });
 		if (x == 0) x = null;
 		else x = Math.ceil(x/slots);
 		retVal.push(x);
@@ -332,8 +333,9 @@ function chunkArray(myArray, chunk_size){
     var arrayLength = myArray.length;
     var tempArray = [];
     
+    let myChunk;
     for (index = 0; index < arrayLength; index += chunk_size) {
-        var myChunk = myArray.slice(index, index+chunk_size);
+        myChunk = myArray.slice(index, index+chunk_size);
         // Do something if you want with the group
         tempArray.push(myChunk);
     }
@@ -425,7 +427,7 @@ function summariseChtData(data, percentage) {
 	// console.log(data)
 	// check all same length;
 	var initialLabel = data.labels[0];
-	var l = -1;
+	let l = -1;
 	for (var property in data) {
 	    if (data.hasOwnProperty(property)) {
 	    	if (l == -1) { l = data[property].length; continue; }
