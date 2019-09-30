@@ -25,16 +25,25 @@ function getQuestions(count, genre) {
 		var q = data.msg.questions[idx];
 		var t = cleanseText(q.echoShowText);
 
+		// for (var i = 0; i < data.msg.questions.length; i++) {
+		// 	if (data.msg.questions[i].t == "Death") {
+		// 		q = data.msg.questions[i];
+		// 		t = cleanseText(q.echoShowText);
+		// 		break;
+		// 	} 
+		// }
+
 		fadeyStuff("pc_question", t);
 
 		$.get(q.Poster).done(function () {
+			console.log(q.Poster)
 		  fadeyPic("pc_question_poster", q.Poster);
 		}).fail(function (e) {
 			console.log(e)
 		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 		});
 		// console.log(q);
-		var c;
+		var c = "";
 
 		if (q.correct) {
 			//console.log(q.correct)
@@ -42,16 +51,16 @@ function getQuestions(count, genre) {
 			c = c.replace('<emphasis level="reduced">', '');
 			c = c.replace('</emphasis>', '');
 		}
-		// console.log(c);
-		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c, q.t);};
-		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c, q.t);};
+
+		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c, q.t, q.comment);};
+		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c, q.t, q.comment);};
 
 		startProgressBar(30, q.answer, c);
 	});
 }
 
 var pg;
-function showAnswer(chosen, answer, correct, type){
+function showAnswer(chosen, answer, correct, type, comment){
 	// console.log(chosen, answer, correct, type);
 	if (!type) type = "";
 	clearInterval(pg);
@@ -84,6 +93,8 @@ function showAnswer(chosen, answer, correct, type){
 			else if (type == "Quote") text += "<hr>" + cleanseText(correct);
 		}
 	}
+
+	if (comment) text += "<hr>" + comment;
 
 	fadeyStuff("pc_answer", text);
 

@@ -285,7 +285,7 @@ function switchDevice(device) {
 }
 
 function setGameElements(locale) {
-	console.log(locale)
+	// console.log(locale)
 	var l = locale.split('-')[0];
 	
 	fadeyStuff("pc_pq_name", "Popcorn Quiz");
@@ -1034,11 +1034,11 @@ function increaseLimit() {
 }
 
 function getIntro() {
-	console.log(aws + "?action=getintro&locale="+_lang)
+	// console.log(aws + "?action=getintro&locale="+_lang)
 	httpGetByUrl(aws + "?action=getintro&locale="+_lang, function (err, data) {
-		console.log(err)
+		// console.log(err)
 		if (!data) return;
-		console.log(data)
+		// console.log(data)
 		if (data.msg.text == ". ") data.msg.text = "Ok!";
 		getQuestions(5, data.msg.genre);
  		fadeyStuff("pc_intro", data.msg.text);
