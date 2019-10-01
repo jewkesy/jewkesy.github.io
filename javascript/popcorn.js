@@ -146,6 +146,7 @@ function getGameCalendar() {
 		}
 
 		for (var i = 0; i < events.length; i++) {
+			if (!events[i]) continue;
 			if (!events[i].msg || events[i].msg.name == 'default') continue;
 			var x = i + 1;
 			if (!document.getElementById('pc_event_cal_' + x)) {
@@ -285,9 +286,12 @@ function switchDevice(device) {
 }
 
 function setGameElements(locale) {
-	// console.log(locale)
+	console.log(locale)
 	var l = locale.split('-')[0];
-	
+	if (l != "en") document.getElementById("desc_en").classList.add("hidden");
+
+	document.getElementById("desc_"+l).classList.remove("hidden")
+
 	fadeyStuff("pc_pq_name", "Popcorn Quiz");
 	fadeyStuff("pc_h1_name", "Popcorn Quiz");
 

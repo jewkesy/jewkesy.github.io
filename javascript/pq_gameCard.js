@@ -36,10 +36,10 @@ function getQuestions(count, genre) {
 		fadeyStuff("pc_question", t);
 
 		$.get(q.Poster).done(function () {
-			console.log(q.Poster)
+			// console.log(q.Poster)
 		  fadeyPic("pc_question_poster", q.Poster);
 		}).fail(function (e) {
-			console.log(e)
+			// console.log(e)
 		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 		});
 		// console.log(q);
