@@ -69,8 +69,6 @@ function startPopcornQuiz(locale, limit, device) {
 		applyLocaleHeader(_locale, _device);
 		_popcornUrl += "&locale=" + _locale;
 	}
-
-	
 }
 
 function amazonTimer() {
@@ -117,11 +115,8 @@ function getStats() {
 
 function getGameCalendar() {
 
-	var events = new Array(10);
-// console.log(events)
-	
+	var events = new Array(10);	
 	var d = new Date();
-
 	var ts = d.getTime();
 
 	async.eachOfSeries(events, function(ev, idx, callback){
@@ -182,8 +177,6 @@ function getGameCalendar() {
 		}
 	});
 }
-
-
 
 function getGamePlay(callback) {
 	async.parallel([
@@ -290,7 +283,8 @@ function setGameElements(locale) {
 	var l = locale.split('-')[0];
 	if (l != "en") document.getElementById("desc_en").classList.add("hidden");
 
-	document.getElementById("desc_"+l).classList.remove("hidden")
+	var el = document.getElementById("desc_"+l);
+	if (el) el.classList.remove("hidden");
 
 	fadeyStuff("pc_pq_name", "Popcorn Quiz");
 	fadeyStuff("pc_h1_name", "Popcorn Quiz");
@@ -358,7 +352,6 @@ function checkNewDay() { //if new day, rebuild saved stats
 	// console.log(diff);
 	// console.log(_daysSinceLaunch);
 	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) reset();
-
 }
 
 function getPhrases() {
@@ -582,7 +575,7 @@ function buildPopcornLastGames(data, prefix) {
 		else if (g.i == 'llama') {sym = " 🦙";}
 
 		if (g.tpb && g.tpb >= 0) {booster = " 🚀";}
-		else if (g.tpb === 0) booster = " 👍";
+		//else if (g.tpb === 0) booster = " 👍";
 
 		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
@@ -646,8 +639,7 @@ function buildPopcornLastGames(data, prefix) {
 		var boostersLeft = "";
 		if (g.tpb || g.tpb ===0) boostersLeft = "<br>🚀 "+numberWithCommas(g.tpb)+"";
 		if (g.n && +g.n > -1) needed = "<br/>(<i>"+numberWithCommas(g.n)+"</i>)";
-		// console.log(booster)
-		
+
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s)+boostersLeft);
 		fadeyStuff(prefix + "_lastgames_games_" + x, numberWithCommas(g.ls)+needed);
 		
@@ -656,6 +648,8 @@ function buildPopcornLastGames(data, prefix) {
 		if (g.b) bonusInfo = "<br/>"+g.b.wins+" / "+g.b.loses+" / "+g.b.skips;
 
 		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+booster+getGenreEventTitle(g.ge)+bonusInfo);
+
+		if (g.bs) g.gs += "<br/><i>Best:&nbsp;" + numberWithCommas(g.bs) + "</i>"; 
 		fadeyStuff(prefix + "_lastgames_gs_" + x, g.gs);
 
 		fadeyStuff(prefix + "_lastgames_ts_" + x, humanTime((g.t/1000)+""));
@@ -667,7 +661,7 @@ function buildPopcornLastGames(data, prefix) {
 
 function buildPopcornLeague(data, prefix, total) {
 	if(!data) return;
-	// console.log(data)
+	console.log(data)
 	var topTen = data.league;
 	var container = document.getElementById(prefix + '_scores');
 	for (var i = 0; i < topTen.length; i++) {

@@ -9,7 +9,7 @@ function getKeywords() {
 		fadeyStuff("pc_false", _keywords.false);
 		if (_keywords.shortDesc) fadeyStuff("pc_short_desc", _keywords.shortDesc);
 		setGameElements(_lang);
-		console.log(_keywords)
+		// console.log(_keywords)
 	});
 }
 
