@@ -161,11 +161,8 @@ function getGameCalendar() {
 			fadeyStuff("pc_event_cal_multiplier_" + x, (function(){
 				if (events[i].msg.multiplier == 3) return "<strong>x"+events[i].msg.multiplier+"</strong>";
 				return "x"+events[i].msg.multiplier;
-
-					
 			})() );
 			fadeyStuff("pc_event_cal_desc_" + x, (function() {
-
 				return events[i].msg.msg;
 
 				// if (events[i].msg.multiplier == 3) return 'Triple Points!';
