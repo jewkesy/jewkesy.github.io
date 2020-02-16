@@ -13,50 +13,58 @@ function getKeywords() {
 	});
 }
 
+var cachedQuestions = [];
+
 function getQuestions(count, genre) {
+	if (cachedQuestions.length != 0) {
+		displayQuestion();
+		return;
+	}
+
 	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_lang;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		// console.log(data);
+		console.log(data);
 		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 
-		var idx = randomInt(0, data.msg.questions.length-1);
-		var q = data.msg.questions[idx];
-		var t = cleanseText(q.echoShowText);
+		cachedQuestions = data.msg.questions;
 
-		// for (var i = 0; i < data.msg.questions.length; i++) {
-		// 	if (data.msg.questions[i].t == "Death") {
-		// 		q = data.msg.questions[i];
-		// 		t = cleanseText(q.echoShowText);
-		// 		break;
-		// 	} 
-		// }
-
-		fadeyStuff("pc_question", t);
-
-		$.get(q.Poster).done(function () {
-			// console.log(q.Poster)
-		  fadeyPic("pc_question_poster", q.Poster);
-		}).fail(function (e) {
-			// console.log(e)
-		   fadeyPic("pc_question_poster", './images/popcorn_l.png');
-		});
-		// console.log(q);
-		var c = "";
-
-		if (q.correct) {
-			//console.log(q.correct)
-			c = cleanseText(q.correct+"");
-			c = c.replace('<emphasis level="reduced">', '');
-			c = c.replace('</emphasis>', '');
-		}
-
-		document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c, q.t, q.comment);};
-		document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c, q.t, q.comment);};
-
-		startProgressBar(30, q.answer, c);
+		displayQuestion();
 	});
+}
+
+function displayQuestion() {
+	// console.log('displaying')
+	console.log(cachedQuestions.length, cachedQuestions)
+	// var idx = randomInt(0, cachedQuestions.length-1);
+	var q = cachedQuestions.pop();
+	// cachedQuestions = cachedQuestions
+	var t = cleanseText(q.echoShowText);
+
+	fadeyStuff("pc_question", t);
+
+	$.get(q.Poster).done(function () {
+		// console.log(q.Poster)
+	  fadeyPic("pc_question_poster", q.Poster);
+	}).fail(function (e) {
+		// console.log(e)
+	   fadeyPic("pc_question_poster", './images/popcorn_l.png');
+	});
+	// console.log(q);
+	var c = "";
+
+	if (q.correct) {
+		//console.log(q.correct)
+		c = cleanseText(q.correct+"");
+		c = c.replace('<emphasis level="reduced">', '');
+		c = c.replace('</emphasis>', '');
+	}
+
+	document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c, q.t, q.comment);};
+	document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c, q.t, q.comment);};
+
+	startProgressBar(30, q.answer, c);
 }
 
 var pg;

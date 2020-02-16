@@ -55,7 +55,7 @@ window.addEventListener('popstate', function (event) {
 }, false);
 	
 function startPopcornQuiz(locale, limit, device) {
-	console.log('Starting', locale);
+	// console.log('Starting', locale);
 	if (locale && locale.length > 0) _locale = locale;
 	getKeywords();
 	amazonTimer();
@@ -72,6 +72,7 @@ function startPopcornQuiz(locale, limit, device) {
 }
 
 function amazonTimer() {
+	// console.log('timer event');
 	getPhrases();
 	getIntro();
 	getEvent();
@@ -235,7 +236,7 @@ function switchLocale(locale) {
 	getIntro();
 	getKeywords();
 	getPhrases();
-	getQuestions(5, "");
+	console.log("HERE 1")
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 	
 	setGameElements(locale);
@@ -276,7 +277,6 @@ function switchDevice(device) {
 }
 
 function setGameElements(locale) {
-	console.log(locale)
 	var l = locale.split('-')[0];
 	if (l != "en") document.getElementById("desc_en").classList.add("hidden");
 
@@ -658,7 +658,7 @@ function buildPopcornLastGames(data, prefix) {
 
 function buildPopcornLeague(data, prefix, total) {
 	if(!data) return;
-	console.log(data)
+	// console.log(data)
 	var topTen = data.league;
 	var container = document.getElementById(prefix + '_scores');
 	for (var i = 0; i < topTen.length; i++) {
@@ -1035,7 +1035,7 @@ function getIntro() {
 		if (!data) return;
 		// console.log(data)
 		if (data.msg.text == ". ") data.msg.text = "Ok!";
-		getQuestions(5, data.msg.genre);
+		getQuestions(50, data.msg.genre);
  		fadeyStuff("pc_intro", data.msg.text);
 	});	
 }
