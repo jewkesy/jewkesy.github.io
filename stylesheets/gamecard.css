@@ -29,16 +29,38 @@ span.question, span.answer {
     color: #39c;
 }
 
+div.posterHalf {
+    float: left;
+    min-height:300px !important;
+    border-left: 1px solid red;
+    /*width: 250px !important;*/
+}
+
+div.posterHalf > img {
+
+}
+
+.row {
+  display: flex; /* equal height of the children */
+}
+
+.col {
+  flex: 1; /* additionally, equal width */
+  padding: 1em;
+  
+}
+
 /*basic layout*/
 .material-contact {
-    width:400px;
+    /*width:400px;*/
     max-width:90%;
     height:auto;
-    padding: 20px 30px 10px 30px;
+    padding: 10px;
     box-sizing:border-box;
     display:block;
     position:relative;
-    margin:50px auto;
+    margin:5px auto;
+    margin-bottom: 30px;
     overflow:hidden;
     
     box-shadow:0 1px 5px 0 rgba(0,0,0,0.3);
@@ -49,18 +71,18 @@ span.question, span.answer {
 /*header*/
 .material-contact img {
     /*width:120px;*/
-    height:200px;
+    height: 300px !important;
     display:block;
     margin:0 auto;
-    box-shadow:0 1px 5px 0 rgba(0,0,0,0.3);
-    border-radius:5%;
+    box-shadow:0 1px 3px 0 rgba(0,0,0,0.3);
+    border-radius:3%;
 }
 .material-contact h1 {
     width:100%;
     height:auto;
-    padding:15px 0 0px 0;
+    padding:5px 0 0px 0;
     display:block;
-    
+    margin-bottom: 5px;
     font-family:'Roboto', sans-serif;
     font-size:1.9rem;
     font-weight:300;
@@ -75,7 +97,7 @@ span.question, span.answer {
     height:auto;
     padding:5px 0;
     display:block;
-    
+    margin-bottom: 5px;
     font-family:'Roboto', sans-serif;
     font-size:1.1em;
     font-weight:300;
@@ -99,7 +121,7 @@ span.question, span.answer {
 .material-contact p {
     width:100%;
     height:auto;
-    padding:10px 0;
+    padding:5px 0;
     display:block;
     
     font-family:'Roboto', sans-serif;

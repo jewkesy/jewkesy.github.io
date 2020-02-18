@@ -36,7 +36,7 @@ function getQuestions(count, genre) {
 
 function displayQuestion() {
 	// console.log('displaying')
-	console.log(cachedQuestions.length, cachedQuestions)
+	// console.log(cachedQuestions.length, cachedQuestions)
 	// var idx = randomInt(0, cachedQuestions.length-1);
 	var q = cachedQuestions.pop();
 	// cachedQuestions = cachedQuestions

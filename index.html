@@ -71,7 +71,7 @@
                     typeSpeed: 75
                 });
             </script>
-            <p class="centerMe" style="height:200px"><img style="border-radius: 8px;" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188" /></p>
+            <p class="centerMe" style="height:200px"><img style="border-radius: 8px; max-height:200px;" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="https://avatars2.githubusercontent.com/u/1673570?u=a206451d64a6f77b0d3fae293bf871ab74c9e188" /></p>
             <div class="clear"/>
             <p class="centerMe">the daryljewkes.com homepage</p>
             <span class="locales">
@@ -124,31 +124,39 @@
             <p><strong><span id="pc_short_desc">Think you know movies? Test your skills against the world!</span></strong></p>
             <!-- the game card -->
             <div class="material-contact animate-in-card">
-
-                <!-- image -->
-                <img class="animate-in-image" id='pc_question_poster' src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_l.png">
-                <!-- name -->
-                <h1 class="animate-in-01" id="pc_h1_name">Popcorn Quiz</h1>
-                <!-- title -->
-                <h2 class="animate-in-02" id="pc_question_genre"></h2>
-
-                <hr class="animate-in-03">
-
-                <!-- bio -->
-                <p class="animate-in-04"><span class="question" id="pc_question"></span></p>
-
-                <div class="progress animate-in-05">
-                    <div id="pc_progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                <div>
+                    <h1 class="animate-in-01" id="pc_h1_name">Popcorn Quiz</h1>
+                    <h2 class="animate-in-02" id="pc_question_genre"></h2>
                 </div>
+                <div class="row">
+                    <div class="col posterHalf">
+                        
+                        <!-- image -->
+                        <img class="animate-in-image" id='pc_question_poster' src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_l.png">
+                    </div>
+                    <div class="col">
+                        <!-- <hr class="animate-in-03"> -->
 
-                <!-- contact links -->
-                <span id='pc_truefalse' class="actions animate-in-06">
-          <button id='pc_true' type="button" class="btn btn-info hvr-grow">True</button>
-          <button id='pc_false' type="button" class="btn btn-info hvr-grow">False</button>
-        </span>
+                        <!-- bio -->
+                        <p class="animate-in-04"><span class="question" id="pc_question"></span></p>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col">
+                        <div class="progress animate-in-05">
+                            <div id="pc_progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
 
-                <div class="centerMe">
-                    <p class="centerMe"><span class="answer" id="pc_answer"></span></p>
+                        <!-- contact links -->
+                        <span id='pc_truefalse' class="actions animate-in-06">
+                          <button id='pc_true' type="button" class="btn btn-info hvr-grow">True</button>
+                          <button id='pc_false' type="button" class="btn btn-info hvr-grow">False</button>
+                        </span>
+
+                        <div class="centerMe">
+                            <p class="centerMe"><span class="answer" id="pc_answer"></span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -917,9 +925,7 @@
     <script src="./javascript/popcorn.js"></script>
     <script src="./javascript/pq_gameCard.js"></script>
     <script>
-        $(document).ready(function() {
-            startPopcornQuiz();
-        });
+        
 
         function init() {
             var imgDefer = document.getElementsByTagName('img');
@@ -928,8 +934,12 @@
                     imgDefer[i].setAttribute('src', imgDefer[i].getAttribute('data-src'));
                 }
             }
+            $(document).ready(function() {
+                startPopcornQuiz();
+            });
         }
         window.onload = init;
+
     </script>
     <script src="./lib/scale.fix.js" async></script>
 </body>
