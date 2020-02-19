@@ -76,6 +76,7 @@ function amazonTimer() {
 	getPhrases();
 	getIntro();
 	getEvent();
+	getUpdated();
 	checkNewDay();
 	getMyRank();
 	getGameCalendar();
@@ -84,6 +85,7 @@ function amazonTimer() {
 		getPhrases();
 		getIntro();
 		getEvent();
+		getUpdated();
 		checkNewDay();
 		getMyRank();
 		getGameCalendar();
@@ -1038,6 +1040,17 @@ function getIntro() {
 		if (cachedQuestions.length == 0) fadeyStuff("pc_intro", data.msg.text);
 		getQuestions(15, data.msg.genre);
 	});	
+}
+
+function getUpdated() {
+	var count = 10;
+	var url = aws + "?action=getupdated&locale="+_lang+"&count="+count;
+	console.log(url);
+	httpGetByUrl(url, function (err, data) {
+		if (!data) return;
+		console.log(data)
+		// fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
+	});
 }
 
 function getEvent(ts) {
