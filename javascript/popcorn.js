@@ -134,9 +134,6 @@ function getGameCalendar() {
 		});	
 		
 	}, function(err) {
-		// console.log(err);
-		// console.log(events);
-
 		var container = document.getElementById('pc_event_cal');
 
 		while (container.hasChildNodes()) {
@@ -167,13 +164,7 @@ function getGameCalendar() {
 			})() );
 			fadeyStuff("pc_event_cal_desc_" + x, (function() {
 				return events[i].msg.msg;
-
-				// if (events[i].msg.multiplier == 3) return 'Triple Points!';
-
-				// if (events[i].msg.multiplier == 2) return 'Double Points!';
-
-				// return events[i].msg.multiplier;
-			})() );
+			})());
 		}
 	});
 }
@@ -993,23 +984,6 @@ function prepDataForChart(data, history) {
 	return dailyData;
 }
 
-function getSum(total, num) {
-    return total + num;
-}
-
-function sumObjCounts(obj) {
-	// console.log(obj)
-	var total = 0;
-
-	for (var x in obj) {
-		if (obj.hasOwnProperty(x)) {
-			total += obj[x];
-		}
-	}
-
-	return total;
-}
-
 function resetLimit() {
 	_limit = 10;
 	document.getElementById('pc_more_count').innerHTML = _limit;
@@ -1045,12 +1019,50 @@ function getIntro() {
 function getUpdated() {
 	var count = 10;
 	var url = aws + "?action=getupdated&locale="+_lang+"&count="+count;
-	console.log(url);
+	// console.log(url);
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
-		console.log(data)
-		// fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
+		buildUpdated(data);
 	});
+}
+
+function buildUpdated(data) {
+	// console.log(data);
+
+	// check for updates
+	for (var i = 0; i < data.msg.length; i++) {
+
+	}
+
+	var parent = document.getElementById('pc_recent_trivia');
+
+	parent.innerHTML = "";
+
+	for (var i = 0; i < data.msg.length; i++) {
+		var m = data.msg[i];
+		// console.log(m)
+		
+		if (m.Poster == "N/A" || m.Poster == "NA") m.Poster = "./images/popcorn_s.png";
+		var img = document.createElement("img");
+		img.classList.add("posterThumb");
+		img.src = m.Poster;
+
+		var div = document.createElement("span");
+		div.innerHTML = m.Title + " (" + m.Year + ")";
+
+		var container = document.createElement("div");
+		container.classList.add("updatedMovie");
+		container.setAttribute("id", "pc_recent_trivia_"+i);
+		container.setAttribute('style', 'display:none;');
+		container.appendChild(img)
+		container.appendChild(div);
+
+		// console.log(container)
+		parent.appendChild(container);
+
+		fadeyElement("pc_recent_trivia_"+i);
+	}
+	
 }
 
 function getEvent(ts) {

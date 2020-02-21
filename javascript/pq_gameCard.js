@@ -24,7 +24,7 @@ function getQuestions(count, genre) {
 	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_lang;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		console.log(data);
+		// console.log(data);
 		if (!data || !data.msg.questions) return;
 		if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 

@@ -395,6 +395,12 @@ function fadeyPic(id, val) {
 	});
 }
 
+function fadeyElement(id) {
+	$("#"+id).fadeOut(666, function () {
+		$("#"+id).fadeIn();
+	});
+}
+
 function cleanseText(txt) {
 	txt = txt.replaceAll('\n', '<hr>');
 	txt = txt.replaceAll(".?", "?");
@@ -476,3 +482,17 @@ function summariseChtData(data, percentage) {
 	// console.log(summarised)
 	return summarised;
 }
+
+function sumObjCounts(obj) {
+	// console.log(obj)
+	var total = 0;
+
+	for (var x in obj) {
+		if (obj.hasOwnProperty(x)) {
+			total += obj[x];
+		}
+	}
+
+	return total;
+}
+
