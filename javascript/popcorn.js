@@ -1019,7 +1019,7 @@ function getIntro() {
 function getUpdated() {
 	var count = 10;
 	var url = aws + "?action=getupdated&locale="+_lang+"&count="+count;
-	console.log(url);
+	// console.log(url);
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
 		buildUpdated(data);
@@ -1027,12 +1027,12 @@ function getUpdated() {
 }
 
 function buildUpdated(data) {
-	console.log(data);
+	// console.log(data);
 
 	// check for updates
-	for (var i = 0; i < data.msg.length; i++) {
+	// for (var i = 0; i < data.msg.length; i++) {
 
-	}
+	// }
 
 	var parent = document.getElementById('pc_recent_trivia');
 
