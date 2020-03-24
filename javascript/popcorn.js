@@ -1027,7 +1027,7 @@ function getUpdated() {
 }
 
 function buildUpdated(data) {
-	// console.log(data);
+	console.log(data);
 
 	var parent = document.getElementById('pc_recent_trivia');
 	parent.innerHTML = "";
@@ -1035,7 +1035,7 @@ function buildUpdated(data) {
 	for (var i = 0; i < data.msg.length; i++) {
 		var m = data.msg[i];
 		// console.log(m)
-
+		var dt = new Date(m.m).getTime()/1000;
 		if (m.type == "actors") {
 			if (m.pic) m.Poster = m.pic;
 			if (m.name) m.Title = m.name;
@@ -1052,11 +1052,14 @@ function buildUpdated(data) {
 		var div = document.createElement("span");
 		div.innerHTML = m.Title;
 		if (m.year) div.innerHTML += " (" + m.Year + ")";
+		div.innerHTML += " <i class='timeago' title='" + dt+ "'>"+ humanTime(dt+"") + "</i>"
 
 		var container = document.createElement("div");
 		container.classList.add("updatedMovie");
+		// container.classList.add("timeago");
 		container.setAttribute("id", "pc_recent_trivia_"+i);
 		container.setAttribute('style', 'display:none;');
+
 		container.appendChild(img)
 		container.appendChild(div);
 
