@@ -1019,7 +1019,7 @@ function getIntro() {
 function getUpdated() {
 	var count = 10;
 	var url = aws + "?action=getupdated&locale="+_lang+"&count="+count;
-	// console.log(url);
+	console.log(url);
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
 		buildUpdated(data);
@@ -1027,7 +1027,7 @@ function getUpdated() {
 }
 
 function buildUpdated(data) {
-	console.log(data);
+	// console.log(data);
 
 	var parent = document.getElementById('pc_recent_trivia');
 	parent.innerHTML = "";
@@ -1041,7 +1041,6 @@ function buildUpdated(data) {
 			if (m.name) m.Title = m.name;
 		} else {
 			if (m.poster) m.Poster = m.poster;
-			if (m.year) m.Year = m.year;
 		}
 
 		if (m.Poster == "N/A" || m.Poster == "NA") m.Poster = "./images/popcorn_s.png";
@@ -1051,7 +1050,7 @@ function buildUpdated(data) {
 
 		var div = document.createElement("span");
 		div.innerHTML = m.Title;
-		if (m.year) div.innerHTML += " (" + m.Year + ")";
+		if (m.Year) div.innerHTML += " (" + m.Year + ")";
 		div.innerHTML += " <i class='timeago' title='" + dt+ "'>"+ humanTime(dt+"") + "</i>"
 
 		var container = document.createElement("div");
