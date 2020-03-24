@@ -1029,27 +1029,29 @@ function getUpdated() {
 function buildUpdated(data) {
 	// console.log(data);
 
-	// check for updates
-	// for (var i = 0; i < data.msg.length; i++) {
-
-	// }
-
 	var parent = document.getElementById('pc_recent_trivia');
-
 	parent.innerHTML = "";
 
 	for (var i = 0; i < data.msg.length; i++) {
 		var m = data.msg[i];
 		// console.log(m)
-		if (m.poster) m.Poster = m.poster;
-		if (m.year) m.Year = m.year;
+
+		if (m.type == "actors") {
+			if (m.pic) m.Poster = m.pic;
+			if (m.name) m.Title = m.name;
+		} else {
+			if (m.poster) m.Poster = m.poster;
+			if (m.year) m.Year = m.year;
+		}
+
 		if (m.Poster == "N/A" || m.Poster == "NA") m.Poster = "./images/popcorn_s.png";
 		var img = document.createElement("img");
 		img.classList.add("posterThumb");
 		img.src = m.Poster;
 
 		var div = document.createElement("span");
-		div.innerHTML = m.Title + " (" + m.Year + ")";
+		div.innerHTML = m.Title;
+		if (m.year) div.innerHTML += " (" + m.Year + ")";
 
 		var container = document.createElement("div");
 		container.classList.add("updatedMovie");
