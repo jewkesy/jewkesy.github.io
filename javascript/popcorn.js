@@ -550,6 +550,7 @@ function buildPopcornLastGames(data, prefix) {
 		var device = ".";
 		var deviceIcon = "alexa";
 		var g = games[i];
+
 		if (g.d == "Echo Show")    device = ":";
 		else if (g.d == "Google"){ device = ""; deviceIcon = "google"; }
 		else if (g.d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
