@@ -1023,6 +1023,7 @@ function getUpdated() {
 	console.log(url);
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
+		if (!data.msg || data.msg.length == 0) return;
 		buildUpdated(data);
 	});
 }
@@ -1031,6 +1032,8 @@ function buildUpdated(data) {
 	// console.log(data);
 
 	var parent = document.getElementById('pc_recent_trivia');
+	var att = parent.getAttribute("last_updated")
+	if (data.msg[0].imdbID == att) return;
 	parent.innerHTML = "";
 
 	for (var i = 0; i < data.msg.length; i++) {
@@ -1068,6 +1071,7 @@ function buildUpdated(data) {
 
 		fadeyElement("pc_recent_trivia_"+i);
 	}
+	parent.setAttribute("last_updated", data.msg[0].imdbID)
 	
 }
 

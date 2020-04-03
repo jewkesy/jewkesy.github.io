@@ -20,9 +20,9 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 function buildIconHTML(deviceIcon, locale, deviceType) {
-	var lIcon = "<img class='locale' width='20' title='"+locale+"' src='./flags/"+locale+".png' />";
+	var lIcon = "<img class='locale' width='16' title='"+locale+"' src='./flags/"+locale+".png' />";
 	var dIcon = "<img width='18' class='device iconMergeCorner' title='"+deviceIcon+"' alt='"+deviceIcon+"' src='./images/"+deviceIcon+".png' />";
-	return "<div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + " <strong>" + deviceType + "</strong></div>";
+	return "<div class='iconMerge' style='white-space: nowrap;' alt='"+locale+"' >" + lIcon + dIcon + "&nbsp;<strong>" + deviceType + "</strong></div>";
 	// return "<span>"+deviceType+"</span><div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + "</div>";
 }
 
