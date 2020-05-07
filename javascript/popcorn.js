@@ -1051,20 +1051,24 @@ function buildUpdated(data) {
 		var img = document.createElement("img");
 		img.classList.add("posterThumb");
 		img.src = m.Poster;
+		var imgDiv = document.createElement("div");
+		imgDiv.setAttribute('style', 'float:left;margin-right:4px;');
+		imgDiv.appendChild(img);
 
-		var div = document.createElement("span");
-		div.innerHTML = m.Title;
-		if (m.Year) div.innerHTML += " (" + m.Year + ")";
-		div.innerHTML += " <i class='timeago' title='" + dt+ "'>"+ humanTime(dt+"") + "</i>"
+		var span = document.createElement("span");
+		span.innerHTML = m.Title;
+		if (m.Year) span.innerHTML += " (" + m.Year + ")";
+
+		span.innerHTML += "<br/><i class='timeago' style='white-space: nowrap; min-width: 105px;' title='" + dt+ "'>"+ humanTime(dt+"") + "</i>"
 
 		var container = document.createElement("div");
 		container.classList.add("updatedMovie");
 		// container.classList.add("timeago");
 		container.setAttribute("id", "pc_recent_trivia_"+i);
-		container.setAttribute('style', 'display:none;');
+		container.setAttribute('style', 'display:none; min-width: 145px;');
 
-		container.appendChild(img)
-		container.appendChild(div);
+		container.appendChild(imgDiv);
+		container.appendChild(span);
 
 		// console.log(container)
 		parent.appendChild(container);
