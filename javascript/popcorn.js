@@ -1065,7 +1065,7 @@ function buildUpdated(data) {
 		container.classList.add("updatedMovie");
 		// container.classList.add("timeago");
 		container.setAttribute("id", "pc_recent_trivia_"+i);
-		container.setAttribute('style', 'display:none; min-width: 145px;');
+		container.setAttribute('style', 'display:none; min-width: 155px;');
 
 		container.appendChild(imgDiv);
 		container.appendChild(span);
