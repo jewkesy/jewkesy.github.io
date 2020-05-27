@@ -27,9 +27,8 @@ function buildIconHTML(deviceIcon, locale, deviceType) {
 }
 
 function getGenreEventTitle(genre, suffix) {
-	//console.log(_locale);
 	var br = "<br/>";
-	var l = _locale.split('-')[0];
+	var l = _pqLocale.split('-')[0];
 	if (genre == "Horror_Seasonal") {
 		
 		

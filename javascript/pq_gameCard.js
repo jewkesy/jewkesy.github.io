@@ -1,15 +1,15 @@
 
-var _keywords;
+var _pqKeywords;
 
 function getKeywords() {
-	httpGetByUrl(aws + "?action=getkeywords&locale="+_lang, function (err, data) {
+	httpGetByUrl(aws + "?action=getkeywords&locale="+_pqLang, function (err, data) {
 		if (!data) return;
-		_keywords = data.msg;
-		fadeyStuff("pc_true", _keywords.true);
-		fadeyStuff("pc_false", _keywords.false);
-		if (_keywords.shortDesc) fadeyStuff("pc_short_desc", _keywords.shortDesc);
-		setGameElements(_lang);
-		// console.log(_keywords)
+		_pqKeywords = data.msg;
+		fadeyStuff("pc_true", _pqKeywords.true);
+		fadeyStuff("pc_false", _pqKeywords.false);
+		if (_pqKeywords.shortDesc) fadeyStuff("pc_short_desc", _pqKeywords.shortDesc);
+		setGameElements(_pqLang);
+		// console.log(_pqKeywords)
 	});
 }
 
@@ -21,7 +21,7 @@ function getQuestions(count, genre) {
 		return;
 	}
 
-	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_lang;
+	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_pqLang;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
 		// console.log(data);
@@ -75,8 +75,8 @@ function showAnswer(chosen, answer, correct, type, comment){
 	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 
-	var a = _answerPhrases[randomInt(0, _answerPhrases.length-1)];
-	// console.log(_answerPhrases);
+	var a = _pqAnswerPhrases[randomInt(0, _pqAnswerPhrases.length-1)];
+	// console.log(_pqAnswerPhrases);
 	// console.log(a)
 	var text = "";
 	if (chosen === null) {
@@ -88,11 +88,11 @@ function showAnswer(chosen, answer, correct, type, comment){
 		}
 	} else {
 		if (chosen == answer) {
-			var i = randomInt(0, _correctPhrases.length-1);
-			text = _correctPhrases[i];
+			var i = randomInt(0, _pqCorrectPhrases.length-1);
+			text = _pqCorrectPhrases[i];
 		} else {
-			var i = randomInt(0, _incorrectPhrases.length-1);
-			text = _incorrectPhrases[randomInt(0, i)];
+			var i = randomInt(0, _pqIncorrectPhrases.length-1);
+			text = _pqIncorrectPhrases[randomInt(0, i)];
 		}
 
 		if (correct) {
