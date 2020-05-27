@@ -2,7 +2,7 @@
 var _pqKeywords;
 
 function getKeywords() {
-	httpGetByUrl(aws + "?action=getkeywords&locale="+_pqLang, function (err, data) {
+	httpGetByUrl(aws + "?action=getkeywords&prefix=pc&locale="+_pqLang, function (err, data) {
 		if (!data) return;
 		_pqKeywords = data.msg;
 		fadeyStuff("pc_true", _pqKeywords.true);
@@ -21,7 +21,7 @@ function getQuestions(count, genre) {
 		return;
 	}
 
-	var url = aws + "?action=getquestions&count="+count+"&genre="+genre+"&locale="+_pqLang;
+	var url = aws + "?action=getquestions&prefix=pc&count="+count+"&genre="+genre+"&locale="+_pqLang;
 	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
 		// console.log(data);

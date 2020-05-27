@@ -114,7 +114,7 @@ function getGameCalendar() {
 	var ts = d.getTime();
 
 	async.eachOfSeries(events, function(ev, idx, callback){
-		var url = aws + "?action=getevents&locale="+_pqLang;
+		var url = aws + "?action=getevents&prefix=pc&locale="+_pqLang;
 		if (ts) url += "&timestamp="+ts;
 		httpGetByUrl(url, function (err, data) {
 			events[idx] = data;
@@ -326,7 +326,7 @@ function checkNewDay() { //if new day, rebuild saved stats
 function getPhrases() {
 	var l = _pqLocale;
 	if (l == '') l = 'en-GB';
-	var url = aws + "?action=getphrases&locale="+l;
+	var url = aws + "?action=getphrases&prefix=pc&locale="+l;
 	httpGetStats(url, 'pc',  function (err, data) {
 		if (!data) return;
 		_pqAnswerPhrases = data.msg.answerPhrases;
@@ -917,7 +917,7 @@ function increaseLimit() {
 }
 
 function getIntro() {
-	httpGetByUrl(aws + "?action=getintro&locale="+_pqLang, function (err, data) {
+	httpGetByUrl(aws + "?action=getintro&prefix=pc&locale="+_pqLang, function (err, data) {
 		if (!data) return;
 		if (data.msg.text == ". ") data.msg.text = "Ok!";
 		if (cachedQuestions.length == 0) fadeyStuff("pc_intro", data.msg.text);
@@ -927,7 +927,7 @@ function getIntro() {
 
 function getUpdated() {
 	var count = 10;
-	var url = aws + "?action=getupdated&locale="+_pqLang+"&count="+count;
+	var url = aws + "?action=getupdated&prefix=pc&locale="+_pqLang+"&count="+count;
 	httpGetByUrl(url, function (err, data) {
 		if (!data || !data.msg || data.msg.length == 0) return;
 		buildUpdated(data);
@@ -980,7 +980,7 @@ function buildUpdated(data) {
 }
 
 function getEvent(ts) {
-	var url = aws + "?action=getevents&locale="+_pqLang;
+	var url = aws + "?action=getevents&prefix=pc&locale="+_pqLang;
 	if (ts) url += "&timestamp="+ts;
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
