@@ -22,7 +22,7 @@ window.addEventListener('popstate', function (event) { // Render new content for
 }, false);
 
 function startBattleShip(locale, limit, device) {
-	// amazonBSTimer();
+	amazonBSTimer();
 }
 
 function amazonBSTimer() {
@@ -75,7 +75,7 @@ function buildBSLastGames(callback) {
 }
 
 function getBSDailyGames(callback) {
-	httpGetByUrl(aws + "?getDailyGames=true&prefix=bs&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
+	httpGetByUrl(aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
 		console.log(data)

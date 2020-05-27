@@ -368,7 +368,7 @@ function applyLocaleHeader(locale, device) {
 }
 
 function buildPQDailyGames(err, content) {
-	console.log(err, content)
+	// console.log(err, content)
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
 	if (!content.g) return;
