@@ -38,8 +38,8 @@ Chart.defaults.bar.scales.xAxes[0].categoryPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].barPercentage = 1;
 Chart.defaults.bar.scales.xAxes[0].gridLines={color:"rgba(0, 0, 0, 0)"};
 
-var _aInt;
-var _sInt;
+var _aPQInt;
+var _sPQInt;
 
 window.addEventListener('popstate', function (event) { // Render new content for the hompage
     if (history.state && history.state.id === 'homepage') {
@@ -55,7 +55,7 @@ window.addEventListener('popstate', function (event) { // Render new content for
 function startPopcornQuiz(locale, limit, device) {
 	if (locale && locale.length > 0) _pqLocale = locale;
 	getKeywords();
-	amazonTimer();
+	amazonPQTimer();
 	getStats();
 	setGameElements(_pqLang);
 	document.getElementById('truncatePercentage').value = _pqChartSummary;
@@ -67,7 +67,7 @@ function startPopcornQuiz(locale, limit, device) {
 	}
 }
 
-function amazonTimer() {
+function amazonPQTimer() {
 	getPhrases();
 	getIntro();
 	getEvent();
@@ -75,7 +75,7 @@ function amazonTimer() {
 	checkNewDay();
 	getMyRank();
 	getGameCalendar();
-	_aInt = setInterval(function () {
+	_aPQInt = setInterval(function () {
 		ga('send', 'pageview', {'page': '/', 'title': ''});
 		getPhrases();
 		getIntro();
@@ -88,8 +88,8 @@ function amazonTimer() {
 }
 
 function statsTimer() {
-	_sInt = setTimeout(function () {
-		clearTimeout(_sInt);
+	_sPQInt = setTimeout(function () {
+		clearTimeout(_sPQInt);
 		getStats();
 	}, 5000);
 }
@@ -99,7 +99,7 @@ function getStats() {
 		if (err) { console.error(err); return statsTimer(); }
 		if (data && _pqLastTimestamp < data[0].timestamp) {
 			_pqLastTimestamp = data[0].timestamp;
-			getGamePlay(function () {
+			getPQGamePlay(function () {
 				 return statsTimer();
 			});
 		} else {
@@ -157,21 +157,21 @@ function getGameCalendar() {
 	});
 }
 
-function getGamePlay(callback) {
+function getPQGamePlay(callback) {
 	async.parallel([
 	    function(callback) {
-	        buildLeague(function () {
-	        	callback(null, 'buildLeague');
+	        buildPQLeague(function () {
+	        	callback(null, 'buildPQLeague');
 	        });
 	    },
 	    function(callback) {
-	        buildLastGames(function () {
-	        	callback(null, 'buildLastGames');
+	        buildPQLastGames(function () {
+	        	callback(null, 'buildPQLastGames');
 	        });
 	    },
 	    function(callback) {
-	    	getDailyGames(function () {
-	    		callback(null, 'getDailyGames');
+	    	getPQDailyGames(function () {
+	    		callback(null, 'getPQDailyGames');
 	    	});
 	    }
 	],
@@ -181,7 +181,7 @@ function getGamePlay(callback) {
 	});
 }
 
-function buildLeague(callback) {
+function buildPQLeague(callback) {
 	var uri = aws + "?league=true&prefix=pc&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLeague(data, 'pc');
@@ -189,7 +189,7 @@ function buildLeague(callback) {
 	});
 }
 
-function buildLastGames(callback) {
+function buildPQLastGames(callback) {
 	var uri = aws + "?lastgames=true&prefix=pc&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLastGames(data, 'pc');
@@ -197,11 +197,11 @@ function buildLastGames(callback) {
 	});
 }
 
-function getDailyGames(callback) {
+function getPQDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		buildDailyGames(err, data);
+		buildPQDailyGames(err, data);
 		return callback();
 	});
 }
@@ -213,7 +213,6 @@ function switchLocale(locale) {
 	getIntro();
 	getKeywords();
 	getPhrases();
-	console.log("HERE 1")
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 	
 	setGameElements(locale);
@@ -223,7 +222,7 @@ function switchLocale(locale) {
 	_pqDailyPlayers = [];
 	clearLeague('pc_scores', null);
 	clearLeague('pc_lastgames', null);
-	getGamePlay();
+	getPQGamePlay();
 }
 
 function switchDevice(device) {
@@ -249,7 +248,7 @@ function switchDevice(device) {
 	_pqDailyPlayers = [];
 	clearLeague('pc_scores', null);
 	clearLeague('pc_lastgames', null);
-	getGamePlay();
+	getPQGamePlay();
 	setGameElements(_pqLang);
 }
 
@@ -368,10 +367,11 @@ function applyLocaleHeader(locale, device) {
 	document.getElementById("th_"+locale).classList.add('selected');
 }
 
-function buildDailyGames(err, content) {
+function buildPQDailyGames(err, content) {
+	console.log(err, content)
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
-	if (!content.g) {console.log(content); return;}
+	if (!content.g) return;
 
 	updateDeviceTypes(content.g);
 	updateBonusPanel(content.g);
@@ -902,8 +902,8 @@ function resetLimit() {
 	var newUrl = paramReplace('limit', window.location.href, _pqLimit);
 	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
 	changeUrl('', newUrl);
-	clearLeague('pc_scores', buildLeague());
-	clearLeague('pc_lastgames', buildLastGames());
+	clearLeague('pc_scores', buildPQLeague());
+	clearLeague('pc_lastgames', buildPQLastGames());
 }
 
 function increaseLimit() {
@@ -912,8 +912,8 @@ function increaseLimit() {
 	var newUrl = paramReplace('limit', window.location.href, _pqLimit);
 	if (newUrl.indexOf('#pc_league') === -1) newUrl = newUrl + '#pc_league';
 	changeUrl('', newUrl);
-	buildLeague();
-	buildLastGames();	
+	buildPQLeague();
+	buildPQLastGames();	
 }
 
 function getIntro() {
