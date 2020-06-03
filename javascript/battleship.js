@@ -29,7 +29,7 @@ function amazonBSTimer() {
 	getBSGamePlay();
 	_aBSInt = setInterval(function () {
 		getBSGamePlay();
-	}, 5000);
+	}, 30000); // 5000
 }
 
 function getBSGamePlay(callback) {
@@ -60,7 +60,7 @@ function buildBSLeague(callback) {
 	var uri = aws + "?league=true&prefix=bs&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
 		// buildPopcornLeague(data, 'pc');
-		console.log(data)
+		console.log(data.league.length)
 		if (callback) return callback();
 	});
 }
@@ -69,7 +69,7 @@ function buildBSLastGames(callback) {
 	var uri = aws + "?lastgames=true&prefix=bs&limit=" + _bsLimit + "&locale=" + _bsLocale + _bsDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
 		// buildPopcornLastGames(data, 'pc');
-		console.log(data)
+		// console.log(data)
 		if (callback) return callback();
 	});
 }
@@ -78,7 +78,7 @@ function getBSDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		console.log(data)
+		// console.log(data)
 		// buildDailyGames(err, data);
 		return callback();
 	});
