@@ -59,8 +59,10 @@ function getBSGamePlay(callback) {
 function buildBSLeague(callback) {
 	var uri = aws + "?league=true&prefix=bs&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
+		if (!data) return callback();
 		// buildPopcornLeague(data, 'pc');
 		console.log(data.league.length)
+		fadeyStuff("bs_total_players", displayDots(data.league.length)); 
 		if (callback) return callback();
 	});
 }
@@ -68,6 +70,7 @@ function buildBSLeague(callback) {
 function buildBSLastGames(callback) {
 	var uri = aws + "?lastgames=true&prefix=bs&limit=" + _bsLimit + "&locale=" + _bsLocale + _bsDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
+		if (!data) return callback();
 		// buildPopcornLastGames(data, 'pc');
 		// console.log(data)
 		if (callback) return callback();
@@ -78,7 +81,12 @@ function getBSDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		// console.log(data)
+		console.log(data)
+		var tots = 0;
+		for (var i = 0; i < data.g.length; i++) {
+			tots+=data.g[i].games;
+		}
+		fadeyStuff("bs_total_games", displayDots(tots)); 
 		// buildDailyGames(err, data);
 		return callback();
 	});
@@ -87,6 +95,16 @@ function getBSDailyGames(callback) {
 function switchLocale(locale) {
 	_bsLocale = locale;
 	getBSGamePlay();
+}
+
+function displayDots(size) {
+	var b = "&bull;";
+	var retVal = "";
+	for (var i = 1; i <= size; i++) {
+		retVal += b;
+		if (i % 5 === 0)  retVal += " ";
+	}
+	return retVal;
 }
 
 // function reset() {
