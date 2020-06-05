@@ -284,6 +284,15 @@ table.allowWrap th {
   display: inline-block;
 }
 
+div.profilePic {
+  height: 200px;
+  min-height: 200px;
+}
+
+div.profilePic > img {
+  border-radius: 8px;
+}
+
 @media print, screen and (max-width: 720px) {
   body {
     word-wrap:break-word;
@@ -396,6 +405,12 @@ img.locale {
   padding: 0px !important;
   margin: 0px !important;
   width: 32px;
+}
+
+img.locale_sm {
+  padding: 0px !important;
+  margin: 0px !important;
+  width: 28px;
 }
 
 .locale_enGB {

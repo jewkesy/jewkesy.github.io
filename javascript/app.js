@@ -306,6 +306,16 @@ function addDays(startDate,numberOfDays) {
 	return returnDate;
 }
 
+function getDaysAgo(dayAgo) {
+	var d = new Date();
+	var dateAgo = new Date(d.setDate(d.getDate() - 10));
+	// console.log(dateAgo)
+	var retVal = dateAgo.getFullYear()+"-"+(dateAgo.getMonth()+1)+"-"+dateAgo.getDate();
+	// console.log(retVal)
+	// 2020-5-27
+	return retVal || 0;
+}
+
 function getMonthName(mon) {
 	var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	return " " + monthNames[+mon];

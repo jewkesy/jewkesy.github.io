@@ -15,7 +15,7 @@ var _popcornLastGameUrl = aws + '?last=true&prefix=pc&limit=' + _pqLimit;
 
 var _pqStartDate = new Date("2017-05-27T02:00:00Z");
 var _pqDiff = daydiff(_pqStartDate, new Date(), true);
-var _pqTimeFrom = 0;
+var _pqTimeFrom = getDaysAgo(10);
 var _pqLastTimestamp = 0;
 var _pqDoubleDayDivider = 1;
 var _pqDaysSinceLaunch = _pqDiff;
@@ -72,6 +72,7 @@ function amazonPQTimer() {
 	getIntro();
 	getEvent();
 	getUpdated();
+	getBoosters();
 	checkNewDay();
 	getMyRank();
 	getGameCalendar();
@@ -81,6 +82,7 @@ function amazonPQTimer() {
 		getIntro();
 		getEvent();
 		getUpdated();
+		getBoosters();
 		checkNewDay();
 		getMyRank();
 		getGameCalendar();
@@ -227,7 +229,7 @@ function switchLocale(locale) {
 
 function switchDevice(device) {
 	if (!device) device = "ga_aa";
-	_pqTimeFrom = 0;
+	_pqTimeFrom = getDaysAgo(10);
 	if (device == 'Google') {
 		_pqDevice = 'ga';
 		_pqDeviceFilter = "&device=Google,Google%20Phone,Google%20Surface,Google%20Speaker";
@@ -313,7 +315,7 @@ function reset() {
 	_pqNewUsersLabels = [];
 	_pqGameinfo = { dailygames: [] };
 	_pqDaysSinceLaunch = _pqDiff;
-	_pqTimeFrom = 0;
+	_pqTimeFrom = getDaysAgo(10);
 }
 
 function checkNewDay() { //if new day, rebuild saved stats
@@ -375,7 +377,6 @@ function buildPQDailyGames(err, content) {
 
 	updateDeviceTypes(content.g);
 	updateBonusPanel(content.g);
-	updateBoosterPanel(content.boo);
 
 	_pqChtData = content.g;
 
@@ -931,6 +932,15 @@ function getUpdated() {
 	httpGetByUrl(url, function (err, data) {
 		if (!data || !data.msg || data.msg.length == 0) return;
 		buildUpdated(data);
+	});
+}
+
+function getBoosters() {
+	var count = 10;
+	var url = aws + "?getboosters=true&prefix=pc&locale="+_pqLang+"&count="+count;
+	httpGetByUrl(url, function (err, data) {
+		if (!data || !data.boo || data.boo.length == 0) return;
+		updateBoosterPanel(data.boo);
 	});
 }
 

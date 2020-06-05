@@ -81,7 +81,7 @@ function getBSDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		console.log(data)
+		// console.log(data)
 		var tots = 0;
 		for (var i = 0; i < data.g.length; i++) {
 			tots+=data.g[i].games;
