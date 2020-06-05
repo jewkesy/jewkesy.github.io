@@ -754,7 +754,7 @@ function prepDataForChart(data, history) {
 	dailyLabels[0] = "Launch";
 	dailyLabels[_pqDiff-1] = "Today";
 
-	var uk = new Array(_pqDiff).fill(null);
+	var uk = new Array(_pqTimeFrom).fill(null);
 	var us = new Array(_pqDiff).fill(null);
 	var de = new Array(_pqDiff).fill(null);
 	var ind= new Array(_pqDiff).fill(null);
@@ -777,6 +777,7 @@ function prepDataForChart(data, history) {
 		for (var x in month) {
 	        if (month.hasOwnProperty(x)) {
 	        	if (x.indexOf("d_") != 0) continue;
+
 	        	var day = month[x];
 
 	        	if (day.games) {
@@ -848,23 +849,23 @@ function prepDataForChart(data, history) {
 	var dailyData = {
 		labels: dailyLabels.slice(history),
 
-		uk: uk.slice(history),
-		us: us.slice(history),
-		de: de.slice(history),
-		in: ind.slice(history),
-		ca: ca.slice(history),
-		jp: jp.slice(history),
-		au: au.slice(history),
-		fr: fr.slice(history),
-		es: es.slice(history),
-		it: it.slice(history),
-		mx: mx.slice(history),
-		br: br.slice(history),
-		dk: dk.slice(history),
-		esla: esla.slice(history),
+		uk: uk,
+		us: us,
+		de: de,
+		in: ind,
+		ca: ca,
+		jp: jp,
+		au: au,
+		fr: fr,
+		es: es,
+		it: it,
+		mx: mx,
+		br: br,
+		dk: dk,
+		esla: esla,
 
 		dailygames: dailyGames.slice(history),
-		dailyplayers: dailyTotals.slice(history),
+		dailyplayers: dailyTotals,
 		we: weekends.slice(history),
 		mo: months.slice(history)
 	}
