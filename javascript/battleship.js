@@ -61,7 +61,7 @@ function buildBSLeague(callback) {
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
 		// buildPopcornLeague(data, 'pc');
-		console.log(data.league.length)
+		// console.log(data.league.length)
 		fadeyStuff("bs_total_players", displayDots(data.league.length)); 
 		if (callback) return callback();
 	});

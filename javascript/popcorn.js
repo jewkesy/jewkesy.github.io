@@ -203,6 +203,7 @@ function getPQDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
+		console.log(data)
 		buildPQDailyGames(err, data);
 		return callback();
 	});
@@ -370,12 +371,11 @@ function applyLocaleHeader(locale, device) {
 }
 
 function buildPQDailyGames(err, content) {
-	// console.log(err, content)
 	if (err) {console.error(err); return;}
 	if (!content) {console.log('no data'); return;}
 	if (!content.g) return;
 
-	updateDeviceTypes(content.g);
+	updateDeviceTypes(content.t);
 	updateBonusPanel(content.g);
 
 	_pqChtData = content.g;
@@ -385,50 +385,24 @@ function buildPQDailyGames(err, content) {
 
 	var d = new Date();
     var formattedDate = "d_"+ formatDate(d);
-
     if (!content.g[content.g.length-1][formattedDate]) return;
-	var today = content.g[content.g.length-1][formattedDate].games;
 	
-	var total = 0;
-	var days = 0;
-	for (var i = 0; i < content.g.length; i++) {
-		if (content.g[i].games === 0) continue;
-		total += content.g[i].games;
-		for (k in content.g[i]) {
-			if (k.indexOf('d_') == 0) days++;
-		}
-	}
+	var total = content.t.total;
+	var days = content.t.days;
+	var today = content.g[content.g.length-1][formattedDate].games;
 
 	fadeyStuff("pc_games_today", numberWithCommas(today));
-
-	var avg = Math.round(total/days);
-	fadeyStuff('pc_games_avg', numberWithCommas(avg));
-
-	fadeyStuff('pc_total_games', numberWithCommas(total));
-	fadeyStuff("approxGames", numberWithCommas(total));		
-	document.getElementById('pc_total_games').setAttribute('total', total);
+	fadeyStuff('pc_games_avg', numberWithCommas(content.t.avg));
+	fadeyStuff('pc_total_games', numberWithCommas(content.t.total));
+	fadeyStuff("approxGames", numberWithCommas(content.t.total));		
+	document.getElementById('pc_total_games').setAttribute('total', content.t.total);
 	fadeyStuff('pc_total_today', numberWithCommas(content.g[content.g.length-1][formattedDate].total));
 }
 
-function countDevices(obj, stack) {
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            if (typeof obj[property] == "object") {
-                countDevices(obj[property], stack + '.' + property);
-            } else {
-            	if (property.toLowerCase().indexOf('echo') == 0) {
-            		_pqDeviceCounts.Echo += obj[property];
-            	} else if (property.toLowerCase().indexOf('google') == 0) {
-            		_pqDeviceCounts.Google += obj[property];
-            	}
-            }
-        }
-    }
-}
-
 function updateDeviceTypes(obj) {
-	_pqDeviceCounts = {Echo: 0, Google: 0, Total: 0};
-	countDevices(obj, '');
+	console.log(obj)
+	_pqDeviceCounts = obj.deviceTotals;
+	// countDevices(obj, '');
 	_pqDeviceCounts.Total = _pqDeviceCounts.Echo + _pqDeviceCounts.Google;
 
 	var aWidth = percentage(_pqDeviceCounts.Echo, _pqDeviceCounts.Total);
@@ -445,8 +419,8 @@ function updateDeviceTypes(obj) {
 		fadeyStuff("barGoogle", gWidth.toFixed(2)+'%');
 	}
 
-	fadeyStuff("pc_pqDevice_alexa", numberWithCommas(_pqDeviceCounts.Echo));
-	fadeyStuff("pc_pqDevice_google", numberWithCommas(_pqDeviceCounts.Google));
+	fadeyStuff("pc_device_alexa", numberWithCommas(_pqDeviceCounts.Echo));
+	fadeyStuff("pc_device_google", numberWithCommas(_pqDeviceCounts.Google));
 }
 
 function countBonuses(obj, stack) {
