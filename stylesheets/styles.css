@@ -50,6 +50,11 @@ h4 > a {
   font-weight:600;
 }
 
+span.quote {
+  font-weight:600;
+  color:#39c;
+}
+
 .wrapper {
   width:860px;
   margin:0 auto;
@@ -291,6 +296,25 @@ div.profilePic {
 
 div.profilePic > img {
   border-radius: 8px;
+}
+
+a.socialTile {
+  text-decoration:none;
+  display:inline-block;
+  color:#333;
+  text-align:center; 
+  font:13px/16px arial,
+  sans-serif;
+  white-space:nowrap;
+  margin:10px;
+}
+
+a.socialTile > img {
+  border:0;width:64px;height:64px;
+}
+
+span.strong {
+  font-weight:bold;
 }
 
 @media print, screen and (max-width: 720px) {

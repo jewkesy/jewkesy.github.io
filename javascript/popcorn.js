@@ -203,7 +203,7 @@ function getPQDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		console.log(data)
+		// console.log(data)
 		buildPQDailyGames(err, data);
 		return callback();
 	});
@@ -400,7 +400,7 @@ function buildPQDailyGames(err, content) {
 }
 
 function updateDeviceTypes(obj) {
-	console.log(obj)
+	// console.log(obj)
 	_pqDeviceCounts = obj.deviceTotals;
 	// countDevices(obj, '');
 	_pqDeviceCounts.Total = _pqDeviceCounts.Echo + _pqDeviceCounts.Google;
