@@ -15,7 +15,8 @@ var _popcornLastGameUrl = aws + '?last=true&prefix=pc&limit=' + _pqLimit;
 
 var _pqStartDate = new Date("2017-05-27T02:00:00Z");
 var _pqDiff = daydiff(_pqStartDate, new Date(), true);
-var _pqTimeFrom = getDaysAgo(10);
+var _pqChartDaysDisplay = 10;
+var _pqTimeFrom = getDaysAgo(_pqChartDaysDisplay);
 var _pqLastTimestamp = 0;
 var _pqDoubleDayDivider = 1;
 var _pqDaysSinceLaunch = _pqDiff;
@@ -185,6 +186,7 @@ function getPQGamePlay(callback) {
 
 function buildPQLeague(callback) {
 	var uri = aws + "?league=true&prefix=pc&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
+	console.log(uri)
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLeague(data, 'pc');
 		if (callback) return callback();
@@ -193,6 +195,7 @@ function buildPQLeague(callback) {
 
 function buildPQLastGames(callback) {
 	var uri = aws + "?lastgames=true&prefix=pc&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
+	console.log(uri)
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLastGames(data, 'pc');
 		if (callback) return callback();
@@ -200,7 +203,9 @@ function buildPQLastGames(callback) {
 }
 
 function getPQDailyGames(callback) {
-	httpGetByUrl(aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter, function (err, data) {
+	var uri = aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter;
+	console.log(uri)
+	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
 		// console.log(data)
@@ -220,7 +225,7 @@ function switchLocale(locale) {
 	
 	setGameElements(locale);
 	
-	clearInterval(sInt);
+	clearTimeout(_sPQInt);
 	statsTimer();
 	_pqDailyPlayers = [];
 	clearLeague('pc_scores', null);
@@ -230,7 +235,7 @@ function switchLocale(locale) {
 
 function switchDevice(device) {
 	if (!device) device = "ga_aa";
-	_pqTimeFrom = getDaysAgo(10);
+	_pqTimeFrom = getDaysAgo(_pqChartDaysDisplay);
 	if (device == 'Google') {
 		_pqDevice = 'ga';
 		_pqDeviceFilter = "&device=Google,Google%20Phone,Google%20Surface,Google%20Speaker";
@@ -316,7 +321,7 @@ function reset() {
 	_pqNewUsersLabels = [];
 	_pqGameinfo = { dailygames: [] };
 	_pqDaysSinceLaunch = _pqDiff;
-	_pqTimeFrom = getDaysAgo(10);
+	_pqTimeFrom = getDaysAgo(_pqChartDaysDisplay);
 }
 
 function checkNewDay() { //if new day, rebuild saved stats
@@ -668,7 +673,7 @@ var _chtStuffRunning = false;
 function chtNewUsers(chart, dailyData, total) {	
 	if (_chtStuffRunning || dailyData.labels.length == 0) return;
 	_chtStuffRunning = true;
-
+console.log(dailyData)
 	var data = {
 		labels: dailyData.labels,
 		datasets:[
@@ -728,7 +733,7 @@ function isBigEnough() {
 function prepDataForChart(data, history) {
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year"));
-
+// console.log(data)
 	var dailyGames = [];
 	var dailyLabels = [];
 	var dailyTotals = [];
@@ -754,20 +759,20 @@ function prepDataForChart(data, history) {
 	dailyLabels[0] = "Launch";
 	dailyLabels[_pqDiff-1] = "Today";
 
-	var uk = new Array(_pqTimeFrom).fill(null);
-	var us = new Array(_pqDiff).fill(null);
-	var de = new Array(_pqDiff).fill(null);
-	var ind= new Array(_pqDiff).fill(null);
-	var ca = new Array(_pqDiff).fill(null);
-	var jp = new Array(_pqDiff).fill(null);
-	var au = new Array(_pqDiff).fill(null);
-	var fr = new Array(_pqDiff).fill(null);
-	var es = new Array(_pqDiff).fill(null);
-	var it = new Array(_pqDiff).fill(null);
-	var mx = new Array(_pqDiff).fill(null);
-	var esla=new Array(_pqDiff).fill(null);
-	var br = new Array(_pqDiff).fill(null);
-	var dk = new Array(_pqDiff).fill(null);
+	var uk = new Array(_pqChartDaysDisplay).fill(null);
+	var us = new Array(_pqChartDaysDisplay).fill(null);
+	var de = new Array(_pqChartDaysDisplay).fill(null);
+	var ind= new Array(_pqChartDaysDisplay).fill(null);
+	var ca = new Array(_pqChartDaysDisplay).fill(null);
+	var jp = new Array(_pqChartDaysDisplay).fill(null);
+	var au = new Array(_pqChartDaysDisplay).fill(null);
+	var fr = new Array(_pqChartDaysDisplay).fill(null);
+	var es = new Array(_pqChartDaysDisplay).fill(null);
+	var it = new Array(_pqChartDaysDisplay).fill(null);
+	var mx = new Array(_pqChartDaysDisplay).fill(null);
+	var esla=new Array(_pqChartDaysDisplay).fill(null);
+	var br = new Array(_pqChartDaysDisplay).fill(null);
+	var dk = new Array(_pqChartDaysDisplay).fill(null);
 
 	var counter = 0;
 	for (var i = 0; i < data.length; i++) {
@@ -845,7 +850,7 @@ function prepDataForChart(data, history) {
 	        counter++;
 	    }
 	}
-
+console.log(uk)
 	var dailyData = {
 		labels: dailyLabels.slice(history),
 
