@@ -186,7 +186,7 @@ function getPQGamePlay(callback) {
 
 function buildPQLeague(callback) {
 	var uri = aws + "?league=true&prefix=pc&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
-	console.log(uri)
+	// console.log(uri)
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLeague(data, 'pc');
 		if (callback) return callback();
@@ -195,7 +195,7 @@ function buildPQLeague(callback) {
 
 function buildPQLastGames(callback) {
 	var uri = aws + "?lastgames=true&prefix=pc&limit=" + _pqLimit + "&locale=" + _pqLocale + _pqDeviceFilter;
-	console.log(uri)
+	// console.log(uri)
 	httpGetStats(uri, 'pc',  function (err, data) {
 		buildPopcornLastGames(data, 'pc');
 		if (callback) return callback();
@@ -204,7 +204,7 @@ function buildPQLastGames(callback) {
 
 function getPQDailyGames(callback) {
 	var uri = aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter;
-	console.log(uri)
+	// console.log(uri)
 	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
@@ -673,7 +673,7 @@ var _chtStuffRunning = false;
 function chtNewUsers(chart, dailyData, total) {	
 	if (_chtStuffRunning || dailyData.labels.length == 0) return;
 	_chtStuffRunning = true;
-console.log(dailyData)
+
 	var data = {
 		labels: dailyData.labels,
 		datasets:[
@@ -850,7 +850,7 @@ function prepDataForChart(data, history) {
 	        counter++;
 	    }
 	}
-console.log(uk)
+
 	var dailyData = {
 		labels: dailyLabels.slice(history),
 

@@ -34,6 +34,7 @@ function amazonBSTimer() {
 }
 
 function getBSGamePlay(callback) {
+	// TODO Only update if there has been a new game
 	async.parallel([
 	    function(callback) {
 	        buildBSLeague(function () {
@@ -49,6 +50,11 @@ function getBSGamePlay(callback) {
 	    	getBSDailyGames(function () {
 	    		callback(null, 'getBSDailyGames');
 	    	});
+	    },
+	    function(callback) {
+	    	getBSAIStats(function () {
+	    		callback(null, 'getBSAIStats');
+	    	});
 	    }
 	],
 	function(err, results) {
@@ -62,7 +68,7 @@ function buildBSLeague(callback) {
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
 		// buildPopcornLeague(data, 'pc');
-		console.log(data.league.length)
+		// console.log(data.league.length)
 		fadeyStuff("bs_total_players", displayDots(data.league.length)); 
 		if (callback) return callback();
 	});
@@ -73,7 +79,7 @@ function buildBSLastGames(callback) {
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
 		// buildPopcornLastGames(data, 'pc');
-		// console.log(data)
+		console.log(data)
 		if (callback) return callback();
 	});
 }
@@ -82,14 +88,31 @@ function getBSDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _bsLocale + "&timefrom=" + _bsTimeFrom + _bsDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		// console.log(data)
+		console.log(data)
 		var tots = 0;
 		for (var i = 0; i < data.g.length; i++) {
 			tots+=data.g[i].games;
 		}
-		fadeyStuff("bs_total_games", displayDots(tots)); 
-		// buildDailyGames(err, data);
+
+		var att = +document.getElementById('bs_total_games').getAttribute("total");
+		console.log(att, tots)
+		if (+att !== +tots) {
+			console.log("SETTING", tots)
+			document.getElementById('bs_total_games').setAttribute('total', tots);
+			fadeyStuff("bs_total_games", displayDots(tots)); 
+		}
+
 		return callback();
+	});
+}
+
+function getBSAIStats(callback) {
+	var uri = aws + "?getbsaistats=true&prefix=bs&limit=0&locale=" + _bsLocale + _bsDeviceFilter;
+	httpGetStats(uri, 'bs',  function (err, data) {
+		if (!data) return callback();
+		// buildPopcornLastGames(data, 'pc');
+		console.log(data)
+		if (callback) return callback();
 	});
 }
 
