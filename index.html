@@ -392,9 +392,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Wins:</th>
+                    <th>Won:</th>
                     <td id='pc_bonus_wins'>0</td>
-                    <th>Loses:</th>
+                    <th>Lost:</th>
                     <td id='pc_bonus_loses'>0</td>
                     <th>Skips:</th>
                     <td id='pc_bonus_skips'>0</td>
@@ -571,13 +571,34 @@
                 <div style="clear: both;"></div>
                 <p><strong><span id="bs_short_desc">Welcome to Battle Ship - the classic Naval warfare game!</span></strong></p>
                 <p>Play against a relentless AI enemy that won't stop hunting you until your fleet is destroyed!</p>
-                <img class="rounded" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/bs_intro.gif" width="400px" style="margin-bottom:10px"/>
+                <p class="centerMe"><img class="rounded" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/bs_intro.gif" width="400px" style="margin-bottom:10px"/></p>
 
-                <img class="rounded" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/bs_outro.gif" width="400px" style="margin-bottom:10px"/>
+                
 
-                <p>The AI will position your fleet for you, so you jump straight into batte - no faffing setting up your game.</p>
+                <p>The AI will position your fleet for you, so you jump straight into battle - no faffing setting up your game.</p>
+
+                <table class="centerMe borderMe scaleme">
+                    <tr>
+                        <th colspan="4">Human vs AI</th>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="stacked-bar-graph">
+                                <span id="bsBarWins" style="width:0%" class="bar-30"></span>
+                                <span id="bsBarLoses" style="width:0%" class="bar-50"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Human Won:</th>
+                        <td id='bs_wins'>0</td>
+                        <th>AI Won:</th>
+                        <td id='bs_loses'>0</td>
+                    </tr>
+                </table>
                 <p>Command your crew with the coordinates to fire against and rid the sea of the hostile forces.</p>    
                 <p>Earn your promotion through the ranks and compare your achievements with other Battle Ship players.</p>    
+                <p class="centerMe"><img class="rounded" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/bs_outro.gif" width="400px" style="margin-bottom:10px"/></p>
                 <p>Optimised for play on Alexa screen devices, but plays perfectly well on the Dot using the companion app.</p>
 
                 <p><i>This Skill was launched on Alexa on 28th May 2020</i></p>

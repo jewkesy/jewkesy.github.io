@@ -79,7 +79,7 @@ function buildBSLastGames(callback) {
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
 		// buildPopcornLastGames(data, 'pc');
-		console.log(data)
+		// console.log(data)
 		if (callback) return callback();
 	});
 }
@@ -88,16 +88,16 @@ function getBSDailyGames(callback) {
 	httpGetByUrl(aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _bsLocale + "&timefrom=" + _bsTimeFrom + _bsDeviceFilter, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		console.log(data)
+		// console.log(data)
 		var tots = 0;
 		for (var i = 0; i < data.g.length; i++) {
 			tots+=data.g[i].games;
 		}
 
 		var att = +document.getElementById('bs_total_games').getAttribute("total");
-		console.log(att, tots)
+		// console.log(att, tots)
 		if (+att !== +tots) {
-			console.log("SETTING", tots)
+			// console.log("SETTING", tots)
 			document.getElementById('bs_total_games').setAttribute('total', tots);
 			fadeyStuff("bs_total_games", displayDots(tots)); 
 		}
@@ -110,16 +110,27 @@ function getBSAIStats(callback) {
 	var uri = aws + "?getbsaistats=true&prefix=bs&limit=0&locale=" + _bsLocale + _bsDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
-		// buildPopcornLastGames(data, 'pc');
-		console.log(data)
+		setAIStats(data);
 		if (callback) return callback();
 	});
 }
 
-// function switchLocale(locale) {
-// 	_bsLocale = locale;
-// 	getBSGamePlay();
-// }
+function setAIStats(data) {
+	console.log(data)
+	var tot = data.w + data.l;
+	var humanWidth = percentage(data.w, tot);
+	var aiWidth = percentage(data.l, tot);
+
+	document.getElementById('bsBarWins').setAttribute('style', 'width:'+humanWidth+'%');
+	document.getElementById('bsBarLoses').setAttribute('style','width:'+aiWidth+'%');
+
+	fadeyStuff("bsBarWins", humanWidth.toFixed(2)+'%');
+	fadeyStuff("bsBarLoses", aiWidth.toFixed(2)+'%');
+
+	fadeyStuff("bs_wins", numberWithCommas(data.w));
+	fadeyStuff("bs_loses", numberWithCommas(data.l));
+
+}
 
 function displayDots(size) {
 	var b = "&bull;";
