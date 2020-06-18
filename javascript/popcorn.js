@@ -315,6 +315,7 @@ function clearLeague(id, callback) {
 }
 
 function reset() {
+	console.log("TODO remove limit from Querystring")
 	var today = new Date();
 	_pqDiff =  daydiff(_pqStartDate, today, true);
 	_pqNewUsers = {};

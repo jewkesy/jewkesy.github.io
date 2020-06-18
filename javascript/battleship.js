@@ -6,7 +6,7 @@
 var _bsStartDate = new Date("2020-05-27T02:00:00Z");
 var _bsDiff = daydiff(_pqStartDate, new Date(), true);
 var _bsLocale = getParameterByName('locale') || '';
-var _bsLimit = getParameterByName('limit') || 0;  //10
+var _bsLimit = 0;  //10
 var _bsDeviceFilter = '';
 var _bsTimeFrom = "";
 var _aBSInt; //interval timer for Lambda
