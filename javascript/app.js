@@ -30,8 +30,6 @@ function getGenreEventTitle(genre, suffix) {
 	var br = "<br/>";
 	var l = _pqLocale.split('-')[0];
 	if (genre == "Horror_Seasonal") {
-		
-		
 			 if (l == 'es') return br + "🎃 Evento de halloween";
 		else if (l == 'it') return br + "🎃 Evento di Halloween";
 		else if (l == 'fr') return br + "🎃 Événement d'Halloween";
@@ -500,4 +498,3 @@ function sumObjCounts(obj) {
 
 	return total;
 }
-

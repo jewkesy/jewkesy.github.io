@@ -116,7 +116,7 @@ function getBSAIStats(callback) {
 }
 
 function setAIStats(data) {
-	console.log(data)
+	// console.log(data)
 	var tot = data.w + data.l;
 	var humanWidth = percentage(data.w, tot);
 	var aiWidth = percentage(data.l, tot);
@@ -133,6 +133,7 @@ function setAIStats(data) {
 }
 
 function displayDots(size) {
+	return size;
 	var b = "&bull;";
 	var retVal = "";
 	for (var i = 1; i <= size; i++) {
