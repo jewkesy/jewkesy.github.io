@@ -75,13 +75,22 @@ function buildBSLeague(callback) {
 }
 
 function buildBSLastGames(callback) {
-	var uri = aws + "?lastgames=true&prefix=bs&limit=" + _bsLimit + "&locale=" + _bsLocale + _bsDeviceFilter;
+	var limit = 5;
+	fadeyStuff("bs_lastgames_limit", limit); 
+	var uri = aws + "?lastgames=true&prefix=bs&limit=" + limit + "&locale=" + _bsLocale + _bsDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
-		// buildPopcornLastGames(data, 'pc');
-		// console.log(data)
+		console.log(data)
+		buildBSLastGamesPreview(data, 'bs');
 		if (callback) return callback();
 	});
+}
+
+function buildBSLastGamesPreview(data, prefix) {
+	console.log(data)
+
+
+
 }
 
 function getBSDailyGames(callback) {
