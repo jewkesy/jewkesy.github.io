@@ -75,7 +75,7 @@ function buildBSLeague(callback) {
 }
 
 function buildBSLastGames(callback) {
-	var limit = 5;
+	var limit = 10;
 	fadeyStuff("bs_lastgames_limit", limit); 
 	var uri = aws + "?lastgames=true&prefix=bs&limit=" + limit + "&locale=" + _bsLocale + _bsDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
@@ -89,8 +89,44 @@ function buildBSLastGames(callback) {
 function buildBSLastGamesPreview(data, prefix) {
 	console.log(data)
 
+	var container = document.getElementById(prefix + '_lastgames');
 
+	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0]._id) return;
 
+	for (var i = 0; i < data.lastGames.length; i++) {
+		var device = ".";
+		var deviceIcon = "alexa";
+		var game = data.lastGames[i];
+		var x = i+1;
+
+		var row = container.insertRow(-1);
+		row.id = prefix + '_lastgames_' + x;
+		row.title = game._id;
+		var cell0 = row.insertCell(0);
+		cell0.id = prefix + "_lastgames_device_" + x;
+
+		var cell1 = row.insertCell(1);
+		cell1.id = prefix + "_lastgames_tactical_" + x;
+		if (game.lg.won) cell1.className = "strong";
+
+		var cell2 = row.insertCell(2);
+		cell2.id = prefix + "_lastgames_enemy_" + x;
+		if (!game.lg.won) cell2.className = "strong";
+
+		var cell3 = row.insertCell(3);
+		cell3.id = prefix + "_lastgames_ts_" + x;
+		cell3.className = "timeago";
+		cell3.title = new Date(game.lastGame).getTime()/1000;
+
+		var cell4 = row.insertCell(4);
+		cell4.id = prefix + "_lastgames_st_" + x;
+		cell4.className = "timeago";
+		cell4.title = new Date(game.startDate).getTime()/1000;
+
+		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, game.locale, device));
+		fadeyStuff(prefix + "_lastgames_tactical_" + x, "TACTICAL");
+		fadeyStuff(prefix + "_lastgames_enemy_" + x, "ENEMY");
+	}
 }
 
 function getBSDailyGames(callback) {
