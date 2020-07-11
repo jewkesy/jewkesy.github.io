@@ -41,7 +41,7 @@ const arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_c
 ];
 
 function buildAmazonReview(data) {
-	console.log(data)
+	// console.log(data)
 	if (!data.popcorn_quiz.uk) data.popcorn_quiz.uk = {score:0,reviews:0};
 	if (!data.popcorn_quiz.us) data.popcorn_quiz.us = {score:0,reviews:0};
 	if (!data.popcorn_quiz.de) data.popcorn_quiz.de = {score:0,reviews:0};

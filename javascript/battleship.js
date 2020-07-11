@@ -75,20 +75,18 @@ function buildBSLeague(callback) {
 }
 
 function buildBSLastGames(callback) {
-	var limit = 10;
+	var limit = _pqLimit || 10;
 	fadeyStuff("bs_lastgames_limit", limit); 
 	var uri = aws + "?lastgames=true&prefix=bs&limit=" + limit + "&locale=" + _bsLocale + _bsDeviceFilter;
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
-		console.log(data)
+		// console.log(data)
 		buildBSLastGamesPreview(data, 'bs');
 		if (callback) return callback();
 	});
 }
 
 function buildBSLastGamesPreview(data, prefix) {
-	console.log(data)
-
 	var container = document.getElementById(prefix + '_lastgames');
 
 	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0]._id) return;
@@ -96,7 +94,10 @@ function buildBSLastGamesPreview(data, prefix) {
 	for (var i = 0; i < data.lastGames.length; i++) {
 		var device = ".";
 		var deviceIcon = "alexa";
+		
 		var game = data.lastGames[i];
+		if (game.device == "EchoShow") device = ":";
+
 		var x = i+1;
 
 		var row = container.insertRow(-1);
@@ -114,18 +115,26 @@ function buildBSLastGamesPreview(data, prefix) {
 		if (!game.lg.won) cell2.className = "strong";
 
 		var cell3 = row.insertCell(3);
-		cell3.id = prefix + "_lastgames_ts_" + x;
-		cell3.className = "timeago";
-		cell3.title = new Date(game.lastGame).getTime()/1000;
+		cell3.id = prefix + "_lastgames_tg_" + x;
 
 		var cell4 = row.insertCell(4);
-		cell4.id = prefix + "_lastgames_st_" + x;
-		cell4.className = "timeago";
-		cell4.title = new Date(game.startDate).getTime()/1000;
+		cell4.id = prefix + "_lastgames_wl_" + x;
+
+		var cell5 = row.insertCell(5);
+		cell5.id = prefix + "_lastgames_ts_" + x;
+		cell5.className = "timeago";
+		cell5.title = new Date(game.lastGame).getTime()/1000;
+
+		var cell6 = row.insertCell(6);
+		cell6.id = prefix + "_lastgames_st_" + x;
+		cell6.className = "timeago";
+		cell6.title = new Date(game.startDate).getTime()/1000;
 
 		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, game.locale, device));
-		fadeyStuff(prefix + "_lastgames_tactical_" + x, "TACTICAL");
+		fadeyStuff(prefix + "_lastgames_tactical_" + x, "PLAYER");
 		fadeyStuff(prefix + "_lastgames_enemy_" + x, "ENEMY");
+		fadeyStuff(prefix + "_lastgames_tg_" + x, game.totalGames);
+		fadeyStuff(prefix + "_lastgames_wl_" + x, game.totalWins + "/" + game.totalLoses);
 	}
 }
 
