@@ -664,6 +664,10 @@ table > tbody > strong {
   font-size: 20pt;
 }
 
+table.bs_grid { background-color: #63b4ff; border-collapse: collapse; text-align: center; vertical-align: middle;  border: 1px solid maroon; padding: 0px; margin:0px;}
+table.bs_grid > th, td {}
+
+
 .stacked-bar-graph {
   width: 100%;
   height: 18px;

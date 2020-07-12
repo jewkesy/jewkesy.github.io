@@ -96,6 +96,7 @@ function buildBSLastGamesPreview(data, prefix) {
 		var deviceIcon = "alexa";
 		
 		var game = data.lastGames[i];
+		console.log(game)
 		if (game.device == "EchoShow") device = ":";
 
 		var x = i+1;
@@ -108,11 +109,11 @@ function buildBSLastGamesPreview(data, prefix) {
 
 		var cell1 = row.insertCell(1);
 		cell1.id = prefix + "_lastgames_tactical_" + x;
-		if (game.lg.won) cell1.className = "strong";
+		// if (game.lg.won) cell1.className = "strong";
 
 		var cell2 = row.insertCell(2);
 		cell2.id = prefix + "_lastgames_enemy_" + x;
-		if (!game.lg.won) cell2.className = "strong";
+		// if (!game.lg.won) cell2.className = "strong";
 
 		var cell3 = row.insertCell(3);
 		cell3.id = prefix + "_lastgames_tg_" + x;
@@ -131,8 +132,8 @@ function buildBSLastGamesPreview(data, prefix) {
 		cell6.title = new Date(game.startDate).getTime()/1000;
 
 		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, game.locale, device));
-		fadeyStuff(prefix + "_lastgames_tactical_" + x, "PLAYER");
-		fadeyStuff(prefix + "_lastgames_enemy_" + x, "ENEMY");
+		fadeyStuff(prefix + "_lastgames_tactical_" + x, wrapWithHTML(game.lg.tGrid, 50));
+		fadeyStuff(prefix + "_lastgames_enemy_" + x, wrapWithHTML(game.lg.aiGrid, 50));
 		fadeyStuff(prefix + "_lastgames_tg_" + x, game.totalGames);
 		fadeyStuff(prefix + "_lastgames_wl_" + x, game.totalWins + "/" + game.totalLoses);
 	}
@@ -197,24 +198,110 @@ function displayDots(size) {
 	return retVal;
 }
 
-// function reset() {
-// 	// console.log(reset)
-// 	var today = new Date();
-// 	_diff =  daydiff(_startDate, today, true);
-// 	_newUsers = {};
-// 	_newUsersLabels = [];
-// 	_gameinfo = {
-// 		dailygames: []
-// 	};
-// 	_daysSinceLaunch = _diff;
-// 	_timeFrom = 0;
-// }
+var flame = "./images/bs_flame.png"
+var splash = "./images/bs_ripples.png"
+var greenship = "./images/bs_green.png";
+var sunkship = "./images/bs_sunk.png";
 
-// function checkNewDay() { //if new day, rebuild saved stats
-// 	console.log("HERE")
-// 	var today = new Date();
-// 	var diff =  daydiff(_startDate, today, true);
-// 	// console.log(diff);
-// 	// console.log(_daysSinceLaunch);
-// 	if (_daysSinceLaunch > 0 && _daysSinceLaunch != diff) reset();
-// }
+
+function getHTMLTop(grids) {
+	var width  = 30; // add initial rownums
+	var height = 30; // add initial colLetters
+	var cellW = 30;
+	var cellH = 30;
+	var borderW = 1;  //borderWidth
+	var spacer = 10;
+
+	if (grids.length == 1) spacer = 0;
+
+	for (var i = 0; i < grids.length; i++) {
+		// console.log(grids[i].grid.length)
+		width = (grids[i].grid[0].length+1)*cellW + (grids[i].grid[0].length+1)*borderW + width;// + (2*borderW);
+		if (i < grids.length-1) width = width + spacer;
+	}
+
+	height = ((grids[0].grid.length+1)*cellH)+15 ;//+ (grids[0].grid.length+1)*borderW + height + (2*borderW);
+
+	// console.log("height", height);
+	// console.log("width", width);
+
+	var htmlTop = `
+	  <html>
+	  <head>
+	  	<style>
+	  		@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i');
+	  		`+cssReset+`
+	        body { font-family: Roboto, Verdana, Arial; width:  ` + width + `px; height: ` + height + `px; margin: 0px; padding: 0px; text-align: center; }
+			table.layout { width: 100% }		
+	        table { background-color: #63b4ff; border-collapse: collapse; text-align: center; vertical-align: middle; }
+	        table.grid > th, td { border: `+borderW+`px solid maroon; padding: 0px; margin:0px; width: `+cellW+`px; height: `+cellH+`px; min-width:`+cellW+`px; min-height:`+cellH+`px; }
+
+			.bs_stacked-bar-graph {
+			  width: 100%;
+			  height: 12px;
+			  color:#414042;
+			}
+
+			.bs_stacked-bar-graph > span {
+			    display: inline-block;
+			    height:100%;
+			    box-sizing: border-box;
+			    float: left;
+			    font-size: 8pt;
+			    padding: 0px;
+			    color: white;
+			    -webkit-text-stroke: 0.5px #f4f4f4;
+			  }
+
+			  .bs_stacked-bar-graph > span.bar-1 {
+			    background: #F7B334;
+			  }
+
+			  .bs_stacked-bar-graph > span.bar-2 {
+			    background: #A7A9AC;
+			  }
+
+			  .bs_stacked-bar-graph > span.bar-3 {
+			    background: #D57E00;
+			  }
+
+	      </style>
+	    </head>
+	  <body>`;
+	  return htmlTop
+}
+
+function wrapWithHTML(grid, progress) {
+	return "<div style='display: inline-block'>" + buildGrid(grid, progress) + "</div>";
+}
+
+function buildGrid(grid, progress) {
+	var alphabet = "abcdefghijklmnopqrstuvwxyz";
+	var retVal = "<table class='bs_grid'>";
+
+	// for (var i = 0; i < grid[0].length; i++) {
+	// 	retVal += "<td>" + alphabet.charAt(i).toUpperCase() + "</td>";
+	// }
+
+	for (var i = 0; i < grid.length; i++) {
+		// retVal += "<tr><td>" + (i+1) + "</td>";
+		retVal += "<tr>";
+		for (var j = 0; j < grid[0].length; j++) {
+			retVal += "<td>"
+			if (grid[i][j] == 0) retVal += '' //'<img src="'+wave+'" alt="flame" />';
+			else if (grid[i][j] == 1) retVal += '<img width="20px" src="'+greenship+'" alt="ship" />'; //ship untouched
+			else if (grid[i][j] == 2) retVal += '<img width="20px" src="'+splash+'" alt="splash" />'; //miss
+			else if (grid[i][j] == 3) retVal += '<img width="20px" src="'+flame+'" alt="flame" />'; //hit
+			else if (grid[i][j] == 4) retVal += '<img width="20px" src="'+sunkship+'" alt="sunk" />'; //sunk
+			else retVal += grid[i][j];
+			retVal += "</td>";
+		}
+		retVal += "</tr>";
+	}
+	// var progress = 0;
+	// var total = 100-progress;
+
+	// retVal += "<tr><td style='border:none !important; height:10px;' colspan='" + grid[0].length+1 + "'><div class='bs_stacked-bar-graph'><span style='width: "+progress+"%; background:green;'>"+progress+"%</span><span style='width: "+total+"%;'></span></div></td></tr>";
+
+	return retVal + "</table>";
+}
