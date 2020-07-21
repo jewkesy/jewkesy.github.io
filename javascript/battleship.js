@@ -285,7 +285,7 @@ function buildGrid(grid, progress) {
 	var width = 15;
 	for (var i = 0; i < grid.length; i++) {
 		// retVal += "<tr><td>" + (i+1) + "</td>";
-		retVal += "<tr>";
+		retVal += "<tr height='15px'>";
 		for (var j = 0; j < grid[0].length; j++) {
 			retVal += "<td class='bs_grid'>"
 			if (grid[i][j] == 0) retVal += '' //'<img src="'+wave+'" alt="flame" />';

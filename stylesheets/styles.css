@@ -665,8 +665,11 @@ table > tbody > strong {
 }
 
 table.bs_grid { background-color: #63b4ff; border-collapse: collapse; text-align: center; vertical-align: middle; border: 1px solid maroon; padding: 0px; margin:0px;}
-td.bs_grid {border: 1px solid maroon; max-height:15px; max-width: 15px; min-width:15px; min-height:15px; padding: 0px; margin:0px;}
+td.bs_grid {border: 1px solid maroon; max-height:15px; max-width: 15px; min-width:15px; min-height:15px; padding: 0px; margin:0px; }
 
+td.bs_grid > img {
+  display: block;
+}
 
 .stacked-bar-graph {
   width: 100%;
