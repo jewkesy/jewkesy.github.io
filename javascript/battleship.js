@@ -78,6 +78,7 @@ function buildBSLastGames(callback) {
 	var limit = _pqLimit || 10;
 	fadeyStuff("bs_lastgames_limit", limit); 
 	var uri = aws + "?lastgames=true&prefix=bs&limit=" + limit + "&locale=" + _bsLocale + _bsDeviceFilter;
+	console.log(uri)
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
 		// console.log(data)
@@ -88,22 +89,22 @@ function buildBSLastGames(callback) {
 
 function buildBSLastGamesPreview(data, prefix) {
 	var container = document.getElementById(prefix + '_lastgames');
-
-	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0]._id) return;
+		console.log(game)
+	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0].lastGame) return;
 
 	for (var i = 0; i < data.lastGames.length; i++) {
 		var device = ".";
 		var deviceIcon = "alexa";
 		
 		var game = data.lastGames[i];
-		console.log(game)
+
 		if (game.device == "EchoShow") device = ":";
 
 		var x = i+1;
 
 		var row = container.insertRow(-1);
 		row.id = prefix + '_lastgames_' + x;
-		row.title = game._id;
+		row.title = game.lastGame;
 		var cell0 = row.insertCell(0);
 		cell0.id = prefix + "_lastgames_device_" + x;
 
@@ -124,18 +125,22 @@ function buildBSLastGamesPreview(data, prefix) {
 		var cell5 = row.insertCell(5);
 		cell5.id = prefix + "_lastgames_ts_" + x;
 		cell5.className = "timeago";
-		cell5.title = new Date(game.lastGame).getTime()/1000;
+		// cell5.title = new Date(game.lastGame).getTime()/1000;
 
 		var cell6 = row.insertCell(6);
 		cell6.id = prefix + "_lastgames_st_" + x;
 		cell6.className = "timeago";
-		cell6.title = new Date(game.startDate).getTime()/1000;
+		// cell6.title = new Date(game.startDate).getTime()/1000;
 
 		fadeyStuff(prefix + "_lastgames_device_" + x, buildIconHTML(deviceIcon, game.locale, device));
 		fadeyStuff(prefix + "_lastgames_tactical_" + x, wrapWithHTML(game.lg.tGrid, 50));
 		fadeyStuff(prefix + "_lastgames_enemy_" + x, wrapWithHTML(game.lg.aiGrid, 50));
 		fadeyStuff(prefix + "_lastgames_tg_" + x, game.totalGames);
 		fadeyStuff(prefix + "_lastgames_wl_" + x, game.totalWins + "/" + game.totalLoses);
+		document.getElementById(prefix + '_lastgames_ts_' + x).title = new Date(game.lastGame).getTime()/1000;
+		document.getElementById(prefix + '_lastgames_st_' + x).title = new Date(game.startDate).getTime()/1000;
+		// fadeyStuff(prefix + "_lastgames_ts_" + x, new Date(game.lastGame).getTime()/1000);
+		// fadeyStuff(prefix + "_lastgames_st_" + x, new Date(game.startDate).getTime()/1000);
 	}
 }
 
