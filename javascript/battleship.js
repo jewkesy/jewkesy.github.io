@@ -139,8 +139,6 @@ function buildBSLastGamesPreview(data, prefix) {
 		fadeyStuff(prefix + "_lastgames_wl_" + x, game.totalWins + "/" + game.totalLoses);
 		document.getElementById(prefix + '_lastgames_ts_' + x).title = new Date(game.lastGame).getTime()/1000;
 		document.getElementById(prefix + '_lastgames_st_' + x).title = new Date(game.startDate).getTime()/1000;
-		// fadeyStuff(prefix + "_lastgames_ts_" + x, new Date(game.lastGame).getTime()/1000);
-		// fadeyStuff(prefix + "_lastgames_st_" + x, new Date(game.startDate).getTime()/1000);
 	}
 }
 
