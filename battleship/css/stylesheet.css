@@ -186,7 +186,7 @@ table.grid > th, td > img {
 }
 
 .opacityZero {
-	opacity:0;
+	opacity:0 !important;
 }
 
 .action  {

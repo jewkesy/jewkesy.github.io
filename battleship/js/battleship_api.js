@@ -4,6 +4,7 @@ let alexaVersion = '1.0';
 let alexa;
 
 let debugMode = false;
+if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 
 let defaultAudiolevel = 0.6;
 let backgroundAudio=document.getElementById("bgAudio");
