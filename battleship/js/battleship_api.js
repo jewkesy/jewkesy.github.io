@@ -3,7 +3,7 @@
 let alexaVersion = '1.0';
 let alexa;
 
-let debugMode = true;
+let debugMode = false;
 
 let defaultAudiolevel = 0.6;
 let backgroundAudio=document.getElementById("bgAudio");
