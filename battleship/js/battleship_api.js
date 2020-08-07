@@ -261,6 +261,6 @@ function micOnError(error) {
 }
 
 function debugMe(txt) {
-	if (debugMode) document.getElementById('debug').innerText += "<br/>" + txt;
+	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + txt + "</p>";
 }
 
