@@ -9,14 +9,14 @@ if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 let defaultAudiolevel = 0.6;
 let quietAudiolevel = 0.1;
 let backgroundAudio=document.getElementById("bgAudio");
-backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
+// backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 duckAudio(defaultAudiolevel);
 
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	debugMe("LOADED");
-	debugMe(JSON.stringify(result, null, 2))
+	debugMe(JSON.stringify(result.data, null, 2))
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
