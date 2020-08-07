@@ -15,7 +15,7 @@ duckAudio(defaultAudiolevel);
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
-	if (debugMode) document.getElementById('debug').innerText += "LOADED";
+	debugMe("LOADED");
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -54,11 +54,11 @@ const success = function(result) {
 const failure = function(error) {
 	const {code, message} = error;
 	// Actions for failure to initialize
-	if (debugMode) document.getElementById('debug').innerText += error;
+	debugMe(error);
 	console.log(error)
 };
 try {
-	if (debugMode) document.getElementById('debug').innerText += "window.alexaHtmlLocalDebug"
+	debugMe("window.alexaHtmlLocalDebug");
 	if (window.alexaHtmlLocalDebug) {
 	  // both alexaHtmlLocalDebug and LocalMessageProvider are injected into the page by alexa-html-local
 	  	Alexa.create({ version: alexaVersion, messageProvider: new LocalMessageProvider() }).then(success).catch(failure);
@@ -68,7 +68,6 @@ try {
 } catch (err) {
 	console.log("Alexa Load Error", err)
 }
-
 
 function speechStarted(){
 	console.log("SPEECH STARTED");
@@ -83,7 +82,7 @@ function speechStopped() {
 function skillOnMessage(msg) {
 	// console.log("ON MESSAGE", msg)
 	// console.log(msg.sessionAttributes.gameObj)
-	if (debugMode) document.getElementById('debug').innerText = JSON.stringify(msg, null, 2);
+	debugMe(JSON.stringify(msg, null, 2));
 	if (msg.description) document.getElementById('description').innerText = new Date()+ " "+ msg.description;
 	if (msg.sessionAttributes) {
 		clearHTML();
@@ -100,7 +99,7 @@ function clearHTML() {
 }
 
 function handleGameAction(msg) {
-	
+
 	// console.log(msg)
 	var playerAction = msg.sessionAttributes.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
@@ -199,6 +198,7 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 }
 
 function skillSendMessage(msg) {
+	debugMe("SEND MESSAGE");
 	console.log("SEND MESSAGE", msg)
 	alexa.skill.sendMessage(msg);
 }
@@ -236,18 +236,25 @@ function toggleAudio() {
 }
 
 function micOnOpened() {
+	debugMe("MIC OPENED");
 	console.log("MIC OPENED")
 	// dimScreen();
 	duckAudio(quietAudiolevel);
 }
 
 function micOnClosed() {
+	debugMe("MIC CLOSED");
 	console.log("MIC CLOSED")
 	// undimScreen();
 	duckAudio(defaultAudiolevel);
 }
 
 function micOnError(error) {
+	debugMe("MIC ERROR");
 	console.log("MIC ERROR", error)
+}
+
+function debugMe(txt) {
+	if (debugMode) document.getElementById('debug').innerText += " " + txt;
 }
 
