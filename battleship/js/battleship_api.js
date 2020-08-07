@@ -15,7 +15,7 @@ duckAudio(defaultAudiolevel);
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
-	document.getElementById('debug').innerText += "LOADED";
+	if (debugMode) document.getElementById('debug').innerText += "LOADED";
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -54,11 +54,11 @@ const success = function(result) {
 const failure = function(error) {
 	const {code, message} = error;
 	// Actions for failure to initialize
-	document.getElementById('debug').innerText += error;
+	if (debugMode) document.getElementById('debug').innerText += error;
 	console.log(error)
 };
 try {
-	document.getElementById('debug').innerText += "window.alexaHtmlLocalDebug"
+	if (debugMode) document.getElementById('debug').innerText += "window.alexaHtmlLocalDebug"
 	if (window.alexaHtmlLocalDebug) {
 	  // both alexaHtmlLocalDebug and LocalMessageProvider are injected into the page by alexa-html-local
 	  	Alexa.create({ version: alexaVersion, messageProvider: new LocalMessageProvider() }).then(success).catch(failure);
@@ -100,6 +100,7 @@ function clearHTML() {
 }
 
 function handleGameAction(msg) {
+	
 	// console.log(msg)
 	var playerAction = msg.sessionAttributes.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
