@@ -7,8 +7,9 @@ let debugMode = false;
 if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 
 let defaultAudiolevel = 0.6;
+let quietAudiolevel = 0.1;
 let backgroundAudio=document.getElementById("bgAudio");
-backgroundAudio.pause();  //TODO REMOVE WHEN LIVE
+backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 duckAudio(defaultAudiolevel);
 
 const success = function(result) {
@@ -67,11 +68,13 @@ try {
 
 
 function speechStarted(){
-	console.log("SPEECH STARTED")
+	console.log("SPEECH STARTED");
+	duckAudio(quietAudiolevel);
 }
 
 function speechStopped() {
-	console.log("SPEECH STOPPED")
+	console.log("SPEECH STOPPED");
+	duckAudio(defaultAudiolevel);
 }
 
 function skillOnMessage(msg) {
@@ -231,7 +234,7 @@ function toggleAudio() {
 function micOnOpened() {
 	console.log("MIC OPENED")
 	// dimScreen();
-	duckAudio(0.1);
+	duckAudio(quietAudiolevel);
 }
 
 function micOnClosed() {
