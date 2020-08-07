@@ -262,6 +262,6 @@ function micOnError(error) {
 }
 
 function debugMe(txt) {
-	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + txt + "</p>";
+	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date.now()+ " " + txt + "</p>";
 }
 
