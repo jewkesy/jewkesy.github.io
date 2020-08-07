@@ -71,15 +71,15 @@ try {
 }
 
 function speechStarted(msg){
-	debugMe(JSON.stringify(msg, null, 2));
 	debugMe("SPEECH STARTED");
+	debugMe(JSON.stringify(msg, null, 2));
 	console.log("SPEECH STARTED");
 	duckAudio(quietAudiolevel);
 }
 
 function speechStopped(msg) {
-	debugMe(JSON.stringify(msg, null, 2));
 	debugMe("SPEECH STOPPED");
+	debugMe(JSON.stringify(msg, null, 2));
 	console.log("SPEECH STOPPED");
 	duckAudio(defaultAudiolevel);
 }
@@ -87,6 +87,7 @@ function speechStopped(msg) {
 function skillOnMessage(msg) {
 	// console.log("ON MESSAGE", msg)
 	// console.log(msg.sessionAttributes.gameObj)
+	debugMe("skillOnMessage");
 	debugMe(JSON.stringify(msg, null, 2));
 	if (msg.description) document.getElementById('description').innerText = new Date()+ " "+ msg.description;
 	if (msg.sessionAttributes) {
@@ -203,8 +204,8 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 }
 
 function skillSendMessage(msg) {
-	debugMe(JSON.stringify(msg, null, 2));
 	debugMe("SEND MESSAGE");
+	debugMe(JSON.stringify(msg, null, 2));
 	console.log("SEND MESSAGE", msg)
 	alexa.skill.sendMessage(msg);
 }
