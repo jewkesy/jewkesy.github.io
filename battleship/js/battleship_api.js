@@ -16,7 +16,7 @@ const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	debugMe("LOADED");
-	debugMe(JSON.stringify(result.message, null, 2))
+	debugMe(JSON.stringify(result, null, 2))
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -70,13 +70,15 @@ try {
 	console.log("Alexa Load Error", err)
 }
 
-function speechStarted(){
+function speechStarted(msg){
+	debugMe(JSON.stringify(msg, null, 2));
 	debugMe("SPEECH STARTED");
 	console.log("SPEECH STARTED");
 	duckAudio(quietAudiolevel);
 }
 
-function speechStopped() {
+function speechStopped(msg) {
+	debugMe(JSON.stringify(msg, null, 2));
 	debugMe("SPEECH STOPPED");
 	console.log("SPEECH STOPPED");
 	duckAudio(defaultAudiolevel);
@@ -102,7 +104,7 @@ function clearHTML() {
 }
 
 function handleGameAction(msg) {
-
+	debugMe(JSON.stringify(msg, null, 2));
 	// console.log(msg)
 	var playerAction = msg.sessionAttributes.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
@@ -201,6 +203,7 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 }
 
 function skillSendMessage(msg) {
+	debugMe(JSON.stringify(msg, null, 2));
 	debugMe("SEND MESSAGE");
 	console.log("SEND MESSAGE", msg)
 	alexa.skill.sendMessage(msg);
