@@ -8,20 +8,8 @@
         </style>
     </head>
     <body>
-    <script src="https://cdn.html.games.alexa.a2z.com/alexa-html/latest/alexa-html.js"></script>
+
     <div id="hello">TEXT WILL APPEAR HERE</div>
-    <script>
-    Alexa.create({version: '1.0'})
-        .then((args) => {
-            const {
-                alexa,
-                message
-            } = args;
-            document.getElementById('hello').innerHTML = '<b>:)Alexa is ready</b>';
-        })
-        .catch(error => {
-            document.getElementById('hello').innerHTML = '<b>:( Alexa not ready</b>';
-        });
-    </script>
+
     </body>
 </html>
