@@ -16,7 +16,7 @@ const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	debugMe("LOADED");
-	debugMe(JSON.stringify(result.data, null, 2))
+	debugMe(JSON.stringify(result, null, 2))
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -59,7 +59,7 @@ const failure = function(error) {
 	console.log(error)
 };
 try {
-	debugMe("window.alexaHtmlLocalDebug: " + window.alexaHtmlLocalDebug);
+	//debugMe("window.alexaHtmlLocalDebug: " + window.alexaHtmlLocalDebug);
 	if (window.alexaHtmlLocalDebug) {
 	  // both alexaHtmlLocalDebug and LocalMessageProvider are injected into the page by alexa-html-local
 	  	Alexa.create({ version: alexaVersion, messageProvider: new LocalMessageProvider() }).then(success).catch(failure);
@@ -261,6 +261,6 @@ function micOnError(error) {
 }
 
 function debugMe(txt) {
-	if (debugMode) document.getElementById('debug').innerText += " " + txt;
+	if (debugMode) document.getElementById('debug').innerText += "<br/>" + txt;
 }
 
