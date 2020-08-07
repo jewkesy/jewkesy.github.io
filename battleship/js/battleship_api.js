@@ -16,7 +16,8 @@ const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	debugMe("LOADED");
-	debugMe(JSON.stringify(result.message, null, 2))
+	
+	initialiseGameBoards(result.message);
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -68,6 +69,10 @@ try {
 	}
 } catch (err) {
 	console.log("Alexa Load Error", err)
+}
+
+function initialiseGameBoards(data) {
+	debugMe(JSON.stringify(data, null, 2));
 }
 
 function speechStarted(msg){
@@ -262,6 +267,6 @@ function micOnError(error) {
 }
 
 function debugMe(txt) {
-	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date.now()+ " " + txt + "</p>";
+	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
 
