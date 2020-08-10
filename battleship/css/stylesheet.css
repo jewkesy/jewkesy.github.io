@@ -26,6 +26,33 @@ table {
   border-collapse: collapse;
 }
 
+#intro {
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+  	background-color: black;
+
+  	background: url("./../images/sunburstwithsea.png") no-repeat center bottom fixed;
+  	-webkit-background-size: 100vw auto;
+	-moz-background-size: 100vw auto;
+	-o-background-size: 100vw auto;
+	background-size: 100vw auto;
+	text-align: center;
+	display: block;
+}
+
+img#intro_ship {
+	height: 85vh;
+	vertical-align: bottom;
+
+}
+
+img#intro_logo {
+	height: 15vh;
+}
+
 #debug {
 	position: absolute;
 	left: 0;

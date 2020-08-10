@@ -3,7 +3,7 @@
 let alexaVersion = '1.0';
 let alexa;
 
-let debugMode = true;
+let debugMode = false;
 if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 
 let defaultAudiolevel = 0.6;
@@ -11,6 +11,8 @@ let quietAudiolevel = 0.1;
 let backgroundAudio=document.getElementById("bgAudio");
 backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 duckAudio(defaultAudiolevel);
+
+showIntro();
 
 const success = function(result) {
 	// const {alexa, message} = result;
@@ -71,6 +73,46 @@ try {
 	console.log("Alexa Load Error", err)
 }
 
+function showIntro() {
+	var intro = document.getElementById('intro');
+	intro.innerHTML = "<img id='intro_ship' src='./images/ship.png' class='animate__animated animate__zoomInUp' />";
+	intro.innerHTML+= "<img id='intro_logo' src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
+
+	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-2_0s');
+	// var shipImg = document.createElement("img");
+	// shipImg.id =  'intro_ship';
+	// shipImg.src = './images/ship.png';
+	// shipImg.style = '';
+	intro.addEventListener('animationend', (evt) => {
+		if (evt.animationName == 'fadeOut') {
+			console.log('COMPLETE');
+			intro.style.setProperty('display', 'none');
+
+		}
+	});
+	// intro.appendChild(shipImg);
+
+
+
+// sunburst
+// "type": "fadeOut",
+// "duration": 200,
+// "delay": 1500
+
+
+// ship and logo
+// {
+//     "type": "zoomInUp",
+//     "duration": 500,
+//     "delay": 200
+// },
+// {
+//     "type": "fadeOut",
+//     "duration": 200,
+//     "delay": 1000
+// }
+}
+
 function initialiseGameBoards(data) {
 	debugMe(JSON.stringify(data, null, 2));
 }
@@ -90,12 +132,12 @@ function speechStopped(msg) {
 }
 
 function skillOnMessage(msg) {
-	// console.log("ON MESSAGE", msg)
+	console.log("ON MESSAGE", msg)
 	// console.log(msg.sessionAttributes.gameObj)
 	debugMe("skillOnMessage");
 	debugMe(JSON.stringify(msg, null, 2));
-	if (msg.description) document.getElementById('description').innerText = new Date()+ " "+ msg.description;
-	if (msg.sessionAttributes) {
+	// if (msg.description) document.getElementById('description').innerText = new Date()+ " "+ msg.description;
+	if (msg.gameObj) {
 		clearHTML();
 		handleGameAction(msg);
 	}
@@ -110,24 +152,25 @@ function clearHTML() {
 }
 
 function handleGameAction(msg) {
+	console.log(msg)
 	debugMe(JSON.stringify(msg, null, 2));
-	// console.log(msg)
-	var playerAction = msg.sessionAttributes.gameObj.playerAction;
+	
+	var playerAction = msg.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
 	if (playerActionDisplay == 'won') playerActionDisplay = 'hit';
 
 	document.getElementById('playerAction').innerHTML  = '<div class="animate__animated animate__fadeIn"><span class="coords">'+playerAction.coords.l.toUpperCase()+playerAction.coords.n+'</span><img alt="'+playerActionDisplay+'" style="height:50%; max-height:50%;" src="./images/' + playerActionDisplay +'.png"/></div>';
 
-	var tacticalGrid = msg.response.directives[0].datasources.battleshipData.image.sources[0].url;
-	var playerFleet  = msg.response.directives[0].datasources.battleshipData.image.sources[1].url;
+	var tacticalGrid = msg.grids[0].url;
+	var playerFleet  = msg.grids[1].url;
 
 	var eleTacticalGrid = document.getElementById('tacticalGrid');
 	eleTacticalGrid.innerHTML = '<img class="animate__animated animate__zoomInUp" alt="Tactical Grid" height="90%" src="' + tacticalGrid +'"/>';
 
 	var elePlayerFleet = document.getElementById('playerFleet');
 	var delay = 'animate__delay-4_7s'; // blank out if player won
-	if (msg.sessionAttributes.gameObj.gameOver) {
-		var last = msg.sessionAttributes.gameObj.lastAction[msg.sessionAttributes.gameObj.lastAction.length-1];
+	if (msg.gameObj.gameOver) {
+		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action == "WON") {
 			delay = '';
 		}
@@ -144,9 +187,9 @@ function handleGameAction(msg) {
 	addAction(elePlayerActionResult, playerActionResult, 'action actionLeftSide animate__animated animate__fadeIn', 'animate__delay-0_1s', '0.5s')
 
 	delay = 'animate__delay-4_7s';
-	if (msg.sessionAttributes.gameObj.gameOver) {
+	if (msg.gameObj.gameOver) {
 		console.log("HANDLE GAME OVER")
-		var last = msg.sessionAttributes.gameObj.lastAction[msg.sessionAttributes.gameObj.lastAction.length-1];
+		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action == "WON") {
 			if (last.whoShot == "player") {
 				console.log("HANDLE PLAYER WON");
@@ -160,7 +203,7 @@ function handleGameAction(msg) {
 		}
 	} 
 
-	var computerAction = msg.sessionAttributes.gameObj.computerAction;
+	var computerAction = msg.gameObj.computerAction;
 	var computerActionDisplay = computerAction.action.toLowerCase();
 	if (computerActionDisplay == 'won') computerActionDisplay = 'hit';
 	document.getElementById('computerAction').innerHTML  = '<div class="animate__animated animate__fadeIn '+delay+'"><img alt="'+computerActionDisplay+'" style="height:50%; max-height:50%;" src="./images/' + computerActionDisplay +'.png"/><span class="coords">'+computerAction.coords.l.toUpperCase()+computerAction.coords.n+'</span></div>';
@@ -191,7 +234,7 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 	if (width)	style += " width:" + width + ";";
 	if (paddingLeft) style += " padding-left:" + paddingLeft + ";"
 	img.style = style;
-	console.log(img.style)
+	// console.log(img.style)
 	img.classList = classes;
 	if (delay) img.classList.add(delay);
 	
@@ -267,6 +310,7 @@ function micOnError(error) {
 }
 
 function debugMe(txt) {
+	// console.log(txt)
 	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
 
