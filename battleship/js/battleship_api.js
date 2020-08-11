@@ -3,7 +3,7 @@
 let alexaVersion = '1.0';
 let alexa;
 
-let debugMode = false;
+let debugMode = true;
 if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 
 let defaultAudiolevel = 0.6;
@@ -90,9 +90,10 @@ function showIntro() {
 }
 
 function initialiseGameBoards(msg) {
+	debugMe(JSON.stringify(msg, null, 2));
 	if (!msg || !msg.data) return;
 	// console.log(msg.data)
-	debugMe(JSON.stringify(msg.data, null, 2));
+	
 	var tacticalGrid = msg.data.grids[0].url;
 	var playerFleet  = msg.data.grids[1].url;
 	loadGrid('tacticalGrid', tacticalGrid, "Tactical Grid", "animate__animated animate__zoomInUp");
@@ -127,7 +128,7 @@ function skillOnMessage(msg) {
 
 function loadGrid(id, src, altTxt, cssClass) {
 	var eleGrid = document.getElementById(id);
-	eleGrid.innerHTML = '<img class="'+cssClass+'" alt="'+altTxt+'" height="90%" src="'+src+'"/>';
+	eleGrid.innerHTML = '<img class="'+cssClass+'" alt="'+altTxt+'" height="95%" src="'+src+'"/>';
 }
 
 function clearHTML() {
