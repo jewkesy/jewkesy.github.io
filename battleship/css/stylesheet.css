@@ -223,18 +223,14 @@ table.grid > th, td > img {
 }
 
 .actionLeftSide {
-	left:0;
+	left:-4vw;
 }
 
 .actionRightSide {
-	right: 0;
+	right: -4vw;
 }
 
 img.action {
-	object-fit: "best-fit";
-	height: 60vh;
+	height: 75vh;
 	width: 60vw;
 }
-
-
-
