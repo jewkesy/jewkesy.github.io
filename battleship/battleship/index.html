@@ -1,0 +1,87 @@
+<!--
+
+ * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ * Copyright 2020 Amazon.com (http://amazon.com/), Inc. or its affiliates. All Rights Reserved.
+ * These materials are licensed as "Restricted Program Materials" under the Program Materials
+ * License Agreement (the "Agreement") in connection with the Amazon Alexa voice service.
+ * The Agreement is available at https://developer.amazon.com/public/support/pml.html.
+ * See the Agreement for the specific terms and conditions of the Agreement. Capitalized
+ * terms not defined in this file have the meanings given to them in the Agreement.
+ * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+-->
+
+<!doctype html>
+<html>
+
+<head>
+  <title>BattleShip Alexa Web App</title>
+
+  <script src="https://cdn.html.games.alexa.a2z.com/alexa-html/v1/alexa-html.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="./css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/animate.custom.css">
+  <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+
+  <meta content='width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=0' name='viewport' />
+  <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+  <audio id="bgAudio" src="./audio/battleship_01.mp3" preload="auto" autoplay loop></audio>
+<!-- 	<script>
+		window.onload = function() {
+			var backgroundAudio=document.getElementById("bgAudio");
+			backgroundAudio.pause();
+			console.log(backgroundAudio)
+			backgroundAudio.volume=0.5;
+		}
+	</script> -->
+	<div id='container'>
+		<div id='game' >
+			<div id='header'>
+				<div id='logo'><img src="./images/Battle-Ship.png" /></div>
+			</div>
+
+			<div id='grids'>
+				<div class="gridRow">
+					<div style="width: 50%;" class='gridCell'><img style="height:50%; max-height:50%;" src="./images/tactical-grid.png"></div>
+					<div style="width: 50%;" class='gridCell'><img style="height:50%; max-height:50%;" src="./images/your-fleet.png"></div>
+				</div>
+				<div class="gridRow" style="height:100%">
+					<div style="width: 50%; height:100%" class='gridCell' id='tacticalGrid'></div>
+					<div style="width: 50%; height:100%" class='gridCell' id='playerFleet'></div>
+					<div id='playerActionResult'></div>
+					<div id='computerActionResult'></div>
+				</div>
+			</div>	
+			<div id='footer'>
+				<div class="gridRow">
+					<div style="width: 50%;" class='gridCell' id='playerAction'></div>
+					<div style="width: 50%;" class='gridCell' id='computerAction'></div>
+				</div>
+			</div>
+			<div id='cmds'>
+				<div> - Version 14 - </div>
+				<div id='micOpen'>Mic Open</div>
+				<div id='micClose'>Mic Close</div>
+				<div id='toggleAudio'>ToggleAudio</div>
+				<div>1024x640 1280x800 480x480 960x480 1280x720</div>
+			</div>
+		</div>
+		<div id='intro'></div>
+		<div id='summary'></div>
+
+		<div id='debug'></div>
+	</div>
+
+  
+  <script src="./js/battleship_api.js?version=14" charset="UTF-8" ></script>
+</body>
+
+</html>
