@@ -96,7 +96,7 @@ function initialiseGameBoards(msg) {
 	var tacticalGrid = msg.data.grids[0].url;
 	var playerFleet  = msg.data.grids[1].url;
 	loadGrid('tacticalGrid', tacticalGrid, "Tactical Grid", "animate__animated animate__zoomInUp");
-	loadGrid('playerFleet', tacticalGrid, "Player Fleet", "animate__animated animate__zoomInUp");
+	loadGrid('playerFleet', playerFleet, "Player Fleet", "animate__animated animate__zoomInUp");
 }
 
 function speechStarted(msg){
