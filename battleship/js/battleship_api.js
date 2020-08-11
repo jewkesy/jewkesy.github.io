@@ -79,10 +79,7 @@ function showIntro() {
 	intro.innerHTML+= "<img id='intro_logo' src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
 
 	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-2_0s');
-	// var shipImg = document.createElement("img");
-	// shipImg.id =  'intro_ship';
-	// shipImg.src = './images/ship.png';
-	// shipImg.style = '';
+
 	intro.addEventListener('animationend', (evt) => {
 		if (evt.animationName == 'fadeOut') {
 			console.log('COMPLETE');
@@ -90,31 +87,16 @@ function showIntro() {
 
 		}
 	});
-	// intro.appendChild(shipImg);
-
-
-
-// sunburst
-// "type": "fadeOut",
-// "duration": 200,
-// "delay": 1500
-
-
-// ship and logo
-// {
-//     "type": "zoomInUp",
-//     "duration": 500,
-//     "delay": 200
-// },
-// {
-//     "type": "fadeOut",
-//     "duration": 200,
-//     "delay": 1000
-// }
 }
 
-function initialiseGameBoards(data) {
-	debugMe(JSON.stringify(data, null, 2));
+function initialiseGameBoards(msg) {
+	if (!msg || !msg.data) return;
+	// console.log(msg.data)
+	debugMe(JSON.stringify(msg.data, null, 2));
+	var tacticalGrid = msg.data.grids[0].url;
+	var playerFleet  = msg.data.grids[1].url;
+	loadGrid('tacticalGrid', tacticalGrid, "Tactical Grid", "animate__animated animate__zoomInUp");
+	loadGrid('playerFleet', tacticalGrid, "Player Fleet", "animate__animated animate__zoomInUp");
 }
 
 function speechStarted(msg){
@@ -141,7 +123,11 @@ function skillOnMessage(msg) {
 		clearHTML();
 		handleGameAction(msg);
 	}
+}
 
+function loadGrid(id, src, altTxt, cssClass) {
+	var eleGrid = document.getElementById(id);
+	eleGrid.innerHTML = '<img class="'+cssClass+'" alt="'+altTxt+'" height="90%" src="'+src+'"/>';
 }
 
 function clearHTML() {
@@ -164,10 +150,10 @@ function handleGameAction(msg) {
 	var tacticalGrid = msg.grids[0].url;
 	var playerFleet  = msg.grids[1].url;
 
-	var eleTacticalGrid = document.getElementById('tacticalGrid');
-	eleTacticalGrid.innerHTML = '<img class="animate__animated animate__zoomInUp" alt="Tactical Grid" height="90%" src="' + tacticalGrid +'"/>';
+	loadGrid('tacticalGrid', tacticalGrid, "Tactical Grid", "animate__animated animate__zoomInUp");
+	// var eleTacticalGrid = document.getElementById('tacticalGrid');
+	// eleTacticalGrid.innerHTML = '<img class="animate__animated animate__zoomInUp" alt="Tactical Grid" height="90%" src="' + tacticalGrid +'"/>';
 
-	var elePlayerFleet = document.getElementById('playerFleet');
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
 		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
@@ -176,7 +162,9 @@ function handleGameAction(msg) {
 		}
 	}
 
-	elePlayerFleet.innerHTML  = '<img class="animate__animated animate__zoomInUp '+delay+'" alt="Player Fleet" height="90%" src="' + playerFleet +'"/>';
+	loadGrid('playerFleet', playerFleet, "Player Fleet", "animate__animated animate__zoomInUp "+delay);
+	// var elePlayerFleet = document.getElementById('playerFleet');
+	// elePlayerFleet.innerHTML  = '<img class="animate__animated animate__zoomInUp '+delay+'" alt="Player Fleet" height="90%" src="' + playerFleet +'"/>';
 
 	var playerActionResult = "explosion-cloud";
 
