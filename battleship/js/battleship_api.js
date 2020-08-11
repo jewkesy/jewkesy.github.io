@@ -91,11 +91,11 @@ function showIntro() {
 
 function initialiseGameBoards(msg) {
 	debugMe(JSON.stringify(msg, null, 2));
-	if (!msg || !msg.data) return;
+	if (!msg) return;
 	// console.log(msg.data)
 	
-	var tacticalGrid = msg.data.grids[0].url;
-	var playerFleet  = msg.data.grids[1].url;
+	var tacticalGrid = msg.grids[0].url;
+	var playerFleet  = msg.grids[1].url;
 	loadGrid('tacticalGrid', tacticalGrid, "Tactical Grid", "animate__animated animate__zoomInUp");
 	loadGrid('playerFleet', playerFleet, "Player Fleet", "animate__animated animate__zoomInUp");
 }
