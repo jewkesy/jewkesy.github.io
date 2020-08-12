@@ -90,7 +90,19 @@ function showIntro() {
 }
 
 function initialiseGameBoards(msg) {
-	backgroundAudio.play();
+
+	var promise = backgroundAudio.play();
+	if (promise !== undefined) {
+	  promise.then(_ => {
+	    // Autoplay started!
+	    console.log("Autoplay started")
+	  }).catch(error => {
+	    // Autoplay was prevented.
+	    // Show a "Play" button so that user can start playback.
+	    console.log("Autoplay prevented")
+	  });
+	}
+
 	debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
 	// console.log(msg.data)
