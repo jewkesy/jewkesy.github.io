@@ -129,7 +129,7 @@ function skillOnMessage(msg) {
 
 function loadGrid(id, src, altTxt, cssClass) {
 	var eleGrid = document.getElementById(id);
-	eleGrid.innerHTML = '<img class="'+cssClass+'" alt="'+altTxt+'" height="95%" src="'+src+'"/>';
+	eleGrid.innerHTML = '<img class="'+cssClass+'" alt="'+altTxt+'" height="100%" src="'+src+'"/>';
 }
 
 function clearHTML() {
