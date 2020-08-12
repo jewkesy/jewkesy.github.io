@@ -84,9 +84,11 @@ function showIntro() {
 		if (evt.animationName == 'fadeOut') {
 			console.log('COMPLETE');
 			intro.style.setProperty('display', 'none');
-
+			var gameSection = document.getElementById('game');
+			gameSection.style.setProperty('display', 'inline');
 		}
 	});
+
 }
 
 function initialiseGameBoards(msg) {
