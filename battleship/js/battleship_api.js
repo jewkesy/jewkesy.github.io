@@ -90,6 +90,7 @@ function showIntro() {
 }
 
 function initialiseGameBoards(msg) {
+	backgroundAudio.play();
 	debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
 	// console.log(msg.data)
