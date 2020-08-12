@@ -160,6 +160,8 @@ function handleGameAction(msg) {
 	var playerAction = msg.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
 	if (playerActionDisplay == 'won') playerActionDisplay = 'hit';
+	else if (playerActionDisplay == 'outtabounds' || playerActionDisplay == 'dupe') return;
+
 
 	document.getElementById('playerAction').innerHTML  = '<div class="animate__animated animate__fadeIn"><span class="coords">'+playerAction.coords.l.toUpperCase()+playerAction.coords.n+'</span><img alt="'+playerActionDisplay+'" style="height:50%; max-height:50%;" src="./images/' + playerActionDisplay +'.png"/></div>';
 
