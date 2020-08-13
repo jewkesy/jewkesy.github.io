@@ -54,6 +54,20 @@
   animation-delay: calc(var(--animate-delay) * 2.0);
 }
 
+.animate__animated.animate__delay-3_0s {
+  -webkit-animation-delay: calc(1s * 3.0);
+  animation-delay: calc(1s * 3.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 3.0);
+  animation-delay: calc(var(--animate-delay) * 3.0);
+}
+
+.animate__animated.animate__delay-4_0s {
+  -webkit-animation-delay: calc(1s * 4.0);
+  animation-delay: calc(1s * 4.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 4.0);
+  animation-delay: calc(var(--animate-delay) * 4.0);
+}
+
 .animate__animated.animate__delay-4_7s {
   -webkit-animation-delay: calc(1s * 4.7);
   animation-delay: calc(1s * 4.7);

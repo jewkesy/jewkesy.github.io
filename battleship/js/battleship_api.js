@@ -90,6 +90,30 @@ function showIntro() {
 	});
 }
 
+function showSummary(won) {
+	if (won) {
+		// show 'You Win'
+		// show ship
+		// Show ship sail away
+		// fade in results
+	} else {
+		// show 'You Lose'
+		// show ship
+		// show explosion
+		// show ship sink
+		// fade in results
+	}
+
+	var summary = document.getElementById('summary');
+	summary.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-4_0s');
+	summary.style.setProperty('display', 'inline');
+	summary.addEventListener('animationend', (evt) => {
+		if (evt.animationName == 'fadeIn') {
+			
+		}
+	});
+}
+
 function initialiseGameBoards(msg) {
 	debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
@@ -148,7 +172,6 @@ function handleGameAction(msg) {
 	if (playerActionDisplay == 'won') playerActionDisplay = 'hit';
 	else if (playerActionDisplay == 'outtabounds' || playerActionDisplay == 'dupe') return;
 
-
 	document.getElementById('playerAction').innerHTML  = '<div class="animate__animated animate__fadeIn"><span class="coords">'+playerAction.coords.l.toUpperCase()+playerAction.coords.n+'</span><img alt="'+playerActionDisplay+'" style="height:50%; max-height:50%;" src="./images/' + playerActionDisplay +'.png"/></div>';
 
 	var tacticalGrid = msg.grids[0].url;
@@ -182,13 +205,15 @@ function handleGameAction(msg) {
 			if (last.whoShot == "player") {
 				console.log("HANDLE PLAYER WON");
 				addFleetDestroyed(elePlayerActionResult, 'actionLeftSide');
-				showSummary();
-				return;
+				showSummary(true);
 			} else {
 				console.log("HANDLE COMPUTER WON");
 				delay = 'animate__delay-0_1s';
 				addFleetDestroyed(eleComputerActionResult, 'actionRightSide');
+				showSummary(false);
 			}
+			
+			return;
 		}
 	} 
 

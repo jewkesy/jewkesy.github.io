@@ -46,11 +46,27 @@ table {
 img#intro_ship {
 	height: 85vh;
 	vertical-align: bottom;
-
 }
 
 img#intro_logo {
 	height: 15vh;
+}
+
+div#summary {
+	display: none;
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+
+  	background: url("./../images/sunburstwithsea.png") no-repeat center bottom fixed;
+  	-webkit-background-size: 100vw auto;
+	-moz-background-size: 100vw auto;
+	-o-background-size: 100vw auto;
+	background-size: 100vw auto;
+	text-align: center;
+
 }
 
 #debug {
