@@ -88,23 +88,9 @@ function showIntro() {
 			gameSection.style.setProperty('display', 'inline');
 		}
 	});
-
 }
 
 function initialiseGameBoards(msg) {
-
-	// var promise = backgroundAudio.play();
-	// if (promise !== undefined) {
-	//   promise.then(_ => {
-	//     // Autoplay started!
-	//     console.log("Autoplay started")
-	//   }).catch(error => {
-	//     // Autoplay was prevented.
-	//     // Show a "Play" button so that user can start playback.
-	//     console.log("Autoplay prevented")
-	//   });
-	// }
-
 	debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
 	// console.log(msg.data)
@@ -169,8 +155,6 @@ function handleGameAction(msg) {
 	var playerFleet  = msg.grids[1].url;
 
 	loadGrid('tacticalGrid', tacticalGrid, "Tactical Grid", "animate__animated animate__zoomInUp");
-	// var eleTacticalGrid = document.getElementById('tacticalGrid');
-	// eleTacticalGrid.innerHTML = '<img class="animate__animated animate__zoomInUp" alt="Tactical Grid" height="90%" src="' + tacticalGrid +'"/>';
 
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
@@ -181,8 +165,6 @@ function handleGameAction(msg) {
 	}
 
 	loadGrid('playerFleet', playerFleet, "Player Fleet", "animate__animated animate__zoomInUp "+delay);
-	// var elePlayerFleet = document.getElementById('playerFleet');
-	// elePlayerFleet.innerHTML  = '<img class="animate__animated animate__zoomInUp '+delay+'" alt="Player Fleet" height="90%" src="' + playerFleet +'"/>';
 
 	var playerActionResult = "explosion-cloud";
 
@@ -200,7 +182,8 @@ function handleGameAction(msg) {
 			if (last.whoShot == "player") {
 				console.log("HANDLE PLAYER WON");
 				addFleetDestroyed(elePlayerActionResult, 'actionLeftSide');
-				return
+				showSummary();
+				return;
 			} else {
 				console.log("HANDLE COMPUTER WON");
 				delay = 'animate__delay-0_1s';
@@ -218,7 +201,6 @@ function handleGameAction(msg) {
 	if (computerActionDisplay == 'miss') computerActionResult = "water-splash";
 
 	addAction(eleComputerActionResult, computerActionResult, 'action actionRightSide animate__animated animate__fadeIn', delay, '0.5s');
-
 }
 
 function addFleetDestroyed(parentNode, cssSide) {
@@ -319,4 +301,3 @@ function debugMe(txt) {
 	// console.log(txt)
 	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
-
