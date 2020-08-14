@@ -93,7 +93,62 @@ function showIntro() {
 	});
 }
 
-function showSummary(won, summarytext) {
+function buildSummaryHtml(gameObj) {
+
+	let retVal = `<div id='summaryLeft'>Round Accuracy: ${gameObj.results.accuracy}%<br/>Round Score: ${gameObj.results.score}<br/>Game Streak: ${gameObj.results.gameStreak}<br/>Total Won: ${gameObj.results.totalWins}</div><div id='summaryRight'></div>`
+
+	return retVal
+	//     {
+	//     "type": "Text",
+	//     "text": "Round Accuracy: ${payload.battleshipData.results.accuracy}%<br/>Round Score: ${payload.battleshipData.results.score}<br/>Game Streak: ${payload.battleshipData.results.gameStreak}<br/>Total Won: ${payload.battleshipData.results.totalWins}",
+	//     "style": "txtSummary",
+	//     "position": "relative",
+	//     "textAlign": "right",
+	//     "width": "50%",
+	//     "paddingRight": "20",
+	//     "height": "90%"
+	// },
+	// {
+	//     "type": "Text",
+	//     "text": "Avg. Accuracy: ${payload.battleshipData.results.avgAccuracy}%<br/>Total Score: ${payload.battleshipData.results.totalScore}<br/>Max Game Streak: ${payload.battleshipData.results.highestGameStreak}<br/>Total Lost: ${payload.battleshipData.results.totalLoses}",
+	//     "style": "txtSummary",
+	//     "position": "relative",
+	//     "textAlign": "left",
+	//     "width": "50%",
+	//     "paddingLeft": "20",
+	//     "height": "90%"
+	// },
+	// {
+	//     "type": "Text",
+	//     "text": "Rank: <strong>${payload.battleshipData.results.rank}</strong><br/>Reach a score of <strong>${payload.battleshipData.results.nextPromotionScore}</strong> for promotion to <strong>${payload.battleshipData.results.nextPromotion}</strong>",
+	//     "style": "txtSummary",
+	//     "width": "96%",
+	//     "position": "absolute",
+	//     "textAlign": "center"
+	// },
+	// {
+	//     "type": "Text",
+	//     "style": "txtSummary",
+	//     "width": "96%",
+	//     "position": "absolute",
+	//     "text": "\"<i>Yes</i>\" or \"<i>No</i>\", would you like to play another round?",
+	//     "textAlign": "center",
+	//     "bottom": "130"
+	// },
+	// {
+	//     "type": "Text",
+	//     "when": "${payload.battleshipData.showWebUrl == 'true'}",
+	//     "style": "txtSummary",
+	//     "width": "96%",
+	//     "position": "absolute",
+	//     "text": "Visit <strong><i>www.daryljewkes.com</i></strong> to view your rank against other BattleShip players.",
+	//     "textAlign": "center",
+	//     "textAlignVertical": "bottom",
+	//     "bottom": "20"
+	// }
+}
+
+function showSummary(won, summaryHTML) {
 	var summary = document.getElementById('summary');
 	summary.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-4_0s');
 	summary.style.setProperty('display', 'inline');
@@ -119,7 +174,7 @@ function showSummary(won, summarytext) {
 					}
 					var resultDisplay = document.getElementById('summary_result');
 					resultDisplay.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-2_0s');
-					resultDisplay.innerHTML = "<p>FILL ME UP</p>";
+					resultDisplay.innerHTML = summaryHTML;
 				} else if (evt.animationName == 'backOutRight' || evt.animationName == 'rotateOutDownLeft') {
 					ship.innerHTML = "";
 				}
@@ -217,20 +272,17 @@ function handleGameAction(msg) {
 
 	delay = 'animate__delay-4_7s';
 	if (msg.gameObj.gameOver) {
-		console.log("HANDLE GAME OVER")
 		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action == "WON") {
+			var summaryHTML = buildSummaryHtml(msg.gameObj);
 			if (last.whoShot == "player") {
-				console.log("HANDLE PLAYER WON");
 				addFleetDestroyed(elePlayerActionResult, 'actionLeftSide');
-				showSummary(true);
+				showSummary(true, summaryHTML);
 			} else {
-				console.log("HANDLE COMPUTER WON");
 				delay = 'animate__delay-0_1s';
 				addFleetDestroyed(eleComputerActionResult, 'actionRightSide');
-				showSummary(false);
+				showSummary(false, summaryHTML);
 			}
-			
 			return;
 		}
 	} 
