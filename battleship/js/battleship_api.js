@@ -12,13 +12,11 @@ let backgroundAudio=document.getElementById("bgAudio");
 // backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 duckAudio(defaultAudiolevel);
 
-showIntro();
-
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	debugMe("LOADED");
-	
+	showIntro();
 	initialiseGameBoards(result.message);
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
@@ -75,10 +73,15 @@ try {
 
 function showIntro() {
 	var intro = document.getElementById('intro');
-	intro.innerHTML = "<img id='intro_ship' src='./images/ship.png' class='animate__animated animate__zoomInUp' />";
-	intro.innerHTML+= "<img id='intro_logo' src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
+	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3_0s');
 
-	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-2_0s');
+	var ship = document.getElementById('intro_ship');
+	ship.classList.add('animate__animated', 'animate__zoomInUp');
+	ship.innerHTML = "<img src='./images/ship.png' class='animate__animated animate__zoomInUp' />";
+
+	var logo = document.getElementById('intro_logo');
+	logo.classList.add('animate__animated', 'animate__zoomInUp');
+	logo.innerHTML+= "<img src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
 
 	intro.addEventListener('animationend', (evt) => {
 		if (evt.animationName == 'fadeOut') {
@@ -90,26 +93,38 @@ function showIntro() {
 	});
 }
 
-function showSummary(won) {
-	if (won) {
-		// show 'You Win'
-		// show ship
-		// Show ship sail away
-		// fade in results
-	} else {
-		// show 'You Lose'
-		// show ship
-		// show explosion
-		// show ship sink
-		// fade in results
-	}
-
+function showSummary(won, summarytext) {
 	var summary = document.getElementById('summary');
 	summary.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-4_0s');
 	summary.style.setProperty('display', 'inline');
+	
 	summary.addEventListener('animationend', (evt) => {
-		if (evt.animationName == 'fadeIn') {
+		console.log("ENDED", evt.animationName,  evt.target.id)
+		if (evt.animationName == 'fadeIn' && evt.target.id == 'summary') {
+			var ship = document.getElementById('summary_ship');
+			ship.classList.add('animate__animated', 'animate__zoomInUp')
+			ship.innerHTML = "<img src='./images/ship.png' />";
 			
+			ship.addEventListener('animationend', (evt) => {
+				console.log("ENDED", evt.animationName,  evt.target.id)
+				if (evt.animationName == 'zoomInUp' && evt.target.id == 'summary_ship') {
+					ship.classList = [];
+					if (won) ship.classList.add('animate__animated', 'animate__backOutRight', 'animate__delay-2_0s');
+					else {
+						console.log("HANDLE LOST")
+						ship.classList.add('animate__animated', 'animate__rotateOutDownLeft', 'animate__delay-2_0s');
+
+						addAction(document.getElementById('summary_action'), "explosion-cloud", 'actionCenter' + ' action animate__animated animate__fadeIn', 'animate__delay-1s', '0.5s', '70vh', '70vw', '40px');
+					}
+					var resultDisplay = document.getElementById('summary_result');
+					resultDisplay.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-2_0s');
+					resultDisplay.innerHTML = "<p>FILL ME UP</p>";
+				}
+			})
+
+			var logo = document.getElementById('summary_logo');
+			if (won) logo.innerHTML+= "<img src='./images/YouWin.png' class='animate__animated animate__zoomInUp' />";
+			else logo.innerHTML+= "<img src='./images/YouLose.png' class='animate__animated animate__zoomInUp' />";
 		}
 	});
 }

@@ -89,7 +89,7 @@ function buildBSLastGames(callback) {
 
 function buildBSLastGamesPreview(data, prefix) {
 	var container = document.getElementById(prefix + '_lastgames');
-		console.log(game)
+
 	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0].lastGame) return;
 
 	for (var i = 0; i < data.lastGames.length; i++) {
