@@ -99,26 +99,29 @@ function showSummary(won, summarytext) {
 	summary.style.setProperty('display', 'inline');
 	
 	summary.addEventListener('animationend', (evt) => {
-		console.log("ENDED", evt.animationName,  evt.target.id)
-		if (evt.animationName == 'fadeIn' && evt.target.id == 'summary') {
+		if (evt.target.id != 'summary') return;
+
+		// console.log("ENDED", evt.animationName,  evt.target.id)
+		if (evt.animationName == 'fadeIn') {
 			var ship = document.getElementById('summary_ship');
 			ship.classList.add('animate__animated', 'animate__zoomInUp')
 			ship.innerHTML = "<img src='./images/ship.png' />";
 			
 			ship.addEventListener('animationend', (evt) => {
-				console.log("ENDED", evt.animationName,  evt.target.id)
-				if (evt.animationName == 'zoomInUp' && evt.target.id == 'summary_ship') {
-					ship.classList = [];
+				if (evt.target.id != 'summary_ship') return;
+				ship.classList = [];
+				// console.log("ENDED", evt.animationName,  evt.target.id)
+				if (evt.animationName == 'zoomInUp') {
 					if (won) ship.classList.add('animate__animated', 'animate__backOutRight', 'animate__delay-2_0s');
 					else {
-						console.log("HANDLE LOST")
 						ship.classList.add('animate__animated', 'animate__rotateOutDownLeft', 'animate__delay-2_0s');
-
 						addAction(document.getElementById('summary_action'), "explosion-cloud", 'actionCenter' + ' action animate__animated animate__fadeIn', 'animate__delay-1s', '0.5s', '70vh', '70vw', '40px');
 					}
 					var resultDisplay = document.getElementById('summary_result');
 					resultDisplay.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-2_0s');
 					resultDisplay.innerHTML = "<p>FILL ME UP</p>";
+				} else if (evt.animationName == 'backOutRight' || evt.animationName == 'rotateOutDownLeft') {
+					ship.innerHTML = "";
 				}
 			})
 
