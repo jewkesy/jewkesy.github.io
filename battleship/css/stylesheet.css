@@ -25,6 +25,14 @@ body {
 table {
   border-collapse: collapse;
 }
+div.clear {
+	clear: both;
+}
+
+div.spacer {
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
 
 #intro {
 	position: absolute;
@@ -100,6 +108,26 @@ table {
   	top: 0;
   	height: 100%;
   	width: 100%;
+	text-shadow: 3px 3px 5px #669999;
+    font-size: 1.3em;
+	color: #111111;
+}
+
+#summaryLeft {
+	width: 50%;
+	float: left;
+	text-align: right;
+	padding-right: 3%;
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+#summaryRight {
+	width: 50%;
+	text-align: left;
+	padding-left: 3%;
+	padding-top: 3%;
+	padding-bottom: 3%;
 }
 
 #summary_action {
@@ -165,11 +193,6 @@ div.gridRow {
 	/*border: 1px solid yellow;*/
 }
 
-.gridCell > img {
-/*	max-height: 50%;
-	max-width: 100%;*/
-}
-
 .gridCell > div {
 	height: 100%;
 	width: 100%;
@@ -224,50 +247,6 @@ div.gridRow {
 	height: 100%;
 	border: green solid 1px;
 	margin: 0 auto;
-}
-
-table.grid { background-color: #63b4ff; border: 1px solid maroon; }
-table.grid > th, td { 
-	border: 1px solid maroon; padding: 0px; margin:0px; 
-	min-height: 50px; min-width: 50px;
-	max-height: 50px; max-width: 50px;
-	height: 50px;
-}
-
-table.grid > th, td > img {
-	display: block;
-	height: 100%;
-	width: 100%;
-}
-
-.stacked-bar-graph {
-	width: 100%;
-	height: 100%;
-	color:#414042;
-	display: block;
-}
-
-.stacked-bar-graph > span {
-	display: inline-block;
-	height:100%;
-	box-sizing: border-box;
-	float: left;
-
-	padding: 0px;
-	color: white;
-	-webkit-text-stroke: 0.5px #f4f4f4;
-}
-
-.stacked-bar-graph > span.bar-1 {
-	background: #F7B334;
-}
-
-.stacked-bar-graph > span.bar-2 {
-	background: #A7A9AC;
-}
-
-.stacked-bar-graph > span.bar-3 {
-	background: #D57E00;
 }
 
 .opacityZero {

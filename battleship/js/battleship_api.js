@@ -93,59 +93,26 @@ function showIntro() {
 	});
 }
 
-function buildSummaryHtml(gameObj) {
+function buildSummaryHtml(results) {
 
-	let retVal = `<div id='summaryLeft'>Round Accuracy: ${gameObj.results.accuracy}%<br/>Round Score: ${gameObj.results.score}<br/>Game Streak: ${gameObj.results.gameStreak}<br/>Total Won: ${gameObj.results.totalWins}</div><div id='summaryRight'></div>`
-
+	let retVal = `<div class='gridRow'><div id='summaryLeft'>Round Accuracy: ${results.accuracy}%
+					<br/>Round Score: ${results.score}
+					<br/>Game Streak: ${results.gameStreak}
+					<br/>Total Won: ${results.totalWins}</div>
+				  <div id='summaryRight'>Avg. Accuracy: ${results.avgAccuracy}%
+					<br/>Total Score: ${results.totalScore}
+					<br/>Max Game Streak: ${results.highestGameStreak}
+					<br/>Total Lost: ${results.totalLoses}</div>
+				  </div>
+				  <div class='clear spacer'></div>
+				  <div>Rank: <strong>${results.rank}</strong>
+				    <br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong></div>
+				  <div class='clear spacer'></div>
+				  <div><i>Yes</i> or <i>No</i>, would you like to play another round?</div>
+				  <div class='clear spacer'></div>
+				  <div>Visit <strong><i>www.daryljewkes.com</i></strong> to view your rank against other BattleShip players.</div>
+				  `
 	return retVal
-	//     {
-	//     "type": "Text",
-	//     "text": "Round Accuracy: ${payload.battleshipData.results.accuracy}%<br/>Round Score: ${payload.battleshipData.results.score}<br/>Game Streak: ${payload.battleshipData.results.gameStreak}<br/>Total Won: ${payload.battleshipData.results.totalWins}",
-	//     "style": "txtSummary",
-	//     "position": "relative",
-	//     "textAlign": "right",
-	//     "width": "50%",
-	//     "paddingRight": "20",
-	//     "height": "90%"
-	// },
-	// {
-	//     "type": "Text",
-	//     "text": "Avg. Accuracy: ${payload.battleshipData.results.avgAccuracy}%<br/>Total Score: ${payload.battleshipData.results.totalScore}<br/>Max Game Streak: ${payload.battleshipData.results.highestGameStreak}<br/>Total Lost: ${payload.battleshipData.results.totalLoses}",
-	//     "style": "txtSummary",
-	//     "position": "relative",
-	//     "textAlign": "left",
-	//     "width": "50%",
-	//     "paddingLeft": "20",
-	//     "height": "90%"
-	// },
-	// {
-	//     "type": "Text",
-	//     "text": "Rank: <strong>${payload.battleshipData.results.rank}</strong><br/>Reach a score of <strong>${payload.battleshipData.results.nextPromotionScore}</strong> for promotion to <strong>${payload.battleshipData.results.nextPromotion}</strong>",
-	//     "style": "txtSummary",
-	//     "width": "96%",
-	//     "position": "absolute",
-	//     "textAlign": "center"
-	// },
-	// {
-	//     "type": "Text",
-	//     "style": "txtSummary",
-	//     "width": "96%",
-	//     "position": "absolute",
-	//     "text": "\"<i>Yes</i>\" or \"<i>No</i>\", would you like to play another round?",
-	//     "textAlign": "center",
-	//     "bottom": "130"
-	// },
-	// {
-	//     "type": "Text",
-	//     "when": "${payload.battleshipData.showWebUrl == 'true'}",
-	//     "style": "txtSummary",
-	//     "width": "96%",
-	//     "position": "absolute",
-	//     "text": "Visit <strong><i>www.daryljewkes.com</i></strong> to view your rank against other BattleShip players.",
-	//     "textAlign": "center",
-	//     "textAlignVertical": "bottom",
-	//     "bottom": "20"
-	// }
 }
 
 function showSummary(won, summaryHTML) {
@@ -274,7 +241,7 @@ function handleGameAction(msg) {
 	if (msg.gameObj.gameOver) {
 		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action == "WON") {
-			var summaryHTML = buildSummaryHtml(msg.gameObj);
+			var summaryHTML = buildSummaryHtml(msg.results);
 			if (last.whoShot == "player") {
 				addFleetDestroyed(elePlayerActionResult, 'actionLeftSide');
 				showSummary(true, summaryHTML);
