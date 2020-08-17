@@ -73,7 +73,7 @@ function formatDate(date) {
 }
 
 function percentage(partialValue, totalValue) {
-   return (100 * partialValue) / totalValue;
+	return (100 * partialValue) / totalValue;
 } 
 
 function capitalizeFirstLetter(string) {
@@ -149,32 +149,43 @@ function httpGetByUrl(theUrl, callback) {
 	}
 }
 
+var gettingLastPlay = {};
 function httpGetLastPlay(theUrl, prefix, callback) {
+	console.log(gettingLastPlay, prefix)
+	if (gettingLastPlay[prefix] === true) {console.log("Getting Last Plays Already!", prefix); return callback(null, null);}
+	gettingLastPlay[prefix] = true;
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("GET", theUrl, true);
-	xmlHttp.onreadystatechange = handleReadyStateChange;
-	xmlHttp.send(null);
 
-	function handleReadyStateChange() {
+	xmlHttp.onreadystatechange = function (oEvent) {
+		gettingLastPlay[prefix] = false;
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
+				console.log(doc)
 				if (callback) return callback(null, doc);
 			}
 			if (callback) return callback(xmlHttp.status);
 		}
 	}
+	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.send(null);
 }
 
+var gettingStats = {};
 function httpGetStats(theUrl, prefix, callback){
+	console.log(gettingStats, prefix)
+	if (gettingStats[prefix] === true) {console.log("Getting Stats Already!", prefix); return callback(null, null);}
+	gettingStats[prefix] = true;
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	
 	xmlHttp.onreadystatechange = function (oEvent) {
+		gettingStats[prefix] = false;
 		if (xmlHttp.readyState === 4) {  
 	        if (xmlHttp.status === 200) {  
 				var doc = JSON.parse(xmlHttp.responseText);
+				console.log(doc)
 				if (callback) return callback(null, doc);
 			} else {  
 	           console.log("Error", theUrl, xmlHttp.status, xmlHttp.statusText);
