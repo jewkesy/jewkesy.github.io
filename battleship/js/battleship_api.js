@@ -347,7 +347,7 @@ function buildGrid(grid, progress) {
 	var retVal = "<table class='board'><tr><td></td>";
 
 	var size = 50;
-	var style = ' width="'+size+'px; height="'+size+'px;';
+	var style = ' width="'+size+'px" height="'+size+'px" ';
 
 	for (var i = 0; i < grid[0].length; i++) {
 		retVal += "<td>" + alphabet.charAt(i).toUpperCase() + "</td>";
@@ -357,11 +357,11 @@ function buildGrid(grid, progress) {
 		retVal += "<tr><td>" + (i+1) + "</td>";
 		for (var j = 0; j < grid[0].length; j++) {
 			retVal += "<td>"
-			if (grid[i][j] == 0) retVal += '<span width="'+size+'px" />' //'<img src="'+wave+'" alt="flame" />';
-			else if (grid[i][j] == 1) retVal += '<img width="'+size+'px" src="'+greenship+'" alt="ship" />'; //ship untouched
-			else if (grid[i][j] == 2) retVal += '<img width="'+size+'px" src="'+splash+'" alt="splash" />'; //miss
-			else if (grid[i][j] == 3) retVal += '<img width="'+size+'px" src="'+flame+'" alt="flame" />'; //hit
-			else if (grid[i][j] == 4) retVal += '<img width="'+size+'px" src="'+sunkship+'" alt="sunk" />'; //sunk
+			if (grid[i][j] == 0) retVal += '<span '+style+' />' //'<img src="'+wave+'" alt="flame" />';
+			else if (grid[i][j] == 1) retVal += '<img '+style+' src="'+greenship+'" alt="ship" />'; //ship untouched
+			else if (grid[i][j] == 2) retVal += '<img '+style+' src="'+splash+'" alt="splash" />'; //miss
+			else if (grid[i][j] == 3) retVal += '<img '+style+' src="'+flame+'" alt="flame" />'; //hit
+			else if (grid[i][j] == 4) retVal += '<img '+style+' src="'+sunkship+'" alt="sunk" />'; //sunk
 			else retVal += grid[i][j];
 			retVal += "</td>";
 		}

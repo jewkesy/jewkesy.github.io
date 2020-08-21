@@ -294,6 +294,10 @@ table.board > th, td {
 	min-height: 50px; 
 }
 
+table.board > th, td > img {
+	display: block;
+}
+
 .stacked-bar-graph {
 	width: 100%;
 	height: 1em;
