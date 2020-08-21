@@ -213,7 +213,7 @@ function handleGameAction(msg) {
 	
 	var playerAction = msg.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
-	if (playerActionDisplay == 'won') playerActionDisplay = 'hit';
+	if (playerActionDisplay == 'won' || playerActionDisplay == 'sunk') playerActionDisplay = 'hit';
 	else if (playerActionDisplay == 'outtabounds' || playerActionDisplay == 'dupe') return;
 
 	document.getElementById('playerAction').innerHTML  = '<div class="animate__animated animate__fadeIn"><span class="coords">'+playerAction.coords.l.toUpperCase()+playerAction.coords.n+'</span><img alt="'+playerActionDisplay+'" style="height:50%; max-height:50%;" src="./images/' + playerActionDisplay +'.png"/></div>';
@@ -260,7 +260,7 @@ function handleGameAction(msg) {
 
 	var computerAction = msg.gameObj.computerAction;
 	var computerActionDisplay = computerAction.action.toLowerCase();
-	if (computerActionDisplay == 'won') computerActionDisplay = 'hit';
+	if (computerActionDisplay == 'won' || computerActionDisplay == 'sunk') computerActionDisplay = 'hit';
 	document.getElementById('computerAction').innerHTML  = '<div class="animate__animated animate__fadeIn '+delay+'"><img alt="'+computerActionDisplay+'" style="height:50%; max-height:50%;" src="./images/' + computerActionDisplay +'.png"/><span class="coords">'+computerAction.coords.l.toUpperCase()+computerAction.coords.n+'</span></div>';
 
 	var computerActionResult = "explosion-cloud";
