@@ -346,7 +346,7 @@ function buildGrid(grid, progress) {
 	var alphabet = "abcdefghijklmnopqrstuvwxyz";
 	var retVal = "<table class='board'><tr><td></td>";
 
-	var size = 50;
+	var size = 32;
 	var style = ' width="'+size+'px" height="'+size+'px" ';
 
 	for (var i = 0; i < grid[0].length; i++) {

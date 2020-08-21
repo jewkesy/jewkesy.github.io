@@ -287,14 +287,14 @@ table.board { margin: 0 auto; padding: 0px; text-align: center; background-color
 
 table.board > th, td { 
 	border: 2px solid maroon; 
-	padding: 0px; margin:0px; 
-	width: 50px; 
-	height: 50px; 
-	min-width: 50px; 
-	min-height: 50px; 
+	/*padding: 0px; margin:0px; */
+	width: 32px; 
+	height: 32px; 
+	min-width: 32px; 
+	min-height: 32px; 
 }
 
-table.board > th, td > img {
+table.board > th, td > img, span {
 	display: block;
 }
 
