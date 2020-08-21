@@ -276,10 +276,28 @@ img.action {
 	width: 60vw;
 }
 
+div.boardContainer {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+table.board { margin: 0 auto; padding: 0px; text-align: center; background-color: #63b4ff; border-collapse: collapse; text-align: center; vertical-align: middle; }		
+
+table.board > th, td { 
+	border: 2px solid maroon; 
+	padding: 0px; margin:0px; 
+	width: 50px; 
+	height: 50px; 
+	min-width: 50px; 
+	min-height: 50px; 
+}
+
 .stacked-bar-graph {
-  width: 100%;
-  height: 1em;
-  color:#414042;
+	width: 100%;
+	height: 1em;
+	color:#414042;
 }
 
 .stacked-bar-graph > span {
@@ -288,7 +306,6 @@ img.action {
 	box-sizing: border-box;
 	float: left;
 
-
 	font-size: 1em;
 	padding: 0px;
 	color: white;
@@ -296,14 +313,14 @@ img.action {
 }
 
 .stacked-bar-graph > span.bar-1 {
-background: #F7B334;
+	background: #F7B334;
 }
 
 .stacked-bar-graph > span.bar-2 {
-background: #A7A9AC;
+	background: #A7A9AC;
 }
 
 .stacked-bar-graph > span.bar-3 {
-background: #D57E00;
+	background: #D57E00;
 }
 
