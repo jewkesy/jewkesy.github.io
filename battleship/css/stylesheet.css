@@ -288,13 +288,17 @@ table.board { margin: 0 auto; padding: 0px; text-align: center; background-color
 table.board > th, td { 
 	border: 2px solid maroon; 
 	/*padding: 0px; margin:0px; */
-	width: 32px; 
-	height: 32px; 
-	min-width: 32px; 
-	min-height: 32px; 
+	width: 30px; 
+	height: 30px; 
+	min-width: 30px; 
+	min-height: 30px; 
 }
 
-table.board > th, td > img, span {
+.boardCell > span {
+	display: block;
+}
+
+.boardCell > img {
 	display: block;
 }
 

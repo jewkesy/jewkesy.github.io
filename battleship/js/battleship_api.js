@@ -346,7 +346,7 @@ function buildGrid(grid, progress) {
 	var alphabet = "abcdefghijklmnopqrstuvwxyz";
 	var retVal = "<table class='board'><tr><td></td>";
 
-	var size = 32;
+	var size = 30;
 	var style = ' width="'+size+'px" height="'+size+'px" ';
 
 	for (var i = 0; i < grid[0].length; i++) {
@@ -356,7 +356,7 @@ function buildGrid(grid, progress) {
 	for (var i = 0; i < grid.length; i++) {
 		retVal += "<tr><td>" + (i+1) + "</td>";
 		for (var j = 0; j < grid[0].length; j++) {
-			retVal += "<td>"
+			retVal += "<td class='boardCell'>"
 			if (grid[i][j] == 0) retVal += '<span '+style+' />' //'<img src="'+wave+'" alt="flame" />';
 			else if (grid[i][j] == 1) retVal += '<img '+style+' src="'+greenship+'" alt="ship" />'; //ship untouched
 			else if (grid[i][j] == 2) retVal += '<img '+style+' src="'+splash+'" alt="splash" />'; //miss
