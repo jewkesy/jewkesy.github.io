@@ -3,7 +3,7 @@
 let alexaVersion = '1.0';
 let alexa;
 
-let debugMode = false;
+let debugMode = true;
 if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 
 let defaultAudiolevel = 0.6;
