@@ -161,8 +161,8 @@ function initialiseGameBoards(msg) {
 	if (!msg) return;
 	console.log(msg)
 	
-	var tacticalGrid = msg.grids[0].url;
-	var playerFleet  = msg.grids[1].url;
+	// var tacticalGrid = msg.grids[0].url;
+	// var playerFleet  = msg.grids[1].url;
 	loadGrid('tacticalGrid', null, "Tactical Grid", "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress);
 	loadGrid('playerFleet', null, "Player Fleet", "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress);
 }
@@ -218,10 +218,10 @@ function handleGameAction(msg) {
 
 	document.getElementById('playerAction').innerHTML  = '<div class="animate__animated animate__fadeIn"><span class="coords">'+playerAction.coords.l.toUpperCase()+playerAction.coords.n+'</span><img alt="'+playerActionDisplay+'" style="height:50%; max-height:50%;" src="./images/' + playerActionDisplay +'.png"/></div>';
 
-	var tacticalGrid = msg.grids[0].url;
-	var playerFleet  = msg.grids[1].url;
+	// var tacticalGrid = msg.grids[0].url;
+	// var playerFleet  = msg.grids[1].url;
 
-	loadGrid('tacticalGrid', tacticalGrid, "Tactical Grid", "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress);
+	loadGrid('tacticalGrid', null, "Tactical Grid", "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress);
 
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
@@ -231,7 +231,7 @@ function handleGameAction(msg) {
 		}
 	}
 
-	loadGrid('playerFleet', playerFleet, "Player Fleet", "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress);
+	loadGrid('playerFleet', null, "Player Fleet", "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress);
 
 	var playerActionResult = "explosion-cloud";
 
