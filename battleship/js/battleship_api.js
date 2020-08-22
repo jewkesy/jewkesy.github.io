@@ -345,7 +345,7 @@ function buildGrid(grid, progress, cssClass) {
 
 	var alphabet = "abcdefghijklmnopqrstuvwxyz";
 	var size = 30; // if Echo Show, switch to 50?
-console.log(size)
+// console.log(size)
 	var retVal = "<table class='board board"+size+" "+cssClass+"'><tr><td></td>";
 
 	var style = ' width="'+size+'px" height="'+size+'px" ';
