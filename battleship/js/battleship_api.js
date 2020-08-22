@@ -8,6 +8,7 @@ const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 let alexaVersion = '1.0';
 let alexa;
+let _gameObj;
 
 let debugMode = false;
 if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
@@ -83,6 +84,11 @@ function gridPressEvent(evt) {
 	// console.log(evt.target.dataset)
 	if (evt && evt.target && evt.target.dataset) {
 		console.log("CLICKED", evt.target.dataset.type,  evt.target.dataset.col ,  evt.target.dataset.row)
+		skillSendMessage({coords: {
+			col: evt.target.dataset.col,
+			row: evt.target.dataset.row,
+			gameObj: _gameObj
+		}});
 	}
 }
 
@@ -172,8 +178,8 @@ function showSummary(won, summaryHTML) {
 function initialiseGameBoards(msg) {
 	debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
-	console.log(msg)
-	
+	// console.log(msg)
+	_gameObj = msg.gameObj;
 	// var tacticalGrid = msg.grids[0].url;
 	// var playerFleet  = msg.grids[1].url;
 	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true);
@@ -201,6 +207,7 @@ function skillOnMessage(msg) {
 	debugMe(JSON.stringify(msg, null, 2));
 	// if (msg.description) document.getElementById('description').innerText = new Date()+ " "+ msg.description;
 	if (msg.gameObj) {
+		_gameObj = msg.gameObj;
 		clearHTML();
 		handleGameAction(msg);
 	}
@@ -306,7 +313,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode) {
 
 	eleGrid.appendChild(table);
 }
-
 
 function clearHTML() {
 	document.getElementById('playerAction').innerHTML = '';
