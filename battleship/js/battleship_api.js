@@ -18,8 +18,6 @@ let backgroundAudio=document.getElementById("bgAudio");
 // backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 duckAudio(defaultAudiolevel);
 
-
-
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
@@ -82,9 +80,9 @@ try {
 }
 
 function gridPressEvent(evt) {
-	console.log(evt.target)
-	if (evt && evt.target && evt.target.type == 'gridPress') {
-		console.log("CLICKED", evt)
+	// console.log(evt.target.dataset)
+	if (evt && evt.target && evt.target.dataset) {
+		console.log("CLICKED", evt.target.dataset.type,  evt.target.dataset.col ,  evt.target.dataset.row)
 	}
 }
 
@@ -249,9 +247,9 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode) {
 				var span = document.createElement('span');
 				span.style.setProperty('width', size+'px');
 				span.style.setProperty('height', size+'px');
-				span.setAttribute("type", "gridPress");
-				span.setAttribute("col", alphabet.charAt(i).toUpperCase());
-				span.setAttribute("row", j+1);
+				span.setAttribute("data-type", "gridPress");
+				span.setAttribute("data-col", alphabet.charAt(j).toUpperCase());
+				span.setAttribute("data-row", i+1);
 				if (touchMode) {
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
 				}
