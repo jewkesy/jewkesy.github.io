@@ -80,10 +80,15 @@ try {
 	console.log("Alexa Load Error", err)
 }
 
+var _gridPressed = false;
 function gridPressEvent(evt) {
+	if (_gridPressed == true) return;
 	// console.log(evt.target.dataset)
 	if (evt && evt.target && evt.target.dataset) {
-		console.log("CLICKED", evt.target.dataset.type,  evt.target.dataset.col ,  evt.target.dataset.row)
+		_gridPressed = true;
+		evt.target.classList.add("pulseit");
+		// evt.target.classList.add("flashit");
+		// console.log("CLICKED", evt.target.dataset.type,  evt.target.dataset.col ,  evt.target.dataset.row)
 		skillSendMessage({coords: {
 			col: evt.target.dataset.col,
 			row: evt.target.dataset.row
@@ -114,7 +119,6 @@ function showIntro() {
 }
 
 function buildSummaryHtml(results) {
-
 	let retVal = `<div class='gridRow'><div id='summaryLeft'>Round Accuracy: ${results.accuracy}%
 					<br/>Round Score: ${results.score}
 					<br/>Game Streak: ${results.gameStreak}
@@ -216,6 +220,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode) {
 	// console.log(gameGrid, progress)
 	var eleGrid = document.getElementById(id);
 	eleGrid.innerHTML = "";
+	_gridPressed = false;
 
 	var size = 30; // if Echo Show, switch to 50?
 	var style = ' width="'+size+'px" height="'+size+'px" ';
