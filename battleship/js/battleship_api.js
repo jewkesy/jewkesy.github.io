@@ -16,6 +16,7 @@ if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 let defaultAudiolevel = 0.6;
 let quietAudiolevel = 0.4;
 let backgroundAudio=document.getElementById("bgAudio");
+let launchAudio=document.getElementById("fireAudio");
 // backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 duckAudio(defaultAudiolevel);
 
@@ -86,9 +87,8 @@ function gridPressEvent(evt) {
 	// console.log(evt.target.dataset)
 	if (evt && evt.target && evt.target.dataset) {
 		_gridPressed = true;
+		fireAudio.play();
 		evt.target.classList.add("pulseit");
-		// evt.target.classList.add("flashit");
-		// console.log("CLICKED", evt.target.dataset.type,  evt.target.dataset.col ,  evt.target.dataset.row)
 		skillSendMessage({coords: {
 			col: evt.target.dataset.col,
 			row: evt.target.dataset.row
