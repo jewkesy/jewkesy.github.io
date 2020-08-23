@@ -16,7 +16,8 @@ if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 let defaultAudiolevel = 0.6;
 let quietAudiolevel = 0.4;
 let backgroundAudio=document.getElementById("bgAudio");
-let launchAudio=document.getElementById("fireAudio");
+// let launchAudio=document.getElementById("fireAudio");
+// let fireAudio = new Audio('./audio/launch.mp3');
 // backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 duckAudio(defaultAudiolevel);
 
@@ -86,7 +87,8 @@ function gridPressEvent(evt) {
 	if (_gridPressed == true) return;
 	// console.log(evt.target.dataset)
 	if (evt && evt.target && evt.target.dataset) {
-		_gridPressed = true;
+		// _gridPressed = true;
+		let fireAudio = new Audio('./audio/launch.mp3');
 		fireAudio.play();
 		evt.target.classList.add("pulseit");
 		skillSendMessage({coords: {
