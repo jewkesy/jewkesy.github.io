@@ -99,6 +99,9 @@ function gridPressEvent(evt) {
 }
 
 function showIntro() {
+	let bgAudio = new Audio('./audio/battleship_01.mp3');
+	bgAudio.play();
+
 	var intro = document.getElementById('intro');
 	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3_0s');
 
@@ -178,6 +181,15 @@ function showSummary(won, summaryHTML) {
 			else logo.innerHTML+= "<img src='./images/YouLose.png' class='animate__animated animate__zoomInUp' />";
 		}
 	});
+	try {
+		if (won) {
+			let wonAudio = new Audio('./audio/won.mp3');
+			wonAudio.play();
+		} else {
+			let lostAudio = new Audio('./audio/lost.mp3');
+			lostAudio.play();
+		}
+	} catch {}
 }
 
 function initialiseGameBoards(msg) {
@@ -225,6 +237,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode) {
 	_gridPressed = false;
 
 	var size = 30; // if Echo Show, switch to 50?
+	console.log("TODO get aspect ratio and for echo show, switch to 50")
 	var style = ' width="'+size+'px" height="'+size+'px" ';
 
 	var table = document.createElement('table');
@@ -458,38 +471,6 @@ function duckAudio(level) {
 		}
 	}
 }
-
-// function buildGrid(grid, progress, cssClass, touchMode) {
-// 	var size = 30; // if Echo Show, switch to 50?
-// 	var retVal = "<table class='board board"+size+" "+cssClass+"'><tr><td></td>";
-
-// 	var style = ' width="'+size+'px" height="'+size+'px" ';
-
-// 	for (var i = 0; i < grid[0].length; i++) {
-// 		retVal += "<td>" + alphabet.charAt(i).toUpperCase() + "</td>";
-// 	}
-
-// 	for (var i = 0; i < grid.length; i++) {
-// 		retVal += "<tr><td>" + (i+1) + "</td>";
-// 		for (var j = 0; j < grid[0].length; j++) {
-// 			retVal += "<td class='boardCell'>"
-// 			if (grid[i][j] == 0) retVal += '<span type="gridPress" '+style+' />' //'<img src="'+wave+'" alt="flame" />';
-// 			else if (grid[i][j] == 1) retVal += '<img '+style+' src="'+greenship+'" alt="ship" />'; //ship untouched
-// 			else if (grid[i][j] == 2) retVal += '<img '+style+' src="'+splash+'" alt="splash" />'; //miss
-// 			else if (grid[i][j] == 3) retVal += '<img '+style+' src="'+flame+'" alt="flame" />'; //hit
-// 			else if (grid[i][j] == 4) retVal += '<img '+style+' src="'+sunkship+'" alt="sunk" />'; //sunk
-// 			else retVal += grid[i][j];
-// 			retVal += "</td>";
-// 		}
-// 		retVal += "</tr>";
-// 	}
-// 	// var progress = 0;
-// 	var total = 100-progress;
-
-// 	retVal += "<tr><td style='height:10px;' colspan='" + grid[0].length+1 + "'><div class='stacked-bar-graph'><span style='width: "+progress+"%; background:green;'>"+progress+"%</span><span style='width: "+total+"%;'></span></div></td></tr>";
-
-// 	return retVal + "</table>";
-// }
 
 function toggleAudio() {
 	if (!backgroundAudio) backgroundAudio=document.getElementById("bgAudio");
