@@ -33,7 +33,7 @@ duckAudio(defaultAudiolevel);
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
-	debugMe("LOADED");
+	// debugMe("LOADED");
 	showIntro();
 	initialiseGameBoards(result.message);
 	alexa = result.alexa;
@@ -80,9 +80,7 @@ const failure = function(error) {
 	console.log(error)
 };
 try {
-	//debugMe("window.alexaHtmlLocalDebug: " + window.alexaHtmlLocalDebug);
-	if (window.alexaHtmlLocalDebug) {
-	  // both alexaHtmlLocalDebug and LocalMessageProvider are injected into the page by alexa-html-local
+	if (window.alexaHtmlLocalDebug) { // both alexaHtmlLocalDebug and LocalMessageProvider are injected into the page by alexa-html-local
 	  	Alexa.create({ version: alexaVersion, messageProvider: new LocalMessageProvider() }).then(success).catch(failure);
 	} else {
 		Alexa.create({ version: alexaVersion }).then(success).catch(failure);
@@ -108,8 +106,8 @@ function gridPressEvent(evt) {
 }
 
 function showIntro() {
-	let bgAudio = new Audio('./audio/battleship_01.mp3');
-	bgAudio.play();
+	// let bgAudio = new Audio('./audio/battleship_01.mp3');
+	// bgAudio.play();
 
 	var intro = document.getElementById('intro');
 	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3_0s');
@@ -202,35 +200,32 @@ function showSummary(won, summaryHTML) {
 }
 
 function initialiseGameBoards(msg) {
-	debugMe(JSON.stringify(msg, null, 2));
+	// debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
-	// console.log(msg)
-	// _gameObj = msg.gameObj;
-	// var tacticalGrid = msg.grids[0].url;
-	// var playerFleet  = msg.grids[1].url;
+
 	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true);
 	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false);
 }
 
 function speechStarted(msg){
-	debugMe("SPEECH STARTED");
-	debugMe(JSON.stringify(msg, null, 2));
-	console.log("SPEECH STARTED");
-	duckAudio(quietAudiolevel);
+	// debugMe("SPEECH STARTED");
+	// debugMe(JSON.stringify(msg, null, 2));
+	// console.log("SPEECH STARTED");
+	// duckAudio(quietAudiolevel);
 }
 
 function speechStopped(msg) {
-	debugMe("SPEECH STOPPED");
-	debugMe(JSON.stringify(msg, null, 2));
-	console.log("SPEECH STOPPED");
-	duckAudio(defaultAudiolevel);
+	// debugMe("SPEECH STOPPED");
+	// debugMe(JSON.stringify(msg, null, 2));
+	// console.log("SPEECH STOPPED");
+	// duckAudio(defaultAudiolevel);
 }
 
 function skillOnMessage(msg) {
 	console.log("ON MESSAGE", msg)
 	// console.log(msg.sessionAttributes.gameObj)
-	debugMe("skillOnMessage");
-	debugMe(JSON.stringify(msg, null, 2));
+	// debugMe("skillOnMessage");
+	// debugMe(JSON.stringify(msg, null, 2));
 	// if (msg.description) document.getElementById('description').innerText = new Date()+ " "+ msg.description;
 	if (msg.gameObj) {
 		// _gameObj = msg.gameObj;
@@ -350,8 +345,12 @@ function clearHTML() {
 
 function handleGameAction(msg) {
 	console.log(msg)
-	debugMe(JSON.stringify(msg, null, 2));
+	// debugMe(JSON.stringify(msg, null, 2));
 	
+
+	let bgAudio = new Audio('./audio/battleship_01.mp3');
+	bgAudio.play();
+
 	var playerAction = msg.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
 	if (playerActionDisplay == 'won' || playerActionDisplay == 'sunk') playerActionDisplay = 'hit';
@@ -450,9 +449,9 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 }
 
 function skillSendMessage(msg) {
-	debugMe("SEND MESSAGE");
-	debugMe(JSON.stringify(msg, null, 2));
-	console.log("SEND MESSAGE", msg)
+	// debugMe("SEND MESSAGE");
+	// debugMe(JSON.stringify(msg, null, 2));
+	// console.log("SEND MESSAGE", msg)
 	alexa.skill.sendMessage(msg);
 }
 
@@ -489,22 +488,22 @@ function toggleAudio() {
 }
 
 function micOnOpened() {
-	debugMe("MIC OPENED");
-	console.log("MIC OPENED")
+	// debugMe("MIC OPENED");
+	// console.log("MIC OPENED")
 	// dimScreen();
 	duckAudio(quietAudiolevel);
 }
 
 function micOnClosed() {
-	debugMe("MIC CLOSED");
-	console.log("MIC CLOSED")
+	// debugMe("MIC CLOSED");
+	// console.log("MIC CLOSED")
 	// undimScreen();
 	duckAudio(defaultAudiolevel);
 }
 
 function micOnError(error) {
-	debugMe("MIC ERROR");
-	console.log("MIC ERROR", error)
+	// debugMe("MIC ERROR");
+	// console.log("MIC ERROR", error)
 }
 
 function debugMe(txt) {
