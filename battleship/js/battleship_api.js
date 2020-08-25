@@ -254,7 +254,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode) {
 	var tr = document.createElement('tr'); 
 	var td = document.createElement('td');
 	tr.appendChild(td);
-	for (var i = 0; i < gameGrid.length; i++) {
+	for (var i = 0; i < gameGrid[0].length; i++) {
 		var td = document.createElement('td');
 		var txt = document.createTextNode(alphabet.charAt(i).toUpperCase());
 		td.appendChild(txt);
@@ -312,7 +312,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode) {
 	var tr = document.createElement('tr'); 
 	var td = document.createElement('td');
 	td.style.setProperty('height', '10px');
-	td.setAttribute("colspan", gameGrid.length+1);
+	td.setAttribute("colspan", gameGrid[0].length+1);
 
 	var div = document.createElement('div');
 	div.classList = ['stacked-bar-graph']
