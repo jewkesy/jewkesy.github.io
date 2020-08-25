@@ -81,3 +81,10 @@
   -webkit-animation-delay: calc(var(--animate-delay) * 5.2);
   animation-delay: calc(var(--animate-delay) * 5.2);
 }
+
+.animate__animated.animate__delay-6_0s {
+  -webkit-animation-delay: calc(1s * 6.0);
+  animation-delay: calc(1s * 6.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 6.0);
+  animation-delay: calc(var(--animate-delay) * 6.0);
+}
