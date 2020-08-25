@@ -6,14 +6,10 @@
 // const sunkship = "data:image/png;base64,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";
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-
-
 const flame = "./images/flame_100.png";
 const splash = "./images/waves.png";
 const greenship = "./images/green_square_lrg.png";
 const sunkship = "./images/sunk_100.png";
-
-
 
 let alexaVersion = '1.0';
 let alexa;
@@ -28,7 +24,7 @@ let backgroundAudio=document.getElementById("bgAudio");
 // let launchAudio=document.getElementById("fireAudio");
 // let fireAudio = new Audio('./audio/launch.mp3');
 // backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
-duckAudio(defaultAudiolevel);
+// duckAudio(defaultAudiolevel);
 
 const success = function(result) {
 	// const {alexa, message} = result;
@@ -202,9 +198,27 @@ function showSummary(won, summaryHTML) {
 function initialiseGameBoards(msg) {
 	// debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
+console.log(msg)
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context);
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context);
+}
 
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true);
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false);
+function getGridCellSizeForScreen(sWidth, cellCount) {
+	// console.log(sWidth, cellCount)
+	sWidth = 1024
+
+	if (sWidth >= 1200) {
+		if (cellCount >= 8) return 50
+		if (cellCount >= 5) return 60
+	} else if (sWidth >= 1000) {
+		if (cellCount >= 9) return 40
+		if (cellCount >= 5) return 50
+	} else if (sWidth >= 800) {
+		if (cellCount >= 9) return 30
+		if (cellCount >= 5) return 40
+	}
+	// go small
+	return 30;
 }
 
 function speechStarted(msg){
@@ -222,7 +236,7 @@ function speechStopped(msg) {
 }
 
 function skillOnMessage(msg) {
-	console.log("ON MESSAGE", msg)
+	// console.log("ON MESSAGE", msg)
 	// console.log(msg.sessionAttributes.gameObj)
 	// debugMe("skillOnMessage");
 	// debugMe(JSON.stringify(msg, null, 2));
@@ -234,14 +248,19 @@ function skillOnMessage(msg) {
 	}
 }
 
-function loadGrid(id, cssClass, gameGrid, progress, touchMode) {
+function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	// console.log(gameGrid, progress)
 	var eleGrid = document.getElementById(id);
 	eleGrid.innerHTML = "";
 	_gridPressed = false;
 
-	var size = 30; // if Echo Show, switch to 50?
-	console.log("TODO get aspect ratio and for echo show, switch to 50")
+	// var size = 50; // if Echo Show, switch to 50?
+
+	let sWidth = context.Viewport.pixelWidth
+	// let sHeight = context.Viewport.pixelHeight
+	
+	let size = getGridCellSizeForScreen(sWidth, gameGrid[0].length+1);
+console.log(size)
 	var style = ' width="'+size+'px" height="'+size+'px" ';
 
 	var table = document.createElement('table');
@@ -348,8 +367,8 @@ function handleGameAction(msg) {
 	// debugMe(JSON.stringify(msg, null, 2));
 	
 
-	let bgAudio = new Audio('./audio/battleship_01.mp3');
-	bgAudio.play();
+	// let bgAudio = new Audio('./audio/battleship_01.mp3');
+	// bgAudio.play();
 
 	var playerAction = msg.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
@@ -361,7 +380,7 @@ function handleGameAction(msg) {
 	// var tacticalGrid = msg.grids[0].url;
 	// var playerFleet  = msg.grids[1].url;
 
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true);
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context);
 
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
@@ -371,7 +390,7 @@ function handleGameAction(msg) {
 		}
 	}
 
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false);
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context);
 
 	var playerActionResult = "explosion-cloud";
 
