@@ -347,7 +347,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	var spanP = document.createElement('span');
 	spanP.style.setProperty('background', 'green');
 	spanP.style.setProperty('width', progress+'%');
-	var txt = document.createTextNode(progress+'%' + ' ' + sWidth + 'x' + sHeight);
+	var txt = document.createTextNode(progress+'%' + '_' + sWidth + 'x' + sHeight);
 	spanP.appendChild(txt);
 
 	var spanW = document.createElement('span');
