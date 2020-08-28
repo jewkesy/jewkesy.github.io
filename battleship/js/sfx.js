@@ -41,7 +41,7 @@ animate(); // Animation loop
 
 // Creating the animation and moving the displacement map position
 function animate() {
-    displacementSprite.x += 2;
+    displacementSprite.x += 5;
     displacementSprite.y += 2;
     requestAnimationFrame(animate); // Loop
 }
