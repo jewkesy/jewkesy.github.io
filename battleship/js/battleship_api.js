@@ -259,7 +259,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	// let sHeight = context.Viewport.pixelHeight
 	
 	let size = getGridCellSizeForScreen(sWidth, gameGrid[0].length+1);
-console.log(size)
+	// console.log(size)
 	var style = ' width="'+size+'px" height="'+size+'px" ';
 
 	var table = document.createElement('table');
@@ -292,6 +292,7 @@ console.log(size)
 
 			if (gameGrid[i][j] == 0) {
 				var span = document.createElement('span');
+				span.classList=['clicky']
 				span.style.setProperty('width', size+'px');
 				span.style.setProperty('height', size+'px');
 				span.setAttribute("data-type", "gridPress");

@@ -258,6 +258,17 @@ div.gridRow {
 	margin: 0 auto;
 }
 
+.clicky:focus {
+	background-color:#f2f;
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;
+}
+.clicky:hover {
+	background-color:#ccc;
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;
+}
+
 .opacityZero {
 	opacity:0 !important;
 	height:0 !important;
