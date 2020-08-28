@@ -322,6 +322,15 @@ table.board30 > tr > * {
 	font-size: 2.1vw;
 }
 
+table.board35 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 35px; 
+	height: 35px; 
+	min-width: 35px; 
+	min-height: 35px;
+	font-size: 2.1vw;
+}
+
 table.board40 > tr > * { 
 	/*border: 2px solid maroon; */
 	width: 40px; 
