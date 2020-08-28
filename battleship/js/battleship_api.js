@@ -211,7 +211,8 @@ function getGridCellSizeForScreen(sWidth, cellCount) {
 	// sWidth = 960;
 	// sWidth = 1024;
 	// sWidth = 1280;
-	// sWidth = 1920   
+	// sWidth = 1920 
+
 	if (sWidth >= 1200) {
 		if (cellCount >= 8) return 35
 		if (cellCount >= 6) return 45
@@ -263,6 +264,10 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	_gridPressed = false;
 
 	// var size = 50; // if Echo Show, switch to 50?
+	if (params.has('w') && params.has('h')) {
+		context.Viewport.pixelWidth = params.get('w');
+		context.Viewport.pixelHeight = params.get('h');
+	} 
 
 	let sWidth = context.Viewport.pixelWidth
 	let sHeight = context.Viewport.pixelHeight
