@@ -70,12 +70,14 @@ div.spacer {
 }
 
 #sfx {
-/*	display: none;*/
+
+	display: none;
 	position: absolute;
 	left: 0;
   	top: 0;
   	height: 100%;
   	width: 100%;
+
 }
 
 #summary {

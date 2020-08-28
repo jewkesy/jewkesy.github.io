@@ -116,12 +116,20 @@ function showIntro() {
 	logo.classList.add('animate__animated', 'animate__zoomInUp');
 	logo.innerHTML+= "<img src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
 
+	intro.addEventListener('animationstart', (evt) => {
+		if (evt.animationName == 'fadeOut') {
+			var sfxSection = document.getElementById('sfx');
+			sfxSection.style.setProperty('display', 'inline');
+		}
+	});
+
 	intro.addEventListener('animationend', (evt) => {
 		if (evt.animationName == 'fadeOut') {
-			console.log('COMPLETE');
+			// console.log('COMPLETE');
 			intro.style.setProperty('display', 'none');
 			var gameSection = document.getElementById('game');
 			gameSection.style.setProperty('display', 'inline');
+			
 		}
 	});
 }
@@ -154,7 +162,15 @@ function showSummary(won, summaryHTML) {
 	var pyro = document.getElementById('pyro');
 	if (won) pyro.style.setProperty('display', 'inline');
 	else pyro.style.setProperty('display', 'none');
-	
+
+	summary.addEventListener('animationstart', (evt) => {
+		if (evt.animationName == 'fadeIn') {
+			var sfxSection = document.getElementById('sfx');
+			sfxSection.style.setProperty('display', 'none');
+			sfxSection.classList=[];
+		}
+	});
+
 	summary.addEventListener('animationend', (evt) => {
 		if (evt.target.id != 'summary') return;
 
@@ -172,8 +188,7 @@ function showSummary(won, summaryHTML) {
 						ship.classList.add('animate__animated', 'animate__rotateOutDownLeft', 'animate__delay-2_0s');
 						addAction(document.getElementById('summary_action'), "explosion-cloud", 'actionCenter' + ' action animate__animated animate__fadeIn', 'animate__delay-1s', '0.5s', '70vh', '70vw', '40px');
 					}
-					// var pyro = document.getElementById('pyro');
-					// pyro.style.setProperty('display', 'none');
+
 					var resultDisplay = document.getElementById('summary_result');
 					resultDisplay.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-2_0s');
 					resultDisplay.innerHTML = summaryHTML;
@@ -460,7 +475,7 @@ function addFleetDestroyed(parentNode, cssSide) {
 }
 
 function addAction(parentNode, imgSrc, classes, delay, duration, height, width, paddingLeft) {
-	console.log(parentNode, imgSrc, classes, delay, duration, height, width, paddingLeft)
+	// console.log(parentNode, imgSrc, classes, delay, duration, height, width, paddingLeft)
 	var img = document.createElement("img");
 	img.id =  delay+"_"+duration+"_"+height+"_"+width+"_"+paddingLeft
 	img.src = './images/'+imgSrc+'.png';
