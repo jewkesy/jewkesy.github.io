@@ -151,11 +151,13 @@ function showSummary(won, summaryHTML) {
 	var summary = document.getElementById('summary');
 	summary.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-6_0s');
 	summary.style.setProperty('display', 'inline');
+	var pyro = document.getElementById('pyro');
+	if (won) pyro.style.setProperty('display', 'inline');
+	else pyro.style.setProperty('display', 'none');
 	
 	summary.addEventListener('animationend', (evt) => {
 		if (evt.target.id != 'summary') return;
 
-		// console.log("ENDED", evt.animationName,  evt.target.id)
 		if (evt.animationName == 'fadeIn') {
 			var ship = document.getElementById('summary_ship');
 			ship.classList.add('animate__animated', 'animate__zoomInUp')
@@ -164,13 +166,14 @@ function showSummary(won, summaryHTML) {
 			ship.addEventListener('animationend', (evt) => {
 				if (evt.target.id != 'summary_ship') return;
 				ship.classList = [];
-				// console.log("ENDED", evt.animationName,  evt.target.id)
 				if (evt.animationName == 'zoomInUp') {
 					if (won) ship.classList.add('animate__animated', 'animate__backOutRight', 'animate__delay-2_0s');
 					else {
 						ship.classList.add('animate__animated', 'animate__rotateOutDownLeft', 'animate__delay-2_0s');
 						addAction(document.getElementById('summary_action'), "explosion-cloud", 'actionCenter' + ' action animate__animated animate__fadeIn', 'animate__delay-1s', '0.5s', '70vh', '70vw', '40px');
 					}
+					// var pyro = document.getElementById('pyro');
+					// pyro.style.setProperty('display', 'none');
 					var resultDisplay = document.getElementById('summary_result');
 					resultDisplay.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-2_0s');
 					resultDisplay.innerHTML = summaryHTML;
