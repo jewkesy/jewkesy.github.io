@@ -214,15 +214,15 @@ function getGridCellSizeForScreen(sWidth, cellCount) {
 	// sWidth = 1920   
 	if (sWidth >= 1200) {
 		if (cellCount >= 8) return 35
-		if (cellCount >= 5) return 45
+		if (cellCount >= 6) return 45
 		if (cellCount >= 2) return 55
 	} else if (sWidth >= 1000) {
 		if (cellCount >= 9) return 40
-		if (cellCount >= 5) return 50
+		if (cellCount >= 6) return 50
 		if (cellCount >= 2) return 60
 	} else if (sWidth >= 800) {
 		if (cellCount >= 9) return 30
-		if (cellCount >= 5) return 40
+		if (cellCount >= 6) return 40
 		if (cellCount >= 2) return 50
 	}
 	// go small
