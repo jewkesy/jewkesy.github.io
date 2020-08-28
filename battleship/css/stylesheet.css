@@ -358,6 +358,15 @@ table.board50 > tr > * {
 	font-size: 2.3vw;
 }
 
+table.board55 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 55px; 
+	height: 55px; 
+	min-width: 55px; 
+	min-height: 55px; 
+	font-size: 2.3vw;
+}
+
 table.board60 > tr > * { 
 	/*border: 2px solid maroon; */
 	width: 60px; 
