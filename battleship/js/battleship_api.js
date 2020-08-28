@@ -210,8 +210,8 @@ function getGridCellSizeForScreen(sWidth, cellCount) {
 
 	// sWidth = 960;
 	// sWidth = 1024;
-	sWidth = 1280;
-	// sWidth = 1920   
+	// sWidth = 1280;
+	sWidth = 1920   
 	if (sWidth >= 1200) {
 		if (cellCount >= 8) return 40
 		if (cellCount >= 5) return 50
@@ -262,7 +262,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	// var size = 50; // if Echo Show, switch to 50?
 
 	let sWidth = context.Viewport.pixelWidth
-	// let sHeight = context.Viewport.pixelHeight
+	let sHeight = context.Viewport.pixelHeight
 	
 	let size = getGridCellSizeForScreen(sWidth, gameGrid[0].length+1);
 
@@ -347,7 +347,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	var spanP = document.createElement('span');
 	spanP.style.setProperty('background', 'green');
 	spanP.style.setProperty('width', progress+'%');
-	var txt = document.createTextNode(progress+'%');
+	var txt = document.createTextNode(progress+'%' + ' ' + sWidth + 'x' + sHeight);
 	spanP.appendChild(txt);
 
 	var spanW = document.createElement('span');
