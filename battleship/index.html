@@ -18,7 +18,11 @@
   <title>BattleShip Alexa Web App</title>
 
   <script src="https://cdn.html.games.alexa.a2z.com/alexa-html/v1/alexa-html.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.2/pixi.min.js" defer></script>
   
+  <script src="./js/battleship_api.js?version=18" charset="UTF-8" defer></script>
+  <script src="./js/sfx.js" charset="UTF-8" defer></script>
+
   <link rel="stylesheet" type="text/css" href="./css/animate.min.css">
   <link rel="stylesheet" type="text/css" href="./css/animate.custom.css">
   <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
@@ -32,24 +36,9 @@
   <meta name="viewport" content="width=device-width" />
 </head>
 
-<body>
-<!-- 	<div class="background">
-      <div class="water"></div>
-    </div> -->
-<!-- 	<svg>
-      <filter id="turbulence" x="0" y="0" width="100%" height="100%">
-        <feTurbulence id="sea-filter" numOctaves="3" seed="2" baseFrequency="0.02 0.05"></feTurbulence>
-        <feDisplacementMap scale="20" in="SourceGraphic"></feDisplacementMap>
-        <animate xlink:href="#sea-filter" attributeName="baseFrequency" dur="60s" 
-        keyTimes="0;0.5;1" values="0.02 0.06;0.04 0.08;0.02 0.06" repeatCount="indefinite"/>
-      </filter>
-    </svg> -->
-  <!-- <audio id="bgAudio" src="./audio/battleship_01.mp3" preload="auto" loop></audio> -->
-  <!-- <audio id="fireAudio" src="./audio/launch.mp3" preload="auto"></audio> -->
-<!--   <audio id="winAudio" src="./audio/battleship_01.mp3" preload="auto"></audio>
-  <audio id="loseAudio" src="./audio/battleship_01.mp3" preload="auto"></audio> -->
-
+<body id='mainBody'>
 	<div id='container'>
+		<div id='sfx'></div>
 		<div id='game'>
 			<div id='header'>
 				<div id='logo'><img src="./images/Battle-Ship.png" /></div>
@@ -72,13 +61,6 @@
 					<div style="width: 50%;" class='gridCell' id='computerAction'></div>
 				</div>
 			</div>
-<!-- 			<div id='cmds'>
-				<div> - Version 15 - </div>
-				<div id='micOpen'>Mic Open</div>
-				<div id='micClose'>Mic Close</div>
-				<div id='toggleAudio'>ToggleAudio</div>
-				<div>1024x640 1280x800 480x480 960x480 1280x720</div>
-			</div> -->
 		</div>
 		<div id='intro'>
 			<div id='intro_ship'></div>
@@ -94,7 +76,6 @@
 		<div id='debug' class='opacityZero'></div>
 	</div>
 
-  <script src="./js/battleship_api.js?version=18" charset="UTF-8" defer></script>
 </body>
 
 </html>
