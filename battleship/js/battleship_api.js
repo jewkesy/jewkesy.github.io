@@ -98,8 +98,8 @@ function gridPressEvent(evt) {
 }
 
 function showIntro() {
-	// let bgAudio = new Audio('./audio/battleship_01.mp3');
-	// bgAudio.play();
+	let bgAudio = new Audio('./audio/battleship_01.mp3');
+	bgAudio.play();
 
 	var intro = document.getElementById('intro');
 	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3_0s');
