@@ -21,6 +21,8 @@ let backgroundAudio=document.getElementById("bgAudio");
 // let fireAudio = new Audio('./audio/launch.mp3');
 // backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
 // duckAudio(defaultAudiolevel);
+let bgAudio = new Audio('./audio/battleship_01.mp3');
+bgAudio.loop = true;
 
 const success = function(result) {
 	// const {alexa, message} = result;
@@ -98,7 +100,7 @@ function gridPressEvent(evt) {
 }
 
 function showIntro() {
-	let bgAudio = new Audio('./audio/battleship_01.mp3');
+	
 	bgAudio.play();
 
 	var intro = document.getElementById('intro');
@@ -181,6 +183,7 @@ function showSummary(won, summaryHTML) {
 		}
 	});
 	try {
+		bgAudio.pause();
 		if (won) {
 			let wonAudio = new Audio('./audio/won.mp3');
 			wonAudio.play();
@@ -204,8 +207,8 @@ function getGridCellSizeForScreen(sWidth, cellCount) {
 
 	// sWidth = 1920
 	if (sWidth >= 1200) {
-		if (cellCount >= 8) return 50
-		if (cellCount >= 5) return 60
+		if (cellCount >= 8) return 40
+		if (cellCount >= 5) return 50
 	} else if (sWidth >= 1000) {
 		if (cellCount >= 9) return 40
 		if (cellCount >= 5) return 50
