@@ -201,9 +201,12 @@ function initialiseGameBoards(msg) {
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
 	// console.log(sWidth, cellCount)
-	// sWidth = 1024
 
-	if (sWidth >= 1200) {
+	// sWidth = 1920
+	if (sWidth > 1900) {
+		if (cellCount >= 8) return 60
+		if (cellCount >= 5) return 80
+	} else if (sWidth >= 1200) {
 		if (cellCount >= 8) return 50
 		if (cellCount >= 5) return 60
 	} else if (sWidth >= 1000) {

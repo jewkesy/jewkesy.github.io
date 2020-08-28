@@ -12,7 +12,7 @@ html, body {
 }
 
 body {
-  background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;
+background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;
   background-color: #cccccc;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -67,6 +67,15 @@ div.spacer {
 }
 #intro_logo > img {
 	height: 90%;
+}
+
+#sfx {
+	display: none;
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
 }
 
 #summary {
@@ -323,6 +332,30 @@ table.board60 > tr > * {
 	height: 60px; 
 	min-width: 60px; 
 	min-height: 60px; 
+}
+
+table.board80 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 80px; 
+	height: 80px; 
+	min-width: 80px; 
+	min-height: 80px; 
+}
+
+table.board100 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 100px; 
+	height: 100px; 
+	min-width: 100px; 
+	min-height: 100px; 
+}
+
+table.board120 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 120px; 
+	height: 120px; 
+	min-width: 120px; 
+	min-height: 120px; 
 }
 
 .boardCell > span {

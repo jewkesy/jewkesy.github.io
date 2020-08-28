@@ -33,17 +33,29 @@
 </head>
 
 <body>
+<!-- 	<div class="background">
+      <div class="water"></div>
+    </div> -->
+<!-- 	<svg>
+      <filter id="turbulence" x="0" y="0" width="100%" height="100%">
+        <feTurbulence id="sea-filter" numOctaves="3" seed="2" baseFrequency="0.02 0.05"></feTurbulence>
+        <feDisplacementMap scale="20" in="SourceGraphic"></feDisplacementMap>
+        <animate xlink:href="#sea-filter" attributeName="baseFrequency" dur="60s" 
+        keyTimes="0;0.5;1" values="0.02 0.06;0.04 0.08;0.02 0.06" repeatCount="indefinite"/>
+      </filter>
+    </svg> -->
   <!-- <audio id="bgAudio" src="./audio/battleship_01.mp3" preload="auto" loop></audio> -->
   <!-- <audio id="fireAudio" src="./audio/launch.mp3" preload="auto"></audio> -->
 <!--   <audio id="winAudio" src="./audio/battleship_01.mp3" preload="auto"></audio>
   <audio id="loseAudio" src="./audio/battleship_01.mp3" preload="auto"></audio> -->
 
 	<div id='container'>
+		<div id='sfx'>
+		</div>
 		<div id='game'>
 			<div id='header'>
 				<div id='logo'><img src="./images/Battle-Ship.png" /></div>
 			</div>
-
 			<div id='grids'>
 				<div class="gridRow" style="height:5vh; max-height:5vh;">
 					<div style="width: 50%;" class='gridCell'><img style="height:75%; max-height:75%;" src="./images/tactical-grid.png"></div>
