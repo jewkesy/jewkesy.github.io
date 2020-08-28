@@ -9,10 +9,12 @@ const sunkship = "./images/sunk_100.png";
 
 let alexaVersion = '1.0';
 let alexa;
+const params = new URLSearchParams(window.location.search);
+let debugMode = params.has('debug');
 // let _gameObj;
 
-let debugMode = false;
-if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
+// let debugMode = false;
+// if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 
 let defaultAudiolevel = 0.6;
 let quietAudiolevel = 0.4;
@@ -206,8 +208,6 @@ function initialiseGameBoards(msg) {
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
 	// console.log(sWidth, cellCount)
-
-
 	// sWidth = 960;
 	// sWidth = 1024;
 	// sWidth = 1280;
@@ -308,7 +308,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 				span.setAttribute("data-type", "gridPress");
 				span.setAttribute("data-col", alphabet.charAt(j).toUpperCase());
 				span.setAttribute("data-row", i+1);
-				span.innerHTML = size
+				if (debugMode) span.innerHTML = size
 				if (touchMode) {
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
 				}
@@ -350,7 +350,9 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	var spanP = document.createElement('span');
 	spanP.style.setProperty('background', 'green');
 	spanP.style.setProperty('width', progress+'%');
-	var txt = document.createTextNode(progress+'%' + '_' + sWidth + 'x' + sHeight);
+	var resolution = '';
+	if (debugMode) resolution = '_' + sWidth + 'x' + sHeight;
+	var txt = document.createTextNode(progress+'%' + resolution);
 	spanP.appendChild(txt);
 
 	var spanW = document.createElement('span');
