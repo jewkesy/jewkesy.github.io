@@ -263,11 +263,11 @@ div.gridRow {
 	-webkit-animation: flash linear 1s infinite;
 	animation: flash linear 1s infinite;
 }
-.clicky:hover {
+/*.clicky:hover {
 	background-color:#ccc;
 	-webkit-animation: flash linear 1s infinite;
 	animation: flash linear 1s infinite;
-}
+}*/
 
 .opacityZero {
 	opacity:0 !important;
@@ -318,7 +318,8 @@ table.board30 > tr > * {
 	width: 30px; 
 	height: 30px; 
 	min-width: 30px; 
-	min-height: 30px; 
+	min-height: 30px;
+	font-size: 2.1vw;
 }
 
 table.board40 > tr > * { 
@@ -327,6 +328,7 @@ table.board40 > tr > * {
 	height: 40px; 
 	min-width: 40px; 
 	min-height: 40px; 
+	font-size: 2.2vw;
 }
 
 table.board50 > tr > * { 
@@ -335,6 +337,7 @@ table.board50 > tr > * {
 	height: 50px; 
 	min-width: 50px; 
 	min-height: 50px; 
+	font-size: 2.3vw;
 }
 
 table.board60 > tr > * { 
@@ -343,6 +346,7 @@ table.board60 > tr > * {
 	height: 60px; 
 	min-width: 60px; 
 	min-height: 60px; 
+	font-size: 2.4vw;
 }
 
 table.board80 > tr > * { 
@@ -350,7 +354,8 @@ table.board80 > tr > * {
 	width: 80px; 
 	height: 80px; 
 	min-width: 80px; 
-	min-height: 80px; 
+	min-height: 80px;
+	font-size: 2.5vw; 
 }
 
 table.board100 > tr > * { 
@@ -359,6 +364,7 @@ table.board100 > tr > * {
 	height: 100px; 
 	min-width: 100px; 
 	min-height: 100px; 
+	font-size: 2.5vw;
 }
 
 table.board120 > tr > * { 
@@ -367,6 +373,7 @@ table.board120 > tr > * {
 	height: 120px; 
 	min-width: 120px; 
 	min-height: 120px; 
+	font-size: 2.5vw;
 }
 
 .boardCell > span {

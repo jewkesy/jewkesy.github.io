@@ -183,7 +183,9 @@ function showSummary(won, summaryHTML) {
 		}
 	});
 	try {
+		duckAudio(quietAudiolevel, bgAudio);
 		bgAudio.pause();
+		duckAudio(defaultAudiolevel);
 		if (won) {
 			let wonAudio = new Audio('./audio/won.mp3');
 			wonAudio.play();
@@ -205,7 +207,11 @@ function initialiseGameBoards(msg) {
 function getGridCellSizeForScreen(sWidth, cellCount) {
 	// console.log(sWidth, cellCount)
 
-	// sWidth = 1920
+
+	// sWidth = 960;
+	// sWidth = 1024;
+	sWidth = 1280;
+	// sWidth = 1920   
 	if (sWidth >= 1200) {
 		if (cellCount >= 8) return 40
 		if (cellCount >= 5) return 50
@@ -259,6 +265,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 	// let sHeight = context.Viewport.pixelHeight
 	
 	let size = getGridCellSizeForScreen(sWidth, gameGrid[0].length+1);
+
 	// console.log(size)
 	var style = ' width="'+size+'px" height="'+size+'px" ';
 
@@ -298,6 +305,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 				span.setAttribute("data-type", "gridPress");
 				span.setAttribute("data-col", alphabet.charAt(j).toUpperCase());
 				span.setAttribute("data-row", i+1);
+				span.innerHTML = size
 				if (touchMode) {
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
 				}
@@ -470,25 +478,26 @@ function skillSendMessage(msg) {
 	alexa.skill.sendMessage(msg);
 }
 
-function duckAudio(level) {
-	if (!backgroundAudio) backgroundAudio=document.getElementById("bgAudio");
+function duckAudio(level, audioStream) {
+	if (!audioStream) return;
+	// if (!backgroundAudio) backgroundAudio=document.getElementById("bgAudio");
 	// console.log(backgroundAudio.volume)
 
 	const soundMultiplier = 5000; 
 
-	if (level == backgroundAudio.volume) return;
+	if (level == audioStream.volume) return;
 
-	if (level > backgroundAudio.volume) {
-		console.log("VOLUME UP", level, backgroundAudio.volume)
-		for (var i = backgroundAudio.volume*soundMultiplier; i <= level*soundMultiplier; i++) {
-			backgroundAudio.volume = i/soundMultiplier;
+	if (level > audioStream.volume) {
+		console.log("VOLUME UP", level, audioStream.volume)
+		for (var i = audioStream.volume*soundMultiplier; i <= level*soundMultiplier; i++) {
+			audioStream.volume = i/soundMultiplier;
 		}
 	} else {
-		console.log("VOLUME DOWN", level, backgroundAudio.volume)
+		console.log("VOLUME DOWN", level, audioStream.volume)
 		level = level*soundMultiplier;
-		var i = backgroundAudio.volume*soundMultiplier;
+		var i = audioStream.volume*soundMultiplier;
 		while (i > level) {
-			backgroundAudio.volume = i/soundMultiplier;
+			audioStream.volume = i/soundMultiplier;
 			i--;
 		}
 	}
