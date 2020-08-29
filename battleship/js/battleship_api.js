@@ -165,9 +165,9 @@ function showSummary(won, summaryHTML) {
 
 	summary.addEventListener('animationstart', (evt) => {
 		if (evt.animationName == 'fadeIn') {
-			var sfxSection = document.getElementById('sfx');
-			sfxSection.style.setProperty('display', 'none');
-			sfxSection.classList=[];
+			// var sfxSection = document.getElementById('sfx');
+			// sfxSection.style.setProperty('display', 'none');
+			// sfxSection.classList=[];
 		}
 	});
 
