@@ -411,6 +411,9 @@ function handleGameAction(msg) {
 
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
+		var sfx = document.getElementById('sfx');
+		sfx.classList=['animate__animated animate__fadeOut']
+		// sfx.style.setProperty('display', 'none')
 		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action == "WON") {
 			delay = '';
