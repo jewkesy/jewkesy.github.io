@@ -116,16 +116,15 @@ function showIntro() {
 	logo.classList.add('animate__animated', 'animate__zoomInUp');
 	logo.innerHTML+= "<img src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
 
-	intro.addEventListener('animationstart', (evt) => {
-		if (evt.animationName == 'fadeOut') {
-			// var sfxSection = document.getElementById('sfx');
-			// sfxSection.style.setProperty('display', 'inline');
-		}
-	});
+	// intro.addEventListener('animationstart', (evt) => {
+	// 	if (evt.animationName == 'fadeOut') {
+	// 		var sfxSection = document.getElementById('sfx');
+	// 		sfxSection.style.setProperty('display', 'inline');
+	// 	}
+	// });
 
 	intro.addEventListener('animationend', (evt) => {
 		if (evt.animationName == 'fadeOut') {
-			// console.log('COMPLETE');
 			intro.style.setProperty('display', 'none');
 			var gameSection = document.getElementById('game');
 			gameSection.style.setProperty('display', 'inline');
@@ -480,7 +479,7 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 	if (delay) img.classList.add(delay);
 	
 	img.addEventListener('animationend', (evt) => {
-		console.log(evt.animationName)
+		// console.log(evt.animationName)
 		if (evt.animationName == 'fadeIn') {
 			img.style.setProperty('--animate-duration', '1s');
 			if (delay) img.classList.remove('animate__fadeIn', delay)
