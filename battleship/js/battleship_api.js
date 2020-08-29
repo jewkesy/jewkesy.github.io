@@ -413,6 +413,9 @@ function handleGameAction(msg) {
 	if (msg.gameObj.gameOver) {
 		var sfx = document.getElementById('sfx');
 		sfx.classList=['animate__animated animate__fadeOut']
+		sfx.addEventListener('animationend', (evt) => {
+			sfx.innerHTML="";
+		});
 		// sfx.style.setProperty('display', 'none')
 		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action == "WON") {
