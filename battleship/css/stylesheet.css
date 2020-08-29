@@ -440,28 +440,38 @@ table.board120 > tr > * {
 	background: #D57E00;
 }
 
+.rotate90 {
+	transform: rotate(90deg);
+}
+
+.flip180 {
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+
 /* Flash class and keyframe animation */
 .flashit{
   background-color:#f2f;
-	-webkit-animation: flash linear 1s infinite;
-	animation: flash linear 1s infinite;
+	-webkit-animation: flashCell linear 1s infinite;
+	animation: flashCell linear 1s infinite;
 }
-@-webkit-keyframes flash {
+@-webkit-keyframes flashCell {
 	0% { opacity: 1; } 
 	50% { opacity: .1; } 
 	100% { opacity: 1; }
 }
-@keyframes flash {
+@keyframes flashCell {
 	0% { opacity: 1; } 
 	50% { opacity: .1; } 
 	100% { opacity: 1; }
 }
 /* Pulse class and keyframe animation */
 .pulseit{
-	-webkit-animation: pulse linear .5s infinite;
-	animation: pulse linear .5s infinite;
+	-webkit-animation: pulseCell linear .5s infinite;
+	animation: pulseCell linear .5s infinite;
 }
-@-webkit-keyframes pulse {
+@-webkit-keyframes pulseCell {
 	0% {
     background-color: #001F3F;
   }
@@ -469,7 +479,7 @@ table.board120 > tr > * {
     background-color: #FF4136;
   }
 }
-@keyframes pulse {
+@keyframes pulseCell {
 	0% {
     background-color: #001F3F;
   }

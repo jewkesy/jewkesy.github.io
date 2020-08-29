@@ -209,9 +209,9 @@ function showSummary(won, summaryHTML) {
 function initialiseGameBoards(msg) {
 	// debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
-	// console.log(msg)
+	console.log(msg)
 	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context);
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context);
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
 }
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
@@ -265,8 +265,8 @@ function skillOnMessage(msg) {
 	}
 }
 
-function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
-	// console.log(gameGrid, progress)
+function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
+	// console.log(context)
 	var eleGrid = document.getElementById(id);
 	eleGrid.innerHTML = "";
 	_gridPressed = false;
@@ -331,14 +331,19 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context) {
 				img.style.setProperty('width', size+'px');
 				img.style.setProperty('height', size+'px');
 				if (gameGrid[i][j] == 1) {
-					img.setAttribute("src", greenship);
+					var icon = getShipImgXY(i,j,fleet);
+					img.setAttribute("src", icon.src);
+					img.classList = [icon.cls]
 					img.setAttribute("alt", "ship");
 				} else if (gameGrid[i][j] == 2) {
 					img.setAttribute("src", splash);
 					img.setAttribute("alt", "splash");
+
 				} else if (gameGrid[i][j] == 3) {
 					img.setAttribute("src", flame);
 					img.setAttribute("alt", "flame");
+					img.classList=['animate__animated animate__infinite animate__pulse']
+					if (Math.random() >= 0.5) img.classList.add('flip180')
 				} else if (gameGrid[i][j] == 4) {
 					img.setAttribute("src", sunkship);
 					img.setAttribute("alt", "sunk");
@@ -481,7 +486,6 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 	if (width)	style += " width:" + width + ";";
 	if (paddingLeft) style += " padding-left:" + paddingLeft + ";"
 	img.style = style;
-	// console.log(img.style)
 	img.classList = classes;
 	if (delay) img.classList.add(delay);
 	
@@ -502,9 +506,6 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 }
 
 function skillSendMessage(msg) {
-	// debugMe("SEND MESSAGE");
-	// debugMe(JSON.stringify(msg, null, 2));
-	// console.log("SEND MESSAGE", msg)
 	alexa.skill.sendMessage(msg);
 }
 
@@ -535,32 +536,40 @@ function duckAudio(level, audioStream) {
 
 function toggleAudio() {
 	if (!backgroundAudio) backgroundAudio=document.getElementById("bgAudio");
-	console.log(backgroundAudio)
-	console.log(backgroundAudio.paused)
 	if (backgroundAudio.paused) backgroundAudio.play();
 	else backgroundAudio.pause();
 }
 
 function micOnOpened() {
-	// debugMe("MIC OPENED");
-	// console.log("MIC OPENED")
-	// dimScreen();
-	duckAudio(quietAudiolevel);
+	// duckAudio(quietAudiolevel);
 }
 
 function micOnClosed() {
-	// debugMe("MIC CLOSED");
-	// console.log("MIC CLOSED")
-	// undimScreen();
-	duckAudio(defaultAudiolevel);
+	// duckAudio(defaultAudiolevel);
 }
 
 function micOnError(error) {
-	// debugMe("MIC ERROR");
-	// console.log("MIC ERROR", error)
 }
 
 function debugMe(txt) {
 	// console.log(txt)
 	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
+
+function getShipImgXY(x, y, fleet) {
+	console.log(x, y, fleet)
+	// ShipPatrolHull_1.png
+	// ShipPatrolHull_2.png
+	// return {src: './SeaWarfareSet/ShipPatrolHull_2.png', cls: ''};
+
+	var cls = '';
+	if (Math.random() >= 0.5) {
+		if (Math.random() >= 0.5) cls = 'rotate90'
+		else cls = 'flip180'
+	}
+	
+ 
+	return {src: greenship, cls: cls};
+}
+
+
