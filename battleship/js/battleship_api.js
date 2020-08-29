@@ -126,6 +126,7 @@ function showIntro() {
 	intro.addEventListener('animationend', (evt) => {
 		if (evt.animationName == 'fadeOut') {
 			intro.style.setProperty('display', 'none');
+			animate(); // Animation loop
 			var gameSection = document.getElementById('game');
 			gameSection.style.setProperty('display', 'inline');
 			

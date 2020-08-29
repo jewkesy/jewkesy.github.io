@@ -37,7 +37,7 @@ app.stage.filters = [displacementFilter];
 displacementSprite.scale.x = 5;
 displacementSprite.scale.y = 5;
 
-animate(); // Animation loop
+// animate(); // Animation loop
 
 // Creating the animation and moving the displacement map position
 function animate() {
