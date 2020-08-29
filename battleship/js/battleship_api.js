@@ -118,8 +118,8 @@ function showIntro() {
 
 	intro.addEventListener('animationstart', (evt) => {
 		if (evt.animationName == 'fadeOut') {
-			var sfxSection = document.getElementById('sfx');
-			sfxSection.style.setProperty('display', 'inline');
+			// var sfxSection = document.getElementById('sfx');
+			// sfxSection.style.setProperty('display', 'inline');
 		}
 	});
 
@@ -159,17 +159,6 @@ function showSummary(won, summaryHTML) {
 	var summary = document.getElementById('summary');
 	summary.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-6_0s');
 	summary.style.setProperty('display', 'inline');
-	var pyro = document.getElementById('pyro');
-	if (won) pyro.style.setProperty('display', 'inline');
-	else pyro.style.setProperty('display', 'none');
-
-	summary.addEventListener('animationstart', (evt) => {
-		if (evt.animationName == 'fadeIn') {
-			// var sfxSection = document.getElementById('sfx');
-			// sfxSection.style.setProperty('display', 'none');
-			// sfxSection.classList=[];
-		}
-	});
 
 	summary.addEventListener('animationend', (evt) => {
 		if (evt.target.id != 'summary') return;
@@ -181,6 +170,7 @@ function showSummary(won, summaryHTML) {
 			
 			ship.addEventListener('animationend', (evt) => {
 				if (evt.target.id != 'summary_ship') return;
+				// console.log(evt.animationName)
 				ship.classList = [];
 				if (evt.animationName == 'zoomInUp') {
 					if (won) ship.classList.add('animate__animated', 'animate__backOutRight', 'animate__delay-2_0s');
@@ -490,6 +480,7 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 	if (delay) img.classList.add(delay);
 	
 	img.addEventListener('animationend', (evt) => {
+		console.log(evt.animationName)
 		if (evt.animationName == 'fadeIn') {
 			img.style.setProperty('--animate-duration', '1s');
 			if (delay) img.classList.remove('animate__fadeIn', delay)
@@ -498,7 +489,6 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 			img.classList.remove('animate__rubberBand')
 			img.classList.add('animate__bounceOut');
 		} else if (evt.animationName == 'bounceOut') {
-			console.log("ANIMATION END")
 			img.style.setProperty('display', 'none')
 		}
 	});

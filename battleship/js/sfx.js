@@ -31,7 +31,7 @@ app.stage.addChild(displacementSprite);
 app.stage.filters = [displacementFilter];
 
 // applying transform scale to the renderer for the borders
-app.renderer.view.style.transform = 'scale(1.02)';
+//app.renderer.view.style.transform = 'scale(1.02)';
 
 // Reducing density of ripple
 displacementSprite.scale.x = 5;
