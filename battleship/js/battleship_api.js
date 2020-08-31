@@ -556,20 +556,49 @@ function debugMe(txt) {
 	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
 
-function getShipImgXY(x, y, fleet) {
-	var retVal = {src: greenship, cls: 'rotate90'};
+function getShipClass(x, y, fleet) {
+	var retVal = '';
 	var found = false;
 	for (var i = 0; i < fleet.length; i++) {
 		if (found === true) break;
 		var v = fleet[i];
+		console.log(v)
+		// get first
+		var bow = v.coords[0];
+		var stern = v.coords[v.coords.length-1];
+		if (bow.x == x && bow.y == y) {
+			return 'bow'
+		} else if (stern.x == x && stern.y == y) {
+			return 'stern'
+		}
+	}
+	return retVal
+}
+
+function getShipImgXY(x, y, fleet) {
+	var retVal = {src: greenship, cls: ''};
+	var found = false;
+	for (var i = 0; i < fleet.length; i++) {
+		if (found === true) break;
+		var v = fleet[i];
+
+		var bow = v.coords[0];
+		var stern = v.coords[v.coords.length-1];
+		if (bow.x == x && bow.y == y) {
+			retVal.cls += 'bow'
+		} else if (stern.x == x && stern.y == y) {
+			retVal.cls = 'stern'
+		}
+
 		for (var j = 0; j < v.coords.length; j++) {
 			if (found === true) break;
 			if (v.coords[j].x == x && v.coords[j].y == y) {
-				if (v.direction == 1) retVal.cls = ''
+				if (v.direction == 0) retVal.cls += ' rotate90 '
 				found = true;
 				break;
 			}
 		}
 	}
+	// retVal += getShipClass(x,y,fleet);
 	return retVal
 }

@@ -171,7 +171,7 @@ div#game {
 	width: 100%;
 	text-align: center;
 	background: url("./../images/battleship_logo_sml_v2.png") no-repeat fixed;
-	background-size: 7%; 
+	background-size: 8%; 
 }
 
 #header > div {
@@ -449,6 +449,15 @@ table.board120 > tr > * {
 	transform: scaleX(-1);
 }
 
+.bow {
+	border-top-left-radius: 100%;
+	border-bottom-left-radius: 100%;
+}
+
+.stern {
+	border-top-right-radius: 35%;
+	border-bottom-right-radius: 35%;
+}
 
 /* Flash class and keyframe animation */
 .flashit{
