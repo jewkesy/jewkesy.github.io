@@ -331,7 +331,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 				img.style.setProperty('width', size+'px');
 				img.style.setProperty('height', size+'px');
 				if (gameGrid[i][j] == 1) {
-					var icon = getShipImgXY(i,j,fleet);
+					var icon = getShipImgXY(i, j, fleet, greenship);
 					img.setAttribute("src", icon.src);
 					img.classList = [icon.cls]
 					img.setAttribute("alt", "ship");
@@ -345,7 +345,9 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 					img.classList=['animate__animated animate__infinite animate__pulse']
 					if (Math.random() >= 0.5) img.classList.add('flip180')
 				} else if (gameGrid[i][j] == 4) {
-					img.setAttribute("src", sunkship);
+					var icon = getShipImgXY(i, j, fleet, sunkship);
+					img.setAttribute("src", icon.src);
+					img.classList = [icon.cls]
 					img.setAttribute("alt", "sunk");
 				}
 				td.appendChild(img);
@@ -575,8 +577,8 @@ function getShipClass(x, y, fleet) {
 	return retVal
 }
 
-function getShipImgXY(x, y, fleet) {
-	var retVal = {src: greenship, cls: ''};
+function getShipImgXY(x, y, fleet, icon) {
+	var retVal = {src: icon, cls: ''};
 	var found = false;
 	for (var i = 0; i < fleet.length; i++) {
 		if (found === true) break;
