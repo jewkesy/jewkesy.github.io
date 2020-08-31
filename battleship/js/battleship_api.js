@@ -557,19 +557,19 @@ function debugMe(txt) {
 }
 
 function getShipImgXY(x, y, fleet) {
-	console.log(x, y, fleet)
-	// ShipPatrolHull_1.png
-	// ShipPatrolHull_2.png
-	// return {src: './SeaWarfareSet/ShipPatrolHull_2.png', cls: ''};
-
-	var cls = '';
-	if (Math.random() >= 0.5) {
-		if (Math.random() >= 0.5) cls = 'rotate90'
-		else cls = 'flip180'
+	var retVal = {src: greenship, cls: 'rotate90'};
+	var found = false;
+	for (var i = 0; i < fleet.length; i++) {
+		if (found === true) break;
+		var v = fleet[i];
+		for (var j = 0; j < v.coords.length; j++) {
+			if (found === true) break;
+			if (v.coords[j].x == x && v.coords[j].y == y) {
+				if (v.direction == 1) retVal.cls = ''
+				found = true;
+				break;
+			}
+		}
 	}
-	
- 
-	return {src: greenship, cls: cls};
+	return retVal
 }
-
-
