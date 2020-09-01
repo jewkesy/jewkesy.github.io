@@ -5,6 +5,7 @@ const alphabet = "abcdefghijklmnopqrstuvwxyz";
 const flame = "./images/flame_100.png";
 const splash = "./images/waves.png";
 const greenship = "./images/green_square_lrg.png";
+// const greenship = "./images/green_square_dark.png";
 const sunkship = "./images/sunk_100.png";
 
 let alexaVersion = '1.0';
@@ -40,28 +41,23 @@ const success = function(result) {
 	alexa.voice.onMicrophoneOpened(micOnOpened);
 	alexa.voice.onMicrophoneClosed(micOnClosed);
 
-	alexa.performance.getMemoryInfo().then((memoryInfo) => {
-		const minimumRequiredMemoryAtStart = 400;
-		const {availableMemoryInMB} = memoryInfo;
-		if (availableMemoryInMB <= minimumRequiredMemoryAtStart) {
-		// Gracefully exit game, device unsupported
-			console.log("MEMORY CHECK - Gracefully exit game, device unsupported")
-		} else {
-		// Continue with game
-			console.log("MEMORY CHECK - Continue with game")
-		}
-	}).catch((error) => {
-		const {message} = error;
-		console.log('Failed to retrieve memory. ' + message);
-		// Gracefully exit game
-	});
-	alexa.performance.getMemoryInfo();
+	// NOT NEEDED
+	// alexa.performance.getMemoryInfo().then((memoryInfo) => {
+	// 	const minimumRequiredMemoryAtStart = 400;
+	// 	const {availableMemoryInMB} = memoryInfo;
+	// 	if (availableMemoryInMB <= minimumRequiredMemoryAtStart) { // Gracefully exit game, device unsupported
+	// 		console.log("MEMORY CHECK - Gracefully exit game, device unsupported")
+	// 	} else {
+	// 		console.log("MEMORY CHECK - Continue with game")
+	// 	}
+	// }).catch((error) => {
+	// 	const {message} = error;
+	// 	console.log('Failed to retrieve memory. ' + message);
+	// });
+	// alexa.performance.getMemoryInfo();
 	
 	console.log(alexa)
-	console.log(alexa.capabilities)
 
-	// document.getElementById('loading').style.opacity = 0;
-	// document.getElementById('ping').addEventListener('click', () => skillSendMessage({ cmd:'ping'}));
 	try {
 		document.getElementById('micOpen').addEventListener('click', () => micOnOpened());
 		document.getElementById('micClose').addEventListener('click', () => micOnClosed());
@@ -72,7 +68,6 @@ const success = function(result) {
 const failure = function(error) {
 	const {code, message} = error;
 	// Actions for failure to initialize
-	debugMe(error);
 	console.log(error)
 };
 try {
@@ -88,9 +83,8 @@ try {
 var _gridPressed = false;
 function gridPressEvent(evt) {
 	if (_gridPressed == true) return;
-	// console.log(evt.target.dataset)
 	if (evt && evt.target && evt.target.dataset) {
-		// _gridPressed = true;
+		_gridPressed = true;
 		let fireAudio = new Audio('./audio/launch.mp3');
 		fireAudio.play();
 		evt.target.classList.add("pulseit");
@@ -110,18 +104,11 @@ function showIntro() {
 
 	var ship = document.getElementById('intro_ship');
 	ship.classList.add('animate__animated', 'animate__zoomInUp');
-	ship.innerHTML = "<img src='./images/ship.png' class='animate__animated animate__zoomInUp' />";
+	ship.innerHTML = "<img alt='ship animation' src='./images/ship.png' class='animate__animated animate__zoomInUp' />";
 
 	var logo = document.getElementById('intro_logo');
 	logo.classList.add('animate__animated', 'animate__zoomInUp');
-	logo.innerHTML+= "<img src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
-
-	// intro.addEventListener('animationstart', (evt) => {
-	// 	if (evt.animationName == 'fadeOut') {
-	// 		var sfxSection = document.getElementById('sfx');
-	// 		sfxSection.style.setProperty('display', 'inline');
-	// 	}
-	// });
+	logo.innerHTML+= "<img alt='logo animation' src='./images/Battle-Ship.png' class='animate__animated animate__zoomInUp' />";
 
 	intro.addEventListener('animationend', (evt) => {
 		if (evt.animationName == 'fadeOut') {
@@ -170,7 +157,6 @@ function showSummary(won, summaryHTML) {
 			
 			ship.addEventListener('animationend', (evt) => {
 				if (evt.target.id != 'summary_ship') return;
-				// console.log(evt.animationName)
 				ship.classList = [];
 				if (evt.animationName == 'zoomInUp') {
 					if (won) ship.classList.add('animate__animated', 'animate__backOutRight', 'animate__delay-2_0s');
@@ -207,10 +193,9 @@ function showSummary(won, summaryHTML) {
 }
 
 function initialiseGameBoards(msg) {
-	// debugMe(JSON.stringify(msg, null, 2));
 	if (!msg) return;
 	console.log(msg)
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context);
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet);
 	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
 }
 
@@ -415,7 +400,7 @@ function handleGameAction(msg) {
 		if (last.action && last.action == "WON" && last.whoShot == "computer") playerGridToShow = msg.gameObj.computerGrid;
 	}
 
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", playerGridToShow, msg.gameObj.progress.playerProgress, true, msg.context);
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", playerGridToShow, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet);
 
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
@@ -482,6 +467,7 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 	var img = document.createElement("img");
 	img.id =  delay+"_"+duration+"_"+height+"_"+width+"_"+paddingLeft
 	img.src = './images/'+imgSrc+'.png';
+	img.alt = '';
 	var style = '';
 	if (duration) style += "--animate-duration:"+ duration + ";";
 	if (height)	style += " height:" + height + ";";
@@ -558,39 +544,23 @@ function debugMe(txt) {
 	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
 
-function getShipClass(x, y, fleet) {
-	var retVal = '';
-	var found = false;
-	for (var i = 0; i < fleet.length; i++) {
-		if (found === true) break;
-		var v = fleet[i];
-		console.log(v)
-		// get first
-		var bow = v.coords[0];
-		var stern = v.coords[v.coords.length-1];
-		if (bow.x == x && bow.y == y) {
-			return 'bow'
-		} else if (stern.x == x && stern.y == y) {
-			return 'stern'
-		}
-	}
-	return retVal
-}
-
 function getShipImgXY(x, y, fleet, icon) {
+	console.log(fleet)
 	var retVal = {src: icon, cls: ''};
 	if (!fleet) return retVal
 	var found = false;
 	for (var i = 0; i < fleet.length; i++) {
 		if (found === true) break;
 		var v = fleet[i];
-
+		if (!v.coords || v.coords.length == 0) return retVal;
 		var bow = v.coords[0];
 		var stern = v.coords[v.coords.length-1];
 		if (bow.x == x && bow.y == y) {
-			retVal.cls += 'bow'
+			retVal.cls += ' bow '
 		} else if (stern.x == x && stern.y == y) {
-			retVal.cls = 'stern'
+			retVal.cls = ' stern '
+		} else {
+			retVal.cls = ' hull '
 		}
 
 		for (var j = 0; j < v.coords.length; j++) {
@@ -602,6 +572,5 @@ function getShipImgXY(x, y, fleet, icon) {
 			}
 		}
 	}
-	// retVal += getShipClass(x,y,fleet);
 	return retVal
 }

@@ -12,8 +12,8 @@ html, body {
 }
 
 body {
-background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;
-  background-color: #cccccc;
+/*background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;*/
+  background-color: #63b4ff;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -450,11 +450,16 @@ table.board120 > tr > * {
 }
 
 .bow {
-	border-top-left-radius: 100%;
-	border-bottom-left-radius: 100%;
+	/*border: black 1px solid;*/
+	border-top-left-radius: 50%;
+	border-bottom-left-radius: 50%;
+}
+.hull {
+	/*border: black 1px solid;*/
 }
 
 .stern {
+	/*border: black 1px solid;*/
 	border-top-right-radius: 35%;
 	border-bottom-right-radius: 35%;
 }
