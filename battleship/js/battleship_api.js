@@ -431,7 +431,7 @@ function handleGameAction(msg) {
 		}
 	}
 
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context);
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
 
 	var playerActionResult = "explosion-cloud";
 
@@ -579,6 +579,7 @@ function getShipClass(x, y, fleet) {
 
 function getShipImgXY(x, y, fleet, icon) {
 	var retVal = {src: icon, cls: ''};
+	if (!fleet) return retVal
 	var found = false;
 	for (var i = 0; i < fleet.length; i++) {
 		if (found === true) break;
