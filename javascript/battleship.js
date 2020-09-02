@@ -99,6 +99,7 @@ function buildBSLastGamesPreview(data, prefix) {
 		var game = data.lastGames[i];
 
 		if (game.device == "EchoShow") device = ":";
+		else if (game.device == "FireTV") device = "|";
 
 		var x = i+1;
 

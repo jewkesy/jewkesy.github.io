@@ -494,28 +494,36 @@ function buildPopcornLastGames(data, prefix) {
 	var container = document.getElementById(prefix + '_lastgames');
 	var games = data.lastGame;
 	for (var i = 0; i < games.length; i++) {
-		var x = i + 1;		
-		var sym = "";
-		var booster = "";
-		var device = ".";
-		var deviceIcon = "alexa";
+		var x = i + 1;
 		var g = games[i];
 
-		if (g.d == "Echo Show")    device = ":";
-		else if (g.d == "Google")		 { device = ""; deviceIcon = "google"; }
-		else if (g.d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
-		else if (g.d == "Google Phone")  { device = "."; deviceIcon = "google"; }
-		else if (g.d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
+		var icons = getDeviceInfo(g.d, g.i, g.tpb)
+		var sym = icons.sym;
+		var booster = icons.booster;
+		var device = icons.device;
+		var deviceIcon = icons.deviceIcon;
+		
+		// console.log(g)
 
-		if (g.i == 'star')       {sym = " ⭐";}
-		else if (g.i == 'sun')   {sym = " 🌞";}
-		else if (g.i == 'note')  {sym = " 🎵";}
-		else if (g.i == 'hash')  {sym = " 🌭";}
-		else if (g.i == 'phone') {sym = " 📱";}
-		else if (g.i == 'en-us') {sym = " 🍔";}
-		else if (g.i == 'llama') {sym = " 🦙";}
+		// if (g.d == "Echo Show" || g.d == "EchoShow") 	device = "🖥️";
+		// else if (g.d == "FireTV")						device = "📺";
+		// else if (g.d == "EchoSpot")						device = "🕳️";
+		// else if (g.d == "Google")		 { device = ""; deviceIcon = "google"; }
+		// else if (g.d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
+		// else if (g.d == "Google Phone")  { device = "."; deviceIcon = "google"; }
+		// else if (g.d == "Google Speaker"){ device = ""; deviceIcon = "google"; }
+		// else console.log("UNHANDLED", g.d)
 
-		if (g.tpb && g.tpb >= 0) {booster = " 🚀";}
+		// if (g.i == 'star')       {sym = " ⭐";}
+		// else if (g.i == 'sun')   {sym = " 🌞";}
+		// else if (g.i == 'note')  {sym = " 🎵";}
+		// else if (g.i == 'hash')  {sym = " 🌭";}
+		// else if (g.i == 'phone') {sym = " 📱";}
+		// else if (g.i == 'en-us') {sym = " 🍔";}
+		// else if (g.i == 'dev')   {sym = " 💻";}
+		// else if (g.i == 'llama') {sym = " 🦙";}
+
+		// if (g.tpb && g.tpb >= 0) {booster = " 🚀";}
 
 		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
@@ -591,30 +599,69 @@ function buildPopcornLastGames(data, prefix) {
 	fadeyStuff(prefix + '_more_count', numberWithCommas(i));
 }
 
+function getDeviceInfo(device, playerIcon, boosterIcon) {
+	var sym = "";
+	var booster = "";
+	var deviceType = "⚇";
+	var deviceIcon = "alexa";
+
+	if (device == "Echo Show" || device == "EchoShow") 	deviceType = "🖥️";
+	else if (device == "FireTV")						deviceType = "📺";
+	else if (device == "EchoSpot")						deviceType = "🕳️";
+	else if (device == "Google")		 { deviceType = ""; deviceIcon = "google"; }
+	else if (device == "Google Surface"){ deviceType = ":";deviceIcon = "google"; }
+	else if (device == "Google Phone")  { deviceType = ".";deviceIcon = "google"; }
+	else if (device == "Google Speaker"){ deviceType = ""; deviceIcon = "google"; }
+	else console.log("UNHANDLED", device)
+
+	if (playerIcon == 'star')       sym = " ⭐";
+	else if (playerIcon == 'sun')   sym = " 🌞";
+	else if (playerIcon == 'note')  sym = " 🎵";
+	else if (playerIcon == 'hash')  sym = " 🌭";
+	else if (playerIcon == 'phone') sym = " 📱";
+	else if (playerIcon == 'en-us') sym = " 🍔";
+	else if (playerIcon == 'dev')   sym = " 💻";
+	else if (playerIcon == 'llama') sym = " 🦙";
+
+	if (boosterIcon && boosterIcon >= 0) booster = " 🚀";
+
+	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster}
+}
+
 function buildPopcornLeague(data, prefix, total) {
 	if(!data) return;
 	var topTen = data.league;
 	var container = document.getElementById(prefix + '_scores');
 	for (var i = 0; i < topTen.length; i++) {
-		var x = i + 1;		
-		var sym = "";
-		var booster = "";
-		var device = ".";
-		var deviceIcon = "alexa";
-		if (topTen[i].d == "Echo Show")    device = ":";
-		else if (topTen[i].d == "Google")        { device = "";  deviceIcon = "google"; }
-		else if (topTen[i].d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
-		else if (topTen[i].d == "Google Phone")  { device = "."; deviceIcon = "google"; }
-		else if (topTen[i].d == "Google Speaker"){ device = "";  deviceIcon = "google"; }
+		var x = i + 1;
+		var g = topTen[i];
 
-		if (topTen[i].i == 'star')       {sym = " ⭐";}
-		else if (topTen[i].i == 'sun')   {sym = " 🌞";}
-		else if (topTen[i].i == 'note')  {sym = " 🎵";}
-		else if (topTen[i].i == 'hash')  {sym = " 🌭";}
-		else if (topTen[i].i == 'phone') {sym = " 📱";}
-		else if (topTen[i].i == 'en-us') {sym = " 🍔";}
+		var icons = getDeviceInfo(g.d, g.i, g.tpb)
+		var sym = icons.sym;
+		var booster = icons.booster;
+		var device = icons.device;
+		var deviceIcon = icons.deviceIcon;
 
-		if (topTen[i].tpb || topTen[i].tpb ===0) booster = "<br>🚀 "+numberWithCommas(topTen[i].tpb)+"";
+		// var sym = "";
+		// var booster = "";
+		// var device = ".";
+		// var deviceIcon = "alexa";
+		// if (topTen[i].d == "Echo Show" || "EchoShow")    device = ":";
+		// else if (topTen[i].d == "FireTV")	device = "|";
+		// else if (topTen[i].d == "EchoSpot")	device = "|";
+		// else if (topTen[i].d == "Google")        { device = "";  deviceIcon = "google"; }
+		// else if (topTen[i].d == "Google Surface"){ device = ":"; deviceIcon = "google"; }
+		// else if (topTen[i].d == "Google Phone")  { device = "."; deviceIcon = "google"; }
+		// else if (topTen[i].d == "Google Speaker"){ device = "";  deviceIcon = "google"; }
+
+		// if (topTen[i].i == 'star')       {sym = " ⭐";}
+		// else if (topTen[i].i == 'sun')   {sym = " 🌞";}
+		// else if (topTen[i].i == 'note')  {sym = " 🎵";}
+		// else if (topTen[i].i == 'hash')  {sym = " 🌭";}
+		// else if (topTen[i].i == 'phone') {sym = " 📱";}
+		// else if (topTen[i].i == 'en-us') {sym = " 🍔";}
+
+		// if (topTen[i].tpb || topTen[i].tpb ===0) booster = "<br>🚀 "+numberWithCommas(topTen[i].tpb)+"";
 		
 		var cell1;
 		var needed = "-";
@@ -734,7 +781,7 @@ function isBigEnough() {
 function prepDataForChart(data, history) {
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year"));
-// console.log(data)
+	// console.log(data)
 	var dailyGames = [];
 	var dailyLabels = [];
 	var dailyTotals = [];
