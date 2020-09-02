@@ -26,6 +26,35 @@ function buildIconHTML(deviceIcon, locale, deviceType) {
 	// return "<span>"+deviceType+"</span><div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + "</div>";
 }
 
+function getDeviceInfo(device, playerIcon, boosterIcon) {
+	var sym = "";
+	var booster = "";
+	var deviceType = "⚇";
+	var deviceIcon = "alexa";
+
+	if (device == "Echo Show" || device == "EchoShow") 	deviceType = "🖥️";
+	else if (device == "FireTV")						deviceType = "📺";
+	else if (device == "EchoSpot")						deviceType = "🕳️";
+	else if (device == "Google")		 { deviceType = ""; deviceIcon = "google"; }
+	else if (device == "Google Surface"){ deviceType = ":";deviceIcon = "google"; }
+	else if (device == "Google Phone")  { deviceType = ".";deviceIcon = "google"; }
+	else if (device == "Google Speaker"){ deviceType = ""; deviceIcon = "google"; }
+	// else console.log("UNHANDLED", device)
+
+	if (playerIcon == 'star')       sym = " ⭐";
+	else if (playerIcon == 'sun')   sym = " 🌞";
+	else if (playerIcon == 'note')  sym = " 🎵";
+	else if (playerIcon == 'hash')  sym = " 🌭";
+	else if (playerIcon == 'phone') sym = " 📱";
+	else if (playerIcon == 'en-us') sym = " 🍔";
+	else if (playerIcon == 'dev')   sym = " 💻";
+	else if (playerIcon == 'llama') sym = " 🦙";
+
+	if (boosterIcon && boosterIcon >= 0) booster = " 🚀";
+
+	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster}
+}
+
 function getGenreEventTitle(genre, suffix) {
 	var br = "<br/>";
 	var l = _pqLocale.split('-')[0];
@@ -151,7 +180,7 @@ function httpGetByUrl(theUrl, callback) {
 
 var gettingLastPlay = {};
 function httpGetLastPlay(theUrl, prefix, callback) {
-	console.log(gettingLastPlay, prefix)
+	// console.log(gettingLastPlay, prefix)
 	if (gettingLastPlay[prefix] === true) {console.log("Getting Last Plays Already!", prefix); return callback(null, null);}
 	gettingLastPlay[prefix] = true;
 	var xmlHttp = null;
@@ -162,7 +191,7 @@ function httpGetLastPlay(theUrl, prefix, callback) {
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
-				console.log(doc)
+				// console.log(doc)
 				if (callback) return callback(null, doc);
 			}
 			if (callback) return callback(xmlHttp.status);
@@ -174,7 +203,7 @@ function httpGetLastPlay(theUrl, prefix, callback) {
 
 var gettingStats = {};
 function httpGetStats(theUrl, prefix, callback){
-	console.log(gettingStats, prefix)
+	// console.log(gettingStats, prefix)
 	if (gettingStats[prefix] === true) {console.log("Getting Stats Already!", prefix); return callback(null, null);}
 	gettingStats[prefix] = true;
 	var xmlHttp = null;
@@ -185,7 +214,7 @@ function httpGetStats(theUrl, prefix, callback){
 		if (xmlHttp.readyState === 4) {  
 	        if (xmlHttp.status === 200) {  
 				var doc = JSON.parse(xmlHttp.responseText);
-				console.log(doc)
+				// console.log(doc)
 				if (callback) return callback(null, doc);
 			} else {  
 	           console.log("Error", theUrl, xmlHttp.status, xmlHttp.statusText);

@@ -93,13 +93,13 @@ function buildBSLastGamesPreview(data, prefix) {
 	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0].lastGame) return;
 
 	for (var i = 0; i < data.lastGames.length; i++) {
-		var device = ".";
-		var deviceIcon = "alexa";
-		
 		var game = data.lastGames[i];
 
-		if (game.device == "EchoShow") device = ":";
-		else if (game.device == "FireTV") device = "|";
+		var icons = getDeviceInfo(game.device, game.i)
+		var sym = icons.sym;
+		var booster = icons.booster;
+		var device = icons.device;
+		var deviceIcon = icons.deviceIcon;
 
 		var x = i+1;
 
