@@ -12,7 +12,7 @@ html, body {
 }
 
 body {
-/*background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;*/
+background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;
   background-color: #63b4ff;
   -webkit-background-size: cover;
   -moz-background-size: cover;
