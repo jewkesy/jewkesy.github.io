@@ -117,7 +117,7 @@ div.spacer {
   	height: 100%;
   	width: 100%;
 	text-shadow: 3px 3px 5px #669999;
-    font-size: 1.3em;
+    font-size: 1.1em;
 	color: #111111;
 }
 
@@ -267,6 +267,16 @@ div.gridRow {
 	-webkit-animation: flash linear 1s infinite;
 	animation: flash linear 1s infinite;
 }*/
+
+.buttOption:focus {
+	-webkit-animation: pulseCell linear 1s infinite;
+	animation: pulseCell linear 1s infinite;
+}
+
+.buttOption:hover {
+	-webkit-animation: pulseCell linear 1s infinite;
+	animation: pulseCell linear 1s infinite;
+}
 
 .opacityZero {
 	opacity:0 !important;

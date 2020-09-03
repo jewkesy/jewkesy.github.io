@@ -95,8 +95,19 @@ function gridPressEvent(evt) {
 	}
 }
 
+var _butPressed = false;
+function buttonPressEvent(evt) {
+	if (_butPressed == true) return;
+	if (evt && evt.target && evt.target.dataset) {
+		_butPressed = true;
+		let fireAudio = new Audio('./audio/launch.mp3');
+		fireAudio.play();
+		if (evt.answer  == 'yes') skillSendMessage({playAgain: true});
+		else skillSendMessage({playAgain: false});
+	}
+}
+
 function showIntro() {
-	
 	bgAudio.play();
 
 	var intro = document.getElementById('intro');
@@ -122,20 +133,82 @@ function showIntro() {
 }
 
 function buildSummaryHtml(results) {
+	var container = document.createElement('div');
+	var gridRow = document.createElement('div');
+	gridRow.classList=['gridRow'];
+
+	var summaryLeft = document.createElement('div');
+	summaryLeft.id = 'summaryLeft';
+	summaryLeft.innerHTML = `Round Accuracy: ${results.accuracy}%<br/>Round Score: ${results.score}<br/>Game Streak: ${results.gameStreak}<br/>Total Won: ${results.totalWins}`;
+	gridRow.appendChild(summaryLeft);
+
+	var summaryRight = document.createElement('div');
+	summaryRight.id = 'summaryRight';
+	summaryRight.innerHTML = `Avg. Accuracy: ${results.avgAccuracy}%<br/>Total Score: ${results.totalScore}<br/>Max Game Streak: ${results.highestGameStreak}<br/>Total Lost: ${results.totalLoses}`
+	gridRow.appendChild(summaryRight);
+
+	var spacer = document.createElement('div');
+	spacer.classList=['clear spacer'];
+	gridRow.appendChild(spacer);
+	container.appendChild(gridRow);
+
+	var rank = document.createElement('div');
+	rank.innerHTML = `Rank: <strong>${results.rank}</strong><br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong>`
+	container.appendChild(rank);
+
+	var spacer = document.createElement('div');
+	spacer.classList=['clear spacer'];
+	container.appendChild(spacer);
+
+	var playAgain = document.createElement('div');
+	var itYes = document.createElement('i');
+	var spanYes = document.createElement('span');
+	spanYes.classList = ['buttOption'];
+	spanYes.innerText = '"Yes"';
+	spanYes.setAttribute("data-type", "playAgain");
+	spanYes.setAttribute("data-answer", "yes");
+	spanYes.addEventListener('click', (evt) => buttonPressEvent(evt));
+
+	playAgain.appendChild(itYes).appendChild(spanYes)
+	var orSpan = document.createElement('span');
+	orSpan.innerText = ' or '
+	playAgain.appendChild(orSpan);
+
+	var itNo = document.createElement('i');
+	var spanNo = document.createElement('span');
+	spanNo.classList = ['buttOption'];
+	spanNo.innerText = '"No"';
+	spanNo.setAttribute("data-type", "playAgain");
+	spanNo.setAttribute("data-answer", "no");
+	spanNo.addEventListener('click', (evt) => buttonPressEvent(evt));
+	playAgain.appendChild(itNo).appendChild(spanNo)
+
+	var againSpan = document.createElement('span');
+	againSpan.innerText = ' - would you like to play another round?'
+	playAgain.appendChild(againSpan);
+
+	container.appendChild(playAgain);
+
+	var spacer = document.createElement('div');
+	spacer.classList=['clear spacer'];
+	container.appendChild(spacer);
+
+	var website = document.createElement('div');
+	website.innerHTML = `Visit <strong><i>www.daryljewkes.com</i></strong> to view your rank against other BattleShip players.`
+	container.appendChild(website);
+
+	return container
+
 	let retVal = `<div class='gridRow'><div id='summaryLeft'>Round Accuracy: ${results.accuracy}%
-					<br/>Round Score: ${results.score}
-					<br/>Game Streak: ${results.gameStreak}
-					<br/>Total Won: ${results.totalWins}</div>
+					<br/>Round Score: ${results.score}<br/>Game Streak: ${results.gameStreak}<br/>Total Won: ${results.totalWins}</div>
 				  <div id='summaryRight'>Avg. Accuracy: ${results.avgAccuracy}%
-					<br/>Total Score: ${results.totalScore}
-					<br/>Max Game Streak: ${results.highestGameStreak}
-					<br/>Total Lost: ${results.totalLoses}</div>
+					<br/>Total Score: ${results.totalScore}<br/>Max Game Streak: ${results.highestGameStreak}<br/>Total Lost: ${results.totalLoses}</div>
 				  </div>
 				  <div class='clear spacer'></div>
 				  <div>Rank: <strong>${results.rank}</strong>
-				    <br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong></div>
+				   <br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong></div>
 				  <div class='clear spacer'></div>
-				  <div><i>Yes</i> or <i>No</i>, would you like to play another round?</div>
+				  <div><i><span class='clicky' data-type="playAgain" data-answer="yes">"Yes"</span></i> or <i><span class='clicky' data-type="playAgain" data-answer="no">"No"</span></i>, would you like to play another round?</div>
 				  <div class='clear spacer'></div>
 				  <div>Visit <strong><i>www.daryljewkes.com</i></strong> to view your rank against other BattleShip players.</div>
 				  `
@@ -167,7 +240,8 @@ function showSummary(won, summaryHTML) {
 
 					var resultDisplay = document.getElementById('summary_result');
 					resultDisplay.classList.add('animate__animated', 'animate__fadeIn', 'animate__delay-2_0s');
-					resultDisplay.innerHTML = summaryHTML;
+					// resultDisplay.innerHTML = summaryHTML;
+					resultDisplay.appendChild(summaryHTML)
 				} else if (evt.animationName == 'backOutRight' || evt.animationName == 'rotateOutDownLeft') {
 					ship.innerHTML = "";
 				}
