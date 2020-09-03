@@ -97,12 +97,13 @@ function gridPressEvent(evt) {
 
 var _butPressed = false;
 function buttonPressEvent(evt) {
-	if (_butPressed == true) return;
+	// if (_butPressed == true) return;
 	if (evt && evt.target && evt.target.dataset) {
 		_butPressed = true;
 		let fireAudio = new Audio('./audio/launch.mp3');
 		fireAudio.play();
-		if (evt.answer  == 'yes') skillSendMessage({playAgain: true});
+		console.log(evt.target.dataset.answer)
+		if (evt.target.dataset.answer  == 'yes') skillSendMessage({playAgain: true});
 		else skillSendMessage({playAgain: false});
 	}
 }
@@ -169,7 +170,7 @@ function buildSummaryHtml(results) {
 	spanYes.setAttribute("data-answer", "yes");
 	spanYes.addEventListener('click', (evt) => buttonPressEvent(evt));
 
-	playAgain.appendChild(itYes).appendChild(spanYes)
+	playAgain.appendChild(itYes).appendChild(spanYes);
 	var orSpan = document.createElement('span');
 	orSpan.innerText = ' or '
 	playAgain.appendChild(orSpan);
