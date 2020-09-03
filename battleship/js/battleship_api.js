@@ -97,7 +97,7 @@ function gridPressEvent(evt) {
 
 var _butPressed = false;
 function buttonPressEvent(evt) {
-	// if (_butPressed == true) return;
+	if (_butPressed == true) return;
 	if (evt && evt.target && evt.target.dataset) {
 		_butPressed = true;
 		let fireAudio = new Audio('./audio/launch.mp3');
