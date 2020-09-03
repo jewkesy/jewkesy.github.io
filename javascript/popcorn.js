@@ -204,7 +204,7 @@ function buildPQLastGames(callback) {
 
 function getPQDailyGames(callback) {
 	var uri = aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter;
-	// console.log(uri)
+	console.log(uri)
 	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
@@ -386,7 +386,7 @@ function buildPQDailyGames(err, content) {
 
 	_pqChtData = content.g;
 
-	var chtData = prepDataForChart(content.g, calculateHistory(content.g.length));
+	var chtData = prepDataForChart(content.g, calculateHistory());
 	chtNewUsers(_pqNewUsersChart, chtData);
 
 	var d = new Date();
@@ -707,6 +707,9 @@ function isBigEnough() {
 }
 
 function prepDataForChart(data, history) {
+	console.log(data)
+
+	console.log(_pqChartDaysDisplay)
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year"));
 	// console.log(data)
@@ -954,14 +957,17 @@ function getEvent(ts) {
 	});
 }
 
-function calculateHistory(historyLength) {
+function calculateHistory() {
 	if (!_pqChartSummary || _pqChartSummary > 10) return -10;
 
 	if (_pqChartSummary==10) return -10;
 	if (_pqChartSummary==0) return 0;
+
 	var d = (_pqDiff/10)*_pqChartSummary;
 	var p = (_pqDiff) - d;
-	return Math.abs(+p) * -1
+	var retVal = Math.ceil(Math.abs(+p) * -1)
+	console.log(retVal)
+	return retVal
 }
 
 function changeUrl(title, url) {
@@ -974,10 +980,14 @@ function changeUrl(title, url) {
 var slider = document.getElementById("truncatePercentage");
 
 slider.onchange = function() {
+	_pqChartDaysDisplay = calculateHistory()*-1;
+	_pqTimeFrom = getDaysAgo(_pqChartDaysDisplay);
+	console.log(_pqChartDaysDisplay)
 	_pqChartSummary = this.value;
 	var newUrl = paramReplace('chtsum', window.location.href, _pqChartSummary);
 	changeUrl('', newUrl);
 	_pqChtHeight = 1000;
-	var chtData = prepDataForChart(_pqChtData, calculateHistory(_pqChtData.length));
+	var chtData = prepDataForChart(_pqChtData, calculateHistory());
 	chtNewUsers(_pqNewUsersChart, chtData);
+	getPQDailyGames(function(){})
 }

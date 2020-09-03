@@ -342,7 +342,7 @@ function addDays(startDate,numberOfDays) {
 
 function getDaysAgo(dayAgo) {
 	var d = new Date();
-	var dateAgo = new Date(d.setDate(d.getDate() - 10));
+	var dateAgo = new Date(d.setDate(d.getDate() - dayAgo));
 	// console.log(dateAgo)
 	var retVal = dateAgo.getFullYear()+"-"+(dateAgo.getMonth()+1)+"-"+dateAgo.getDate();
 	// console.log(retVal)
