@@ -12,25 +12,20 @@ let alexaVersion = '1.0';
 let alexa;
 const params = new URLSearchParams(window.location.search);
 let debugMode = params.has('debug');
-// let _gameObj;
-
-// let debugMode = false;
-// if (!debugMode) document.getElementById('debug').classList = ['opacityZero'];
 
 let defaultAudiolevel = 0.6;
 let quietAudiolevel = 0.4;
-let backgroundAudio=document.getElementById("bgAudio");
-// let launchAudio=document.getElementById("fireAudio");
-// let fireAudio = new Audio('./audio/launch.mp3');
-// backgroundAudio.pause();  //TODO TOGGLE WHEN LIVE
-// duckAudio(defaultAudiolevel);
+// let backgroundAudio=document.getElementById("bgAudio");
 let bgAudio = new Audio('./audio/battleship_01.mp3');
 bgAudio.loop = true;
+
+let useBgAudio = false;
 
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	// debugMe("LOADED");
+	useBgAudio = setAudioStatus(result.message.context);
 	showIntro();
 	initialiseGameBoards(result.message);
 	alexa = result.alexa;
@@ -59,15 +54,14 @@ const success = function(result) {
 	console.log(alexa)
 
 	try {
-		document.getElementById('micOpen').addEventListener('click', () => micOnOpened());
-		document.getElementById('micClose').addEventListener('click', () => micOnClosed());
-		document.getElementById('toggleAudio').addEventListener('click', () => toggleAudio());
+		// document.getElementById('micOpen').addEventListener('click', () => micOnOpened());
+		// document.getElementById('micClose').addEventListener('click', () => micOnClosed());
+		// document.getElementById('toggleAudio').addEventListener('click', () => toggleAudio());
 	} catch {}
 };
 
 const failure = function(error) {
-	const {code, message} = error;
-	// Actions for failure to initialize
+	const {code, message} = error; // Actions for failure to initialize
 	console.log(error)
 };
 try {
@@ -109,7 +103,7 @@ function buttonPressEvent(evt) {
 }
 
 function showIntro() {
-	bgAudio.play();
+	if (useBgAudio === true) bgAudio.play();
 
 	var intro = document.getElementById('intro');
 	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3_0s');
@@ -199,21 +193,6 @@ function buildSummaryHtml(results) {
 	container.appendChild(website);
 
 	return container
-
-	let retVal = `<div class='gridRow'><div id='summaryLeft'>Round Accuracy: ${results.accuracy}%
-					<br/>Round Score: ${results.score}<br/>Game Streak: ${results.gameStreak}<br/>Total Won: ${results.totalWins}</div>
-				  <div id='summaryRight'>Avg. Accuracy: ${results.avgAccuracy}%
-					<br/>Total Score: ${results.totalScore}<br/>Max Game Streak: ${results.highestGameStreak}<br/>Total Lost: ${results.totalLoses}</div>
-				  </div>
-				  <div class='clear spacer'></div>
-				  <div>Rank: <strong>${results.rank}</strong>
-				   <br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong></div>
-				  <div class='clear spacer'></div>
-				  <div><i><span class='clicky' data-type="playAgain" data-answer="yes">"Yes"</span></i> or <i><span class='clicky' data-type="playAgain" data-answer="no">"No"</span></i>, would you like to play another round?</div>
-				  <div class='clear spacer'></div>
-				  <div>Visit <strong><i>www.daryljewkes.com</i></strong> to view your rank against other BattleShip players.</div>
-				  `
-	return retVal
 }
 
 function showSummary(won, summaryHTML) {
@@ -253,34 +232,29 @@ function showSummary(won, summaryHTML) {
 			else logo.innerHTML+= "<img src='./images/YouLose.png' class='animate__animated animate__zoomInUp' />";
 		}
 	});
-	try {
-		duckAudio(quietAudiolevel, bgAudio);
-		bgAudio.pause();
-		duckAudio(defaultAudiolevel);
-		if (won) {
-			let wonAudio = new Audio('./audio/won.mp3');
-			wonAudio.play();
-		} else {
-			let lostAudio = new Audio('./audio/lost.mp3');
-			lostAudio.play();
-		}
-	} catch {}
+	if (useBgAudio === true) {
+		try {
+			duckAudio(quietAudiolevel, bgAudio);
+			bgAudio.pause();
+			duckAudio(defaultAudiolevel);
+			if (won) {
+				let wonAudio = new Audio('./audio/won.mp3');
+				wonAudio.play();
+			} else {
+				let lostAudio = new Audio('./audio/lost.mp3');
+				lostAudio.play();
+			}
+		} catch {}
+	}
 }
 
 function initialiseGameBoards(msg) {
 	if (!msg) return;
-	console.log(msg)
 	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet);
 	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
 }
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
-	// console.log(sWidth, cellCount)
-	// sWidth = 960;
-	// sWidth = 1024;
-	// sWidth = 1280;
-	// sWidth = 1920 
-
 	if (sWidth >= 1200) {
 		if (cellCount >= 8) return 35
 		if (cellCount >= 6) return 45
@@ -294,32 +268,12 @@ function getGridCellSizeForScreen(sWidth, cellCount) {
 		if (cellCount >= 5) return 40
 		if (cellCount >= 2) return 50
 	}
-	// go small
-	return 30;
-}
-
-function speechStarted(msg){
-	// debugMe("SPEECH STARTED");
-	// debugMe(JSON.stringify(msg, null, 2));
-	// console.log("SPEECH STARTED");
-	// duckAudio(quietAudiolevel);
-}
-
-function speechStopped(msg) {
-	// debugMe("SPEECH STOPPED");
-	// debugMe(JSON.stringify(msg, null, 2));
-	// console.log("SPEECH STOPPED");
-	// duckAudio(defaultAudiolevel);
+	
+	return 30; // go small
 }
 
 function skillOnMessage(msg) {
-	// console.log("ON MESSAGE", msg)
-	// console.log(msg.sessionAttributes.gameObj)
-	// debugMe("skillOnMessage");
-	// debugMe(JSON.stringify(msg, null, 2));
-	// if (msg.description) document.getElementById('description').innerText = new Date()+ " "+ msg.description;
 	if (msg.gameObj) {
-		// _gameObj = msg.gameObj;
 		clearHTML();
 		handleGameAction(msg);
 	}
@@ -331,7 +285,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	eleGrid.innerHTML = "";
 	_gridPressed = false;
 
-	// var size = 50; // if Echo Show, switch to 50?
 	if (params.has('w') && params.has('h')) {
 		context.Viewport.pixelWidth = params.get('w');
 		context.Viewport.pixelHeight = params.get('h');
@@ -342,7 +295,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	
 	let size = getGridCellSizeForScreen(sWidth, gameGrid[0].length+1);
 
-	// console.log(size)
 	var style = ' width="'+size+'px" height="'+size+'px" ';
 
 	var table = document.createElement('table');
@@ -457,10 +409,6 @@ function clearHTML() {
 
 function handleGameAction(msg) {
 	console.log(msg)
-	// debugMe(JSON.stringify(msg, null, 2));
-	
-	// let bgAudio = new Audio('./audio/battleship_01.mp3');
-	// bgAudio.play();
 
 	var playerAction = msg.gameObj.playerAction;
 	var playerActionDisplay = playerAction.action.toLowerCase();
@@ -553,7 +501,6 @@ function addAction(parentNode, imgSrc, classes, delay, duration, height, width, 
 	if (delay) img.classList.add(delay);
 	
 	img.addEventListener('animationend', (evt) => {
-		// console.log(evt.animationName)
 		if (evt.animationName == 'fadeIn') {
 			img.style.setProperty('--animate-duration', '1s');
 			if (delay) img.classList.remove('animate__fadeIn', delay)
@@ -574,8 +521,6 @@ function skillSendMessage(msg) {
 
 function duckAudio(level, audioStream) {
 	if (!audioStream) return;
-	// if (!backgroundAudio) backgroundAudio=document.getElementById("bgAudio");
-	// console.log(backgroundAudio.volume)
 
 	const soundMultiplier = 5000; 
 
@@ -597,30 +542,24 @@ function duckAudio(level, audioStream) {
 	}
 }
 
-function toggleAudio() {
-	if (!backgroundAudio) backgroundAudio=document.getElementById("bgAudio");
-	if (backgroundAudio.paused) backgroundAudio.play();
-	else backgroundAudio.pause();
+function setAudioStatus(context) {
+	console.log(context)
+	if (context.Viewport.mode && context.Viewport.mode == "TV") return true;
+	return false;
 }
 
-function micOnOpened() {
-	// duckAudio(quietAudiolevel);
-}
-
-function micOnClosed() {
-	// duckAudio(defaultAudiolevel);
-}
-
-function micOnError(error) {
-}
+// function toggleAudio() {
+// 	if (!backgroundAudio) backgroundAudio=document.getElementById("bgAudio");
+// 	if (backgroundAudio.paused) backgroundAudio.play();
+// 	else backgroundAudio.pause();
+// }
 
 function debugMe(txt) {
-	// console.log(txt)
 	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
 
 function getShipImgXY(x, y, fleet, icon) {
-	console.log(fleet)
+	// console.log(fleet)
 	var retVal = {src: icon, cls: ''};
 	if (!fleet) return retVal
 	var found = false;
@@ -649,3 +588,9 @@ function getShipImgXY(x, y, fleet, icon) {
 	}
 	return retVal
 }
+
+function micOnOpened() {}
+function micOnClosed() {}
+function micOnError(error) {}
+function speechStarted(msg) {}
+function speechStopped(msg) {}
