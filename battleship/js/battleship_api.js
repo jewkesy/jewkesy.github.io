@@ -4,7 +4,7 @@ const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 const flame = "./images/flame_100.png";
 const splash = "./images/waves.png";
-const greenship = "./images/green_square_lrg.png";
+const greenship = "./images/green_square_lrg_v2.png";
 // const greenship = "./images/green_square_dark.png";
 const sunkship = "./images/sunk_100.png";
 

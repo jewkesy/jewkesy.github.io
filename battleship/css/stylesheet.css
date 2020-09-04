@@ -13,7 +13,7 @@ html, body {
 
 body {
 background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;
-  background-color: #63b4ff;
+  background-color: #005cb3;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -307,7 +307,7 @@ div.boardContainer {
 	text-align: center;
 }
 
-table.board { margin: 0 auto; padding: 0px; text-align: center; background-color: #63b4ff; border-collapse: collapse; text-align: center; vertical-align: middle; }
+table.board { margin: 0 auto; padding: 0px; text-align: center; background-color: #339cff; border-collapse: collapse; text-align: center; vertical-align: middle; }
 
 table.board > tr > * { 
 	border: 2px solid maroon; 
@@ -465,8 +465,8 @@ table.board120 > tr > * {
 
 .stern {
 	/*border: black 1px solid;*/
-	border-top-right-radius: 35%;
-	border-bottom-right-radius: 35%;
+	border-top-right-radius: 25%;
+	border-bottom-right-radius: 25%;
 }
 
 a.btnOption{
