@@ -156,33 +156,33 @@ function buildSummaryHtml(results) {
 	container.appendChild(spacer);
 
 	var playAgain = document.createElement('div');
-	var itYes = document.createElement('i');
-	var spanYes = document.createElement('span');
-	spanYes.classList = ['buttOption'];
-	spanYes.innerText = '"Yes"';
-	spanYes.setAttribute("data-type", "playAgain");
-	spanYes.setAttribute("data-answer", "yes");
-	spanYes.addEventListener('click', (evt) => buttonPressEvent(evt));
-
-	playAgain.appendChild(itYes).appendChild(spanYes);
-	var orSpan = document.createElement('span');
-	orSpan.innerText = ' or '
-	playAgain.appendChild(orSpan);
-
-	var itNo = document.createElement('i');
-	var spanNo = document.createElement('span');
-	spanNo.classList = ['buttOption'];
-	spanNo.innerText = '"No"';
-	spanNo.setAttribute("data-type", "playAgain");
-	spanNo.setAttribute("data-answer", "no");
-	spanNo.addEventListener('click', (evt) => buttonPressEvent(evt));
-	playAgain.appendChild(itNo).appendChild(spanNo)
-
-	var againSpan = document.createElement('span');
-	againSpan.innerText = ' - would you like to play another round?'
-	playAgain.appendChild(againSpan);
-
+	playAgain.innerHTML = "Would you like to play another round?";
 	container.appendChild(playAgain);
+	var clear = document.createElement('div');
+	clear.classList=['clear minispacer'];
+	container.appendChild(clear);
+
+	// var spacer = document.createElement('div');
+	// spacer.classList=['clear spacer'];
+	// container.appendChild(spacer);
+
+	var btnYes = document.createElement('a');
+	btnYes.classList = ['btnOption'];
+	btnYes.innerText = '"Yes"';
+	btnYes.setAttribute("href", "#");
+	btnYes.setAttribute("data-type", "playAgain");
+	btnYes.setAttribute("data-answer", "yes");
+	btnYes.addEventListener('click', (evt) => buttonPressEvent(evt));
+	container.appendChild(btnYes);
+	
+	var btnNo = document.createElement('a');
+	btnNo.classList = ['btnOption'];
+	btnNo.innerText = '"No"';
+	btnNo.setAttribute("href", "#");
+	btnNo.setAttribute("data-type", "playAgain");
+	btnNo.setAttribute("data-answer", "no");
+	btnNo.addEventListener('click', (evt) => buttonPressEvent(evt));
+	container.appendChild(btnNo);
 
 	var spacer = document.createElement('div');
 	spacer.classList=['clear spacer'];
@@ -228,8 +228,8 @@ function showSummary(won, summaryHTML) {
 			})
 
 			var logo = document.getElementById('summary_logo');
-			if (won) logo.innerHTML+= "<img src='./images/YouWin.png' class='animate__animated animate__zoomInUp' />";
-			else logo.innerHTML+= "<img src='./images/YouLose.png' class='animate__animated animate__zoomInUp' />";
+			if (won) logo.innerHTML = "<img src='./images/YouWin.png' class='animate__animated animate__zoomInUp' />";
+			else logo.innerHTML = "<img src='./images/YouLose.png' class='animate__animated animate__zoomInUp' />";
 		}
 	});
 	if (useBgAudio === true) {

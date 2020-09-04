@@ -34,6 +34,11 @@ div.spacer {
 	padding-bottom: 2%;
 }
 
+div.minispacer {
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+
 #intro {
 	position: absolute;
 	left: 0;
@@ -126,7 +131,7 @@ div.spacer {
 	float: left;
 	text-align: right;
 	padding-right: 3%;
-	padding-top: 5%;
+	padding-top: 4%;
 	padding-bottom: 3%;
 }
 
@@ -134,7 +139,7 @@ div.spacer {
 	width: 50%;
 	text-align: left;
 	padding-left: 3%;
-	padding-top: 5%;
+	padding-top: 4%;
 	padding-bottom: 3%;
 }
 
@@ -267,16 +272,6 @@ div.gridRow {
 	-webkit-animation: flash linear 1s infinite;
 	animation: flash linear 1s infinite;
 }*/
-
-.buttOption:focus {
-	-webkit-animation: pulseCell linear 1s infinite;
-	animation: pulseCell linear 1s infinite;
-}
-
-.buttOption:hover {
-	-webkit-animation: pulseCell linear 1s infinite;
-	animation: pulseCell linear 1s infinite;
-}
 
 .opacityZero {
 	opacity:0 !important;
@@ -473,6 +468,38 @@ table.board120 > tr > * {
 	border-top-right-radius: 35%;
 	border-bottom-right-radius: 35%;
 }
+
+a.btnOption{
+	text-decoration: none;
+	color: inherit;
+	border: 2px solid maroon;
+	border-radius: 1vw;
+	padding: 1vw;
+	margin-left: 1vw;
+	margin-right: 1vw;
+}
+
+a.btnOption:hover {
+/*	text-decoration: underline;*/
+	background-color:#f2f;
+/*  animation: pulseBtn 1s infinite;
+  animation-timing-function: linear; */
+}
+
+a.btnOption:focus {
+	background-color:#f2f;
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;
+}
+
+@keyframes pulseBtn {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+  }
+}
+
+
 
 /* Flash class and keyframe animation */
 .flashit{
