@@ -204,6 +204,10 @@ function showSummary(won, summaryHTML) {
 		if (evt.target.id != 'summary') return;
 
 		if (evt.animationName == 'fadeIn') {
+			var gameDiv = document.getElementById('game');
+			gameDiv.style.setProperty('display', 'none');
+			gameDiv.innerHTML = '';
+	
 			var ship = document.getElementById('summary_ship');
 			ship.classList.add('animate__animated', 'animate__zoomInUp')
 			ship.innerHTML = "<img src='./images/ship.png' />";
