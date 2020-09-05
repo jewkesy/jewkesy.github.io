@@ -204,7 +204,7 @@ function buildPQLastGames(callback) {
 
 function getPQDailyGames(callback) {
 	var uri = aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter;
-	console.log(uri)
+	// console.log(uri)
 	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
@@ -490,7 +490,6 @@ function updateBoosterPanel(obj) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-
 	var container = document.getElementById(prefix + '_lastgames');
 	var games = data.lastGame;
 	for (var i = 0; i < games.length; i++) {
@@ -585,7 +584,7 @@ function buildPopcornLeague(data, prefix, total) {
 		var x = i + 1;
 		var g = topTen[i];
 
-		var icons = getDeviceInfo(g.d, g.i, g.tpb)
+		var icons = getDeviceInfo(g.d, g.i, g.tpb)		
 		var sym = icons.sym;
 		var booster = icons.booster;
 		var device = icons.device;
@@ -707,9 +706,9 @@ function isBigEnough() {
 }
 
 function prepDataForChart(data, history) {
-	console.log(data)
+	// console.log(data)
 
-	console.log(_pqChartDaysDisplay)
+	// console.log(_pqChartDaysDisplay)
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year"));
 	// console.log(data)

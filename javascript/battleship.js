@@ -78,7 +78,7 @@ function buildBSLastGames(callback) {
 	var limit = _pqLimit || 10;
 	fadeyStuff("bs_lastgames_limit", limit); 
 	var uri = aws + "?lastgames=true&prefix=bs&limit=" + limit + "&locale=" + _bsLocale + _bsDeviceFilter;
-	console.log(uri)
+	// console.log(uri)
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
 		// console.log(data)
