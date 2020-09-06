@@ -102,6 +102,18 @@ function buttonPressEvent(evt) {
 	}
 }
 
+// ArrowUp, ArrowDown, ArrowLeft, ArrowRight and NumpadEnter
+// document.addEventListener('ArrowUp', (evt) => logKey(evt));
+// document.addEventListener('ArrowDown', (evt) => logKey(evt));
+// document.addEventListener('ArrowLeft', (evt) => logKey(evt));
+// document.addEventListener('ArrowRight', (evt) => logKey(evt));
+// document.addEventListener('NumpadEnter', (evt) => logKey(evt));
+document.addEventListener('keydown', (evt) => logKey(evt));
+
+function logKey(e) {
+	console.log(e.code);
+}
+
 function showIntro() {
 	if (useBgAudio === true) bgAudio.play();
 
@@ -339,6 +351,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 				span.setAttribute("data-row", i+1);
 				if (debugMode) span.innerHTML = size
 				if (touchMode) {
+					span.setAttribute('tabindex', i+"_"+j)
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
 				}
 				td.appendChild(span);
