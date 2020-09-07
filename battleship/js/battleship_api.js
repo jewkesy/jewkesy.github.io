@@ -333,7 +333,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 		tr.appendChild(td);
 	}
 	table.appendChild(tr);
-
+	var counter = 0;
 	for (var i = 0; i < gameGrid.length; i++) {
 		var tr = document.createElement('tr'); 
 		var td = document.createElement('td');
@@ -341,10 +341,12 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 		td.appendChild(txt);
 		tr.appendChild(td);
 		for (var j = 0; j < gameGrid[0].length; j++) {
+			
 			var td = document.createElement('td');
 			td.classList = ['boardCell'];
 
 			if (gameGrid[i][j] == 0) {
+				counter++;
 				var span = document.createElement('span');
 				span.classList=['clicky']
 				span.style.setProperty('width', size+'px');
@@ -354,7 +356,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 				span.setAttribute("data-row", i+1);
 				if (debugMode) span.innerHTML = size
 				if (touchMode) {
-					span.setAttribute('tabindex', i+"_"+j)
+					span.setAttribute('tabindex', counter);
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
 				}
 				td.appendChild(span);
