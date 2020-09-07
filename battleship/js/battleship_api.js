@@ -13,7 +13,7 @@ let alexa;
 const params = new URLSearchParams(window.location.search);
 let debugMode = params.has('debug');
 
-let defaultAudiolevel = 0.6;
+let defaultAudiolevel = 0.5;
 let quietAudiolevel = 0.4;
 // let backgroundAudio=document.getElementById("bgAudio");
 let bgAudio = new Audio('./audio/battleship_01.mp3');
@@ -111,7 +111,7 @@ function buttonPressEvent(evt) {
 document.addEventListener('keydown', (evt) => logKey(evt));
 
 function logKey(e) {
-	console.log(e.code);
+	// console.log(e.code);
 }
 
 function showIntro() {
@@ -319,6 +319,9 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	table.classList.add('board'+size)
 	table.style.setProperty('width', size+'px');
 	table.style.setProperty('height', size+'px');
+	if (touchMode) {
+		table.autofocus = true;
+	}
 
 	var tr = document.createElement('tr'); 
 	var td = document.createElement('td');
