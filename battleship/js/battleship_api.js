@@ -111,7 +111,7 @@ function buttonPressEvent(evt) {
 document.addEventListener('keydown', (evt) => logKey(evt));
 
 function logKey(e) {
-	// console.log(e.code);
+	console.log(e.code);
 }
 
 function showIntro() {
@@ -159,14 +159,6 @@ function buildSummaryHtml(results) {
 	gridRow.appendChild(spacer);
 	container.appendChild(gridRow);
 
-	var rank = document.createElement('div');
-	rank.innerHTML = `Rank: <strong>${results.rank}</strong><br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong>`
-	container.appendChild(rank);
-
-	var spacer = document.createElement('div');
-	spacer.classList=['clear spacer'];
-	container.appendChild(spacer);
-
 	var playAgain = document.createElement('div');
 	playAgain.innerHTML = "Would you like to play another round?";
 	container.appendChild(playAgain);
@@ -196,6 +188,15 @@ function buildSummaryHtml(results) {
 	btnNo.setAttribute("data-answer", "no");
 	btnNo.addEventListener('click', (evt) => buttonPressEvent(evt));
 	container.appendChild(btnNo);
+
+
+	var spacer = document.createElement('div');
+	spacer.classList=['clear spacer'];
+	container.appendChild(spacer);
+	
+	var rank = document.createElement('div');
+	rank.innerHTML = `Rank: <strong>${results.rank}</strong><br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong>`
+	container.appendChild(rank);
 
 	var spacer = document.createElement('div');
 	spacer.classList=['clear spacer'];
