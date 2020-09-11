@@ -179,6 +179,7 @@ function buildSummaryHtml(results) {
 	// container.appendChild(spacer);
 
 	var btnYes = document.createElement('a');
+	btnYes.autofocus = true;
 	btnYes.classList = ['btnOption'];
 	btnYes.innerText = '"Yes"';
 	btnYes.setAttribute("href", "#");
@@ -319,9 +320,9 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	table.classList.add('board'+size)
 	table.style.setProperty('width', size+'px');
 	table.style.setProperty('height', size+'px');
-	if (touchMode) {
-		table.autofocus = true;
-	}
+	// if (touchMode) {
+	// 	table.autofocus = true;
+	// }
 
 	var tr = document.createElement('tr'); 
 	var td = document.createElement('td');
@@ -334,6 +335,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	}
 	table.appendChild(tr);
 	var counter = 0;
+	var touchAdded = false;
 	for (var i = 0; i < gameGrid.length; i++) {
 		var tr = document.createElement('tr'); 
 		var td = document.createElement('td');
@@ -341,7 +343,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 		td.appendChild(txt);
 		tr.appendChild(td);
 		for (var j = 0; j < gameGrid[0].length; j++) {
-			
 			var td = document.createElement('td');
 			td.classList = ['boardCell'];
 
@@ -358,6 +359,11 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 				if (touchMode) {
 					span.setAttribute('tabindex', counter);
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
+					if (touchAdded === false) {
+						console.log(i,j)
+						span.autofocus = true;
+						touchAdded = true;
+					}
 				}
 				td.appendChild(span);
 			} else {
