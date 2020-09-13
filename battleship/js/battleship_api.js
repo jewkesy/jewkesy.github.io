@@ -193,7 +193,7 @@ function buildSummaryHtml(results) {
 	var spacer = document.createElement('div');
 	spacer.classList=['clear spacer'];
 	container.appendChild(spacer);
-	
+
 	var rank = document.createElement('div');
 	rank.innerHTML = `Rank: <strong>${results.rank}</strong><br/>Reach a score of <strong>${results.nextPromotionScore}</strong> for promotion to <strong>${results.nextPromotion}</strong>`
 	container.appendChild(rank);
@@ -573,7 +573,9 @@ function duckAudio(level, audioStream) {
 
 function setAudioStatus(context) {
 	console.log(context)
-	if (context.Viewport.mode && context.Viewport.mode == "TV") return true;
+	if (context.Viewport.mode && context.Viewport.mode == "TV") {
+		if (param.has('audio')) return true;
+	}
 	return false;
 }
 
