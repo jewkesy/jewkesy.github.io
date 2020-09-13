@@ -576,7 +576,8 @@ function setAudioStatus(context) {
 	// console.log(params)
 	// console.log(params.has('audio'))
 	if (context.Viewport.mode && context.Viewport.mode == "TV") {
-		if (params.has('audio')) return true;
+		// if (params.has('audio')) return true;
+		return true;
 	}
 	return false;
 }
