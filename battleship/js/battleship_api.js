@@ -574,7 +574,7 @@ function duckAudio(level, audioStream) {
 function setAudioStatus(context) {
 	console.log(context)
 	if (context.Viewport.mode && context.Viewport.mode == "TV") {
-		if (params.has('audio')) return true;
+		// if (params.has('audio')) return true;
 	}
 	return false;
 }
