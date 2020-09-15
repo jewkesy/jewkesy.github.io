@@ -572,6 +572,7 @@ function duckAudio(level, audioStream) {
 }
 
 function setAudioStatus(context) {
+	return true;
 	// console.log(context)
 	// console.log(params)
 	// console.log(params.has('audio'))

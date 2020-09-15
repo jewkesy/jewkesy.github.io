@@ -490,7 +490,7 @@ function updateBoosterPanel(obj) {
 
 function buildPopcornLastGames(data, prefix) {
 	if(!data) return;
-	console.log(data)
+	// console.log(data)
 	var container = document.getElementById(prefix + '_lastgames');
 	var games = data.lastGame;
 	for (var i = 0; i < games.length; i++) {
