@@ -13,8 +13,8 @@ let alexa;
 const params = new URLSearchParams(window.location.search);
 let debugMode = params.has('debug');
 
-let defaultAudiolevel = 0.5;
-let quietAudiolevel = 0.4;
+let defaultAudiolevel = 0.4;
+let quietAudiolevel = 0.3;
 // let backgroundAudio=document.getElementById("bgAudio");
 let bgAudio = new Audio('./audio/battleship_01.mp3');
 bgAudio.loop = true;
@@ -360,11 +360,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 				if (touchMode) {
 					span.setAttribute('tabindex', counter);
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
-					if (touchAdded === false) {
-						console.log(i,j)
-						span.autofocus = true;
-						touchAdded = true;
-					}
 				}
 				td.appendChild(span);
 			} else {
