@@ -44,7 +44,7 @@ function displayQuestion() {
 
 	var mosaic = document.getElementById('pc_poster_mosaic');
 
-q.t = "Poster"	
+
 	if (q.t == "Poster") {
 		// show mosaic
 		mosaic.setAttribute('style', "display: inline;");
