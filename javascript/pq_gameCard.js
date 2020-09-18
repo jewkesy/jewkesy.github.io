@@ -42,6 +42,24 @@ function displayQuestion() {
 	// cachedQuestions = cachedQuestions
 	var t = cleanseText(q.echoShowText);
 
+	var mosaic = document.getElementById('pc_poster_mosaic');
+
+q.t = "Poster"	
+	if (q.t == "Poster") {
+		// show mosaic
+		mosaic.setAttribute('style', "display: inline;");
+		mosaic.classList = ["mosaic animate__animated animate__zoomIn"]
+		mosaic.addEventListener('animationend', (evt) => {
+		  if (evt.animationName == "zoomIn") {
+		  	mosaic.classList = ["mosaic animate__animated animate__rubberBand animate__slower"]
+		  }
+		});
+
+	} else {
+		// hide mosiac
+		mosaic.setAttribute('style', "display: none;");
+	}
+
 	fadeyStuff("pc_question", t);
 
 	$.get(q.Poster).done(function () {

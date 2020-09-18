@@ -171,6 +171,23 @@ div.posterHalf > img {
     color:#fff;
 }
 
+div.imgStack {
+    position: relative;
+}
+
+img.mosaic {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width:100%;
+}
+
+
 /*animation*/
 .animate-in-01 {
     animation:animateIn 1s ease;

@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="stylesheets/gamecard.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="stylesheets/hover-partial.css">
+    <link rel="stylesheet" href="stylesheets/animate.min.css">
 
     <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
@@ -137,9 +138,12 @@
                 </div>
                 <div class="row">
                     <div class="col posterHalf">
-                        
-                        <!-- image -->
-                        <img loading="lazy" class="animate-in-image" id='pc_question_poster' src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_l.png">
+                        <div class="imgStack">
+                            <!-- image -->
+                            <img loading="lazy" class="animate-in-image" id='pc_question_poster' src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="./images/popcorn_l.png">
+
+                            <img loading="lazy" class="" style="display: none;" id="pc_poster_mosaic" src="https://popcornquiz.s3-eu-west-1.amazonaws.com/mosaic_1.png" />
+                        </div>
                     </div>
                 </div>  
                 <div class="row">
@@ -465,6 +469,7 @@
 
             <hr>
             <h4 style="text-align: center;">Latest Popcorn Quiz News</h4>
+            <p><strong>18 Sep 2020</strong> - NEW QUESTION TYPE IS NOW LIVE - Poster Mosaic! For screen devices, can you make out the movie poster hidden behind the tiles??</p>
 
             <p><strong>02 Feb 2020</strong> - NEW QUESTION TYPE IS NOW LIVE - Movie Details! Do you know your Nostromo from your Sulaco? Are there 6 members of The Incredibles family?  Did Keanu take the red pill or the blue pill? Lets see how you compare!</p>
 
