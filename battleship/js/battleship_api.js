@@ -25,11 +25,9 @@ const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	// debugMe("LOADED");
-	// useBgAudio = setAudioStatus(result.message.context);
-	// showIntro();
-	// initialiseGameBoards(result.message);
-
-	startGame(result)
+	useBgAudio = setAudioStatus(result.message.context);
+	showIntro();
+	initialiseGameBoards(result.message);
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -76,13 +74,6 @@ try {
 	console.log("Alexa Load Error", err)
 }
 
-
-function startGame(result) {
-	useBgAudio = setAudioStatus(result.message.context);
-	showIntro();
-	initialiseGameBoards(result.message);
-}
-
 var _gridPressed = false;
 function gridPressEvent(evt) {
 	if (_gridPressed == true) return;
@@ -124,7 +115,7 @@ function logKey(e) {
 }
 
 function showIntro() {
-	// if (useBgAudio === true) bgAudio.play();
+	if (useBgAudio === true) bgAudio.play();
 
 	var intro = document.getElementById('intro');
 	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3_0s');
@@ -261,9 +252,9 @@ function showSummary(won, summaryHTML) {
 	});
 	if (useBgAudio === true) {
 		try {
-			// duckAudio(quietAudiolevel, bgAudio);
+			duckAudio(quietAudiolevel, bgAudio);
 			bgAudio.pause();
-			// duckAudio(defaultAudiolevel);
+			duckAudio(defaultAudiolevel);
 			if (won) {
 				let wonAudio = new Audio('./audio/won.mp3');
 				wonAudio.play();
@@ -452,7 +443,6 @@ function handleGameAction(msg) {
 
 	var playerGridToShow = msg.gameObj.playerGameGrid;
 	if (msg.gameObj.gameOver) {
-		audioCheck = false;
 		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action && last.action == "WON" && last.whoShot == "computer") playerGridToShow = msg.gameObj.computerGrid;
 	}
@@ -633,12 +623,4 @@ function micOnOpened() {}
 function micOnClosed() {}
 function micOnError(error) {}
 function speechStarted(msg) {}
-
-var audioCheck = false;
-function speechStopped(msg) {
-	if (audioCheck === false) {
-		audioCheck = true
-		if (useBgAudio === true) bgAudio.play();
-	}
-
-}
+function speechStopped(msg) {}
