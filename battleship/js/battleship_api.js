@@ -261,9 +261,9 @@ function showSummary(won, summaryHTML) {
 	});
 	if (useBgAudio === true) {
 		try {
-			duckAudio(quietAudiolevel, bgAudio);
+			// duckAudio(quietAudiolevel, bgAudio);
 			bgAudio.pause();
-			duckAudio(defaultAudiolevel);
+			// duckAudio(defaultAudiolevel);
 			if (won) {
 				let wonAudio = new Audio('./audio/won.mp3');
 				wonAudio.play();
@@ -452,6 +452,7 @@ function handleGameAction(msg) {
 
 	var playerGridToShow = msg.gameObj.playerGameGrid;
 	if (msg.gameObj.gameOver) {
+		audioCheck = false;
 		var last = msg.gameObj.lastAction[msg.gameObj.lastAction.length-1];
 		if (last.action && last.action == "WON" && last.whoShot == "computer") playerGridToShow = msg.gameObj.computerGrid;
 	}
