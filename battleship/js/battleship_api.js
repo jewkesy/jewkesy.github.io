@@ -25,9 +25,11 @@ const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
 	// debugMe("LOADED");
-	useBgAudio = setAudioStatus(result.message.context);
-	showIntro();
-	initialiseGameBoards(result.message);
+	// useBgAudio = setAudioStatus(result.message.context);
+	// showIntro();
+	// initialiseGameBoards(result.message);
+
+	startGame(result)
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -74,6 +76,13 @@ try {
 	console.log("Alexa Load Error", err)
 }
 
+
+function startGame(result) {
+	useBgAudio = setAudioStatus(result.message.context);
+	showIntro();
+	initialiseGameBoards(result.message);
+}
+
 var _gridPressed = false;
 function gridPressEvent(evt) {
 	if (_gridPressed == true) return;
@@ -115,7 +124,7 @@ function logKey(e) {
 }
 
 function showIntro() {
-	if (useBgAudio === true) bgAudio.play();
+	// if (useBgAudio === true) bgAudio.play();
 
 	var intro = document.getElementById('intro');
 	intro.classList.add('animate__animated', 'animate__fadeOut', 'animate__delay-3_0s');
@@ -623,4 +632,12 @@ function micOnOpened() {}
 function micOnClosed() {}
 function micOnError(error) {}
 function speechStarted(msg) {}
-function speechStopped(msg) {}
+
+var audioCheck = false;
+function speechStopped(msg) {
+	if (audioCheck === false) {
+		audioCheck = true
+		if (useBgAudio === true) bgAudio.play();
+	}
+
+}
