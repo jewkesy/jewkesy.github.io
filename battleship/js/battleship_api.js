@@ -20,21 +20,16 @@ let bgAudio = new Audio('./audio/battleship_01.mp3');
 bgAudio.loop = true;
 
 let useBgAudio = false;
-let fireTV = false;
 
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
-	debugMe("LOADED");
-	debugMe(result.message.context)
-	// if (result.message.context.Viewport.mode && result.message.context.Viewport.mode == "TV") {
-	// 	fireTV = true;
-	// 	// bgAudio.play();
-	// }
+	// debugMe("LOADED");
+	// useBgAudio = setAudioStatus(result.message.context);
+	// showIntro();
+	// initialiseGameBoards(result.message);
 
-	useBgAudio = setAudioStatus(result.message.context);
-	showIntro();
-	initialiseGameBoards(result.message);
+	startGame(result)
 	alexa = result.alexa;
 	alexa.speech.onStarted(speechStarted);
 	alexa.speech.onStopped(speechStopped);
@@ -58,7 +53,7 @@ const success = function(result) {
 	// });
 	// alexa.performance.getMemoryInfo();
 	
-	// console.log(alexa)
+	console.log(alexa)
 
 	try {
 		// document.getElementById('micOpen').addEventListener('click', () => micOnOpened());
@@ -81,12 +76,17 @@ try {
 	console.log("Alexa Load Error", err)
 }
 
+
+function startGame(result) {
+	useBgAudio = setAudioStatus(result.message.context);
+	showIntro();
+	initialiseGameBoards(result.message);
+}
+
 var _gridPressed = false;
 function gridPressEvent(evt) {
-	debugMe("PRESSED")
 	if (_gridPressed == true) return;
 	if (evt && evt.target && evt.target.dataset) {
-		debugMe("SENDING")
 		_gridPressed = true;
 		let fireAudio = new Audio('./audio/launch.mp3');
 		fireAudio.play();
@@ -259,20 +259,20 @@ function showSummary(won, summaryHTML) {
 			else logo.innerHTML = "<img src='./images/YouLose.png' class='animate__animated animate__zoomInUp' />";
 		}
 	});
-	// if (useBgAudio === true && fireTV === true) {
-	// 	try {
-	// 		duckAudio(quietAudiolevel, bgAudio);
-	// 		bgAudio.pause();
-	// 		duckAudio(defaultAudiolevel);
-	// 		if (won) {
-	// 			let wonAudio = new Audio('./audio/won.mp3');
-	// 			wonAudio.play();
-	// 		} else {
-	// 			let lostAudio = new Audio('./audio/lost.mp3');
-	// 			lostAudio.play();
-	// 		}
-	// 	} catch {}
-	// }
+	if (useBgAudio === true) {
+		try {
+			duckAudio(quietAudiolevel, bgAudio);
+			bgAudio.pause();
+			duckAudio(defaultAudiolevel);
+			if (won) {
+				let wonAudio = new Audio('./audio/won.mp3');
+				wonAudio.play();
+			} else {
+				let lostAudio = new Audio('./audio/lost.mp3');
+				lostAudio.play();
+			}
+		} catch {}
+	}
 }
 
 function initialiseGameBoards(msg) {
@@ -576,10 +576,10 @@ function duckAudio(level, audioStream) {
 }
 
 function setAudioStatus(context) {
-	if (context.Viewport.mode && context.Viewport.mode == "TV") fireTV = true;
 	return true;
 	// console.log(context)
-
+	// console.log(params)
+	// console.log(params.has('audio'))
 	if (context.Viewport.mode && context.Viewport.mode == "TV") {
 		// if (params.has('audio')) return true;
 		return true;
@@ -593,13 +593,8 @@ function setAudioStatus(context) {
 // 	else backgroundAudio.pause();
 // }
 
-var debugEle = document.getElementById('debug');
-
 function debugMe(txt) {
-	if (debugMode) {
-		debugEle.innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
-		debugEle.classList = [];
-	}
+	if (debugMode) document.getElementById('debug').innerHTML += "<p>" + new Date()+ " " + txt + "</p>";
 }
 
 function getShipImgXY(x, y, fleet, icon) {
@@ -644,4 +639,5 @@ function speechStopped(msg) {
 		audioCheck = true
 		if (useBgAudio === true) bgAudio.play();
 	}
+
 }
