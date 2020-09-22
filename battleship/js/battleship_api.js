@@ -29,8 +29,7 @@ const success = function(result) {
 
 	if (result.message.context.Viewport.mode && result.message.context.Viewport.mode == "TV") {
 		fireTV = true;
-		bgPlaying = true;
-		bgAudio.play();
+		// bgAudio.play();
 	}
 
 	useBgAudio = setAudioStatus(result.message.context);
@@ -632,10 +631,11 @@ function micOnClosed() {}
 function micOnError(error) {}
 function speechStarted(msg) {}
 
-var bgPlaying = false;
+var audioCheck = false;
 function speechStopped(msg) {
-	if (useBgAudio === true && bgPlaying === false && fireTV == false) {
-		bgAudio.play();
-		bgPlaying = true
+	if (audioCheck === false) {
+		audioCheck = true
+		if (useBgAudio === true) bgAudio.play();
 	}
+
 }
