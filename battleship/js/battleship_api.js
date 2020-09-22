@@ -27,10 +27,10 @@ const success = function(result) {
 	// Actions after Alexa client initialization is complete
 	// debugMe("LOADED");
 
-	if (result.message.context.Viewport.mode && result.message.context.Viewport.mode == "TV") {
-		fireTV = true;
-		// bgAudio.play();
-	}
+	// if (result.message.context.Viewport.mode && result.message.context.Viewport.mode == "TV") {
+	// 	fireTV = true;
+	// 	// bgAudio.play();
+	// }
 
 	useBgAudio = setAudioStatus(result.message.context);
 	showIntro();
@@ -637,5 +637,4 @@ function speechStopped(msg) {
 		audioCheck = true
 		if (useBgAudio === true) bgAudio.play();
 	}
-
 }
