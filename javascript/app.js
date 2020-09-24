@@ -49,7 +49,7 @@ function getDeviceInfo(device, playerIcon, boosterIcon) {
 	else if (playerIcon == 'en-us') sym = " 🍔";
 	else if (playerIcon == 'dev')   sym = " 💻";
 	else if (playerIcon == 'llama') sym = " 🦙";
-	if (boosterIcon >= 0) booster = " 🚀";
+	if (boosterIcon > 0) booster = " 🚀";
 	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster}
 }
 

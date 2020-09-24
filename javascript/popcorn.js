@@ -503,9 +503,6 @@ function buildPopcornLastGames(data, prefix) {
 		var device = icons.device;
 		var deviceIcon = icons.deviceIcon;
 
-		if (g.tpb == 0) booster = "";
-// console.log(booster)
-// console.log(g)
 		var cell1;
 		if (!document.getElementById(prefix + '_lastgames_rank_' + x)) {			
 			var row = container.insertRow(-1);
