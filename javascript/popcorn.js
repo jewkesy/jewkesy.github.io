@@ -565,6 +565,8 @@ function buildPopcornLastGames(data, prefix) {
 		var bonusInfo = "";
 		if (g.b) bonusInfo = "<br/>"+g.b.wins+" / "+g.b.loses+" / "+g.b.skips;
 
+		if (g.tpb && g.tpb > 0) {}
+		else booster = "";
 		fadeyStuff(prefix + "_lastgames_lg_" + x, g.lg+booster+getGenreEventTitle(g.ge)+bonusInfo);
 
 		if (g.bs) g.gs += "<br/><i>Best:&nbsp;" + numberWithCommas(g.bs) + "</i>"; 

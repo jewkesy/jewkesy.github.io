@@ -1,5 +1,6 @@
 
 var _pqKeywords;
+const s3Url = "https://popcornquiz.s3-eu-west-1.amazonaws.com/"
 
 function getKeywords() {
 	httpGetByUrl(aws + "?action=getkeywords&prefix=pc&locale="+_pqLang, function (err, data) {
@@ -44,9 +45,12 @@ function displayQuestion() {
 
 	var mosaic = document.getElementById('pc_poster_mosaic');
 
+	var mosaics = ["mosaic_1.png", "mosaic_3.png", "mosaic_3.png" ];
 
 	if (q.t == "Poster") {
 		// show mosaic
+		mosaic.setAttribute('href', s3Url+Math.floor(Math.random() * (mosaics.length)));
+		// https://popcornquiz.s3-eu-west-1.amazonaws.com/mosaic_1.png
 		mosaic.setAttribute('style', "display: inline;");
 		mosaic.classList = ["mosaic animate__animated animate__zoomIn"]
 		mosaic.addEventListener('animationend', (evt) => {
