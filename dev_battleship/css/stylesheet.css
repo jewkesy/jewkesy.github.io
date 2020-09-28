@@ -1,0 +1,545 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i');
+
+@font-face { font-family: badaboom; src: url('BadaboomBB_Reg.otf'); } 
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: url("./../images/battleship_bg01.jpg") no-repeat center center fixed;
+  background-color: #005cb3;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2vw;
+}
+
+table {
+  border-collapse: collapse;
+}
+div.clear {
+	clear: both;
+}
+
+div.spacer {
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+div.minispacer {
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+
+#intro {
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+  	background-color: black;
+
+  	background: url("./../images/sunburstwithsea.png") no-repeat center bottom fixed;
+  	-webkit-background-size: 100vw auto;
+	-moz-background-size: 100vw auto;
+	-o-background-size: 100vw auto;
+	background-size: 100vw auto;
+	text-align: center;
+	display: block;
+}
+
+#intro_ship {
+	width: 100%;
+	height: 85vh;
+	vertical-align: bottom;
+}
+#intro_ship > img {
+	margin-top: 5%;
+	height: 95%;
+}
+
+#intro_logo {
+	width: 100%;
+	height: 15vh;
+}
+#intro_logo > img {
+	height: 90%;
+}
+
+#sfx {
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+}
+
+#summary {
+	display: none;
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+
+  	background: url("./../images/sunburstwithsea.png") no-repeat center bottom fixed;
+  	-webkit-background-size: 100vw auto;
+	-moz-background-size: 100vw auto;
+	-o-background-size: 100vw auto;
+	background-size: 100vw auto;
+	text-align: center;
+}
+
+#summary_ship {
+	width: 100%;
+	height: 85vh;
+	vertical-align: bottom;
+}
+#summary_ship > img {
+	margin-top: 5%;
+	height: 95%;
+}
+#summary_logo {
+	width: 100%;
+	height: 15vh;
+}
+#summary_logo > img {
+	height: 90%;
+}
+
+#summary_result {
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+	text-shadow: 3px 3px 5px #669999;
+    font-size: 1.1em;
+	color: #111111;
+}
+
+#summaryLeft {
+	width: 50%;
+	float: left;
+	text-align: right;
+	padding-right: 3%;
+	padding-top: 4%;
+	padding-bottom: 3%;
+}
+
+#summaryRight {
+	width: 50%;
+	text-align: left;
+	padding-left: 3%;
+	padding-top: 4%;
+	padding-bottom: 3%;
+}
+
+#summary_action {
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+}
+
+#debug {
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	height: 100%;
+  	width: 100%;
+  	background-color: white;
+  	font-size: 0.7vw;
+  	opacity: 0.8;
+}
+
+div#game {
+	display: none;
+	position: absolute;
+	left: 0;
+  	top: 0;
+  	text-align: center;
+} 
+
+#header {
+	position: fixed;
+	height: 15%;
+	width: 100%;
+	text-align: center;
+	background: url("./../images/battleship_logo_sml_v2.png") no-repeat fixed;
+	background-size: 8%; 
+}
+
+#header > div {
+	height: 80%;
+}
+
+#logo {
+	vertical-align: middle;
+	display: block;
+}
+
+#logo > img {
+/*	width: 76%;*/
+	height: 100%;
+}
+
+div.gridRow {
+	display: flex;
+}
+
+.gridCell {
+/*	width:100%;
+	height: 100%;*/
+	vertical-align: middle;
+	display: block;
+
+	/*border: 1px solid yellow;*/
+}
+
+.gridCell > div {
+	height: 100%;
+	width: 100%;
+/*	border: 1px solid yellow;*/
+	vertical-align: middle;
+}
+
+#grids {
+	position: fixed;
+	top: 15%;
+	height: 65%;
+	width: 100%;
+	text-align: center;
+	margin: auto 0;
+}
+
+#footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	height: 15%;
+	width: 100%;
+	/*background-color: green;*/
+	text-align: center;
+	margin: auto 0;
+	
+}
+#footer > * {
+	margin-top:0%;
+}
+
+.coords {
+	font-family: badaboom;
+	margin-left: 2vw;
+	margin-right: 2vw;
+	font-size: 6vw;
+	/*font-weight: bold;*/
+	color: #fff;
+	-webkit-text-stroke: 1px black;
+	/*text-shadow: 3px 3px 5px #000000;*/
+}
+
+#cmds {
+	position: fixed;
+	bottom:0;
+	float:left;
+}
+#cmds > div {
+	float:left;
+}
+
+#gameGrids {
+	width: 90%;
+	height: 100%;
+	border: green solid 1px;
+	margin: 0 auto;
+}
+
+.clicky:focus {
+	background-color:#f2f;
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;
+}
+/*.clicky:hover {
+	background-color:#ccc;
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;
+}*/
+
+.opacityZero {
+	opacity:0 !important;
+	height:0 !important;
+}
+
+.action  {
+	position: absolute;
+	top:0;
+}
+
+.actionLeftSide {
+	left:-4vw;
+}
+
+.actionCenter {
+	left: 12vw;
+}
+
+.actionRightSide {
+	right: -4vw;
+}
+
+img.action {
+	height: 75vh;
+	width: 60vw;
+}
+
+div.boardContainer {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+table.board { margin: 0 auto; padding: 0px; text-align: center; background-color: #339cff; border-collapse: collapse; text-align: center; vertical-align: middle; }
+
+table.board > tr > * { 
+	border: 2px solid maroon; 
+/*	width: 30px; 
+	height: 30px; 
+	min-width: 30px; 
+	min-height: 30px; */
+}
+
+table.board30 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 30px; 
+	height: 30px; 
+	min-width: 30px; 
+	min-height: 30px;
+	font-size: 2.1vw;
+}
+
+table.board35 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 35px; 
+	height: 35px; 
+	min-width: 35px; 
+	min-height: 35px;
+	font-size: 2.1vw;
+}
+
+table.board40 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 40px; 
+	height: 40px; 
+	min-width: 40px; 
+	min-height: 40px; 
+	font-size: 2.2vw;
+}
+
+table.board45 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 45px; 
+	height: 45px; 
+	min-width: 45px; 
+	min-height: 45px; 
+	font-size: 2.2vw;
+}
+
+table.board50 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 50px; 
+	height: 50px; 
+	min-width: 50px; 
+	min-height: 50px; 
+	font-size: 2.3vw;
+}
+
+table.board55 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 55px; 
+	height: 55px; 
+	min-width: 55px; 
+	min-height: 55px; 
+	font-size: 2.3vw;
+}
+
+table.board60 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 60px; 
+	height: 60px; 
+	min-width: 60px; 
+	min-height: 60px; 
+	font-size: 2.4vw;
+}
+
+table.board80 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 80px; 
+	height: 80px; 
+	min-width: 80px; 
+	min-height: 80px;
+	font-size: 2.5vw; 
+}
+
+table.board100 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 100px; 
+	height: 100px; 
+	min-width: 100px; 
+	min-height: 100px; 
+	font-size: 2.5vw;
+}
+
+table.board120 > tr > * { 
+	/*border: 2px solid maroon; */
+	width: 120px; 
+	height: 120px; 
+	min-width: 120px; 
+	min-height: 120px; 
+	font-size: 2.5vw;
+}
+
+.boardCell > span {
+	display: block;
+}
+
+.boardCell > img {
+	display: block;
+}
+
+.stacked-bar-graph {
+	width: 100%;
+	height: 1em;
+	color:#414042;
+}
+
+.stacked-bar-graph > span {
+	display: inline-block;
+	height:100%;
+	box-sizing: border-box;
+	float: left;
+
+	font-size: 1em;
+	padding: 0px;
+	color: white;
+	-webkit-text-stroke: 0.5px #f4f4f4;
+}
+
+.stacked-bar-graph > span.bar-1 {
+	background: #F7B334;
+}
+
+.stacked-bar-graph > span.bar-2 {
+	background: #A7A9AC;
+}
+
+.stacked-bar-graph > span.bar-3 {
+	background: #D57E00;
+}
+
+.rotate90 {
+	transform: rotate(90deg);
+}
+
+.flip180 {
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+.bow {
+	/*border: black 1px solid;*/
+	border-top-left-radius: 50%;
+	border-bottom-left-radius: 50%;
+}
+.hull {
+	/*border: black 1px solid;*/
+}
+
+.stern {
+	/*border: black 1px solid;*/
+	border-top-right-radius: 25%;
+	border-bottom-right-radius: 25%;
+}
+
+a.btnOption{
+	text-decoration: none;
+	color: inherit;
+	border: 2px solid maroon;
+	border-radius: 1vw;
+	padding: 1vw;
+	margin-left: 1vw;
+	margin-right: 1vw;
+}
+
+a.btnOption:hover {
+/*	text-decoration: underline;*/
+	background-color:#f2f;
+/*  animation: pulseBtn 1s infinite;
+  animation-timing-function: linear; */
+}
+
+a.btnOption:focus {
+	background-color:#f2f;
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;
+}
+
+@keyframes pulseBtn {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+  }
+}
+
+
+
+/* Flash class and keyframe animation */
+.flashit{
+  background-color:#f2f;
+	-webkit-animation: flashCell linear 1s infinite;
+	animation: flashCell linear 1s infinite;
+}
+@-webkit-keyframes flashCell {
+	0% { opacity: 1; } 
+	50% { opacity: .1; } 
+	100% { opacity: 1; }
+}
+@keyframes flashCell {
+	0% { opacity: 1; } 
+	50% { opacity: .1; } 
+	100% { opacity: 1; }
+}
+/* Pulse class and keyframe animation */
+.pulseit{
+	-webkit-animation: pulseCell linear .5s infinite;
+	animation: pulseCell linear .5s infinite;
+}
+@-webkit-keyframes pulseCell {
+	0% {
+    background-color: #001F3F;
+  }
+  100% {
+    background-color: #FF4136;
+  }
+}
+@keyframes pulseCell {
+	0% {
+    background-color: #001F3F;
+  }
+  100% {
+    background-color: #FF4136;
+  }
+}
+

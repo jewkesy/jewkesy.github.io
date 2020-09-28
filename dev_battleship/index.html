@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>BattleShip Alexa Web App</title>
+
+  <script src="https://cdn.html.games.alexa.a2z.com/alexa-html/v1/alexa-html.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.2/pixi.min.js" defer></script>
+  
+  <script src="./js/battleship_api.js?version=18" charset="UTF-8" defer></script>
+  <script src="./js/sfx.js" charset="UTF-8" defer></script>
+
+  <link rel="stylesheet" type="text/css" href="./css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/animate.custom.css">
+  <!-- <link rel="stylesheet" type="text/css" href="./css/pyro.css"> -->
+  <link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+
+  <meta content='width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=0' name='viewport' />
+  <meta name="viewport" content="width=device-width" />
+</head>
+
+<body id='mainBody'>
+	<div id='container'>
+		<div id='sfx'></div>
+		<div id='debug' class='opacityZero'></div>
+		<div id='game'>
+			<div id='header'>
+				<div id='logo'><img alt="BattleShip logo" src="./images/Battle-Ship.png" /></div>
+			</div>
+			<div id='grids'>
+				<div class="gridRow" style="height:5vh; max-height:5vh;">
+					<div style="width: 50%;" class='gridCell'><img alt="tactical grid logo" style="height:75%; max-height:75%;" src="./images/tactical-grid.png"></div>
+					<div style="width: 50%;" class='gridCell'><img alt="your fleet logo" style="height:75%; max-height:75%;" src="./images/your-fleet.png"></div>
+				</div>
+				<div class="gridRow boardContainer" style="height:100%">
+					<div style="width: 50%; height:100%" class='gridCell' id='tacticalGrid'></div>
+					<div style="width: 50%; height:100%" class='gridCell' id='playerFleet'></div>
+					<div id='playerActionResult'></div>
+					<div id='computerActionResult'></div>
+				</div>
+			</div>	
+			<div id='footer'>
+				<div class="gridRow">
+					<div style="width: 50%;" class='gridCell' id='playerAction'></div>
+					<div style="width: 50%;" class='gridCell' id='computerAction'></div>
+				</div>
+			</div>
+		</div>
+		<div id='intro'>
+			<div id='intro_ship'></div>
+			<div id='intro_logo'></div>
+		</div>
+		<div id='summary'>
+			<div id='summary_ship'></div>
+			<div id='summary_logo'></div>
+			<div id='summary_action'></div>
+			<div id='summary_result'></div>
+		</div>
+
+		
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+.animate__animated.animate__delay-0_1s {
+  -webkit-animation-delay: calc(1s * 0.1);
+  animation-delay: calc(1s * 0.1);
+  -webkit-animation-delay: calc(var(--animate-delay) * 0.1);
+  animation-delay: calc(var(--animate-delay) * 0.1);
+}
+
+.animate__animated.animate__delay-0_2s {
+  -webkit-animation-delay: calc(1s * 0.2);
+  animation-delay: calc(1s * 0.2);
+  -webkit-animation-delay: calc(var(--animate-delay) * 0.2);
+  animation-delay: calc(var(--animate-delay) * 0.2);
+}
+
+.animate__animated.animate__delay-0_3s {
+  -webkit-animation-delay: calc(1s * 0.3);
+  animation-delay: calc(1s * 0.3);
+  -webkit-animation-delay: calc(var(--animate-delay) * 0.3);
+  animation-delay: calc(var(--animate-delay) * 0.3);
+}
+
+.animate__animated.animate__delay-0_4s {
+  -webkit-animation-delay: calc(1s * 0.4);
+  animation-delay: calc(1s * 0.4);
+  -webkit-animation-delay: calc(var(--animate-delay) * 0.4);
+  animation-delay: calc(var(--animate-delay) * 0.4);
+}
+
+.animate__animated.animate__delay-0_7s {
+  -webkit-animation-delay: calc(1s * 0.7);
+  animation-delay: calc(1s * 0.7);
+  -webkit-animation-delay: calc(var(--animate-delay) * 0.7);
+  animation-delay: calc(var(--animate-delay) * 0.7);
+}
+
+.animate__animated.animate__delay-0_9s {
+  -webkit-animation-delay: calc(1s * 0.9);
+  animation-delay: calc(1s * 0.9);
+  -webkit-animation-delay: calc(var(--animate-delay) * 0.9);
+  animation-delay: calc(var(--animate-delay) * 0.9);
+}
+
+.animate__animated.animate__delay-1_0s {
+  -webkit-animation-delay: calc(1s * 1.0);
+  animation-delay: calc(1s * 1.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 1.0);
+  animation-delay: calc(var(--animate-delay) * 1.0);
+}
+
+.animate__animated.animate__delay-2_0s {
+  -webkit-animation-delay: calc(1s * 2.0);
+  animation-delay: calc(1s * 2.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 2.0);
+  animation-delay: calc(var(--animate-delay) * 2.0);
+}
+
+.animate__animated.animate__delay-3_0s {
+  -webkit-animation-delay: calc(1s * 3.0);
+  animation-delay: calc(1s * 3.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 3.0);
+  animation-delay: calc(var(--animate-delay) * 3.0);
+}
+
+.animate__animated.animate__delay-4_0s {
+  -webkit-animation-delay: calc(1s * 4.0);
+  animation-delay: calc(1s * 4.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 4.0);
+  animation-delay: calc(var(--animate-delay) * 4.0);
+}
+
+.animate__animated.animate__delay-4_7s {
+  -webkit-animation-delay: calc(1s * 4.7);
+  animation-delay: calc(1s * 4.7);
+  -webkit-animation-delay: calc(var(--animate-delay) * 4.7);
+  animation-delay: calc(var(--animate-delay) * 4.7);
+}
+
+.animate__animated.animate__delay-5_2s {
+  -webkit-animation-delay: calc(1s * 5.2);
+  animation-delay: calc(1s * 5.2);
+  -webkit-animation-delay: calc(var(--animate-delay) * 5.2);
+  animation-delay: calc(var(--animate-delay) * 5.2);
+}
+
+.animate__animated.animate__delay-6_0s {
+  -webkit-animation-delay: calc(1s * 6.0);
+  animation-delay: calc(1s * 6.0);
+  -webkit-animation-delay: calc(var(--animate-delay) * 6.0);
+  animation-delay: calc(var(--animate-delay) * 6.0);
+}
