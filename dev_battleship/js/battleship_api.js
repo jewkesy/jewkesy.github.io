@@ -18,6 +18,7 @@ let quietAudiolevel = 0.3;
 // let backgroundAudio=document.getElementById("bgAudio");
 let bgAudio = new Audio('./audio/battleship_01.mp3');
 bgAudio.loop = true;
+bgAudio.volume = defaultAudiolevel;
 
 let useBgAudio = false;
 let _fireTV = false;
@@ -267,9 +268,11 @@ function showSummary(won, summaryHTML) {
 			duckAudio(defaultAudiolevel);
 			if (won) {
 				let wonAudio = new Audio('./audio/won.mp3');
+				wonAudio.volume = defaultAudiolevel;
 				wonAudio.play();
 			} else {
 				let lostAudio = new Audio('./audio/lost.mp3');
+				lostAudio.volume = defaultAudiolevel;
 				lostAudio.play();
 			}
 		} catch {}
@@ -577,16 +580,17 @@ function duckAudio(level, audioStream) {
 }
 
 function setAudioStatus(context) {
-	return true;
+	// return true;
 	// console.log(context)
 	// console.log(params)
 	// console.log(params.has('audio'))
 	if (context.Viewport.mode && context.Viewport.mode == "TV") {
 		_fireTV = true
 		// if (params.has('audio')) return true;
-		return true;
+		// return true;
 	}
-	return false;
+	return true;
+	// return false;
 }
 
 // function toggleAudio() {
