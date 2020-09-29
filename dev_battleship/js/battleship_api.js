@@ -20,6 +20,7 @@ let bgAudio = new Audio('./audio/battleship_01.mp3');
 bgAudio.loop = true;
 
 let useBgAudio = false;
+let _fireTV = false;
 
 const success = function(result) {
 	// const {alexa, message} = result;
@@ -259,7 +260,7 @@ function showSummary(won, summaryHTML) {
 			else logo.innerHTML = "<img src='./images/YouLose.png' class='animate__animated animate__zoomInUp' />";
 		}
 	});
-	if (useBgAudio === true) {
+	if (useBgAudio === true && _fireTV === true) {
 		try {
 			duckAudio(quietAudiolevel, bgAudio);
 			bgAudio.pause();
@@ -581,6 +582,7 @@ function setAudioStatus(context) {
 	// console.log(params)
 	// console.log(params.has('audio'))
 	if (context.Viewport.mode && context.Viewport.mode == "TV") {
+		_fireTV = true
 		// if (params.has('audio')) return true;
 		return true;
 	}
