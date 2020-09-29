@@ -148,6 +148,15 @@ function showIntro() {
 			
 		}
 	});
+
+	var btnJoyFix = document.createElement('a');
+	btnJoyFix.autofocus = true;
+	btnJoyFix.innerText = '';
+	btnJoyFix.setAttribute("href", "#");
+	btnJoyFix.setAttribute("data-type", "playAgain");
+	btnJoyFix.setAttribute("data-answer", "yes");
+	btnJoyFix.addEventListener('click', (evt) => logKey(evt));
+	logo.appendChild(btnJoyFix);
 }
 
 function buildSummaryHtml(results) {
