@@ -18,6 +18,7 @@ function getAmazonReviews() {
 }
 
 function httpGetAmazon(theUrl, callback){
+	console.log(theUrl)
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, true);
@@ -28,7 +29,8 @@ function httpGetAmazon(theUrl, callback){
 		if (xmlHttp.readyState == 4) {
 			if (xmlHttp.status == 200) {
 				var doc = JSON.parse(xmlHttp.responseText);
-				return callback(null, doc.reviews[0]);
+				console.log(doc)
+				return callback(null, doc.reviews);
 			}
 		}
 	}
@@ -41,7 +43,7 @@ const arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_c
 ];
 
 function buildAmazonReview(data) {
-	// console.log(data)
+	console.log(data)
 	if (!data.popcorn_quiz.uk) data.popcorn_quiz.uk = {score:0,reviews:0};
 	if (!data.popcorn_quiz.us) data.popcorn_quiz.us = {score:0,reviews:0};
 	if (!data.popcorn_quiz.de) data.popcorn_quiz.de = {score:0,reviews:0};
