@@ -643,8 +643,12 @@ function getShipImgXY(x, y, fleet, icon) {
 	return retVal
 }
 
-function micOnOpened() {}
-function micOnClosed() {}
+function micOnOpened() {
+	var bs = document.getElementById('logo').style.setProperty('display', 'none')
+}
+function micOnClosed() {
+	var bs = document.getElementById('logo').style.setProperty('display', 'inline')
+}
 function micOnError(error) {}
 function speechStarted(msg) {}
 
