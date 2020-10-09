@@ -23,6 +23,8 @@ bgAudio.volume = defaultAudiolevel;
 let useBgAudio = false;
 let _fireTV = false;
 
+let micOpen = false;
+
 const success = function(result) {
 	// const {alexa, message} = result;
 	// Actions after Alexa client initialization is complete
@@ -85,9 +87,10 @@ function startGame(result) {
 	initialiseGameBoards(result.message);
 }
 
-var _gridPressed = false;
+let _gridPressed = false;
 function gridPressEvent(evt) {
 	if (_gridPressed == true) return;
+	if (micOpen) return;
 	if (evt && evt.target && evt.target.dataset) {
 		_gridPressed = true;
 		let fireAudio = new Audio('./audio/launch.mp3');
@@ -100,9 +103,10 @@ function gridPressEvent(evt) {
 	}
 }
 
-var _butPressed = false;
+let _butPressed = false;
 function buttonPressEvent(evt) {
 	if (_butPressed == true) return;
+	if (micOpen) return;
 	if (evt && evt.target && evt.target.dataset) {
 		_butPressed = true;
 		let fireAudio = new Audio('./audio/launch.mp3');
@@ -643,8 +647,14 @@ function getShipImgXY(x, y, fleet, icon) {
 	return retVal
 }
 
-function micOnOpened() {}
-function micOnClosed() {}
+function micOnOpened() {
+	micOpen = true;
+	// var bs = document.getElementById('logo').style.setProperty('display', 'none')
+}
+function micOnClosed() {
+	micOpen = false;
+	// var bs = document.getElementById('logo').style.setProperty('display', 'inline')
+}
 function micOnError(error) {}
 function speechStarted(msg) {}
 

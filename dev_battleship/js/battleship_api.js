@@ -649,11 +649,11 @@ function getShipImgXY(x, y, fleet, icon) {
 
 function micOnOpened() {
 	micOpen = true;
-	var bs = document.getElementById('logo').style.setProperty('display', 'none')
+	// var bs = document.getElementById('logo').style.setProperty('display', 'none')
 }
 function micOnClosed() {
 	micOpen = false;
-	var bs = document.getElementById('logo').style.setProperty('display', 'inline')
+	// var bs = document.getElementById('logo').style.setProperty('display', 'inline')
 }
 function micOnError(error) {}
 function speechStarted(msg) {}
