@@ -94,6 +94,8 @@ function displayQuestion() {
 var pg;
 function showAnswer(chosen, answer, correct, type, comment){
 	// console.log(chosen, answer, correct, type);
+	var mosaic = document.getElementById('pc_poster_mosaic');
+	mosaic.setAttribute('style', "display: none;");
 	if (!type) type = "";
 	clearInterval(pg);
 	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
