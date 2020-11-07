@@ -563,7 +563,7 @@ function buildPopcornLastGames(data, prefix) {
 		
 		if (!g.lg) g.lg = "";
 		var bonusInfo = "";
-		if (g.b) bonusInfo = "<br/>"+g.b.wins+" / "+g.b.loses+" / "+g.b.skips;
+		if (g.b) bonusInfo = "<br/>"+numberWithCommas(g.b.wins)+" / "+numberWithCommas(g.b.loses)+" / "+numberWithCommas(g.b.skips);
 
 		if (g.tpb && g.tpb > 0) {}
 		else booster = "";
