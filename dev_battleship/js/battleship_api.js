@@ -325,13 +325,32 @@ function skillOnMessage(msg) {
 	}
 }
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function determineAndPlaceHint(gameGrid, touchMode) {
 	if (!touchMode) return {row: -1, col: -1};
 	console.log("Determine if the hint is shown")
 	if (_hintsRemaining <= 0) return {row: -1, col: -1};
 	  
 	// random if showing hint this round
-	if (Math.random() >= 0.4) return {row: -1, col: -1};
+	//if (Math.random() >= 0.4) return {row: -1, col: -1};
 
 	var arrCells = [];
 	// iterate the grid looking for value 0, adding to array
@@ -347,7 +366,21 @@ function determineAndPlaceHint(gameGrid, touchMode) {
 	_hintsRemaining--;
 	console.log(arrCells, _hintsRemaining)
 	// return the coords of the random item.
-	var item = arrCells[Math.floor(Math.random() * arrCells.length)];
+	var shipCell = arrCells[Math.floor(Math.random() * arrCells.length)];
+	console.log(shipCell)
+	// now find a free, adjacent cell
+	var item = {row: -1, col: -1};
+
+	var choices = shuffle([[0, 1], [0,-1], [1,0], [-1,0]]);
+	
+	for (var x = 0; x < choices.length; x++) {
+		try {
+			var c = gameGrid[shipCell.row-choices[x][0]][shipCell.col-choices[x][1]]
+			if (c == 0) return {row: shipCell.row-choices[x][0], col: shipCell.col-choices[x][1]}
+		} catch {
+		}
+
+	}
 	console.log(item)
 	return item;
 }
