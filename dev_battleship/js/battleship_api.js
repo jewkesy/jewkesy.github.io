@@ -371,7 +371,7 @@ function determineAndPlaceHint(gameGrid, touchMode) {
 	// now find a free, adjacent cell
 	var item = {row: -1, col: -1};
 
-	var choices = shuffle([[0, 1], [0,-1], [1,0], [-1,0]]);
+	var choices = shuffle([[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [-1, -1], [1, -1], [-1, 1]]);
 	
 	for (var x = 0; x < choices.length; x++) {
 		try {
