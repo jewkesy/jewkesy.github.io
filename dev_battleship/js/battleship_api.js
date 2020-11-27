@@ -348,6 +348,7 @@ function determineAndPlaceHint(gameGrid, touchMode) {
 	console.log(arrCells, _hintsRemaining)
 	// return the coords of the random item.
 	var item = arrCells[Math.floor(Math.random() * arrCells.length)];
+	console.log(item)
 	return item;
 }
 
@@ -413,12 +414,13 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet, s
 					span.setAttribute('tabindex', counter);
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
 					if (touchMode && showHint.row == i && showHint.col == j) {
-						var img = document.createElement('img');
-						img.style.setProperty('width', size+'px');
-						img.style.setProperty('height', size+'px');
-						img.setAttribute("src", "./images/orcas.gif");
-						img.classList=['animate__animated animate__fadeIn animate__pulse animate__delay-4_7s']
-						span.appendChild(img)
+						td.classList.add('orca')
+						// var img = document.createElement('img');
+						// img.style.setProperty('width', size+'px');
+						// img.style.setProperty('height', size+'px');
+						// img.setAttribute("src", "./images/orcas.gif");
+						// img.classList=['animate__animated animate__fadeIn animate__pulse animate__delay-4_7s']
+						// span.appendChild(img)
 					}
 				}
 				td.appendChild(span);

@@ -299,6 +299,11 @@ div.gridRow {
 	right: -4vw;
 }
 
+.orca {
+	background-image:url('./../images/orcas.gif');
+    background-size:contain;
+}
+
 img.action {
 	height: 75vh;
 	width: 60vw;
