@@ -45,7 +45,7 @@ function displayQuestion() {
 
 	var mosaic = document.getElementById('pc_poster_mosaic');
 
-	var mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png" ];
+	var mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png", "mosaic_5.png" ];
 
 	if (q.t == "Poster") {
 		// show mosaic

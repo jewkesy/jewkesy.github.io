@@ -22,8 +22,8 @@ bgAudio.volume = defaultAudiolevel;
 
 let useBgAudio = false;
 let _fireTV = false;
-
 let micOpen = false;
+let _hintsRemaining = 3;
 
 const success = function(result) {
 	// const {alexa, message} = result;
@@ -83,6 +83,7 @@ try {
 
 function startGame(result) {
 	useBgAudio = setAudioStatus(result.message.context);
+	_hintsRemaining = 3;
 	showIntro();
 	initialiseGameBoards(result.message);
 }
@@ -294,8 +295,9 @@ function showSummary(won, summaryHTML) {
 
 function initialiseGameBoards(msg) {
 	if (!msg) return;
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet);
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
+	console.log(msg.gameObj)
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet, determineAndPlaceHint(msg.gameObj.computerGrid, true));
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet, determineAndPlaceHint(msg.gameObj.playerGrid, false));
 }
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
@@ -323,7 +325,33 @@ function skillOnMessage(msg) {
 	}
 }
 
-function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
+function determineAndPlaceHint(gameGrid, touchMode) {
+	if (!touchMode) return {row: -1, col: -1};
+	console.log("Determine if the hint is shown")
+	if (_hintsRemaining <= 0) return {row: -1, col: -1};
+	  
+	// random if showing hint this round
+	// if (Math.random() >= 0.5) return {row: -1, col: -1};
+
+	var arrCells = [];
+	// iterate the grid looking for value 0, adding to array
+	for (var i = 0; i < gameGrid.length; i++) {
+		for (var j = 0; j < gameGrid[i].length; j++) {
+			var cell = gameGrid[i][j];
+			if (cell == 1) {
+				arrCells.push({row:i, col:j});
+			}
+		}
+	}
+	
+	_hintsRemaining--;
+	console.log(arrCells, _hintsRemaining)
+	// return the coords of the random item.
+	var item = arrCells[Math.floor(Math.random() * arrCells.length)];
+	return item;
+}
+
+function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet, showHint) {
 	// console.log(context)
 	var eleGrid = document.getElementById(id);
 	eleGrid.innerHTML = "";
@@ -347,9 +375,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	table.classList.add('board'+size)
 	table.style.setProperty('width', size+'px');
 	table.style.setProperty('height', size+'px');
-	// if (touchMode) {
-	// 	table.autofocus = true;
-	// }
 
 	var tr = document.createElement('tr'); 
 	var td = document.createElement('td');
@@ -363,6 +388,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	table.appendChild(tr);
 	var counter = 0;
 	var touchAdded = false;
+
 	for (var i = 0; i < gameGrid.length; i++) {
 		var tr = document.createElement('tr'); 
 		var td = document.createElement('td');
@@ -386,6 +412,14 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 				if (touchMode) {
 					span.setAttribute('tabindex', counter);
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
+					if (touchMode && showHint.row == i && showHint.col == j) {
+						var img = document.createElement('img');
+						img.style.setProperty('width', size+'px');
+						img.style.setProperty('height', size+'px');
+						img.setAttribute("src", "./images/orcas.gif");
+						img.classList=['animate__animated animate__fadeIn animate__pulse animate__delay-4_7s']
+						span.appendChild(img)
+					}
 				}
 				td.appendChild(span);
 			} else {
@@ -473,7 +507,7 @@ function handleGameAction(msg) {
 		if (last.action && last.action == "WON" && last.whoShot == "computer") playerGridToShow = msg.gameObj.computerGrid;
 	}
 
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", playerGridToShow, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet);
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", playerGridToShow, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet, determineAndPlaceHint(msg.gameObj.computerGrid, true));
 
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
@@ -489,7 +523,7 @@ function handleGameAction(msg) {
 		}
 	}
 
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet, determineAndPlaceHint(msg.gameObj.playerGrid, false));
 
 	var playerActionResult = "explosion-cloud";
 
