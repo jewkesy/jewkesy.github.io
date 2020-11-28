@@ -377,7 +377,7 @@ function determineAndPlaceHint(gameGrid, touchMode) {
 	if (_hintsRemaining <= 0) return {row: -1, col: -1};
 	  
 	// random if showing hint this round
-	//if (Math.random() >= 0.4) return {row: -1, col: -1};
+	if (Math.random() >= 0.4) return {row: -1, col: -1};
 
 	var arrCells = [];
 	// iterate the grid looking for value 0, adding to array
