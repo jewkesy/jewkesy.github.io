@@ -298,7 +298,7 @@ function initialiseGameBoards(msg) {
 	console.log(msg.gameObj)
 	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet, determineAndPlaceHint(msg.gameObj.computerGrid, true));
 	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet, determineAndPlaceHint(msg.gameObj.playerGrid, false));
-	showHint();
+	showHintPanel();
 }
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
@@ -326,7 +326,7 @@ function skillOnMessage(msg) {
 	}
 }
 
-function showHint() {
+function showHintPanel() {
 	console.log("Showing Hint");
 
 	var hints = [
@@ -413,6 +413,9 @@ function determineAndPlaceHint(gameGrid, touchMode) {
 
 function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet, showHint) {
 	// console.log(context)
+
+	if (Math.random() >= 0.25) showHintPanel()		
+
 	var eleGrid = document.getElementById(id);
 	eleGrid.innerHTML = "";
 	_gridPressed = false;
