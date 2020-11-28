@@ -350,8 +350,8 @@ function showHintPanel() {
 	eleHint.addEventListener('animationend', (evt) => {
 		console.log(evt.animationName)
 		if (evt.animationName == 'zoomInUp') {
-			eleHint.classList = "animate__animated animate__lightSpeedOutRight animate__delay-4_7s";
-		} else if (evt.animationName == 'lightSpeedOutRight') {
+			eleHint.classList = "animate__animated animate__fadeOutDown animate__delay-4_7s";
+		} else if (evt.animationName == 'fadeOutDown') {
 			eleHint.style.setProperty('display', 'none')
 			// eleHint.classList = "animate__animated animate__lightSpeedInRight animate__delay-4_7s";
 		}
