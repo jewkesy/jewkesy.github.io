@@ -417,7 +417,7 @@ function determineAndPlaceHint(gameGrid, touchMode) {
 function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet, showHint) {
 	// console.log(context)
 
-	if (Math.random() >= 0.25) showHintPanel()		
+	if (Math.random() >= 0.7) showHintPanel()		
 
 	var eleGrid = document.getElementById(id);
 	eleGrid.innerHTML = "";
