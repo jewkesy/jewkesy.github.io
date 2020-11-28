@@ -340,13 +340,14 @@ function showHint() {
 
 	var eleHint = document.getElementById("hint");
 	eleHint.style.setProperty('display', 'inline');
-	eleHint.classList = "animate__animated animate__lightSpeedInRight animate__delay-4_7s";
+	eleHint.classList = "animate__animated animate__zoomInUp animate__delay-4_7s";
 	eleHint.addEventListener('animationend', (evt) => {
 		console.log(evt.animationName)
-		if (evt.animationName == 'lightSpeedInRight') {
+		if (evt.animationName == 'zoomInUp') {
 			eleHint.classList = "animate__animated animate__lightSpeedOutRight animate__delay-4_7s";
 		} else if (evt.animationName == 'lightSpeedOutRight') {
 			eleHint.style.setProperty('display', 'none')
+			// eleHint.classList = "animate__animated animate__lightSpeedInRight animate__delay-4_7s";
 		}
 	});
 }
