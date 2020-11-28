@@ -336,6 +336,9 @@ function showHintPanel() {
 		"Killer Whales are curious creatures and like to swim <span class='emph'>next</span> to ships",
 		"Orcas can <span class='emph'>only</span> swim in unoccupied cells",
 		"Orcas and ships <span class='emph'>cannot</span> share the same cell",
+
+		"Guess in <span class='emph'>diagonal</span> lines to get better coverage",
+		"Don't bunch up your shots early on. Fill in the gaps later",
 		"Don't let the enemy outsmart you, <span class='emph'>spread</span> your shots to get better coverage",
 		"Once the enemy patrolboat is destroyed, <span class='emph'>broaden</span> your shots"
 	];
