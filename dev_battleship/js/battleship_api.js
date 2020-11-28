@@ -124,7 +124,7 @@ function buttonPressEvent(evt) {
 // document.addEventListener('ArrowLeft', (evt) => logKey(evt));
 // document.addEventListener('ArrowRight', (evt) => logKey(evt));
 // document.addEventListener('NumpadEnter', (evt) => logKey(evt));
-document.addEventListener('keydown', (evt) => logKey(evt));
+// document.addEventListener('keydown', (evt) => logKey(evt));
 
 function logKey(e) {
 	console.log(e.code);
@@ -298,6 +298,7 @@ function initialiseGameBoards(msg) {
 	console.log(msg.gameObj)
 	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet, determineAndPlaceHint(msg.gameObj.computerGrid, true));
 	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet, determineAndPlaceHint(msg.gameObj.playerGrid, false));
+	showHint();
 }
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
@@ -323,6 +324,31 @@ function skillOnMessage(msg) {
 		clearHTML();
 		handleGameAction(msg);
 	}
+}
+
+function showHint() {
+	console.log("Showing Hint");
+
+	var hints = [
+		"Killer Whales are curious creatures and like to swim <span class='emph'>next</span> to ships",
+		"Orcas can <span class='emph'>only</span> swim in unoccupied cells",
+		"Orcas and ships <span class='emph'>cannot</span> share the same cell",
+		"Don't let the enemy outsmart you, <span class='emph'>spread</span> your shots to get better coverage",
+		"Once the enemy patrolboat is destroyed, <span class='emph'>broaden</span> your shots"
+	];
+	var eleText = document.getElementById("hintText").innerHTML = hints[Math.floor(Math.random() * hints.length)];
+
+	var eleHint = document.getElementById("hint");
+	eleHint.style.setProperty('display', 'inline');
+	eleHint.classList = "animate__animated animate__lightSpeedInRight animate__delay-4_7s";
+	eleHint.addEventListener('animationend', (evt) => {
+		console.log(evt.animationName)
+		if (evt.animationName == 'lightSpeedInRight') {
+			eleHint.classList = "animate__animated animate__lightSpeedOutRight animate__delay-4_7s";
+		} else if (evt.animationName == 'lightSpeedOutRight') {
+			eleHint.style.setProperty('display', 'none')
+		}
+	});
 }
 
 function shuffle(array) {
@@ -379,7 +405,6 @@ function determineAndPlaceHint(gameGrid, touchMode) {
 			if (c == 0) return {row: shipCell.row-choices[x][0], col: shipCell.col-choices[x][1]}
 		} catch {
 		}
-
 	}
 	console.log(item)
 	return item;
@@ -448,12 +473,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet, s
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
 					if (touchMode && showHint.row == i && showHint.col == j) {
 						td.classList.add('orca')
-						// var img = document.createElement('img');
-						// img.style.setProperty('width', size+'px');
-						// img.style.setProperty('height', size+'px');
-						// img.setAttribute("src", "./images/orcas.gif");
-						// img.classList=['animate__animated animate__fadeIn animate__pulse animate__delay-4_7s']
-						// span.appendChild(img)
 					}
 				}
 				td.appendChild(span);
