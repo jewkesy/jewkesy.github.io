@@ -164,6 +164,44 @@ div.minispacer {
   	opacity: 0.8;
 }
 
+#hint {
+	display: none;
+	position: absolute; 
+	bottom: 0;
+	right:0;
+	width: 50%;
+	height: 50%;
+	background-color: rgba(64, 116, 237, 0.4);
+	border: 1px black solid;
+	border-top-left-radius: 5vw;
+	font-family: badaboom;
+	color: #fcba03;
+}
+
+#hintTitle {
+	margin-top: 3vh;
+	margin-left: 3vw;
+	margin-right: 3vw;
+	font-size: 6vw;
+
+	-webkit-text-stroke: 1px black;
+}
+
+#hintText {
+	margin-left: 3vw;
+	margin-right: 3vw;
+	font-size: 3.75vw;
+	/*font-weight: bold;*/
+	-webkit-text-stroke: 1px black;
+	text-align: center;
+}
+
+#hintText > .emph {
+	font-style: italic;
+	font-weight: bold;
+	font-size: 3.5vw;
+}
+
 div#game {
 	display: none;
 	position: absolute;
@@ -297,6 +335,11 @@ div.gridRow {
 
 .actionRightSide {
 	right: -4vw;
+}
+
+.orca {
+	background-image:url('./../images/orcas_80.gif');
+    background-size:contain;
 }
 
 img.action {

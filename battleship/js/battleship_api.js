@@ -22,8 +22,8 @@ bgAudio.volume = defaultAudiolevel;
 
 let useBgAudio = false;
 let _fireTV = false;
-
 let micOpen = false;
+let _hintsRemaining = 3;
 
 const success = function(result) {
 	// const {alexa, message} = result;
@@ -83,6 +83,7 @@ try {
 
 function startGame(result) {
 	useBgAudio = setAudioStatus(result.message.context);
+	_hintsRemaining = 3;
 	showIntro();
 	initialiseGameBoards(result.message);
 }
@@ -123,7 +124,7 @@ function buttonPressEvent(evt) {
 // document.addEventListener('ArrowLeft', (evt) => logKey(evt));
 // document.addEventListener('ArrowRight', (evt) => logKey(evt));
 // document.addEventListener('NumpadEnter', (evt) => logKey(evt));
-document.addEventListener('keydown', (evt) => logKey(evt));
+// document.addEventListener('keydown', (evt) => logKey(evt));
 
 function logKey(e) {
 	console.log(e.code);
@@ -294,8 +295,10 @@ function showSummary(won, summaryHTML) {
 
 function initialiseGameBoards(msg) {
 	if (!msg) return;
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet);
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
+	console.log(msg.gameObj)
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", msg.gameObj.playerGameGrid, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet, determineAndPlaceHint(msg.gameObj.computerGrid, true));
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp", msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet, determineAndPlaceHint(msg.gameObj.playerGrid, false));
+	showHintPanel();
 }
 
 function getGridCellSizeForScreen(sWidth, cellCount) {
@@ -323,8 +326,102 @@ function skillOnMessage(msg) {
 	}
 }
 
-function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
+function showHintPanel() {
+	console.log("Showing Hint");
+
+	var hints = [
+		"Killer Whales are curious creatures and like to swim <span class='emph'>next</span> to ships",
+		"Orcas can <span class='emph'>only</span> swim in unoccupied cells",
+		"Orcas and ships <span class='emph'>cannot</span> share the same cell",
+		"Killer Whales are curious creatures and like to swim <span class='emph'>next</span> to ships",
+		"Orcas can <span class='emph'>only</span> swim in unoccupied cells",
+		"Orcas and ships <span class='emph'>cannot</span> share the same cell",
+
+		"Guess in <span class='emph'>diagonal</span> lines to get better coverage",
+		"Don't bunch up your shots early on. Fill in the gaps later",
+		"Don't let the enemy outsmart you, <span class='emph'>spread</span> your shots to get better coverage",
+		"Once the enemy patrolboat is destroyed, <span class='emph'>broaden</span> your shots"
+	];
+	var eleText = document.getElementById("hintText").innerHTML = hints[Math.floor(Math.random() * hints.length)];
+
+	var eleHint = document.getElementById("hint");
+	eleHint.style.setProperty('display', 'inline');
+	eleHint.classList = "animate__animated animate__zoomInUp animate__delay-4_7s";
+	eleHint.addEventListener('animationend', (evt) => {
+		console.log(evt.animationName)
+		if (evt.animationName == 'zoomInUp') {
+			eleHint.classList = "animate__animated animate__fadeOutDown animate__delay-4_7s";
+		} else if (evt.animationName == 'fadeOutDown') {
+			eleHint.style.setProperty('display', 'none')
+			// eleHint.classList = "animate__animated animate__lightSpeedInRight animate__delay-4_7s";
+		}
+	});
+}
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+function determineAndPlaceHint(gameGrid, touchMode) {
+	if (!touchMode) return {row: -1, col: -1};
+	console.log("Determine if the hint is shown")
+	if (_hintsRemaining <= 0) return {row: -1, col: -1};
+	  
+	// random if showing hint this round
+	if (Math.random() >= 0.4) return {row: -1, col: -1};
+
+	var arrCells = [];
+	// iterate the grid looking for value 0, adding to array
+	for (var i = 0; i < gameGrid.length; i++) {
+		for (var j = 0; j < gameGrid[i].length; j++) {
+			var cell = gameGrid[i][j];
+			if (cell == 1) {
+				arrCells.push({row:i, col:j});
+			}
+		}
+	}
+	
+	_hintsRemaining--;
+	console.log(arrCells, _hintsRemaining)
+	// return the coords of the random item.
+	var shipCell = arrCells[Math.floor(Math.random() * arrCells.length)];
+	console.log(shipCell)
+	// now find a free, adjacent cell
+	var item = {row: -1, col: -1};
+
+	var choices = shuffle([[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [-1, -1], [1, -1], [-1, 1]]);
+	
+	for (var x = 0; x < choices.length; x++) {
+		try {
+			var c = gameGrid[shipCell.row-choices[x][0]][shipCell.col-choices[x][1]]
+			if (c == 0) return {row: shipCell.row-choices[x][0], col: shipCell.col-choices[x][1]}
+		} catch {
+		}
+	}
+	console.log(item)
+	return item;
+}
+
+function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet, showHint) {
 	// console.log(context)
+
+	if (Math.random() >= 0.7) showHintPanel()		
+
 	var eleGrid = document.getElementById(id);
 	eleGrid.innerHTML = "";
 	_gridPressed = false;
@@ -347,9 +444,6 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	table.classList.add('board'+size)
 	table.style.setProperty('width', size+'px');
 	table.style.setProperty('height', size+'px');
-	// if (touchMode) {
-	// 	table.autofocus = true;
-	// }
 
 	var tr = document.createElement('tr'); 
 	var td = document.createElement('td');
@@ -363,6 +457,7 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 	table.appendChild(tr);
 	var counter = 0;
 	var touchAdded = false;
+
 	for (var i = 0; i < gameGrid.length; i++) {
 		var tr = document.createElement('tr'); 
 		var td = document.createElement('td');
@@ -386,6 +481,9 @@ function loadGrid(id, cssClass, gameGrid, progress, touchMode, context, fleet) {
 				if (touchMode) {
 					span.setAttribute('tabindex', counter);
 					span.addEventListener('click', (evt) => gridPressEvent(evt));
+					if (touchMode && showHint.row == i && showHint.col == j) {
+						td.classList.add('orca')
+					}
 				}
 				td.appendChild(span);
 			} else {
@@ -473,7 +571,7 @@ function handleGameAction(msg) {
 		if (last.action && last.action == "WON" && last.whoShot == "computer") playerGridToShow = msg.gameObj.computerGrid;
 	}
 
-	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", playerGridToShow, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet);
+	loadGrid('tacticalGrid', "animate__animated animate__zoomInUp", playerGridToShow, msg.gameObj.progress.playerProgress, true, msg.context, msg.gameObj.computerFleet, determineAndPlaceHint(msg.gameObj.computerGrid, true));
 
 	var delay = 'animate__delay-4_7s'; // blank out if player won
 	if (msg.gameObj.gameOver) {
@@ -489,7 +587,7 @@ function handleGameAction(msg) {
 		}
 	}
 
-	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet);
+	loadGrid('playerFleet', "animate__animated animate__zoomInUp "+delay, msg.gameObj.playerGrid, msg.gameObj.progress.computerProgress, false, msg.context, msg.gameObj.playerFleet, determineAndPlaceHint(msg.gameObj.playerGrid, false));
 
 	var playerActionResult = "explosion-cloud";
 
