@@ -50,7 +50,7 @@ function displayQuestion() {
 	if (q.t == "Poster") {
 		// show mosaic
 		let m = s3Url+mosaics[Math.floor(Math.random() * (mosaics.length))];
-		console.log(m)
+
 		mosaic.setAttribute('src', m);
 		// https://popcornquiz.s3-eu-west-1.amazonaws.com/mosaic_1.png
 		mosaic.setAttribute('style', "display: inline;");

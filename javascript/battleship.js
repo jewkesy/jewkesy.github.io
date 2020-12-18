@@ -89,17 +89,17 @@ function buildBSLastGames(callback) {
 
 function buildBSLastGamesPreview(data, prefix) {
 	var container = document.getElementById(prefix + '_lastgames');
-console.log(data)
-if (container.rows.length > 0) {
-	console.log(container.rows[0].title)
-	console.log(data.lastGames[0].lastGame)
-	console.log(container.rows[0].title == data.lastGames[0].lastGame)
-}
+// console.log(data)
+// if (container.rows.length > 0) {
+// 	console.log(container.rows[0].title)
+// 	console.log(data.lastGames[0].lastGame)
+// 	console.log(container.rows[0].title == data.lastGames[0].lastGame)
+// }
 	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0].lastGame) return;
 container.innerHTML = ""
 	for (var i = 0; i < data.lastGames.length; i++) {
 		var game = data.lastGames[i];
-console.log(game)
+// console.log(game)
 
 		var icons = getDeviceInfo(game.device, game.i)
 		var sym = icons.sym;
