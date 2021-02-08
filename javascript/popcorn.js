@@ -119,6 +119,7 @@ function getGameCalendar() {
 	async.eachOfSeries(events, function(ev, idx, callback){
 		var url = aws + "?action=getevents&prefix=pc&locale="+_pqLang;
 		if (ts) url += "&timestamp="+ts;
+		// console.log(url)
 		httpGetByUrl(url, function (err, data) {
 			events[idx] = data;
 			ts += 86400000;
@@ -154,6 +155,7 @@ function getGameCalendar() {
 				return "x"+events[i].msg.multiplier;
 			})() );
 			fadeyStuff("pc_event_cal_desc_" + x, (function() {
+				if (events[i].msg.exitMsg) return events[i].msg.exitMsg;
 				return events[i].msg.msg;
 			})());
 		}
@@ -204,7 +206,7 @@ function buildPQLastGames(callback) {
 
 function getPQDailyGames(callback) {
 	var uri = aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter;
-	console.log(uri)
+	// console.log(uri)
 	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
