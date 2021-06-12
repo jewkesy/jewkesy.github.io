@@ -119,7 +119,7 @@ function getGameCalendar() {
 	async.eachOfSeries(events, function(ev, idx, callback){
 		var url = aws + "?action=getevents&prefix=pc&locale="+_pqLang;
 		if (ts) url += "&timestamp="+ts;
-		// console.log(url)
+		console.log(url)
 		httpGetByUrl(url, function (err, data) {
 			events[idx] = data;
 			ts += 86400000;
@@ -957,6 +957,7 @@ function getEvent(ts) {
 	if (ts) url += "&timestamp="+ts;
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
+		console.log(data)
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
 }

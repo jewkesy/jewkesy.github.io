@@ -47,7 +47,7 @@ function displayQuestion() {
 
 	var mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png", "mosaic_5.png" ];
 
-	if (q.t == "Poster") {
+	if (q.t == "Poster" || q.t == "TitleSwap") {
 		// show mosaic
 		let m = s3Url+mosaics[Math.floor(Math.random() * (mosaics.length))];
 
