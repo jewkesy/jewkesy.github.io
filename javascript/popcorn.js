@@ -27,7 +27,7 @@ var _bonusCounts = 0;
 var _pqGameinfo = { dailygames: [] };
 var _pqChtHeight = 1000;
 var _pqDailyPlayers = [];
-var _pqChartSummary = getParameterByName('chtsum') || 95;
+var _pqChartSummary = getParameterByName('chtsum') || _pqChartDaysDisplay;
 var _pqChtData = {};
 var _pqDeviceCounts;
 
@@ -209,7 +209,6 @@ function getPQDailyGames(callback) {
 	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		// console.log(data)
 		buildPQDailyGames(err, data);
 		return callback();
 	});
@@ -980,13 +979,12 @@ var slider = document.getElementById("truncatePercentage");
 
 slider.onchange = function() {
 	_pqChartSummary = this.value;
-
 	_pqChartDaysDisplay = calculateHistory()*-1;
 	_pqTimeFrom = getDaysAgo(_pqChartDaysDisplay);
 	console.log(_pqChartDaysDisplay, _pqTimeFrom)
 	
-	var newUrl = paramReplace('chtsum', window.location.href, _pqChartSummary);
-	changeUrl('', newUrl);
+	// var newUrl = paramReplace('chtsum', window.location.href, _pqChartSummary);
+	// changeUrl('', newUrl);
 	_pqChtHeight = 1000;
 	var chtData = prepDataForChart(_pqChtData, calculateHistory());
 	chtNewUsers(_pqNewUsersChart, chtData);
