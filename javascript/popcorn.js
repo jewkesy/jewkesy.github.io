@@ -119,7 +119,7 @@ function getGameCalendar() {
 	async.eachOfSeries(events, function(ev, idx, callback){
 		var url = aws + "?action=getevents&prefix=pc&locale="+_pqLang;
 		if (ts) url += "&timestamp="+ts;
-		console.log(url)
+		// console.log(url)
 		httpGetByUrl(url, function (err, data) {
 			events[idx] = data;
 			ts += 86400000;
@@ -206,7 +206,6 @@ function buildPQLastGames(callback) {
 
 function getPQDailyGames(callback) {
 	var uri = aws + "?getdailygames=true&prefix=pc&limit=0&locale=" + _pqLocale + "&timefrom=" + _pqTimeFrom + _pqDeviceFilter;
-	// console.log(uri)
 	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
@@ -711,9 +710,6 @@ function isBigEnough() {
 }
 
 function prepDataForChart(data, history) {
-	// console.log(data)
-
-	// console.log(_pqChartDaysDisplay)
 	data.sort(dynamicSort("month"));
 	data.sort(dynamicSort("year"));
 	// console.log(data)
@@ -828,7 +824,6 @@ function prepDataForChart(data, history) {
             			}
             		}
             	}
-            	
 	        }
 	        counter++;
 	    }
@@ -836,7 +831,6 @@ function prepDataForChart(data, history) {
 
 	var dailyData = {
 		labels: dailyLabels.slice(history),
-
 		uk: uk,
 		us: us,
 		de: de,
@@ -957,22 +951,22 @@ function getEvent(ts) {
 	if (ts) url += "&timestamp="+ts;
 	httpGetByUrl(url, function (err, data) {
 		if (!data) return;
-		console.log(data)
 		fadeyStuff("pc_event", data.msg.exitMsg || data.msg.msg);
 	});
 }
 
 function calculateHistory() {
-	if (!_pqChartSummary || _pqChartSummary > 10) return -10;
-
+	if (_pqChartSummary==0) return -2000;
+	if (_pqChartSummary==1) return -1000;
+	if (_pqChartSummary==2) return -750;
+	if (_pqChartSummary==3) return -500;
+	if (_pqChartSummary==4) return -250;
+	if (_pqChartSummary==5) return -150;
+	if (_pqChartSummary==6) return -100;
+	if (_pqChartSummary==7) return -60;
+	if (_pqChartSummary==8) return -40;
+	if (_pqChartSummary==9) return -20;
 	if (_pqChartSummary==10) return -10;
-	if (_pqChartSummary==0) return 0;
-
-	var d = (_pqDiff/10)*_pqChartSummary;
-	var p = (_pqDiff) - d;
-	var retVal = Math.ceil(Math.abs(+p) * -1)
-	console.log(retVal)
-	return retVal
 }
 
 function changeUrl(title, url) {
@@ -985,10 +979,12 @@ function changeUrl(title, url) {
 var slider = document.getElementById("truncatePercentage");
 
 slider.onchange = function() {
+	_pqChartSummary = this.value;
+
 	_pqChartDaysDisplay = calculateHistory()*-1;
 	_pqTimeFrom = getDaysAgo(_pqChartDaysDisplay);
-	console.log(_pqChartDaysDisplay)
-	_pqChartSummary = this.value;
+	console.log(_pqChartDaysDisplay, _pqTimeFrom)
+	
 	var newUrl = paramReplace('chtsum', window.location.href, _pqChartSummary);
 	changeUrl('', newUrl);
 	_pqChtHeight = 1000;
