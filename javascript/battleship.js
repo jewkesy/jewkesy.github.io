@@ -64,11 +64,11 @@ function getBSGamePlay(callback) {
 }
 
 function buildBSLeague(callback) {
-	var uri = aws + "?league=true&prefix=bs&limit=" + _bsLimit + "&locale=" + _bsLocale + _bsDeviceFilter;
+	var fields = JSON.stringify({"_id":1});
+	var uri = aws + "?league=true&prefix=bs&limit=" + _bsLimit + "&locale=" + _bsLocale + _bsDeviceFilter + "&f=" + encodeURIComponent(fields);
 	httpGetStats(uri, 'bs',  function (err, data) {
 		if (!data) return callback();
-		// buildPopcornLeague(data, 'pc');
-		// console.log(data.league.length)
+		// console.log(uri, data)
 		fadeyStuff("bs_total_players", displayDots(data.league.length)); 
 		if (callback) return callback();
 	});
@@ -89,17 +89,11 @@ function buildBSLastGames(callback) {
 
 function buildBSLastGamesPreview(data, prefix) {
 	var container = document.getElementById(prefix + '_lastgames');
-// console.log(data)
-// if (container.rows.length > 0) {
-// 	console.log(container.rows[0].title)
-// 	console.log(data.lastGames[0].lastGame)
-// 	console.log(container.rows[0].title == data.lastGames[0].lastGame)
-// }
+
 	if (container.rows.length > 0 && container.rows[0].title == data.lastGames[0].lastGame) return;
-container.innerHTML = ""
+	container.innerHTML = ""
 	for (var i = 0; i < data.lastGames.length; i++) {
 		var game = data.lastGames[i];
-// console.log(game)
 
 		var icons = getDeviceInfo(game.device, game.i)
 		var sym = icons.sym;
@@ -151,10 +145,11 @@ container.innerHTML = ""
 }
 
 function getBSDailyGames(callback) {
-	httpGetByUrl(aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _bsLocale + "&timefrom=" + _bsTimeFrom + _bsDeviceFilter, function (err, data) {
+	var uri = aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _bsLocale + "&timefrom=" + _bsTimeFrom + _bsDeviceFilter;
+	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
 		if (!data) return callback();
-		// console.log(data)
+		// console.log(uri, data)
 		var tots = 0;
 		for (var i = 0; i < data.g.length; i++) {
 			tots+=data.g[i].games;

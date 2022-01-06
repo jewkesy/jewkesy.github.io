@@ -497,7 +497,7 @@ function buildPopcornLastGames(data, prefix) {
 		var x = i + 1;
 		var g = games[i];
 
-		var icons = getDeviceInfo(g.d, g.i, g.tpb)
+		var icons = getDeviceInfo(g.d, g.i, g.tpb, g.boo)
 		var sym = icons.sym;
 		var booster = icons.booster;
 		var device = icons.device;
@@ -587,7 +587,7 @@ function buildPopcornLeague(data, prefix, total) {
 		var x = i + 1;
 		var g = topTen[i];
 
-		var icons = getDeviceInfo(g.d, g.i, g.tpb)		
+		var icons = getDeviceInfo(g.d, g.i, g.tpb, g.boo)		
 		var sym = icons.sym;
 		var booster = icons.booster;
 		var device = icons.device;

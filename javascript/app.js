@@ -26,7 +26,7 @@ function buildIconHTML(deviceIcon, locale, deviceType) {
 	// return "<span>"+deviceType+"</span><div class='iconMerge' alt='"+locale+"' >" + lIcon + dIcon + "</div>";
 }
 
-function getDeviceInfo(device, playerIcon, boosterIcon) {
+function getDeviceInfo(device, playerIcon, boosterIcon, boosterDetails) {
 	var sym = "";
 	var booster = "";
 	var deviceType = "⚇";
@@ -50,7 +50,7 @@ function getDeviceInfo(device, playerIcon, boosterIcon) {
 	else if (playerIcon == 'dev')   sym = " 💻";
 	else if (playerIcon == 'llama') sym = " 🦙";
 
-	if (boosterIcon >= 0) booster = " 🚀";
+	if (boosterIcon >= 0 && Object.keys(boosterDetails).length !== 0) booster = " 🚀";
 	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster}
 }
 
