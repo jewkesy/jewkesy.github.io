@@ -39,7 +39,13 @@ function displayQuestion() {
 	// console.log('displaying')
 	// console.log(cachedQuestions.length, cachedQuestions)
 	// var idx = randomInt(0, cachedQuestions.length-1);
+
+	// cachedQuestions = cachedQuestions.filter(item => {
+	// 	return (item.t == "Poster" || item.t == "TitleSwap")
+	// });
+
 	var q = cachedQuestions.pop();
+	// console.log(q)
 	// cachedQuestions = cachedQuestions
 	var t = cleanseText(q.echoShowText);
 
@@ -103,14 +109,14 @@ function showAnswer(chosen, answer, correct, type, comment){
 
 	var a = _pqAnswerPhrases[randomInt(0, _pqAnswerPhrases.length-1)];
 	// console.log(_pqAnswerPhrases);
-	// console.log(a)
+
 	var text = "";
 	if (chosen === null) {
 		text = "The correct answer was " + answer + ". ";
 		if (correct) {
-			if (type != "Quote" && type != "Taglines")
+			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap")
 				text += a.replace('&&', correct); // + correct;
-			else if (type == "Quote") text = cleanseText(correct);
+			else text = cleanseText(correct);
 		}
 	} else {
 		if (chosen == answer) {
@@ -122,9 +128,9 @@ function showAnswer(chosen, answer, correct, type, comment){
 		}
 
 		if (correct) {
-			if (type != "Quote" && type != "Taglines") 
+			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap")
 				text += " - " + a.replace('&&', correct);// + correct;
-			else if (type == "Quote") text += "<hr>" + cleanseText(correct);
+			else text += "<hr>" + cleanseText(correct);
 		}
 	}
 
