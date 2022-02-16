@@ -306,7 +306,7 @@ function humanTime(time) {
 })();
 
 function getCssStar(score) {
-	var retVal = 'a-star-' + score.toString().replace(".", "-");
+	var retVal = 'a-star-' + (Math.round(score*2)/2).toString().replace(".", "-");
 	return retVal;
 }
 
