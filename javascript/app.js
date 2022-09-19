@@ -311,8 +311,6 @@ function getCssStar(score) {
 }
 
 function daydiff(first, second, includeLast) {
-	// console.log(first.getDate(), first.getUTCDate())
-	// console.log(second.getDate(), second.getUTCDate())
     // Copy date parts of the timestamps, discarding the time parts.
     var one = new Date(first.getFullYear(), first.getMonth(), first.getUTCDate());
     var two = new Date(second.getFullYear(), second.getMonth(), second.getUTCDate());

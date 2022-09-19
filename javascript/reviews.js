@@ -35,7 +35,7 @@ function httpGetAmazon(theUrl, callback){
 }
 
 const arClasses = ['a-star-0', 'a-star-0-5', 'a-star-1', 'a-star-1-5', 'a-star-2', 'a-star-2-5', 'a-star-3', 'a-star-3-5', 'a-star-4', 'a-star-4-5', 'a-star-5'];
-const arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_jp_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_fr_ca_stars', 
+const arIds = ['pc_uk_stars', 'pc_us_stars', 'pc_de_stars', 'pc_in_stars', 'pc_ca_stars', 'pc_ja_stars', 'pc_au_stars', 'pc_fr_stars', 'pc_fr_ca_stars', 
 	'pc_es_stars', 'pc_it_stars', 'pc_mx_stars', 'pc_br_stars', 'pc_es_us_stars', 'pc_ga_stars',
 	'bs_uk_stars', 'bs_us_stars', 'bs_au_stars', 'bs_ca_stars', 'bs_in_stars'
 ];
@@ -46,7 +46,7 @@ function buildAmazonReview(data) {
 	if (!data.popcorn_quiz.de) data.popcorn_quiz.de = {score:0,reviews:0};
 	if (!data.popcorn_quiz.in) data.popcorn_quiz.in = {score:0,reviews:0};
 	if (!data.popcorn_quiz.ca) data.popcorn_quiz.ca = {score:0,reviews:0};
-	if (!data.popcorn_quiz.jp) data.popcorn_quiz.jp = {score:0,reviews:0};
+	if (!data.popcorn_quiz.ja) data.popcorn_quiz.ja = {score:0,reviews:0};
 	if (!data.popcorn_quiz.au) data.popcorn_quiz.au = {score:0,reviews:0};
 	if (!data.popcorn_quiz.fr) data.popcorn_quiz.fr = {score:0,reviews:0};
 	if (!data.popcorn_quiz.fr_ca) data.popcorn_quiz.fr_ca = {score:0,reviews:0};
@@ -65,15 +65,14 @@ function buildAmazonReview(data) {
 
 	for (var i = 0; i < arIds.length; i++) {
 		var e = document.getElementById(arIds[i]);
-		if (!e) continue;
+		if (!e) {console.warn("missing element "+ arIds[i]);  continue;}
 		for (var j = 0; j < arClasses.length; j++) e.classList.remove(arClasses[j]);
-
 		     if (i ===0) e.classList.add(getCssStar(data.popcorn_quiz.uk.score));
 		else if (i == 1) e.classList.add(getCssStar(data.popcorn_quiz.us.score));
 		else if (i == 2) e.classList.add(getCssStar(data.popcorn_quiz.de.score));
 		else if (i == 3) e.classList.add(getCssStar(data.popcorn_quiz.in.score));
 		else if (i == 4) e.classList.add(getCssStar(data.popcorn_quiz.ca.score));
-		else if (i == 5) e.classList.add(getCssStar(data.popcorn_quiz.jp.score));
+		else if (i == 5) e.classList.add(getCssStar(data.popcorn_quiz.ja.score));
 		else if (i == 6) e.classList.add(getCssStar(data.popcorn_quiz.au.score));
 		else if (i == 7) e.classList.add(getCssStar(data.popcorn_quiz.fr.score));
 		else if (i == 8) e.classList.add(getCssStar(data.popcorn_quiz.fr_ca.score));
@@ -96,7 +95,7 @@ function buildAmazonReview(data) {
 	fadeyStuff('pc_de_reviews', numberWithCommas(data.popcorn_quiz.de.reviews));
 	fadeyStuff('pc_in_reviews', numberWithCommas(data.popcorn_quiz.in.reviews));
 	fadeyStuff('pc_ca_reviews', numberWithCommas(data.popcorn_quiz.ca.reviews));
-	fadeyStuff('pc_jp_reviews', numberWithCommas(data.popcorn_quiz.jp.reviews));
+	fadeyStuff('pc_ja_reviews', numberWithCommas(data.popcorn_quiz.ja.reviews));
 	fadeyStuff('pc_au_reviews', numberWithCommas(data.popcorn_quiz.au.reviews));
 	fadeyStuff('pc_fr_reviews', numberWithCommas(data.popcorn_quiz.fr.reviews));
 	fadeyStuff('pc_fr_ca_reviews', numberWithCommas(data.popcorn_quiz.fr_ca.reviews));
