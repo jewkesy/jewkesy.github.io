@@ -51,6 +51,7 @@ function getDeviceInfo(device, playerIcon, boosterIcon, boosterDetails) {
 	else if (playerIcon == 'llama') sym = " 🦙";
 
 	if (boosterIcon >= 0 && Object.keys(boosterDetails).length !== 0) booster = " 🚀";
+	//console.log(boosterDetails, Object.keys(boosterDetails).length, booster)
 	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster}
 }
 
@@ -179,7 +180,7 @@ function httpGetByUrl(theUrl, callback) {
 
 var gettingLastPlay = {};
 function httpGetLastPlay(theUrl, prefix, callback) {
-	// console.log(gettingLastPlay, prefix)
+	// console.log(theUrl, gettingLastPlay, prefix)
 	if (gettingLastPlay[prefix] === true) {console.log("Getting Last Plays Already!", prefix); return callback(null, null);}
 	gettingLastPlay[prefix] = true;
 	var xmlHttp = null;

@@ -498,6 +498,7 @@ function buildPopcornLastGames(data, prefix) {
 		var g = games[i];
 
 		var icons = getDeviceInfo(g.d, g.i, g.tpb, g.boo)
+		// console.log(icons, g.r)
 		var sym = icons.sym;
 		var booster = icons.booster;
 		var device = icons.device;
@@ -555,7 +556,8 @@ function buildPopcornLastGames(data, prefix) {
 
 		var needed = "";
 		var boostersLeft = "";
-		if (g.tpb || g.tpb ===0) boostersLeft = "<br>🚀 "+numberWithCommas(g.tpb)+"";
+		if (g.tpb > 0) boostersLeft = "<br>🚀 "+numberWithCommas(g.tpb)+"";
+		else if (icons.booster != "") boostersLeft = "<br>🚀 "+numberWithCommas(g.tpb)+"";
 		if (g.n && +g.n > -1) needed = "<br/><i>Need:&nbsp;"+numberWithCommas(g.n)+"</i>";
 
 		fadeyStuff(prefix + "_lastgames_score_" + x, numberWithCommas(g.s)+boostersLeft);
