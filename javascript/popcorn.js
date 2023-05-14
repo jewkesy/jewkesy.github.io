@@ -880,7 +880,7 @@ function getIntro() {
 		if (!data) return;
 		if (data.msg.text == ". ") data.msg.text = "Ok!";
 		if (cachedQuestions.length == 0) fadeyStuff("pc_intro", data.msg.text);
-		getQuestions(15, data.msg.genre);
+		getQuestions(5, data.msg.genre);
 	});	
 }
 

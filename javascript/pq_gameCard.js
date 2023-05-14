@@ -1,6 +1,7 @@
 
 var _pqKeywords;
 const s3Url = "https://popcornquiz.s3-eu-west-1.amazonaws.com/"
+const gameTime = 30;
 
 function getKeywords() {
 	httpGetByUrl(aws + "?action=getkeywords&prefix=pc&locale="+_pqLang, function (err, data) {
@@ -16,45 +17,35 @@ function getKeywords() {
 
 var cachedQuestions = [];
 
-function getQuestions(count, genre) {
-	if (cachedQuestions.length != 0) {
-		displayQuestion();
+function getQuestions(count, genre, skipReset = false) {
+	if (!skipReset && cachedQuestions.length != 0) {
+		displayQuestion(count, genre);
 		return;
 	}
 
 	var url = aws + "?action=getquestions&prefix=pc&count="+count+"&genre="+genre+"&locale="+_pqLang;
-	// console.log(url)
 	httpGetByUrl(url, function (err, data) {
-		// console.log(data);
 		if (!data || !data.msg.questions) return;
-		if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
+		
+		if (!skipReset)
+			if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 
-		cachedQuestions = data.msg.questions;
-
-		displayQuestion();
+		cachedQuestions.push(...data.msg.questions);
+		if (!skipReset) displayQuestion(count, genre);
 	});
 }
 
-function displayQuestion() {
-	// console.log('displaying')
-	// console.log(cachedQuestions.length, cachedQuestions)
-	// var idx = randomInt(0, cachedQuestions.length-1);
-
-	// cachedQuestions = cachedQuestions.filter(item => {
-	// 	return (item.t == "Poster" || item.t == "TitleSwap")
-	// });
-
+function displayQuestion(count, genre) {
 	var q = cachedQuestions.pop();
-	// console.log(q)
-	// cachedQuestions = cachedQuestions
+	if (cachedQuestions.length < 2) getQuestions(count, genre, true);
+
 	var t = cleanseText(q.echoShowText);
 
 	var mosaic = document.getElementById('pc_poster_mosaic');
 
 	var mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png", "mosaic_5.png", "mosaic_6.png", "mosaic_7.png", "mosaic_8.png" ];
 
-	if (q.t == "Poster" || q.t == "TitleSwap") {
-		// show mosaic
+	if (q.t == "Poster" || q.t == "TitleSwap") { // show mosaic
 		let m = s3Url+mosaics[Math.floor(Math.random() * (mosaics.length))];
 
 		mosaic.setAttribute('src', m);
@@ -67,8 +58,7 @@ function displayQuestion() {
 		  }
 		});
 
-	} else {
-		// hide mosiac
+	} else { // hide mosiac
 		mosaic.setAttribute('style', "display: none;");
 	}
 
@@ -94,7 +84,7 @@ function displayQuestion() {
 	document.getElementById('pc_true').onclick = function () {showAnswer(true, q.answer, c, q.t, q.comment);};
 	document.getElementById('pc_false').onclick = function () {showAnswer(false, q.answer, c, q.t, q.comment);};
 
-	startProgressBar(30, q.answer, c);
+	startProgressBar(gameTime, q.answer, c);
 }
 
 var pg;
@@ -112,10 +102,11 @@ function showAnswer(chosen, answer, correct, type, comment){
 
 	var text = "";
 	if (chosen === null) {
-		text = "The correct answer was " + answer + ". ";
 		if (correct) {
-			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap")
+			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap" && type != "Still") {
+				text = "The correct answer was " + answer + ". ";
 				text += a.replace('&&', correct); // + correct;
+			}
 			else text = cleanseText(correct);
 		}
 	} else {
@@ -128,7 +119,7 @@ function showAnswer(chosen, answer, correct, type, comment){
 		}
 
 		if (correct) {
-			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap")
+			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap" && type != "Still")
 				text += " - " + a.replace('&&', correct);// + correct;
 			else text += "<hr>" + cleanseText(correct);
 		}
