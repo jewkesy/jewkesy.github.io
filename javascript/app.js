@@ -428,10 +428,16 @@ function fadeyStuff(id, val, attr) {
 function fadeyPic(id, val) {
 	if (!val) return;
 
-	if (document.getElementById(id).src == val) return;
+	var img = document.getElementById(id);
+
+	if (img.src == val) return;
 
 	$("#"+id).fadeOut(666, function () {
-		document.getElementById(id).src = val;
+		//img.src = "";
+		img.style.opacity = "0";
+		img.src = "";
+		img.src = val;
+		img.style.opacity = "1";
 		$("#"+id).fadeIn();
 	});
 }

@@ -31,8 +31,30 @@ function getQuestions(count, genre, skipReset = false) {
 			if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 
 		cachedQuestions.push(...data.msg.questions);
+		updateStillInfo();
 		if (!skipReset) displayQuestion(count, genre);
 	});
+}
+
+function updateStillInfo() {
+	var stills = cachedQuestions.filter(x => x.t == 'Still')
+	if (stills.length == 0) return
+	
+	// pick a random?
+	for ( var i = 0; i < stills.length; i++) {
+		var x = stills[i]
+		var t = ""
+		if (x.answer == true) {
+			t = x.echoShowText
+		} else {
+			t = x.correct
+		}
+
+		var a = t.split(">")[1].split("<")[0]
+
+		fadeyPic("stillRandomImg", x.Poster);
+		fadeyStuff("stillRandomTitle", a);
+	}
 }
 
 function displayQuestion(count, genre) {
