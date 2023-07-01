@@ -52,8 +52,14 @@ function updateStillInfo() {
 
 		var a = t.split(">")[1].split("<")[0]
 
-		fadeyPic("stillRandomImg", x.Poster);
+		$.get(x.Poster).done(function () {
+		  fadeyPic("stillRandomImg", x.Poster);
+		}).fail(function (e) {
+			console.log(e)
+		   fadeyPic("stillRandomImg", './images/popcorn_l.png');
+		});
 		fadeyStuff("stillRandomTitle", a);
+		break;
 	}
 }
 
@@ -90,7 +96,7 @@ function displayQuestion(count, genre) {
 		// console.log(q.Poster)
 	  fadeyPic("pc_question_poster", q.Poster);
 	}).fail(function (e) {
-		// console.log(e)
+		console.log(e)
 	   fadeyPic("pc_question_poster", './images/popcorn_l.png');
 	});
 	// console.log(q);

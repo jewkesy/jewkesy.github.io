@@ -145,6 +145,7 @@ function buildBSLastGamesPreview(data, prefix) {
 }
 
 function getBSDailyGames(callback) {
+return
 	var uri = aws + "?getdailygames=true&prefix=bs&limit=0&locale=" + _bsLocale + "&timefrom=" + _bsTimeFrom + _bsDeviceFilter;
 	httpGetByUrl(uri, function (err, data) {
 		if (err) console.error(err);
