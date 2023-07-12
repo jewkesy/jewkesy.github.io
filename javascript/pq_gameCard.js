@@ -70,8 +70,7 @@ function displayQuestion(count, genre) {
 	var t = cleanseText(q.echoShowText);
 
 	var mosaic = document.getElementById('pc_poster_mosaic');
-	var mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png", "mosaic_5.png", "mosaic_6.png", "mosaic_7.png", "mosaic_8.png", "mosaic_9.png", "mosaic_10.png", "mosaic_11.png", "mosaic_12.png" ];
-	
+	var mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png", "mosaic_5.png", "mosaic_6.png", "mosaic_7.png", "mosaic_8.png", "mosaic_9.png", "mosaic_10.png", "mosaic_11.png", "mosaic_12.png", "mosaic_13.png", "mosaic_14.png"]
 	if (q.t == "Poster" || q.t == "TitleSwap") { // show mosaic
 		let m = s3Url+mosaics[Math.floor(Math.random() * (mosaics.length))];
 
