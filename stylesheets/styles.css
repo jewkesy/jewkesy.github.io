@@ -660,6 +660,15 @@ tr.hover > th:hover {
   text-decoration: none;
 }
 
+
+.bs_won {
+  background-color: khaki;
+}
+
+.bs.lost {
+
+}
+
 table > tbody > strong {
   font-size: 20pt;
 }
@@ -678,53 +687,53 @@ td.bs_grid > img {
 }
 
 .stacked-bar-graph > span {
-    display: inline-block;
-    height:100%;
-    box-sizing: border-box;
-    float: left;
+  display: inline-block;
+  height:100%;
+  box-sizing: border-box;
+  float: left;
 
-    font-weight: bold;
-    font-family: arial, sans-serif;
-    padding: 0px;
-    color: white;
-    -webkit-text-stroke: 0.5px #f4f4f4;
-  }
+  font-weight: bold;
+  font-family: arial, sans-serif;
+  padding: 0px;
+  color: white;
+  -webkit-text-stroke: 0.5px #f4f4f4;
+}
 
-  .stacked-bar-graph > span.bar-1 {
-    background: #F7B334;
-  }
+.stacked-bar-graph > span.bar-1 {
+  background: #F7B334;
+}
 
-  .stacked-bar-graph > span.bar-2 {
-    background: #A7A9AC;
-  }
+.stacked-bar-graph > span.bar-2 {
+  background: #A7A9AC;
+}
 
-  .stacked-bar-graph > span.bar-3 {
-    background: #D57E00;
-  }
+.stacked-bar-graph > span.bar-3 {
+  background: #D57E00;
+}
 
-  .stacked-bar-graph > span.bar-g {
-    background: #48C9B0;
-  }
-  .stacked-bar-graph > span.bar-a {
-    background: #F5B041;
-  }
-  .stacked-bar-graph > span.bar-r {
-    background: #E74C3C;
-  }
+.stacked-bar-graph > span.bar-g {
+  background: #48C9B0;
+}
+.stacked-bar-graph > span.bar-a {
+  background: #F5B041;
+}
+.stacked-bar-graph > span.bar-r {
+  background: #E74C3C;
+}
 
-  .stacked-bar-graph > span.bar-30 {
-    background: #AF7AC5;
-  }
+.stacked-bar-graph > span.bar-30 {
+  background: #AF7AC5;
+}
 
-  .stacked-bar-graph > span.bar-50 {
-    background: #884EA0;
-  }
+.stacked-bar-graph > span.bar-50 {
+  background: #884EA0;
+}
 
-  .stacked-bar-graph > span.bar-100 {
-    background: #633974;
-  }
+.stacked-bar-graph > span.bar-100 {
+  background: #633974;
+}
 
-  
+
 .slidecontainer {
     width: 100%; /* Width of the outside container */
 }

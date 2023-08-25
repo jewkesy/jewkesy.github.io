@@ -243,16 +243,16 @@ var templates = {
     suffix: " ago",
     just: " %d seconds",
     seconds: "less than a minute",
-    minute: "about a minute",
+    minute: "a minute",
     minutes: "%d mins",
-    hour: "about an hour",
-    hours: "about %d hrs",
+    hour: "an hour",
+    hours: "%d hrs",
     day: "a day",
     days: "%d days",
-    month: "about a month",
+    month: "a month",
     months: "%d months",
     yearExact: "a year",
-    year: "about a year",
+    year: "a year",
     years: "%d years"
 };
 
