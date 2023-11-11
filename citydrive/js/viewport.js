@@ -49,14 +49,6 @@ class Viewport {
 
 		this.canvas.addEventListener('keydown', this.#handleKeyDown.bind(this));
 		this.canvas.addEventListener('keyup', this.#handleKeyUp.bind(this));
-
-		// document.onkeydown = function(evt) {
-		//     evt = evt || window.event;
-		//     this.#handleKeyDown(evt).bind(this)
-		// };
-
-		//document.onkeydown((evt) => this.#handleKeyDown(evt).biond(this));
-		//document.onkeyup((evt) => this.#handleKeyUp(evt).bind(this));
 	}
 
 	#handleMouseWheel(evt) {
@@ -99,8 +91,6 @@ class Viewport {
 	}
 
 	#handleKeyUp(evt) {
-		if (evt.keyCode == 91) {
-			this.cmd = false;
-		}
+		this.cmd = false;
 	}
 }
