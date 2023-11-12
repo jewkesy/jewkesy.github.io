@@ -1,7 +1,8 @@
 class Graph{
-	constructor(points = [], segments = []) {
+	constructor(points = [], segments = [], zoom = 100) {
 		this.points = points;
 		this.segments = segments;
+		this.zoom = zoom;
 	}
 
 	static load(info) {

@@ -1,9 +1,9 @@
 class Viewport {
-	constructor(canvas) {
+	constructor(canvas, zoom = 1) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 
-		this.zoom = 1;
+		this.zoom = zoom;
 		this.center = new Point(canvas.width / 2, canvas.height / 2);
 		this.offset = scale(this.center, -1);
 
@@ -41,6 +41,14 @@ class Viewport {
 		return add(this.offset, this.drag.offset);
 	}
 
+	getZoom() {
+		return this.zoom;
+	}
+
+	setZoom(zoom) {
+		this.zoom = zoom;
+	}
+
 	#addEventListeners() {
 		this.canvas.addEventListener("mousewheel", this.#handleMouseWheel.bind(this));
 		this.canvas.addEventListener("mousedown", this.#handleMouseDown.bind(this));
@@ -55,7 +63,7 @@ class Viewport {
 		const dir = Math.sign(evt.deltaY);
 		const step = 0.1;
 		this.zoom += dir * step;
-		this.zoom = Math.max(1, Math.min(5, this.zoom));
+		this.zoom = Math.max(1, Math.min(8, this.zoom));
 	}
 
 	#handleMouseDown(evt) {

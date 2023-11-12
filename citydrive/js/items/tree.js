@@ -1,5 +1,5 @@
 class Tree {
-	constructor(center, size, height = 200) {
+	constructor(center, size, height = Math.floor((Math.random() * 200) + 21)) {
 		this.center = center;
 		this.size = size; //size of base
 		this.height = height;

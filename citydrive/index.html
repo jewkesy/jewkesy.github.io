@@ -39,6 +39,8 @@
 			const world = new World(graph);
 
 			const viewport = new Viewport(myCanvas);
+			const zoom = localStorage.getItem("zoom");
+			viewport.setZoom(zoom ? parseInt(zoom) : 1);
 			const graphEditor = new GraphEditor(viewport, graph);
 
 			let oldGraphHash = graph.hash();
@@ -63,6 +65,7 @@
 
 			function save() {
 				localStorage.setItem("graph", JSON.stringify(graph));
+				localStorage.setItem("zoom", JSON.stringify(viewport.getZoom()));
 			}
 		</script>
 	</body>
