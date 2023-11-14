@@ -205,7 +205,9 @@ class World {
 		const lights = this.markings.filter((m) => m instanceof Light);
 		const controlCenters = [];
 		for (const light of lights) {
-			const point = getNearestPoint(light.center, this.#getIntersections());
+			const intersections = this.#getIntersections();
+			if (intersections.length == 0) break;
+			const point = getNearestPoint(light.center, intersections);
 			let controlCenter = controlCenters.find((c) => c.equals(point));
 			if (!controlCenter) {
 				controlCenter = new Point(point.x, point.y);
