@@ -6,6 +6,10 @@ class Tree {
 		this.base = this.#generateLevel(center, size);
 	}
 
+	static load(info) {
+		return new Tree(info.center, info.size, info.height);
+	}
+
 	#generateLevel(point, size) {
 		const points = [];
 		const rad = size / 2;
