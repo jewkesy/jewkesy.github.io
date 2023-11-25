@@ -287,12 +287,12 @@ class World {
 
 		ctx.globalAlpha = 0.2;
 		for (const car of this.cars) {
-			car.draw(ctx, "blue");
+			car.draw(ctx);
 		}
 
 		ctx.globalAlpha = 1;
 		if (this.bestCar) {
-			this.bestCar.draw(ctx, "blue", true);
+			this.bestCar.draw(ctx, true);
 		}
 
 		const items = [...this.buildings, ...this.trees];

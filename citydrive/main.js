@@ -94,7 +94,7 @@ function animate(time) {
 	// carCtx.translate(0, -bestCar.y+carCanvas.height*0.7);
 
 	for (let i = 0; i < traffic.length; i++) {
-		traffic[i].draw(carCtx, "red");
+		traffic[i].draw(carCtx);
 	}
 
 	// Follow car
