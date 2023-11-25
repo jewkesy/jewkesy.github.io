@@ -274,7 +274,7 @@ class World {
 			envelope.draw(ctx, { fill: "#BBB", stroke: "#BBB", lineWidth: 15});
 		}
 		for (const marking of this.markings) {
-			if (!(marking instanceof Start || showStartMarkings)) {
+			if (!(marking instanceof Start) || showStartMarkings) {
 				marking.draw(ctx);
 			}
 		}
