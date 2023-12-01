@@ -15,6 +15,7 @@
 				📂
 				<input type="file" id="fileInput" accept=".world" onchange="load(event)" />
 			</label>
+			<button onclick="openOsmPanel()">🗺️</button>
 			&nbsp;
 			<button id="graphBtn" onclick="setMode('graph')">🌐</button>
 			<button id="crossingBtn" onclick="setMode('crossing')">🚶</button>
@@ -24,6 +25,13 @@
 			<button id="lightBtn" onclick="setMode('light')">🚦</button>
 			<button id="targetBtn" onclick="setMode('target')">🎯</button>
 			<button id="yieldBtn" onclick="setMode('yield')">⚠️</button>
+
+			<div id="osmPanel" style="display: none;">
+				<textarea id="osmDataContainer" rows="10" cols="50" placeholder="Paste OSM data here"></textarea>
+				<div>
+					<button onclick="parseOsmData()">✔️</button>
+					<button onclick="closeOsmPanel()">⭕</button>
+				</div>
 		</div>
 
 		<script type="text/javascript" src="js/world.js"></script>
@@ -53,6 +61,7 @@
 
 		<script type="text/javascript" src="js/math/utils.js"></script>
 		<script type="text/javascript" src="js/math/graph.js"></script>
+		<script type="text/javascript" src="js/math/osm.js"></script>
 
 		<script type="text/javascript" src="js/primitives/point.js"></script>
 		<script type="text/javascript" src="js/primitives/segment.js"></script>
@@ -168,6 +177,24 @@
 				}
 			}
 
+			function openOsmPanel() {
+				osmPanel.style.display = "block";
+			}
+
+			function closeOsmPanel() {
+				osmPanel.style.display = "none";
+			}
+
+			function parseOsmData() {
+				if (osmDataContainer.value == "") {
+					alert("Paste data first");
+					return;
+				}
+				const res = Osm.parseRoads(JSON.parse(osmDataContainer.value));
+				graph.points = res.points;
+				graph.segments = res.segments;
+				closeOsmPanel();
+			}
 		</script>
 	</body>
 </html>
