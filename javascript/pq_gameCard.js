@@ -31,6 +31,7 @@ function getQuestions(count, genre, skipReset = false) {
 			if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 
 		cachedQuestions.push(...data.msg.questions);
+		// console.log(cachedQuestions)
 		updateStillInfo();
 		if (!skipReset) displayQuestion(count, genre);
 	});
@@ -129,7 +130,7 @@ function showAnswer(chosen, answer, correct, type, comment){
 	var text = "";
 	if (chosen === null) {
 		if (correct) {
-			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap" && type != "Still") {
+			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap" && type != "Still" && type != "Boxset") {
 				text = "The correct answer was " + answer + ". ";
 				text += a.replace('&&', correct); // + correct;
 			}
@@ -145,7 +146,7 @@ function showAnswer(chosen, answer, correct, type, comment){
 		}
 
 		if (correct) {
-			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap" && type != "Still")
+			if (type != "Quote" && type != "Taglines" && type != "Poster" && type != "TitleSwap" && type != "Still" && type != "Boxset")
 				text += " - " + a.replace('&&', correct);// + correct;
 			else text += "<hr>" + cleanseText(correct);
 		}

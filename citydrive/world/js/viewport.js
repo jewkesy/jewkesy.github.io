@@ -63,7 +63,7 @@ class Viewport {
 		const dir = Math.sign(evt.deltaY);
 		const step = 0.1;
 		this.zoom += dir * step;
-		this.zoom = Math.max(1, Math.min(8, this.zoom));
+		this.zoom = Math.max(1, Math.min(16, this.zoom));
 	}
 
 	#handleMouseDown(evt) {
@@ -93,8 +93,17 @@ class Viewport {
 	}
 
 	#handleKeyDown(evt) {
-		if (evt.keyCode == 91) {
+		console.log(evt.keyCode)
+		if (evt.keyCode == 91) { // cmd
 			this.cmd = true;
+		} else if (evt.keyCode == 187) { // + zoom in
+			const step = 0.1;
+			this.zoom -= this.zoom * step;
+			this.zoom = Math.max(1, Math.min(16, this.zoom));
+		} else if (evt.keyCode == 189) { // - zoom out
+			const step = 0.1;
+			this.zoom += this.zoom * step;
+			this.zoom = Math.max(1, Math.min(16, this.zoom));
 		}
 	}
 
