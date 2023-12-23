@@ -1,7 +1,7 @@
-
 var _pqKeywords;
 const s3Url = "https://popcornquiz.s3-eu-west-1.amazonaws.com/"
 const gameTime = 30;
+const _mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png", "mosaic_5.png", "mosaic_6.png", "mosaic_7.png", "mosaic_8.png", "mosaic_9.png", "mosaic_10.png", "mosaic_11.png", "mosaic_12.png", "mosaic_13.png", "mosaic_14.png"]
 
 function getKeywords() {
 	httpGetByUrl(aws + "?action=getkeywords&prefix=pc&locale="+_pqLang, function (err, data) {
@@ -11,7 +11,6 @@ function getKeywords() {
 		fadeyStuff("pc_false", _pqKeywords.false);
 		if (_pqKeywords.shortDesc) fadeyStuff("pc_short_desc", _pqKeywords.shortDesc);
 		setGameElements(_pqLang);
-		// console.log(_pqKeywords)
 	});
 }
 
@@ -26,12 +25,14 @@ function getQuestions(count, genre, skipReset = false) {
 	var url = aws + "?action=getquestions&prefix=pc&count="+count+"&genre="+genre+"&locale="+_pqLang;
 	httpGetByUrl(url, function (err, data) {
 		if (!data || !data.msg.questions) return;
-		
+
+		//data.msg.questions = data.msg.questions.filter(x => x.t == "Boxset")
+
 		if (!skipReset)
-			if (data.msg.genre) fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
+			if (data.msg.genre) 
+				fadeyStuff("pc_question_genre", getGenreEventTitle(capitalizeFirstLetter(data.msg.genre), "Movies")); 
 
 		cachedQuestions.push(...data.msg.questions);
-		// console.log(cachedQuestions)
 		updateStillInfo();
 		if (!skipReset) displayQuestion(count, genre);
 	});
@@ -66,43 +67,66 @@ function updateStillInfo() {
 
 function displayQuestion(count, genre) {
 	var q = cachedQuestions.pop();
-	if (cachedQuestions.length < 2) getQuestions(count, genre, true);
-
+	if (cachedQuestions.length < 1) getQuestions(count, genre, true);
+	if (!q) return getQuestions(count, genre, false);
+console.log(q)
 	var t = cleanseText(q.echoShowText);
 
-	var mosaic = document.getElementById('pc_poster_mosaic');
-	var mosaics = ["mosaic_1.png", "mosaic_2.png", "mosaic_3.png", "mosaic_4.png", "mosaic_5.png", "mosaic_6.png", "mosaic_7.png", "mosaic_8.png", "mosaic_9.png", "mosaic_10.png", "mosaic_11.png", "mosaic_12.png", "mosaic_13.png", "mosaic_14.png"]
-	if (q.t == "Poster" || q.t == "TitleSwap") { // show mosaic
-		let m = s3Url+mosaics[Math.floor(Math.random() * (mosaics.length))];
+	var rightImg = document.getElementById('rightPoster');
+	rightImg.setAttribute('style', "display: none;");
+	rightImg.classList.remove('hidden')
 
-		mosaic.setAttribute('src', m);
-		// https://popcornquiz.s3-eu-west-1.amazonaws.com/mosaic_1.png
-		mosaic.setAttribute('style', "display: inline;");
-		mosaic.classList = ["mosaic animate__animated animate__zoomIn"]
-		mosaic.addEventListener('animationend', (evt) => {
-		  if (evt.animationName == "zoomIn") {
-		  	mosaic.classList = ["mosaic animate__animated animate__rubberBand animate__slower"]
-		  }
+	let mosaics = document.getElementsByClassName('pc_poster_mosaic');
+
+	if (q.t == "Poster" || q.t == "TitleSwap" || q.t == "Boxset") { // show mosaic
+
+		if (q.t == "Boxset") rightImg.setAttribute('style', "display: inline;");
+		
+		Array.from(mosaics).forEach(function (element) {
+			let m = s3Url+_mosaics[Math.floor(Math.random() * (_mosaics.length))];
+			element.setAttribute('src', m);
+			element.setAttribute('style', "display: inline;");
+			element.classList = ["mosaic animate__animated animate__zoomIn, pc_poster_mosaic"]
+			element.addEventListener('animationend', (evt) => {
+				if (evt.animationName == "zoomIn") {
+					element.classList = ["mosaic animate__animated animate__rubberBand animate__slower"]
+				}
+			});
 		});
 
 	} else { // hide mosiac
-		mosaic.setAttribute('style', "display: none;");
+		Array.from(mosaics).forEach(function (element) {
+			element.setAttribute('style', "display: none;");
+		});	
 	}
 
 	fadeyStuff("pc_question", t);
 
-	$.get(q.Poster).done(function () {
-		// console.log(q.Poster)
-	  fadeyPic("pc_question_poster", q.Poster);
-	}).fail(function (e) {
-		console.log(e)
-	   fadeyPic("pc_question_poster", './images/popcorn_l.png');
-	});
-	// console.log(q);
-	var c = "";
+	if (q.t == "Boxset") {
+		$.get(q.Poster_1).done(function () {
+		  fadeyPic("pc_question_poster_1", q.Poster_1);
+		}).fail(function (e) {
+			console.log(e)
+		   fadeyPic("pc_question_poster_1", './images/popcorn_l.png');
+		});
+		$.get(q.Poster_2).done(function () {
+		  fadeyPic("pc_question_poster_2", q.Poster_2);
+		}).fail(function (e) {
+			console.log(e)
+		   fadeyPic("pc_question_poster_2", './images/popcorn_l.png');
+		});
+	} else {
+		$.get(q.Poster).done(function () {
+		  fadeyPic("pc_question_poster_1", q.Poster);
+		}).fail(function (e) {
+			console.log(e)
+		   fadeyPic("pc_question_poster_1", './images/popcorn_l.png');
+		});
+	}
+
+	let c = "";
 
 	if (q.correct) {
-		//console.log(q.correct)
 		c = cleanseText(q.correct+"");
 		c = c.replace('<emphasis level="reduced">', '');
 		c = c.replace('</emphasis>', '');
@@ -116,16 +140,18 @@ function displayQuestion(count, genre) {
 
 var pg;
 function showAnswer(chosen, answer, correct, type, comment){
-	// console.log(chosen, answer, correct, type);
-	var mosaic = document.getElementById('pc_poster_mosaic');
-	mosaic.setAttribute('style', "display: none;");
+	let mosaics = document.getElementsByClassName('pc_poster_mosaic');
+
+	Array.from(mosaics).forEach(function (element) {
+		element.setAttribute('style', "display: none;");
+	});	
+
 	if (!type) type = "";
 	clearInterval(pg);
 	document.getElementById('pc_progressbar').setAttribute('style', "width:100%;");
 	document.getElementById('pc_truefalse').setAttribute('style', 'display:none;');
 
 	var a = _pqAnswerPhrases[randomInt(0, _pqAnswerPhrases.length-1)];
-	// console.log(_pqAnswerPhrases);
 
 	var text = "";
 	if (chosen === null) {
