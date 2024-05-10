@@ -41,7 +41,7 @@ function getDeviceInfo(device, playerIcon, boosterIcon, boosterDetails) {
 	else if (device == "Google Phone")  { deviceType = ".";deviceIcon = "google"; }
 	else if (device == "Google Speaker"){ deviceType = ""; deviceIcon = "google"; }
 
-	if (playerIcon == 'star')       sym = " ⭐";
+	if (playerIcon == 'star')       symbolOverride = "<img title='Daryl' class='profilepic' height='40px' src='https://avatars2.githubusercontent.com/u/1673570'/>";//sym = " ⭐";
 	else if (playerIcon == 'sun')   sym = " 🌞";
 	else if (playerIcon == 'note')  sym = " 🎵";
 	else if (playerIcon == 'hash')  sym = " 🌭";
@@ -49,7 +49,7 @@ function getDeviceInfo(device, playerIcon, boosterIcon, boosterDetails) {
 	else if (playerIcon == 'en-us') sym = " 🍔";
 	else if (playerIcon == 'dev')   sym = " 💻";
 	else if (playerIcon == 'llama') sym = " 🦙";
-	else if (playerIcon == 'Gary') symbolOverride = "<img title='Gary' class='profilepic' height='40px' src='https://avatars.githubusercontent.com/u/37657036'/>"
+	else if (playerIcon == 'Gary')  symbolOverride = "<img title='Gary' class='profilepic' height='40px' src='https://avatars.githubusercontent.com/u/37657036'/>"
 
 	if (boosterIcon >= 0 && Object.keys(boosterDetails).length !== 0) booster = " 🚀";
 	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster, symbolOverride: symbolOverride}
