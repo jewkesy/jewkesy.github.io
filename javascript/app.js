@@ -31,6 +31,7 @@ function getDeviceInfo(device, playerIcon, boosterIcon, boosterDetails) {
 	var booster = "";
 	var deviceType = "⚇";
 	var deviceIcon = "alexa";
+	var symbolOverride;
 
 	if (device == "Echo Show" || device == "EchoShow") 	deviceType = "🖥️";
 	else if (device == "FireTV")						deviceType = "📺";
@@ -39,7 +40,6 @@ function getDeviceInfo(device, playerIcon, boosterIcon, boosterDetails) {
 	else if (device == "Google Surface"){ deviceType = ":";deviceIcon = "google"; }
 	else if (device == "Google Phone")  { deviceType = ".";deviceIcon = "google"; }
 	else if (device == "Google Speaker"){ deviceType = ""; deviceIcon = "google"; }
-	// else console.log("UNHANDLED", device)
 
 	if (playerIcon == 'star')       sym = " ⭐";
 	else if (playerIcon == 'sun')   sym = " 🌞";
@@ -49,10 +49,10 @@ function getDeviceInfo(device, playerIcon, boosterIcon, boosterDetails) {
 	else if (playerIcon == 'en-us') sym = " 🍔";
 	else if (playerIcon == 'dev')   sym = " 💻";
 	else if (playerIcon == 'llama') sym = " 🦙";
+	else if (playerIcon == 'Gary') symbolOverride = "<img title='Gary' class='profilepic' height='40px' src='https://avatars.githubusercontent.com/u/37657036'/>"
 
 	if (boosterIcon >= 0 && Object.keys(boosterDetails).length !== 0) booster = " 🚀";
-	//console.log(boosterDetails, Object.keys(boosterDetails).length, booster)
-	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster}
+	return {device: deviceType, deviceIcon: deviceIcon, sym: sym, booster: booster, symbolOverride: symbolOverride}
 }
 
 function getGenreEventTitle(genre, suffix) {

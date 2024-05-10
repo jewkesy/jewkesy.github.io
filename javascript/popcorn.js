@@ -541,8 +541,11 @@ function buildPopcornLastGames(data, prefix) {
 			document.getElementById(prefix + '_lastgames_ts_' + x).title = g.t/1000;
 			document.getElementById(prefix + '_lastgames_st_' + x).title = g.st/1000;
 		}
-		
-		fadeyStuff(prefix + "_lastgames_pqDevice_" + x, buildIconHTML(deviceIcon, g.l, device));
+
+		if (icons.symbolOverride)
+			fadeyStuff(prefix + "_lastgames_pqDevice_" + x, icons.symbolOverride);
+		else
+			fadeyStuff(prefix + "_lastgames_pqDevice_" + x, buildIconHTML(deviceIcon, g.l, device));
 
 		if (g.r == 1) {
 			fadeyStuff(prefix + "_lastgames_rank_" + x, "<span class='font26'>🥇</span>" + sym);
@@ -589,7 +592,8 @@ function buildPopcornLeague(data, prefix, total) {
 		var x = i + 1;
 		var g = topTen[i];
 
-		var icons = getDeviceInfo(g.d, g.i, g.tpb, g.boo)		
+		var icons = getDeviceInfo(g.d, g.i, g.tpb, g.boo)
+
 		var sym = icons.sym;
 		var booster = icons.booster;
 		var device = icons.device;
@@ -628,7 +632,10 @@ function buildPopcornLeague(data, prefix, total) {
 			document.getElementById(prefix + '_league_st_' + x).title = topTen[i].st/1000;
 		}
 		
-		fadeyStuff(prefix + "_league_pqDevice_" + x, buildIconHTML(deviceIcon, topTen[i].l, device));
+		if (icons.symbolOverride)
+			fadeyStuff(prefix + "_league_pqDevice_" + x, icons.symbolOverride);
+		else
+			fadeyStuff(prefix + "_league_pqDevice_" + x, buildIconHTML(deviceIcon, topTen[i].l, device));
 		
 		if (x == 1) 	 fadeyStuff(prefix + "_league_rank_" + x, "<span class='font26'>🥇</span>" + sym);
 		else if (x == 2) fadeyStuff(prefix + "_league_rank_" + x, "<span class='font26'>🥈</span>" + sym);
